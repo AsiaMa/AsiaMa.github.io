@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="移步大佬, 三十二道街">
+    <meta name="keywords" content="friends, 三十二道街">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,18 +16,18 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>移步大佬 | 三十二道街</title>
-    <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/AsiaMa/asiama.github.io/favicon.png">
+    <title>friends | 三十二道街</title>
+    <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/favicon.png">
 
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/AsiaMa/asiama.github.io/libs/awesome/css/all.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/AsiaMa/asiama.github.io/libs/materialize/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/AsiaMa/asiama.github.io/libs/aos/aos.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/AsiaMa/asiama.github.io/libs/animate/animate.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/AsiaMa/asiama.github.io/libs/lightGallery/css/lightgallery.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/AsiaMa/asiama.github.io/css/matery.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/AsiaMa/asiama.github.io/css/my.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/css/my.css">
 
-    <script src="https://cdn.jsdelivr.net/gh/AsiaMa/asiama.github.io/libs/jquery/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/jquery/jquery.min.js"></script>
 
 <meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="三十二道街" type="application/atom+xml">
 <link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
@@ -40,7 +40,7 @@
             <div class="brand-logo">
                 <a href="/" class="waves-effect waves-light">
                     
-                    <img src="https://cdn.jsdelivr.net/gh/AsiaMa/asiama.github.io/medias/logo.png" class="logo-img" alt="LOGO">
+                    <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/logo.png" class="logo-img" alt="LOGO">
                     
                     <span class="logo-span">三十二道街</span>
                 </a>
@@ -139,7 +139,7 @@
 
     <div class="mobile-head bg-color">
         
-        <img src="https://cdn.jsdelivr.net/gh/AsiaMa/asiama.github.io/medias/logo.png" class="logo-img circle responsive-img">
+        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/logo.png" class="logo-img circle responsive-img">
         
         <div class="logo-name">三十二道街</div>
         <div class="logo-desc">
@@ -339,7 +339,7 @@
 
 <script>
     // 每天切换 banner 图.  Switch banner image every day.
-    var bannerUrl = "https://cdn.jsdelivr.net/gh/AsiaMa/asiama.github.io/medias/banner/" + new Date().getDay() + '.jpg';
+    var bannerUrl = "https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/banner/" + new Date().getDay() + '.jpg';
     $('.bg-cover').css('background-image', 'url(' + bannerUrl + ')');
 </script>
 
@@ -641,6 +641,33 @@
         <div class="card">
 
             
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: '59bf142f2e1e32208f0f',
+        clientSecret: '8fd8a8462225cf93ec37c4dbd0362c71ba21ddac',
+        repo: 'asiama.github.io',
+        owner: 'asiama',
+        admin: "asiama",
+        id: '2020-09-19T21-54-24',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+
+            
 
             
 
@@ -796,10 +823,10 @@
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/gh/AsiaMa/asiama.github.io/js/search.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/js/search.js"></script>
 <script type="text/javascript">
 $(function () {
-    searchFunc("https://cdn.jsdelivr.net/gh/AsiaMa/asiama.github.io/search.xml", 'searchInput', 'searchResult');
+    searchFunc("https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/search.xml", 'searchInput', 'searchResult');
 });
 </script>
 
@@ -811,12 +838,12 @@ $(function () {
 </div>
 
 
-    <script src="https://cdn.jsdelivr.net/gh/AsiaMa/asiama.github.io/libs/materialize/materialize.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/AsiaMa/asiama.github.io/libs/masonry/masonry.pkgd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/AsiaMa/asiama.github.io/libs/aos/aos.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/AsiaMa/asiama.github.io/libs/scrollprogress/scrollProgress.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/AsiaMa/asiama.github.io/libs/lightGallery/js/lightgallery-all.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/AsiaMa/asiama.github.io/js/matery.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/materialize/materialize.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/aos/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/js/matery.js"></script>
 
     <!-- Baidu Analytics -->
 
@@ -837,12 +864,10 @@ $(function () {
 </script>
 
     
-    <script src="https://cdn.jsdelivr.net/gh/AsiaMa/asiama.github.io/libs/others/clicklove.js" async="async"></script>
+    <script src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/others/clicklove.js" async="async"></script>
     
     
-    <script async src="https://cdn.jsdelivr.net/gh/AsiaMa/asiama.github.io/libs/others/busuanzi.pure.mini.js"></script>
-    
-
+    <script async src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/others/busuanzi.pure.mini.js"></script>
     
 
     
@@ -854,7 +879,9 @@ $(function () {
     
 
     
-    <script src="https://cdn.jsdelivr.net/gh/AsiaMa/asiama.github.io/libs/instantpage/instantpage.js" type="module"></script>
+
+    
+    <script src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/instantpage/instantpage.js" type="module"></script>
     
 
 </body>
