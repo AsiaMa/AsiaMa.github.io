@@ -1,6 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Hello World</title>
+    <url>/posts/3eeb.html</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class=" language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span></code></pre>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class=" language-bash"><code class="language-bash">$ hexo server</code></pre>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bash"><code class="language-bash">$ hexo generate</code></pre>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-bash"><code class="language-bash">$ hexo deploy</code></pre>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+  </entry>
+  <entry>
     <title>Git介绍</title>
     <url>/posts/f3f.html</url>
     <content><![CDATA[<h3 id="Git的诞生"><a href="#Git的诞生" class="headerlink" title="Git的诞生"></a>Git的诞生</h3><p>在Git诞生之前，Linux内核开发过程中使用BitKeeper来作为VCS。BitKeeper提供当时的一些开源VCS（如RCS、CVS）所不能提供的高级操作。然而，在2005年春天，当BitKeeper的所有方对他们的免费版BitKeeper加入了额外的限制时，Linux社区意识到，使用BitKeeper不再是一个长期可行的解决方案。</p>
@@ -66,6 +98,84 @@
       </tags>
   </entry>
   <entry>
+    <title>Git常用命令</title>
+    <url>/posts/1b99.html</url>
+    <content><![CDATA[<h3 id="建Git仓库"><a href="#建Git仓库" class="headerlink" title="建Git仓库"></a>建Git仓库</h3><p>把已有的项目代码纳入Git管理</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">cd</span> 项目代码所在的文件夹
+$ <span class="token function">git</span> init</code></pre>
+<p>新建的项目直接用Git管理</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">cd</span> 某个文件夹
+$ <span class="token function">git</span> init your_project <span class="token comment" spellcheck="true"># 会在当前项目下创建和项目名称同名的文件夹</span>
+$ <span class="token function">cd</span> your_project</code></pre>
+<h3 id="查看提交"><a href="#查看提交" class="headerlink" title="查看提交"></a>查看提交</h3><pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 条目按照从最新的到最老的顺序罗列出来</span>
+$ <span class="token function">git</span> log 
+<span class="token comment" spellcheck="true"># 查看特定提交更加详细的信息</span>
+$ <span class="token function">git</span> show commitId 
+<span class="token comment" spellcheck="true"># 查看当前分支的最近10次提交</span>
+$ <span class="token function">git</span> show-branch --more<span class="token operator">=</span>10
+<span class="token comment" spellcheck="true"># 查看简洁信息</span>
+$ <span class="token function">git</span> log --oneline
+<span class="token comment" spellcheck="true"># 显示最近四次提交的简介信息</span>
+$ <span class="token function">git</span> log -n4 --oneline</code></pre>
+<h3 id="版本库内文件的删除和重命名"><a href="#版本库内文件的删除和重命名" class="headerlink" title="版本库内文件的删除和重命名"></a>版本库内文件的删除和重命名</h3><p>文件删除</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 表示你想要删除这个文件的意图并暂存这个变更</span>
+$ <span class="token function">git</span> <span class="token function">rm</span> poem.html
+<span class="token comment" spellcheck="true"># 在版本库里实现这个变更</span>
+$ <span class="token function">git</span> commit -m <span class="token string">"Remove a poem"</span></code></pre>
+<p>文件重命名</p>
+<ul>
+<li>方式一</li>
+</ul>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">mv</span> foo.html bar.html <span class="token comment" spellcheck="true"># 防止git命令会把foo.html从文件系统中永久删除</span>
+$ <span class="token function">git</span> <span class="token function">rm</span> foo.html
+$ <span class="token function">git</span> add bar.html</code></pre>
+<ul>
+<li>方式二</li>
+</ul>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> <span class="token function">mv</span> foo.html bar.html</code></pre>
+<h3 id="其它命令"><a href="#其它命令" class="headerlink" title="其它命令"></a>其它命令</h3><pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 暂存区已经修改的添加进去</span>
+$ <span class="token function">git</span> add -u
+<span class="token comment" spellcheck="true"># 暂存区的修改全部抹除掉</span>
+$ <span class="token function">git</span> reset --hard
+<span class="token comment" spellcheck="true"># 根据commitId检索分支</span>
+$ <span class="token function">git</span> checkout -b temp dc8aff7
+<span class="token comment" spellcheck="true"># 显示分支</span>
+$ <span class="token function">git</span> branch -av
+<span class="token comment" spellcheck="true"># 显示所有分支的提价信息</span>
+$ <span class="token function">git</span> log --all
+<span class="token comment" spellcheck="true"># 图像化的方式展示提交信息</span>
+$ <span class="token function">git</span> log --all --graph
+<span class="token comment" spellcheck="true"># 以浏览器的方式打开git帮助文档</span>
+$ <span class="token function">git</span> <span class="token function">help</span> --web log
+<span class="token comment" spellcheck="true"># 查看帮助命令</span>
+$ <span class="token function">git</span> <span class="token function">help</span> --all</code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <categories>
+        <category>项目管理</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用Git之前需要做的最小配置</title>
     <url>/posts/5174.html</url>
     <content><![CDATA[<h3 id="配置user-name-和-user-email"><a href="#配置user-name-和-user-email" class="headerlink" title="配置user.name 和 user.email"></a>配置user.name 和 user.email</h3><p>全局配置「对当前用户所有仓库有效」</p>
@@ -81,6 +191,7 @@ $ <span class="token function">git</span> config --system user.email <span class
 $ <span class="token function">git</span> config --list --global
 $ <span class="token function">git</span> config --list --system</code></pre>
 <h3 id="查看某一个属性"><a href="#查看某一个属性" class="headerlink" title="查看某一个属性"></a>查看某一个属性</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --global user.name</code></pre>
+<h3 id="移除设置"><a href="#移除设置" class="headerlink" title="移除设置"></a>移除设置</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --unset --global user.email</code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -100,40 +211,11 @@ $ <span class="token function">git</span> config --list --system</code></pre>
             document.body.appendChild(img);
           });
       </script>]]></content>
+      <categories>
+        <category>项目管理</category>
+      </categories>
       <tags>
         <tag>Git</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/posts/3eeb.html</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class=" language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span></code></pre>
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class=" language-bash"><code class="language-bash">$ hexo server</code></pre>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bash"><code class="language-bash">$ hexo generate</code></pre>
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-bash"><code class="language-bash">$ hexo deploy</code></pre>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
   </entry>
 </search>

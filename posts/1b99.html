@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="使用Git之前需要做的最小配置, Java,Git,SpringBoot,SpringCloud,SpringCloud Alibaba等">
+    <meta name="keywords" content="Git常用命令, Java,Git,SpringBoot,SpringCloud,SpringCloud Alibaba等">
     <meta name="description" content="专注WJava后端,大数据,分享知识,分享生活">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>使用Git之前需要做的最小配置 | 三十二道街</title>
+    <title>Git常用命令 | 三十二道街</title>
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/awesome/css/all.css">
@@ -309,12 +309,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/10.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/15.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">使用Git之前需要做的最小配置</h1>
+                    <h1 class="description center-align post-title">Git常用命令</h1>
                 </div>
             </div>
         </div>
@@ -470,7 +470,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    180
+                    423
                 </div>
                 
 
@@ -492,20 +492,55 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="配置user-name-和-user-email"><a href="#配置user-name-和-user-email" class="headerlink" title="配置user.name 和 user.email"></a>配置user.name 和 user.email</h3><p>全局配置「对当前用户所有仓库有效」</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --global user.name <span class="token string">"your_name"</span>
-$ <span class="token function">git</span> config --global user.email <span class="token string">"your_email"</span></code></pre>
-<p>缺省等同于local「只对某个仓库有效」</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --local user.name <span class="token string">"your_name"</span>
-$ <span class="token function">git</span> config --local user.email <span class="token string">"your_email"</span></code></pre>
-<p>系统配置「对系统所有登录的用户有效」</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --system user.name <span class="token string">"your_name"</span>
-$ <span class="token function">git</span> config --system user.email <span class="token string">"your_email"</span></code></pre>
-<h3 id="显示config的配置"><a href="#显示config的配置" class="headerlink" title="显示config的配置"></a>显示config的配置</h3><pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --list --local
-$ <span class="token function">git</span> config --list --global
-$ <span class="token function">git</span> config --list --system</code></pre>
-<h3 id="查看某一个属性"><a href="#查看某一个属性" class="headerlink" title="查看某一个属性"></a>查看某一个属性</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --global user.name</code></pre>
-<h3 id="移除设置"><a href="#移除设置" class="headerlink" title="移除设置"></a>移除设置</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --unset --global user.email</code></pre>
+                <h3 id="建Git仓库"><a href="#建Git仓库" class="headerlink" title="建Git仓库"></a>建Git仓库</h3><p>把已有的项目代码纳入Git管理</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">cd</span> 项目代码所在的文件夹
+$ <span class="token function">git</span> init</code></pre>
+<p>新建的项目直接用Git管理</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">cd</span> 某个文件夹
+$ <span class="token function">git</span> init your_project <span class="token comment" spellcheck="true"># 会在当前项目下创建和项目名称同名的文件夹</span>
+$ <span class="token function">cd</span> your_project</code></pre>
+<h3 id="查看提交"><a href="#查看提交" class="headerlink" title="查看提交"></a>查看提交</h3><pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 条目按照从最新的到最老的顺序罗列出来</span>
+$ <span class="token function">git</span> log 
+<span class="token comment" spellcheck="true"># 查看特定提交更加详细的信息</span>
+$ <span class="token function">git</span> show commitId 
+<span class="token comment" spellcheck="true"># 查看当前分支的最近10次提交</span>
+$ <span class="token function">git</span> show-branch --more<span class="token operator">=</span>10
+<span class="token comment" spellcheck="true"># 查看简洁信息</span>
+$ <span class="token function">git</span> log --oneline
+<span class="token comment" spellcheck="true"># 显示最近四次提交的简介信息</span>
+$ <span class="token function">git</span> log -n4 --oneline</code></pre>
+<h3 id="版本库内文件的删除和重命名"><a href="#版本库内文件的删除和重命名" class="headerlink" title="版本库内文件的删除和重命名"></a>版本库内文件的删除和重命名</h3><p>文件删除</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 表示你想要删除这个文件的意图并暂存这个变更</span>
+$ <span class="token function">git</span> <span class="token function">rm</span> poem.html
+<span class="token comment" spellcheck="true"># 在版本库里实现这个变更</span>
+$ <span class="token function">git</span> commit -m <span class="token string">"Remove a poem"</span></code></pre>
+<p>文件重命名</p>
+<ul>
+<li>方式一</li>
+</ul>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">mv</span> foo.html bar.html <span class="token comment" spellcheck="true"># 防止git命令会把foo.html从文件系统中永久删除</span>
+$ <span class="token function">git</span> <span class="token function">rm</span> foo.html
+$ <span class="token function">git</span> add bar.html</code></pre>
+<ul>
+<li>方式二</li>
+</ul>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> <span class="token function">mv</span> foo.html bar.html</code></pre>
+<h3 id="其它命令"><a href="#其它命令" class="headerlink" title="其它命令"></a>其它命令</h3><pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 暂存区已经修改的添加进去</span>
+$ <span class="token function">git</span> add -u
+<span class="token comment" spellcheck="true"># 暂存区的修改全部抹除掉</span>
+$ <span class="token function">git</span> reset --hard
+<span class="token comment" spellcheck="true"># 根据commitId检索分支</span>
+$ <span class="token function">git</span> checkout -b temp dc8aff7
+<span class="token comment" spellcheck="true"># 显示分支</span>
+$ <span class="token function">git</span> branch -av
+<span class="token comment" spellcheck="true"># 显示所有分支的提价信息</span>
+$ <span class="token function">git</span> log --all
+<span class="token comment" spellcheck="true"># 图像化的方式展示提交信息</span>
+$ <span class="token function">git</span> log --all --graph
+<span class="token comment" spellcheck="true"># 以浏览器的方式打开git帮助文档</span>
+$ <span class="token function">git</span> <span class="token function">help</span> --web log
+<span class="token comment" spellcheck="true"># 查看帮助命令</span>
+$ <span class="token function">git</span> <span class="token function">help</span> --all</code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -549,7 +584,7 @@ $ <span class="token function">git</span> config --list --system</code></pre>
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://blog.asiama.top/posts/5174.html">https://blog.asiama.top/posts/5174.html</a>
+                    <a href="https://blog.asiama.top/posts/1b99.html">https://blog.asiama.top/posts/1b99.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -759,7 +794,7 @@ $ <span class="token function">git</span> config --list --system</code></pre>
         repo: 'asiama.github.io',
         owner: 'asiama',
         admin: "asiama",
-        id: '2020-09-20T14-54-45',
+        id: '2020-09-20T19-41-22',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -783,9 +818,10 @@ $ <span class="token function">git</span> config --list --system</code></pre>
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/posts/1b99.html">
                     <div class="card-image">
@@ -803,9 +839,9 @@ $ <span class="token function">git</span> config --list --system</code></pre>
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-09-20
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-09-20
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -818,6 +854,7 @@ $ <span class="token function">git</span> config --list --system</code></pre>
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -836,13 +873,13 @@ $ <span class="token function">git</span> config --list --system</code></pre>
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/posts/f3f.html">
+                <a href="/posts/5174.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/4.jpg" class="responsive-img" alt="Git介绍">
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/10.jpg" class="responsive-img" alt="使用Git之前需要做的最小配置">
                         
-                        <span class="card-title">Git介绍</span>
+                        <span class="card-title">使用Git之前需要做的最小配置</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
