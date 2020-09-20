@@ -3,11 +3,11 @@
   <title>三十二道街</title>
   
   <subtitle>学徒心</subtitle>
-  <link href="https://asiama.github.io/atom.xml" rel="self"/>
+  <link href="https://blog.asiama.top/atom.xml" rel="self"/>
   
-  <link href="https://asiama.github.io/"/>
+  <link href="https://blog.asiama.top/"/>
   <updated>2020-09-19T03:37:53.018Z</updated>
-  <id>https://asiama.github.io/</id>
+  <id>https://blog.asiama.top/</id>
   
   <author>
     <name>AsiaMa</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>Git版本控制管理</title>
-    <link href="https://asiama.github.io/2020/09/19/git-ban-ben-kong-zhi-guan-li/"/>
-    <id>https://asiama.github.io/2020/09/19/git-ban-ben-kong-zhi-guan-li/</id>
+    <link href="https://blog.asiama.top/2020/09/19/git-ban-ben-kong-zhi-guan-li/"/>
+    <id>https://blog.asiama.top/2020/09/19/git-ban-ben-kong-zhi-guan-li/</id>
     <published>2020-09-19T03:25:47.000Z</published>
     <updated>2020-09-19T03:37:53.018Z</updated>
     
@@ -34,19 +34,19 @@
     
     
     
-    <category term="前端" scheme="https://asiama.github.io/categories/%E5%89%8D%E7%AB%AF/"/>
+    <category term="前端" scheme="https://blog.asiama.top/categories/%E5%89%8D%E7%AB%AF/"/>
     
     
-    <category term="导航" scheme="https://asiama.github.io/tags/%E5%AF%BC%E8%88%AA/"/>
+    <category term="导航" scheme="https://blog.asiama.top/tags/%E5%AF%BC%E8%88%AA/"/>
     
-    <category term="分享" scheme="https://asiama.github.io/tags/%E5%88%86%E4%BA%AB/"/>
+    <category term="分享" scheme="https://blog.asiama.top/tags/%E5%88%86%E4%BA%AB/"/>
     
   </entry>
   
   <entry>
     <title>Hello World</title>
-    <link href="https://asiama.github.io/2020/09/18/hello-world/"/>
-    <id>https://asiama.github.io/2020/09/18/hello-world/</id>
+    <link href="https://blog.asiama.top/2020/09/18/hello-world/"/>
+    <id>https://blog.asiama.top/2020/09/18/hello-world/</id>
     <published>2020-09-18T13:22:19.343Z</published>
     <updated>2020-09-18T13:22:19.343Z</updated>
     
