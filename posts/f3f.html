@@ -500,9 +500,9 @@
 <p>SCCS 提供的数据存储中心称为“版本库”（repository），而这个基本概念一直沿用至今。SCCS 同样提供了一个简单的锁模型来保证开发过程有序。如果一个开发人员需要运行或者测试一个程序，他需要将该程序解锁并检出。然而，如果他想修改某个文件，他则需要锁定并检出（通过 UNIX 文件系统执行的转换）。当编辑完成以后，他又可以将文件检入到版本库中并解锁它。</p>
 <p>修订控制系统（Revision Control System，RCS）由 Walter F. Tichy 于 20 世纪 80 年代早期引入。RCS 引入了双向差异的概念，来提高文件不同版本的存储效率。</p>
 <p>并行版本系统（Concurrent Version System，CVS）由 Dick Grune 于 1986 年设计并最初实现。4 年后又被Berliner 和他的团队融入 RCS 模型重新实现，这次实现非常成功。CVS 变得非常流行，并且成为<a target="_blank" rel="noopener" href="https://opensource.org/">开源社区</a>许多年的事实标准。CVS 相对 RCS 有多项优势，包括分布式开发和版本库范围内对整个“模块”的更改集。</p>
-<p>此外，CVS 引入了一个关于“锁”的新范式。而之前的系统需要开发人员在修改某个文件之前先锁定它， 一个文件同时只允许一个开发人员进行修改，所有需要修改这个文件的开发人员需要有序等候。CVS 给 予每个开发人员对于自己的私有版本写的权限。因此，不同开发人员的改动可以自动合并，除非两个开 发人员尝试修改同一行。如果出现修改同一行的情况，那这一行将会作为“冲突”被标记出来，由开发 人员手动去解决。这个关于“锁”的新规则使得多个开发人员可以并行地编写代码。</p>
-<p>就像经常发生的那样，对 CVS 短处和缺点的改进，促进了新 VCS 的诞生：Subversion（SVN）。SVN 于 2001 年问世，迅速风靡了开源社区。不像 CVS，SVN 以原子方式提交改动部分，并且更好地支持分支。 BitKeeper 和 Mercurial 则彻底抛弃了上述所有解决方案。它们淘汰了中心版本库的概念，取而代之的，数 据的存储是分布式的，每个开发人员都拥有自己可共享的版本库副本。Git 则是从这种端点对端点（Peer to Peer）的模型继承而来。</p>
-<p>最后，Mercurial 和 Monotone 首创了用散列指纹来唯一标识文件的内容，而文件名只是个“绰号”，旨在 方便用户操作，再没有别的作用。Git 沿用了这个概念。从内部实现上来说，Git 的文件标识符基于文件的内容，这是一个叫做“内容可寻址文件存储”（Content Addressable File Store，CAFS）的概念。这不 是一个新概念。见<a target="_blank" rel="noopener" href="https://www.usenix.org/legacy/events/fast02/quinlan/quinlan_html/index.html">“The Venti Filesystem,” (Plan 9)</a>, Bell Labs,  据 Linus 的说法3，Git 直接从 Monotone 借用了这个概念。Mercurial 也同时实现了这个概念。</p>
+<p>此外，CVS 引入了一个关于“锁”的新范式。而之前的系统需要开发人员在修改某个文件之前先锁定它， 一个文件同时只允许一个开发人员进行修改，所有需要修改这个文件的开发人员需要有序等候。CVS 给予每个开发人员对于自己的私有版本写的权限。因此，不同开发人员的改动可以自动合并，除非两个开发人员尝试修改同一行。如果出现修改同一行的情况，那这一行将会作为“冲突”被标记出来，由开发 人员手动去解决。这个关于“锁”的新规则使得多个开发人员可以并行地编写代码。</p>
+<p>就像经常发生的那样，对 CVS 短处和缺点的改进，促进了新 VCS 的诞生：Subversion（SVN）。SVN 于 2001 年问世，迅速风靡了开源社区。不像 CVS，SVN 以原子方式提交改动部分，并且更好地支持分支。 BitKeeper 和 Mercurial 则彻底抛弃了上述所有解决方案。它们淘汰了中心版本库的概念，取而代之的，数据的存储是分布式的，每个开发人员都拥有自己可共享的版本库副本。Git 则是从这种端点对端点（Peer to Peer）的模型继承而来。</p>
+<p>最后，Mercurial 和 Monotone 首创了用散列指纹来唯一标识文件的内容，而文件名只是个“绰号”，旨在方便用户操作，再没有别的作用。Git 沿用了这个概念。从内部实现上来说，Git 的文件标识符基于文件的内容，这是一个叫做“内容可寻址文件存储”（Content Addressable File Store，CAFS）的概念。这不是一个新概念。见<a target="_blank" rel="noopener" href="https://www.usenix.org/legacy/events/fast02/quinlan/quinlan_html/index.html">“The Venti Filesystem,” (Plan 9)</a>, Bell Labs,  据 Linus 的说法3，Git 直接从 Monotone 借用了这个概念。Mercurial 也同时实现了这个概念。</p>
 <h3 id="名字含义"><a href="#名字含义" class="headerlink" title="名字含义"></a>名字含义</h3><p>据Linus宣称，命名Git，是因为“我是一个自私的混蛋，我照着自己命名我所有的项目，先是Linux，现在是Git。”倘若，Linux这个名字是Linus和Minix的某种结合。那么反用一个表示愚蠢无用之人的英语词汇也不是没可能。</p>
 <p>那之后，也有人曾建议，使用一些其它也许更让人舒服的解释。其中最受欢迎的一个就是：全局信息追踪器（Global Information Tracker）。</p>
 <h3 id="版本管理的演变"><a href="#版本管理的演变" class="headerlink" title="版本管理的演变"></a>版本管理的演变</h3><p>VCS出现前</p>
@@ -805,18 +805,17 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/posts/f3f.html">
+                <a href="/posts/5174.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/4.jpg" class="responsive-img" alt="Git介绍">
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/10.jpg" class="responsive-img" alt="使用Git之前需要做的最小配置">
                         
-                        <span class="card-title">Git介绍</span>
+                        <span class="card-title">使用Git之前需要做的最小配置</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -826,22 +825,17 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-09-20
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-09-20
+                        </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="post-category">
-                                    项目管理
-                                </a>
-                            
+                            <i class="fas fa-user fa-fw"></i>
+                            AsiaMa
                             
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
@@ -860,13 +854,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/posts/27f2.html">
+                <a href="/posts/3eeb.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/22.jpg" class="responsive-img" alt="Git版本控制管理">
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
                         
-                        <span class="card-title">Git版本控制管理</span>
+                        <span class="card-title">Hello World</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -877,31 +871,15 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-09-19
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-09-18
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E5%89%8D%E7%AB%AF/" class="post-category">
-                                    前端
-                                </a>
-                            
+                            <i class="fas fa-user fa-fw"></i>
+                            AsiaMa
                             
                         </span>
                     </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E5%AF%BC%E8%88%AA/">
-                        <span class="chip bg-color">导航</span>
-                    </a>
-                    
-                    <a href="/tags/%E5%88%86%E4%BA%AB/">
-                        <span class="chip bg-color">分享</span>
-                    </a>
-                    
                 </div>
                 
             </div>
@@ -1052,7 +1030,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">1.6k</span>&nbsp;字
+                class="white-color">1.7k</span>&nbsp;字
             
             
             

@@ -11,9 +11,9 @@
 <p>SCCS 提供的数据存储中心称为“版本库”（repository），而这个基本概念一直沿用至今。SCCS 同样提供了一个简单的锁模型来保证开发过程有序。如果一个开发人员需要运行或者测试一个程序，他需要将该程序解锁并检出。然而，如果他想修改某个文件，他则需要锁定并检出（通过 UNIX 文件系统执行的转换）。当编辑完成以后，他又可以将文件检入到版本库中并解锁它。</p>
 <p>修订控制系统（Revision Control System，RCS）由 Walter F. Tichy 于 20 世纪 80 年代早期引入。RCS 引入了双向差异的概念，来提高文件不同版本的存储效率。</p>
 <p>并行版本系统（Concurrent Version System，CVS）由 Dick Grune 于 1986 年设计并最初实现。4 年后又被Berliner 和他的团队融入 RCS 模型重新实现，这次实现非常成功。CVS 变得非常流行，并且成为<a href="https://opensource.org/">开源社区</a>许多年的事实标准。CVS 相对 RCS 有多项优势，包括分布式开发和版本库范围内对整个“模块”的更改集。</p>
-<p>此外，CVS 引入了一个关于“锁”的新范式。而之前的系统需要开发人员在修改某个文件之前先锁定它， 一个文件同时只允许一个开发人员进行修改，所有需要修改这个文件的开发人员需要有序等候。CVS 给 予每个开发人员对于自己的私有版本写的权限。因此，不同开发人员的改动可以自动合并，除非两个开 发人员尝试修改同一行。如果出现修改同一行的情况，那这一行将会作为“冲突”被标记出来，由开发 人员手动去解决。这个关于“锁”的新规则使得多个开发人员可以并行地编写代码。</p>
-<p>就像经常发生的那样，对 CVS 短处和缺点的改进，促进了新 VCS 的诞生：Subversion（SVN）。SVN 于 2001 年问世，迅速风靡了开源社区。不像 CVS，SVN 以原子方式提交改动部分，并且更好地支持分支。 BitKeeper 和 Mercurial 则彻底抛弃了上述所有解决方案。它们淘汰了中心版本库的概念，取而代之的，数 据的存储是分布式的，每个开发人员都拥有自己可共享的版本库副本。Git 则是从这种端点对端点（Peer to Peer）的模型继承而来。</p>
-<p>最后，Mercurial 和 Monotone 首创了用散列指纹来唯一标识文件的内容，而文件名只是个“绰号”，旨在 方便用户操作，再没有别的作用。Git 沿用了这个概念。从内部实现上来说，Git 的文件标识符基于文件的内容，这是一个叫做“内容可寻址文件存储”（Content Addressable File Store，CAFS）的概念。这不 是一个新概念。见<a href="https://www.usenix.org/legacy/events/fast02/quinlan/quinlan_html/index.html">“The Venti Filesystem,” (Plan 9)</a>, Bell Labs,  据 Linus 的说法3，Git 直接从 Monotone 借用了这个概念。Mercurial 也同时实现了这个概念。</p>
+<p>此外，CVS 引入了一个关于“锁”的新范式。而之前的系统需要开发人员在修改某个文件之前先锁定它， 一个文件同时只允许一个开发人员进行修改，所有需要修改这个文件的开发人员需要有序等候。CVS 给予每个开发人员对于自己的私有版本写的权限。因此，不同开发人员的改动可以自动合并，除非两个开发人员尝试修改同一行。如果出现修改同一行的情况，那这一行将会作为“冲突”被标记出来，由开发 人员手动去解决。这个关于“锁”的新规则使得多个开发人员可以并行地编写代码。</p>
+<p>就像经常发生的那样，对 CVS 短处和缺点的改进，促进了新 VCS 的诞生：Subversion（SVN）。SVN 于 2001 年问世，迅速风靡了开源社区。不像 CVS，SVN 以原子方式提交改动部分，并且更好地支持分支。 BitKeeper 和 Mercurial 则彻底抛弃了上述所有解决方案。它们淘汰了中心版本库的概念，取而代之的，数据的存储是分布式的，每个开发人员都拥有自己可共享的版本库副本。Git 则是从这种端点对端点（Peer to Peer）的模型继承而来。</p>
+<p>最后，Mercurial 和 Monotone 首创了用散列指纹来唯一标识文件的内容，而文件名只是个“绰号”，旨在方便用户操作，再没有别的作用。Git 沿用了这个概念。从内部实现上来说，Git 的文件标识符基于文件的内容，这是一个叫做“内容可寻址文件存储”（Content Addressable File Store，CAFS）的概念。这不是一个新概念。见<a href="https://www.usenix.org/legacy/events/fast02/quinlan/quinlan_html/index.html">“The Venti Filesystem,” (Plan 9)</a>, Bell Labs,  据 Linus 的说法3，Git 直接从 Monotone 借用了这个概念。Mercurial 也同时实现了这个概念。</p>
 <h3 id="名字含义"><a href="#名字含义" class="headerlink" title="名字含义"></a>名字含义</h3><p>据Linus宣称，命名Git，是因为“我是一个自私的混蛋，我照着自己命名我所有的项目，先是Linux，现在是Git。”倘若，Linux这个名字是Linus和Minix的某种结合。那么反用一个表示愚蠢无用之人的英语词汇也不是没可能。</p>
 <p>那之后，也有人曾建议，使用一些其它也许更让人舒服的解释。其中最受欢迎的一个就是：全局信息追踪器（Global Information Tracker）。</p>
 <h3 id="版本管理的演变"><a href="#版本管理的演变" class="headerlink" title="版本管理的演变"></a>版本管理的演变</h3><p>VCS出现前</p>
@@ -66,6 +66,45 @@
       </tags>
   </entry>
   <entry>
+    <title>使用Git之前需要做的最小配置</title>
+    <url>/posts/5174.html</url>
+    <content><![CDATA[<h3 id="配置user-name-和-user-email"><a href="#配置user-name-和-user-email" class="headerlink" title="配置user.name 和 user.email"></a>配置user.name 和 user.email</h3><p>全局配置「对当前用户所有仓库有效」</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --global user.name <span class="token string">"your_name"</span>
+$ <span class="token function">git</span> config --global user.email <span class="token string">"your_email"</span></code></pre>
+<p>缺省等同于local「只对某个仓库有效」</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --local user.name <span class="token string">"your_name"</span>
+$ <span class="token function">git</span> config --local user.email <span class="token string">"your_email"</span></code></pre>
+<p>系统配置「对系统所有登录的用户有效」</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --system user.name <span class="token string">"your_name"</span>
+$ <span class="token function">git</span> config --system user.email <span class="token string">"your_email"</span></code></pre>
+<h3 id="显示config的配置"><a href="#显示config的配置" class="headerlink" title="显示config的配置"></a>显示config的配置</h3><pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --list --local
+$ <span class="token function">git</span> config --list --global
+$ <span class="token function">git</span> config --list --system</code></pre>
+<h3 id="查看某一个属性"><a href="#查看某一个属性" class="headerlink" title="查看某一个属性"></a>查看某一个属性</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --global user.name</code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hello World</title>
     <url>/posts/3eeb.html</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
@@ -96,35 +135,5 @@
             document.body.appendChild(img);
           });
       </script>]]></content>
-  </entry>
-  <entry>
-    <title>Git版本控制管理</title>
-    <url>/posts/27f2.html</url>
-    <content><![CDATA[<h1 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h1><h3 id="第一阶段睡觉了"><a href="#第一阶段睡觉了" class="headerlink" title="第一阶段睡觉了"></a>第一阶段睡觉了</h3><script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-      <tags>
-        <tag>导航</tag>
-        <tag>分享</tag>
-      </tags>
   </entry>
 </search>
