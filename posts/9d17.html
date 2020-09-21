@@ -470,14 +470,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    198
+                    470
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    2 分
                 </div>
                 
 
@@ -496,7 +496,7 @@
 <p>head：显示当前所在分支</p>
 <pre class=" language-bash"><code class="language-bash">$ <span class="token function">cat</span> .git/HEAD
 ref: refs/heads/master</code></pre>
-<p>config: git config – local 的配置信息</p>
+<p>config: 本地的配置信息</p>
 <pre class=" language-bash"><code class="language-bash">$ <span class="token function">cat</span> .git/config
 <span class="token punctuation">[</span>core<span class="token punctuation">]</span>
     repositoryformatversion <span class="token operator">=</span> 0
@@ -514,8 +514,13 @@ ref: refs/heads/master</code></pre>
 <span class="token punctuation">[</span>user<span class="token punctuation">]</span>
     name <span class="token operator">=</span> xiu
     email <span class="token operator">=</span> xiu@163.com</code></pre>
-<p>refs: 里面有heads、remotes、tags「存放里程碑版本」三个文件夹</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">cd</span> heads
+<p>refs: 里面有heads、remotes、tags三个文件夹</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">cd</span> refs
+$ ll
+drwxr-xr-x  5 asiama  staff   160B  9 21 21:59 heads
+drwxr-xr-x  3 asiama  staff    96B  9 20 20:26 remotes
+drwxr-xr-x  2 asiama  staff    64B  9 20 20:26 tags
+$ <span class="token function">cd</span> heads
 $ ll
 -rw-r--r--  1 asiama  staff    41B  9 20 20:26 master
 -rw-r--r--  1 asiama  staff    41B  9 20 22:18 temp
@@ -524,8 +529,54 @@ $ <span class="token function">cat</span> master
 $ <span class="token function">git</span> cat-file -t 3aadece1f41abceaca380ff25d9872da112644e4
 commit
 $ <span class="token function">cat</span> temp
-dc8aff7c2cce1c3956113e701f54f43585a4e730 <span class="token comment" spellcheck="true">#temp分支最新提交</span></code></pre>
-<script>
+dc8aff7c2cce1c3956113e701f54f43585a4e730 <span class="token comment" spellcheck="true">#temp分支最新提交</span>
+$ <span class="token function">git</span> cat-file -t dc8aff7c2cce1c3956113e701f54f43585a4e730
+commit</code></pre>
+<p>objects: 核心文件夹</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">cd</span> objects
+$ ll
+drwxr-xr-x  3 asiama  staff    96B  9 21 21:59 57
+drwxr-xr-x  3 asiama  staff    96B  9 21 21:59 9d
+drwxr-xr-x  3 asiama  staff    96B  9 21 21:57 b9
+drwxr-xr-x  2 asiama  staff    64B  9 20 20:26 info
+drwxr-xr-x  4 asiama  staff   128B  9 20 20:26 pack <span class="token comment" spellcheck="true"># 松散的文件比较多时，会进行打包放在这里面</span>
+$ <span class="token function">cd</span> 57
+0d12a33be783aeb557d44c17f66ac17cec10d7
+<span class="token comment" spellcheck="true"># 需要前面拼接57</span>
+$ <span class="token function">git</span> cat-file -t 570d12a33be783aeb557d44c17f66ac17cec10d7
+commit
+<span class="token comment" spellcheck="true"># 再看b9</span>
+$ <span class="token function">cd</span> <span class="token punctuation">..</span>
+$ <span class="token function">ls</span> b9/
+67cf8fdb60314c33f2bceacd8ff1c4567f5b53
+<span class="token comment" spellcheck="true"># 需要前面拼接b9</span>
+$ <span class="token function">git</span> cat-file -t b967cf8fdb60314c33f2bceacd8ff1c4567f5b53
+blob
+$ <span class="token function">git</span> cat-file -p b967cf8fdb60314c33f2bceacd8ff1c4567f5b53
+<span class="token comment" spellcheck="true"># 提交的文件里的内容</span>
+ifjksjdfkfldjslfj
+费德勒快速反击撒了接口
+的快感和附近的恐慌感
+ijdk
+$ <span class="token function">ls</span> 9d/
+a73a42ec544fe149927f595a4fec01ea3f5018
+<span class="token comment" spellcheck="true"># 需要前面拼接9d</span>
+$ <span class="token function">git</span> cat-file -t 9da73a42ec544fe149927f595a4fec01ea3f5018
+tree
+$ <span class="token function">git</span> cat-file -p 9da73a42ec544fe149927f595a4fec01ea3f5018
+100644 blob 39fb081a42a86ccf8f9cf99dbccc8bdf7c828bce    .gitignore
+040000 tree b0feff2525390e998fe1c6fa596956d0b1cc3fb0    .idea
+100644 blob 72b6f3f4f7b1a4900057c2776a0dac63171ab9ff    README.md
+040000 tree b73d8756304943ab811652d55582c54ffeb4b494    app
+100644 blob 31fb06fc06923bbe3d0abf746498eb32069f778d    build.gradle
+100644 blob aac7c9b4614ccfde6c721f24994cf30885a791d0    gradle.properties
+040000 tree f76200a0891f6681e508b4af256edd7db7e0a929    gradle
+100644 blob 9d82f78915133e1c35a6ea51252590fb38efac2f    gradlew
+100644 blob 8a0b282aa6885fb573c106b3551f7275c5f17e8e    gradlew.bat
+040000 tree 460455f25404eb4775c79dbba28fb5c1a870173b    mylibrary
+100644 blob 9c982a3ebd0288b2ed9bff0c1da11828cb396b28    settings.gradle
+100644 blob b967cf8fdb60314c33f2bceacd8ff1c4567f5b53    <span class="token function">test</span></code></pre>
+<h4 id=""><a href="#" class="headerlink" title=""></a></h4><script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -1045,7 +1096,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">2.3k</span>&nbsp;字
+                class="white-color">2.6k</span>&nbsp;字
             
             
             
