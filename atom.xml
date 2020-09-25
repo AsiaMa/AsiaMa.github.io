@@ -6,7 +6,7 @@
   <link href="https://blog.asiama.top/atom.xml" rel="self"/>
   
   <link href="https://blog.asiama.top/"/>
-  <updated>2020-09-23T14:35:32.594Z</updated>
+  <updated>2020-09-25T17:54:34.202Z</updated>
   <id>https://blog.asiama.top/</id>
   
   <author>
@@ -17,11 +17,36 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Git在工作时的概念</title>
+    <link href="https://blog.asiama.top/posts/23d0.html"/>
+    <id>https://blog.asiama.top/posts/23d0.html</id>
+    <published>2020-09-24T14:19:48.000Z</published>
+    <updated>2020-09-25T17:54:34.202Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;进入-git目录&quot;&gt;&lt;a href=&quot;#进入-git目录&quot; class=&quot;headerlink&quot; title=&quot;进入.git目录&quot;&gt;&lt;/a&gt;进入.git目录&lt;/h3&gt;&lt;p&gt;首先，使用git</summary>
+        
+      
+    
+    
+    
+    <category term="项目管理" scheme="https://blog.asiama.top/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/"/>
+    
+    
+    <category term="Git" scheme="https://blog.asiama.top/tags/Git/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Git目录</title>
     <link href="https://blog.asiama.top/posts/9d17.html"/>
     <id>https://blog.asiama.top/posts/9d17.html</id>
     <published>2020-09-20T15:32:11.000Z</published>
-    <updated>2020-09-23T14:35:32.594Z</updated>
+    <updated>2020-09-23T14:44:08.813Z</updated>
     
     
       

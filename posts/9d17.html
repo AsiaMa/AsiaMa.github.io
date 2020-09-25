@@ -645,7 +645,7 @@ $ <span class="token function">git</span> cat-file -p 9da73a42ec544fe149927f595a
 <p>就像前一张图里，新提交对象添加了一个关联的树对象来表示目录和文件结构的总状态。在这里，它是ID为cafed00d的树对象。</p>
 <p>因为顶级目录被添加的新子目录改变了，顶级树对象的内容也跟着改变了，所以Git引进了一个新的树对象：cafed00d。</p>
 <p>然而，blob对象dead23和feeb1e在从第一次到第二次提交的时候没有发生变化。Git意识到ID没有变化，所以可以被新的cafed00d树对象直接引用和共享。</p>
-<p>请注意提交对象之间箭头的方向。父提交在时间上来得更早。因此，在Git的实现里，每个提交对象指回它的一个或多个父提交。很多人对此感到困惑，因为版本库的状态通常画成反方向：数据流从父提交流向子提交。</p>
+<p>请注意提交对象之间箭头的方向。父提交在时间上来得更早。因此，在Git的实现里，每个提交对象指回它的一个或多个父提交。版本库的状态通常画成反方向：数据流从父提交流向子提交。</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -923,18 +923,17 @@ $ <span class="token function">git</span> cat-file -p 9da73a42ec544fe149927f595a
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/posts/9d17.html">
+                <a href="/posts/23d0.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/9.jpg" class="responsive-img" alt="Git目录">
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/18.jpg" class="responsive-img" alt="Git在工作时的概念">
                         
-                        <span class="card-title">Git目录</span>
+                        <span class="card-title">Git在工作时的概念</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -944,9 +943,9 @@ $ <span class="token function">git</span> cat-file -p 9da73a42ec544fe149927f595a
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-09-20
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-09-24
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -959,7 +958,6 @@ $ <span class="token function">git</span> cat-file -p 9da73a42ec544fe149927f595a
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
@@ -1166,7 +1164,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">6.1k</span>&nbsp;字
+                class="white-color">10k</span>&nbsp;字
             
             
             
