@@ -66,6 +66,86 @@
       </tags>
   </entry>
   <entry>
+    <title>Git常用命令</title>
+    <url>/posts/1b99.html</url>
+    <content><![CDATA[<h3 id="建Git仓库"><a href="#建Git仓库" class="headerlink" title="建Git仓库"></a>建Git仓库</h3><p>把已有的项目代码纳入Git管理</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">cd</span> 项目代码所在的文件夹
+$ <span class="token function">git</span> init</code></pre>
+<p>新建的项目直接用Git管理</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">cd</span> 某个文件夹
+$ <span class="token function">git</span> init your_project <span class="token comment" spellcheck="true"># 会在当前项目下创建和项目名称同名的文件夹</span>
+$ <span class="token function">cd</span> your_project</code></pre>
+<h3 id="查看提交"><a href="#查看提交" class="headerlink" title="查看提交"></a>查看提交</h3><pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 条目按照从最新的到最老的顺序罗列出来</span>
+$ <span class="token function">git</span> log 
+<span class="token comment" spellcheck="true"># 查看特定提交更加详细的信息</span>
+$ <span class="token function">git</span> show commitId 
+<span class="token comment" spellcheck="true"># 查看当前分支的最近10次提交</span>
+$ <span class="token function">git</span> show-branch --more<span class="token operator">=</span>10
+<span class="token comment" spellcheck="true"># 查看简洁信息</span>
+$ <span class="token function">git</span> log --oneline
+<span class="token comment" spellcheck="true"># 显示最近四次提交的简介信息</span>
+$ <span class="token function">git</span> log -n4 --oneline</code></pre>
+<h3 id="版本库内文件的删除和重命名"><a href="#版本库内文件的删除和重命名" class="headerlink" title="版本库内文件的删除和重命名"></a>版本库内文件的删除和重命名</h3><p>文件删除</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 表示你想要删除这个文件的意图并暂存这个变更</span>
+$ <span class="token function">git</span> <span class="token function">rm</span> poem.html
+<span class="token comment" spellcheck="true"># 在版本库里实现这个变更</span>
+$ <span class="token function">git</span> commit -m <span class="token string">"Remove a poem"</span></code></pre>
+<p>文件重命名</p>
+<ul>
+<li>方式一</li>
+</ul>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">mv</span> foo.html bar.html <span class="token comment" spellcheck="true"># 防止git命令会把foo.html从文件系统中永久删除</span>
+$ <span class="token function">git</span> <span class="token function">rm</span> foo.html
+$ <span class="token function">git</span> add bar.html</code></pre>
+<ul>
+<li>方式二</li>
+</ul>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> <span class="token function">mv</span> foo.html bar.html</code></pre>
+<h3 id="其它命令"><a href="#其它命令" class="headerlink" title="其它命令"></a>其它命令</h3><pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 暂存区已经修改的添加进去</span>
+$ <span class="token function">git</span> add -u
+<span class="token comment" spellcheck="true"># 暂存区的修改全部抹除掉</span>
+$ <span class="token function">git</span> reset --hard
+<span class="token comment" spellcheck="true"># 根据commitId检索分支</span>
+$ <span class="token function">git</span> checkout -b temp dc8aff7
+<span class="token comment" spellcheck="true"># 切换到master分支</span>
+$ <span class="token function">git</span> checkout master
+<span class="token comment" spellcheck="true"># 显示分支</span>
+$ <span class="token function">git</span> branch -av
+<span class="token comment" spellcheck="true"># 显示所有分支的提价信息</span>
+$ <span class="token function">git</span> log --all
+<span class="token comment" spellcheck="true"># 图像化的方式展示提交信息</span>
+$ <span class="token function">git</span> log --all --graph
+<span class="token comment" spellcheck="true"># 以浏览器的方式打开git帮助文档</span>
+$ <span class="token function">git</span> <span class="token function">help</span> --web log
+<span class="token comment" spellcheck="true"># 查看帮助命令</span>
+$ <span class="token function">git</span> <span class="token function">help</span> --all</code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <categories>
+        <category>项目管理</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Git在工作时的概念</title>
     <url>/posts/23d0.html</url>
     <content><![CDATA[<h3 id="进入-git目录"><a href="#进入-git目录" class="headerlink" title="进入.git目录"></a>进入.git目录</h3><p>首先，使用git init来初始化一个空的版本库，然后运行find来看看都创建了什么文件。</p>
@@ -242,86 +322,6 @@ Tag version 1.0</code></pre>
 <p>Git通常给指向树对象的提交对象打标签，这个树对象包含版本库中文件和目录的整个层次结构的总状态。</p>
 <p>回想一下上面的图，V1.0标签指向提交1492—依次指向跨越多个文件的树（8675309）。因此，这个标签同时适用于该树的所有文件。</p>
 <p>这跟CVS不同，例如，对每个单独的文件应用标签，然后依赖所有打过标签的文件来重建一个完整的标记修订。并且CVS允许你移动单独文件的标签，而Git则需要在标签移动到的地方做一个新的提交，囊括该文件的状态变化。</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <categories>
-        <category>项目管理</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Git常用命令</title>
-    <url>/posts/1b99.html</url>
-    <content><![CDATA[<h3 id="建Git仓库"><a href="#建Git仓库" class="headerlink" title="建Git仓库"></a>建Git仓库</h3><p>把已有的项目代码纳入Git管理</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">cd</span> 项目代码所在的文件夹
-$ <span class="token function">git</span> init</code></pre>
-<p>新建的项目直接用Git管理</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">cd</span> 某个文件夹
-$ <span class="token function">git</span> init your_project <span class="token comment" spellcheck="true"># 会在当前项目下创建和项目名称同名的文件夹</span>
-$ <span class="token function">cd</span> your_project</code></pre>
-<h3 id="查看提交"><a href="#查看提交" class="headerlink" title="查看提交"></a>查看提交</h3><pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 条目按照从最新的到最老的顺序罗列出来</span>
-$ <span class="token function">git</span> log 
-<span class="token comment" spellcheck="true"># 查看特定提交更加详细的信息</span>
-$ <span class="token function">git</span> show commitId 
-<span class="token comment" spellcheck="true"># 查看当前分支的最近10次提交</span>
-$ <span class="token function">git</span> show-branch --more<span class="token operator">=</span>10
-<span class="token comment" spellcheck="true"># 查看简洁信息</span>
-$ <span class="token function">git</span> log --oneline
-<span class="token comment" spellcheck="true"># 显示最近四次提交的简介信息</span>
-$ <span class="token function">git</span> log -n4 --oneline</code></pre>
-<h3 id="版本库内文件的删除和重命名"><a href="#版本库内文件的删除和重命名" class="headerlink" title="版本库内文件的删除和重命名"></a>版本库内文件的删除和重命名</h3><p>文件删除</p>
-<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 表示你想要删除这个文件的意图并暂存这个变更</span>
-$ <span class="token function">git</span> <span class="token function">rm</span> poem.html
-<span class="token comment" spellcheck="true"># 在版本库里实现这个变更</span>
-$ <span class="token function">git</span> commit -m <span class="token string">"Remove a poem"</span></code></pre>
-<p>文件重命名</p>
-<ul>
-<li>方式一</li>
-</ul>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">mv</span> foo.html bar.html <span class="token comment" spellcheck="true"># 防止git命令会把foo.html从文件系统中永久删除</span>
-$ <span class="token function">git</span> <span class="token function">rm</span> foo.html
-$ <span class="token function">git</span> add bar.html</code></pre>
-<ul>
-<li>方式二</li>
-</ul>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> <span class="token function">mv</span> foo.html bar.html</code></pre>
-<h3 id="其它命令"><a href="#其它命令" class="headerlink" title="其它命令"></a>其它命令</h3><pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 暂存区已经修改的添加进去</span>
-$ <span class="token function">git</span> add -u
-<span class="token comment" spellcheck="true"># 暂存区的修改全部抹除掉</span>
-$ <span class="token function">git</span> reset --hard
-<span class="token comment" spellcheck="true"># 根据commitId检索分支</span>
-$ <span class="token function">git</span> checkout -b temp dc8aff7
-<span class="token comment" spellcheck="true"># 切换到master分支</span>
-$ <span class="token function">git</span> checkout master
-<span class="token comment" spellcheck="true"># 显示分支</span>
-$ <span class="token function">git</span> branch -av
-<span class="token comment" spellcheck="true"># 显示所有分支的提价信息</span>
-$ <span class="token function">git</span> log --all
-<span class="token comment" spellcheck="true"># 图像化的方式展示提交信息</span>
-$ <span class="token function">git</span> log --all --graph
-<span class="token comment" spellcheck="true"># 以浏览器的方式打开git帮助文档</span>
-$ <span class="token function">git</span> <span class="token function">help</span> --web log
-<span class="token comment" spellcheck="true"># 查看帮助命令</span>
-$ <span class="token function">git</span> <span class="token function">help</span> --all</code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
