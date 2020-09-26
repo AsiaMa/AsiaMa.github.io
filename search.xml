@@ -606,4 +606,103 @@ $ <span class="token function">git</span> config --list --system</code></pre>
         <tag>Git</tag>
       </tags>
   </entry>
+  <entry>
+    <title>数一数tree的个数</title>
+    <url>/posts/4069.html</url>
+    <content><![CDATA[<p>新建的Git仓库，有且仅有1个commit，仅仅包含/doc/readme，请问内含多少个tree，多少个blob?</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> init watch-git-objects
+已初始化空的 Git 仓库于 /Users/asiama/IdeaProjects/watch-git-objects/.git/
+$ <span class="token function">cd</span> watch-git-objects
+$ <span class="token function">mkdir</span> doc
+$ <span class="token function">git</span> status
+位于分支 master
+
+尚无提交
+
+无文件要提交（创建/拷贝文件并使用 <span class="token string">"git add"</span> 建立跟踪）
+$ <span class="token function">cd</span> doc
+$ <span class="token keyword">echo</span> <span class="token string">"hello,world"</span> <span class="token operator">></span> readme
+$ <span class="token function">cd</span> <span class="token punctuation">..</span>
+位于分支 master
+
+尚无提交
+
+未跟踪的文件:
+  （使用 <span class="token string">"git add &lt;文件>..."</span> 以包含要提交的内容）
+    doc/
+
+提交为空，但是存在尚未跟踪的文件（使用 <span class="token string">"git add"</span> 建立跟踪）
+$ <span class="token function">find</span> .git/objects -type f <span class="token comment" spellcheck="true"># 空的 没有东西</span>
+$ <span class="token function">git</span> add doc
+$ <span class="token function">git</span> status
+位于分支 master
+
+尚无提交
+
+要提交的变更：
+  （使用 <span class="token string">"git rm --cached &lt;文件>..."</span> 以取消暂存）
+    新文件：   doc/readme
+$ <span class="token function">find</span> .git/objects -type f
+.git/objects/2d/832d9044c698081e59c322d5a2a459da546469
+$ <span class="token function">git</span> cat-file -t 2d832d9044c698081e59c322d5a2a459da546469
+blob
+$ <span class="token function">git</span> cat-file -p 2d832d9044c698081e59c322d5a2a459da546469
+hello,world
+$ <span class="token function">git</span> commit -m <span class="token string">"Add readme"</span>
+<span class="token punctuation">[</span>master（根提交） 8fe36c1<span class="token punctuation">]</span> Add readme
+ 1 <span class="token function">file</span> changed, 1 insertion<span class="token punctuation">(</span>+<span class="token punctuation">)</span>
+ create mode 100644 doc/readme</code></pre>
+<p>猜一猜我们的.git/objects到底有多少个文件创建出来，有多少个tree，多少个blob。</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">find</span> .git/objects -type f
+.git/objects/8f/e36c1c741d52526c2d3d228a6f6cd25de88849
+.git/objects/08/3e18d286d8d2a9eda8c62d9d98935dcc07ca4c
+.git/objects/ba/8711bd7540faa22e4e76a1cf5c78501fa4e162
+.git/objects/2d/832d9044c698081e59c322d5a2a459da546469
+$ <span class="token function">git</span> cat-file -t 8fe36c1c741d52526c2d3d228a6f6cd25de88849
+commit
+$ <span class="token function">git</span> cat-file -p 8fe36c1c741d52526c2d3d228a6f6cd25de88849
+tree 083e18d286d8d2a9eda8c62d9d98935dcc07ca4c
+author asiama <span class="token operator">&lt;</span>a976304624@outlook.com<span class="token operator">></span> 1601082923 +0800
+committer asiama <span class="token operator">&lt;</span>a976304624@outlook.com<span class="token operator">></span> 1601082923 +0800
+
+Add readme
+$ <span class="token function">git</span> cat-file -t 083e18d286d8d2a9eda8c62d9d98935dcc07ca4c
+tree
+$ <span class="token function">git</span> cat-file -p 083e18d286d8d2a9eda8c62d9d98935dcc07ca4c
+040000 tree ba8711bd7540faa22e4e76a1cf5c78501fa4e162    doc
+$ <span class="token function">git</span> cat-file -t ba8711bd7540faa22e4e76a1cf5c78501fa4e162
+tree
+$ <span class="token function">git</span> cat-file -p ba8711bd7540faa22e4e76a1cf5c78501fa4e162
+100644 blob 2d832d9044c698081e59c322d5a2a459da546469    readme
+$ <span class="token function">git</span> cat-file -t 2d832d9044c698081e59c322d5a2a459da546469
+blob
+$ <span class="token function">git</span> cat-file -p 2d832d9044c698081e59c322d5a2a459da546469
+hello,world</code></pre>
+<p><img src="https://s1.ax1x.com/2020/09/26/0PADN6.md.png" alt="ss"></p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <categories>
+        <category>项目管理</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
 </search>

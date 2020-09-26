@@ -6,7 +6,7 @@
   <link href="https://blog.asiama.top/atom.xml" rel="self"/>
   
   <link href="https://blog.asiama.top/"/>
-  <updated>2020-09-25T17:54:34.202Z</updated>
+  <updated>2020-09-26T01:46:27.396Z</updated>
   <id>https://blog.asiama.top/</id>
   
   <author>
@@ -17,11 +17,37 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>数一数tree的个数</title>
+    <link href="https://blog.asiama.top/posts/4069.html"/>
+    <id>https://blog.asiama.top/posts/4069.html</id>
+    <published>2020-09-26T01:01:08.000Z</published>
+    <updated>2020-09-26T01:46:27.396Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;新建的Git仓库，有且仅有1个commit，仅仅包含/doc/readme，请问内含多少个tree，多少个blob?&lt;/p&gt;
+&lt;pre class=&quot; language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ &lt;span</summary>
+        
+      
+    
+    
+    
+    <category term="项目管理" scheme="https://blog.asiama.top/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/"/>
+    
+    
+    <category term="Git" scheme="https://blog.asiama.top/tags/Git/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Git在工作时的概念</title>
     <link href="https://blog.asiama.top/posts/23d0.html"/>
     <id>https://blog.asiama.top/posts/23d0.html</id>
     <published>2020-09-24T14:19:48.000Z</published>
-    <updated>2020-09-25T17:54:34.202Z</updated>
+    <updated>2020-09-25T17:55:05.165Z</updated>
     
     
       
