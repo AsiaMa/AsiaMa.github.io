@@ -1,6 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Git介绍</title>
+    <url>/posts/f3f.html</url>
+    <content><![CDATA[<h3 id="Git的诞生"><a href="#Git的诞生" class="headerlink" title="Git的诞生"></a>Git的诞生</h3><p>在Git诞生之前，Linux内核开发过程中使用BitKeeper来作为VCS。BitKeeper提供当时的一些开源VCS（如RCS、CVS）所不能提供的高级操作。然而，在2005年春天，当BitKeeper的所有方对他们的免费版BitKeeper加入了额外的限制时，Linux社区意识到，使用BitKeeper不再是一个长期可行的解决方案。</p>
+<p>Git于2005年4月诞生了。不久之后，Linux内核的第一个提交也诞生了。这一次提交将整个Linux内核导入Git版本库中。这次提交的统计信息如下：</p>
+<pre class=" language-bash"><code class="language-bash">17291 files changed, 6718755 insertions<span class="token punctuation">(</span>+<span class="token punctuation">)</span>，0 deletions<span class="token punctuation">(</span>+<span class="token punctuation">)</span>。</code></pre>
+<p>是的，这次提交足足引入了670万行代码。</p>
+<h3 id="先例"><a href="#先例" class="headerlink" title="先例"></a>先例</h3><p>源码控制系统（Source Code Control System, SCCS）是UNIX上最初的几个系统之一，由M.J.Rochkind于20世纪70年代早期开发。这是可以运行在UNIX系统上最早的VCS。</p>
+<p>SCCS 提供的数据存储中心称为“版本库”（repository），而这个基本概念一直沿用至今。SCCS 同样提供了一个简单的锁模型来保证开发过程有序。如果一个开发人员需要运行或者测试一个程序，他需要将该程序解锁并检出。然而，如果他想修改某个文件，他则需要锁定并检出（通过 UNIX 文件系统执行的转换）。当编辑完成以后，他又可以将文件检入到版本库中并解锁它。</p>
+<p>修订控制系统（Revision Control System，RCS）由 Walter F. Tichy 于 20 世纪 80 年代早期引入。RCS 引入了双向差异的概念，来提高文件不同版本的存储效率。</p>
+<p>并行版本系统（Concurrent Version System，CVS）由 Dick Grune 于 1986 年设计并最初实现。4 年后又被Berliner 和他的团队融入 RCS 模型重新实现，这次实现非常成功。CVS 变得非常流行，并且成为<a href="https://opensource.org/">开源社区</a>许多年的事实标准。CVS 相对 RCS 有多项优势，包括分布式开发和版本库范围内对整个“模块”的更改集。</p>
+<p>此外，CVS 引入了一个关于“锁”的新范式。而之前的系统需要开发人员在修改某个文件之前先锁定它， 一个文件同时只允许一个开发人员进行修改，所有需要修改这个文件的开发人员需要有序等候。CVS 给予每个开发人员对于自己的私有版本写的权限。因此，不同开发人员的改动可以自动合并，除非两个开发人员尝试修改同一行。如果出现修改同一行的情况，那这一行将会作为“冲突”被标记出来，由开发 人员手动去解决。这个关于“锁”的新规则使得多个开发人员可以并行地编写代码。</p>
+<p>就像经常发生的那样，对 CVS 短处和缺点的改进，促进了新 VCS 的诞生：Subversion（SVN）。SVN 于 2001 年问世，迅速风靡了开源社区。不像 CVS，SVN 以原子方式提交改动部分，并且更好地支持分支。 BitKeeper 和 Mercurial 则彻底抛弃了上述所有解决方案。它们淘汰了中心版本库的概念，取而代之的，数据的存储是分布式的，每个开发人员都拥有自己可共享的版本库副本。Git 则是从这种端点对端点（Peer to Peer）的模型继承而来。</p>
+<p>最后，Mercurial 和 Monotone 首创了用散列指纹来唯一标识文件的内容，而文件名只是个“绰号”，旨在方便用户操作，再没有别的作用。Git 沿用了这个概念。从内部实现上来说，Git 的文件标识符基于文件的内容，这是一个叫做“内容可寻址文件存储”（Content Addressable File Store，CAFS）的概念。这不是一个新概念。见<a href="https://www.usenix.org/legacy/events/fast02/quinlan/quinlan_html/index.html">“The Venti Filesystem,” (Plan 9)</a>, Bell Labs,  据 Linus 的说法3，Git 直接从 Monotone 借用了这个概念。Mercurial 也同时实现了这个概念。</p>
+<h3 id="名字含义"><a href="#名字含义" class="headerlink" title="名字含义"></a>名字含义</h3><p>据Linus宣称，命名Git，是因为“我是一个自私的混蛋，我照着自己命名我所有的项目，先是Linux，现在是Git。”倘若，Linux这个名字是Linus和Minix的某种结合。那么反用一个表示愚蠢无用之人的英语词汇也不是没可能。</p>
+<p>那之后，也有人曾建议，使用一些其它也许更让人舒服的解释。其中最受欢迎的一个就是：全局信息追踪器（Global Information Tracker）。</p>
+<h3 id="版本管理的演变"><a href="#版本管理的演变" class="headerlink" title="版本管理的演变"></a>版本管理的演变</h3><p>VCS出现前</p>
+<ul>
+<li>用目录拷贝区别不同的版本</li>
+<li>公共文件容易被覆盖</li>
+<li>成员沟通成本很高，代码集成效率低下</li>
+</ul>
+<img src="https://s1.ax1x.com/2020/09/20/wTkMUU.md.png" alt="VSC出现之前" style="zoom:50%;">
+
+<p>集中式VCS</p>
+<ul>
+<li>有集中的版本管理服务器</li>
+<li>具备文件版本管理和分支管理能力</li>
+<li>集成效率有明显的提高</li>
+<li>客户端必须时刻和服务器相连</li>
+</ul>
+<p><img src="https://s1.ax1x.com/2020/09/20/wTkKET.md.png" alt="集中式VCS"></p>
+<p>分布式VCS</p>
+<ul>
+<li>服务端和客户端都有完整的版本库</li>
+<li>脱离服务端，客户端照样可以管理版本</li>
+<li>查看历史和版本比较等多数操作，都不需要访问服务器，比集中式VCS更能提高版本管理效率。</li>
+</ul>
+<p><img src="https://s1.ax1x.com/2020/09/20/wTkQ5F.md.png" alt="分布式VCS"></p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <categories>
+        <category>项目管理</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Git在工作时的概念</title>
     <url>/posts/23d0.html</url>
     <content><![CDATA[<h3 id="进入-git目录"><a href="#进入-git目录" class="headerlink" title="进入.git目录"></a>进入.git目录</h3><p>首先，使用git init来初始化一个空的版本库，然后运行find来看看都创建了什么文件。</p>
@@ -177,71 +242,6 @@ Tag version 1.0</code></pre>
 <p>Git通常给指向树对象的提交对象打标签，这个树对象包含版本库中文件和目录的整个层次结构的总状态。</p>
 <p>回想一下上面的图，V1.0标签指向提交1492—依次指向跨越多个文件的树（8675309）。因此，这个标签同时适用于该树的所有文件。</p>
 <p>这跟CVS不同，例如，对每个单独的文件应用标签，然后依赖所有打过标签的文件来重建一个完整的标记修订。并且CVS允许你移动单独文件的标签，而Git则需要在标签移动到的地方做一个新的提交，囊括该文件的状态变化。</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <categories>
-        <category>项目管理</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Git介绍</title>
-    <url>/posts/f3f.html</url>
-    <content><![CDATA[<h3 id="Git的诞生"><a href="#Git的诞生" class="headerlink" title="Git的诞生"></a>Git的诞生</h3><p>在Git诞生之前，Linux内核开发过程中使用BitKeeper来作为VCS。BitKeeper提供当时的一些开源VCS（如RCS、CVS）所不能提供的高级操作。然而，在2005年春天，当BitKeeper的所有方对他们的免费版BitKeeper加入了额外的限制时，Linux社区意识到，使用BitKeeper不再是一个长期可行的解决方案。</p>
-<p>Git于2005年4月诞生了。不久之后，Linux内核的第一个提交也诞生了。这一次提交将整个Linux内核导入Git版本库中。这次提交的统计信息如下：</p>
-<pre class=" language-bash"><code class="language-bash">17291 files changed, 6718755 insertions<span class="token punctuation">(</span>+<span class="token punctuation">)</span>，0 deletions<span class="token punctuation">(</span>+<span class="token punctuation">)</span>。</code></pre>
-<p>是的，这次提交足足引入了670万行代码。</p>
-<h3 id="先例"><a href="#先例" class="headerlink" title="先例"></a>先例</h3><p>源码控制系统（Source Code Control System, SCCS）是UNIX上最初的几个系统之一，由M.J.Rochkind于20世纪70年代早期开发。这是可以运行在UNIX系统上最早的VCS。</p>
-<p>SCCS 提供的数据存储中心称为“版本库”（repository），而这个基本概念一直沿用至今。SCCS 同样提供了一个简单的锁模型来保证开发过程有序。如果一个开发人员需要运行或者测试一个程序，他需要将该程序解锁并检出。然而，如果他想修改某个文件，他则需要锁定并检出（通过 UNIX 文件系统执行的转换）。当编辑完成以后，他又可以将文件检入到版本库中并解锁它。</p>
-<p>修订控制系统（Revision Control System，RCS）由 Walter F. Tichy 于 20 世纪 80 年代早期引入。RCS 引入了双向差异的概念，来提高文件不同版本的存储效率。</p>
-<p>并行版本系统（Concurrent Version System，CVS）由 Dick Grune 于 1986 年设计并最初实现。4 年后又被Berliner 和他的团队融入 RCS 模型重新实现，这次实现非常成功。CVS 变得非常流行，并且成为<a href="https://opensource.org/">开源社区</a>许多年的事实标准。CVS 相对 RCS 有多项优势，包括分布式开发和版本库范围内对整个“模块”的更改集。</p>
-<p>此外，CVS 引入了一个关于“锁”的新范式。而之前的系统需要开发人员在修改某个文件之前先锁定它， 一个文件同时只允许一个开发人员进行修改，所有需要修改这个文件的开发人员需要有序等候。CVS 给予每个开发人员对于自己的私有版本写的权限。因此，不同开发人员的改动可以自动合并，除非两个开发人员尝试修改同一行。如果出现修改同一行的情况，那这一行将会作为“冲突”被标记出来，由开发 人员手动去解决。这个关于“锁”的新规则使得多个开发人员可以并行地编写代码。</p>
-<p>就像经常发生的那样，对 CVS 短处和缺点的改进，促进了新 VCS 的诞生：Subversion（SVN）。SVN 于 2001 年问世，迅速风靡了开源社区。不像 CVS，SVN 以原子方式提交改动部分，并且更好地支持分支。 BitKeeper 和 Mercurial 则彻底抛弃了上述所有解决方案。它们淘汰了中心版本库的概念，取而代之的，数据的存储是分布式的，每个开发人员都拥有自己可共享的版本库副本。Git 则是从这种端点对端点（Peer to Peer）的模型继承而来。</p>
-<p>最后，Mercurial 和 Monotone 首创了用散列指纹来唯一标识文件的内容，而文件名只是个“绰号”，旨在方便用户操作，再没有别的作用。Git 沿用了这个概念。从内部实现上来说，Git 的文件标识符基于文件的内容，这是一个叫做“内容可寻址文件存储”（Content Addressable File Store，CAFS）的概念。这不是一个新概念。见<a href="https://www.usenix.org/legacy/events/fast02/quinlan/quinlan_html/index.html">“The Venti Filesystem,” (Plan 9)</a>, Bell Labs,  据 Linus 的说法3，Git 直接从 Monotone 借用了这个概念。Mercurial 也同时实现了这个概念。</p>
-<h3 id="名字含义"><a href="#名字含义" class="headerlink" title="名字含义"></a>名字含义</h3><p>据Linus宣称，命名Git，是因为“我是一个自私的混蛋，我照着自己命名我所有的项目，先是Linux，现在是Git。”倘若，Linux这个名字是Linus和Minix的某种结合。那么反用一个表示愚蠢无用之人的英语词汇也不是没可能。</p>
-<p>那之后，也有人曾建议，使用一些其它也许更让人舒服的解释。其中最受欢迎的一个就是：全局信息追踪器（Global Information Tracker）。</p>
-<h3 id="版本管理的演变"><a href="#版本管理的演变" class="headerlink" title="版本管理的演变"></a>版本管理的演变</h3><p>VCS出现前</p>
-<ul>
-<li>用目录拷贝区别不同的版本</li>
-<li>公共文件容易被覆盖</li>
-<li>成员沟通成本很高，代码集成效率低下</li>
-</ul>
-<img src="https://s1.ax1x.com/2020/09/20/wTkMUU.md.png" alt="VSC出现之前" style="zoom:50%;">
-
-<p>集中式VCS</p>
-<ul>
-<li>有集中的版本管理服务器</li>
-<li>具备文件版本管理和分支管理能力</li>
-<li>集成效率有明显的提高</li>
-<li>客户端必须时刻和服务器相连</li>
-</ul>
-<p><img src="https://s1.ax1x.com/2020/09/20/wTkKET.md.png" alt="集中式VCS"></p>
-<p>分布式VCS</p>
-<ul>
-<li>服务端和客户端都有完整的版本库</li>
-<li>脱离服务端，客户端照样可以管理版本</li>
-<li>查看历史和版本比较等多数操作，都不需要访问服务器，比集中式VCS更能提高版本管理效率。</li>
-</ul>
-<p><img src="https://s1.ax1x.com/2020/09/20/wTkQ5F.md.png" alt="分布式VCS"></p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -597,6 +597,38 @@ $ <span class="token function">git</span> cat-file -p 9da73a42ec544fe149927f595a
       </tags>
   </entry>
   <entry>
+    <title>Hello World</title>
+    <url>/posts/3eeb.html</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class=" language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span></code></pre>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class=" language-bash"><code class="language-bash">$ hexo server</code></pre>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bash"><code class="language-bash">$ hexo generate</code></pre>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-bash"><code class="language-bash">$ hexo deploy</code></pre>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+  </entry>
+  <entry>
     <title>使用Git之前需要做的最小配置</title>
     <url>/posts/5174.html</url>
     <content><![CDATA[<h3 id="配置user-name-和-user-email"><a href="#配置user-name-和-user-email" class="headerlink" title="配置user.name 和 user.email"></a>配置user.name 和 user.email</h3><p>全局配置「对当前用户所有仓库有效」</p>
@@ -638,38 +670,6 @@ $ <span class="token function">git</span> config --list --system</code></pre>
       <tags>
         <tag>Git</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/posts/3eeb.html</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class=" language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span></code></pre>
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class=" language-bash"><code class="language-bash">$ hexo server</code></pre>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bash"><code class="language-bash">$ hexo generate</code></pre>
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-bash"><code class="language-bash">$ hexo deploy</code></pre>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
   </entry>
   <entry>
     <title>数一数tree的个数</title>
@@ -850,6 +850,18 @@ hello,world</code></pre>
 <td>them</td>
 </tr>
 </tbody></table>
+<h2 id="定语和状语"><a href="#定语和状语" class="headerlink" title="定语和状语"></a>定语和状语</h2><p>定语：对名词起修饰限定作用，主要是形容词。</p>
+<ul>
+<li>She is a beautiful girl.</li>
+<li>She is a tall and thin server-year-old girl.</li>
+</ul>
+<p>状语：表示方式，程度，时间，地点，原因，目的…可以修饰动词，形容词和副词。</p>
+<ul>
+<li>He woke up at midnight.（时间状语）</li>
+<li>Tim studied at home.（地点状语）</li>
+<li>She talk loudy.（方式状语）</li>
+<li>He walks in a funny way.</li>
+</ul>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
