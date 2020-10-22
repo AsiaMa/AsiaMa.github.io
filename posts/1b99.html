@@ -463,21 +463,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-09-21
+                    2020-09-26
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    432
+                    874
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    3 分
                 </div>
                 
 
@@ -525,17 +525,82 @@ $ <span class="token function">git</span> add bar.html</code></pre>
 <li>方式二</li>
 </ul>
 <pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> <span class="token function">mv</span> foo.html bar.html</code></pre>
+<h3 id="分离头指针"><a href="#分离头指针" class="headerlink" title="分离头指针"></a>分离头指针</h3><pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> checkout 3aadece1f41abc
+注意：正在切换到 <span class="token string">'3aadece1f41abc'</span>。
+
+您正处于分离头指针状态。您可以查看、做试验性的修改及提交，并且您可以在切换
+回一个分支时，丢弃在此状态下所做的提交而不对分支造成影响。
+
+如果您想要通过创建分支来保留在此状态下所做的提交，您可以通过在 switch 命令
+中添加参数 -c 来实现（现在或稍后）。例如：
+
+  <span class="token function">git</span> switch -c <span class="token operator">&lt;</span>新分支名<span class="token operator">></span>
+
+或者撤销此操作：
+
+  <span class="token function">git</span> switch -
+
+通过将配置变量 advice.detachedHead 设置为 <span class="token boolean">false</span> 来关闭此建议
+
+HEAD 目前位于 3aadece Create README.md
+
+<span class="token comment" spellcheck="true"># 做一些更改...</span>
+
+$ <span class="token function">git</span> checkout master
+警告：您正丢下 1 个提交，未和任何分支关联：
+
+  821e0a5 Update readme.md
+
+如果您想要通过创建新分支保存它，这可能是一个好时候。
+如下操作：
+
+ <span class="token function">git</span> branch <span class="token operator">&lt;</span>新分支名<span class="token operator">></span> 821e0a5
+
+切换到分支 <span class="token string">'master'</span>
+您的分支领先 <span class="token string">'origin/master'</span> 共 2 个提交。
+$ <span class="token function">git</span> branch hot-fix 821e0a5 <span class="token comment" spellcheck="true"># 新建一个分支关联刚刚丢失的提交</span></code></pre>
+<h3 id="比较差异"><a href="#比较差异" class="headerlink" title="比较差异"></a>比较差异</h3><pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> log --all
+commit 821e0a5873ee5800d1bb8661da3ca05955693f2f <span class="token punctuation">(</span>hot-fix<span class="token punctuation">)</span>
+Author: xiu <span class="token operator">&lt;</span>xiu@163.com<span class="token operator">></span>
+Date:   Sat Sep 26 10:17:27 2020 +0800
+
+    Update readme.md
+
+commit 1de4a338cb7f3753d94729fcf247534e97dd860c <span class="token punctuation">(</span>HEAD -<span class="token operator">></span> master<span class="token punctuation">)</span>
+Author: xiu <span class="token operator">&lt;</span>xiu@163.com<span class="token operator">></span>
+Date:   Mon Sep 21 22:47:25 2020 +0800
+
+    add <span class="token function">git</span> tree
+
+commit 570d12a33be783aeb557d44c17f66ac17cec10d7
+Author: xiu <span class="token operator">&lt;</span>xiu@163.com<span class="token operator">></span>
+Date:   Mon Sep 21 21:59:40 2020 +0800
+
+    绝对是借口
+
+commit 3aadece1f41abceaca380ff25d9872da112644e4 <span class="token punctuation">(</span>origin/master, origin/HEAD, 0a<span class="token punctuation">)</span>
+Author: AsiaMa <span class="token operator">&lt;</span>a976304624@outlook.com<span class="token operator">></span>
+Date:   Fri Mar 9 20:37:22 2018 +0800
+
+    Create README.md
+
+commit 42acb0b8f4d5f207f248e75bc6553bb3d51a37d3
+Author: PEP\mayz <span class="token operator">&lt;</span>a976304624@outlook.com<span class="token operator">></span>
+Date:   Fri Mar 9 20:33:17 2018 +0800
+$ <span class="token function">git</span> <span class="token function">diff</span> 821e0a5873e 1de4a338cb7
+$ <span class="token function">git</span> <span class="token function">diff</span> HEAD HEAD^ <span class="token comment" spellcheck="true">#(与父提交匹配，等价于 git diff HEAD HEAD~1)</span>
+$ <span class="token function">git</span> <span class="token function">diff</span> HEAD HEAD^^ <span class="token comment" spellcheck="true">#(等价于git diff HEAD HEAD~2)</span></code></pre>
 <h3 id="其它命令"><a href="#其它命令" class="headerlink" title="其它命令"></a>其它命令</h3><pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 暂存区已经修改的添加进去</span>
 $ <span class="token function">git</span> add -u
 <span class="token comment" spellcheck="true"># 暂存区的修改全部抹除掉</span>
 $ <span class="token function">git</span> reset --hard
 <span class="token comment" spellcheck="true"># 根据commitId检索分支</span>
-$ <span class="token function">git</span> checkout -b temp dc8aff7
+$ <span class="token function">git</span> checkout -b fix_readme dc8aff7<span class="token punctuation">(</span>也可以基于分支, 如master、developer或feature/add-spring-security<span class="token punctuation">)</span>
 <span class="token comment" spellcheck="true"># 切换到master分支</span>
 $ <span class="token function">git</span> checkout master
-<span class="token comment" spellcheck="true"># 显示分支</span>
+<span class="token comment" spellcheck="true"># 显示所有分支</span>
 $ <span class="token function">git</span> branch -av
-<span class="token comment" spellcheck="true"># 显示所有分支的提价信息</span>
+<span class="token comment" spellcheck="true"># 显示所有分支的提交信息</span>
 $ <span class="token function">git</span> log --all
 <span class="token comment" spellcheck="true"># 图像化的方式展示提交信息</span>
 $ <span class="token function">git</span> log --all --graph
@@ -1061,7 +1126,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">10.4k</span>&nbsp;字
+                class="white-color">11.1k</span>&nbsp;字
             
             
             
