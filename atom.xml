@@ -6,7 +6,7 @@
   <link href="https://blog.asiama.top/atom.xml" rel="self"/>
   
   <link href="https://blog.asiama.top/"/>
-  <updated>2020-10-22T15:49:34.713Z</updated>
+  <updated>2020-10-22T15:52:02.824Z</updated>
   <id>https://blog.asiama.top/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://blog.asiama.top/posts/56b.html"/>
     <id>https://blog.asiama.top/posts/56b.html</id>
     <published>2020-10-22T15:02:12.000Z</published>
-    <updated>2020-10-22T15:49:34.713Z</updated>
+    <updated>2020-10-22T15:52:02.824Z</updated>
     
     
       
@@ -38,57 +38,6 @@
     
     
     <category term="English" scheme="https://blog.asiama.top/tags/English/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>数一数tree的个数</title>
-    <link href="https://blog.asiama.top/posts/4069.html"/>
-    <id>https://blog.asiama.top/posts/4069.html</id>
-    <published>2020-09-26T01:01:08.000Z</published>
-    <updated>2020-09-26T01:47:01.722Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;新建的Git仓库，有且仅有1个commit，仅仅包含/doc/readme，请问内含多少个tree，多少个blob?&lt;/p&gt;
-&lt;pre class=&quot; language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ &lt;span</summary>
-        
-      
-    
-    
-    
-    <category term="项目管理" scheme="https://blog.asiama.top/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/"/>
-    
-    
-    <category term="Git" scheme="https://blog.asiama.top/tags/Git/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Git在工作时的概念</title>
-    <link href="https://blog.asiama.top/posts/23d0.html"/>
-    <id>https://blog.asiama.top/posts/23d0.html</id>
-    <published>2020-09-24T14:19:48.000Z</published>
-    <updated>2020-09-25T17:55:05.165Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;进入-git目录&quot;&gt;&lt;a href=&quot;#进入-git目录&quot; class=&quot;headerlink&quot; title=&quot;进入.git目录&quot;&gt;&lt;/a&gt;进入.git目录&lt;/h3&gt;&lt;p&gt;首先，使用git</summary>
-        
-      
-    
-    
-    
-    <category term="项目管理" scheme="https://blog.asiama.top/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/"/>
-    
-    
-    <category term="Git" scheme="https://blog.asiama.top/tags/Git/"/>
     
   </entry>
   
@@ -118,32 +67,6 @@
   </entry>
   
   <entry>
-    <title>Git常用命令</title>
-    <link href="https://blog.asiama.top/posts/1b99.html"/>
-    <id>https://blog.asiama.top/posts/1b99.html</id>
-    <published>2020-09-20T11:41:22.000Z</published>
-    <updated>2020-09-26T02:47:36.263Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;建Git仓库&quot;&gt;&lt;a href=&quot;#建Git仓库&quot; class=&quot;headerlink&quot; title=&quot;建Git仓库&quot;&gt;&lt;/a&gt;建Git仓库&lt;/h3&gt;&lt;p&gt;把已有的项目代码纳入Git管理&lt;/p&gt;
-&lt;pre class=&quot; language-bash&quot;&gt;&lt;code</summary>
-        
-      
-    
-    
-    
-    <category term="项目管理" scheme="https://blog.asiama.top/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/"/>
-    
-    
-    <category term="Git" scheme="https://blog.asiama.top/tags/Git/"/>
-    
-  </entry>
-  
-  <entry>
     <title>使用Git之前需要做的最小配置</title>
     <link href="https://blog.asiama.top/posts/5174.html"/>
     <id>https://blog.asiama.top/posts/5174.html</id>
@@ -156,31 +79,6 @@
         
         
     <summary type="html">&lt;h3 id=&quot;配置user-name-和-user-email&quot;&gt;&lt;a href=&quot;#配置user-name-和-user-email&quot; class=&quot;headerlink&quot; title=&quot;配置user.name 和 user.email&quot;&gt;&lt;/a&gt;配置user.name 和</summary>
-        
-      
-    
-    
-    
-    <category term="项目管理" scheme="https://blog.asiama.top/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/"/>
-    
-    
-    <category term="Git" scheme="https://blog.asiama.top/tags/Git/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Git介绍</title>
-    <link href="https://blog.asiama.top/posts/f3f.html"/>
-    <id>https://blog.asiama.top/posts/f3f.html</id>
-    <published>2020-09-20T03:24:12.000Z</published>
-    <updated>2020-09-20T06:46:35.994Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;Git的诞生&quot;&gt;&lt;a href=&quot;#Git的诞生&quot; class=&quot;headerlink&quot;</summary>
         
       
     
