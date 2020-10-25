@@ -1,189 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Git目录</title>
-    <url>/posts/9d17.html</url>
-    <content><![CDATA[<h3 id="git目录"><a href="#git目录" class="headerlink" title="git目录"></a>git目录</h3><p><img src="https://s1.ax1x.com/2020/09/20/w70pxe.md.png" alt="Git目录"></p>
-<p>head：显示当前所在分支</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">cat</span> .git/HEAD
-ref: refs/heads/master</code></pre>
-<p>config: 本地的配置信息</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">cat</span> .git/config
-<span class="token punctuation">[</span>core<span class="token punctuation">]</span>
-    repositoryformatversion <span class="token operator">=</span> 0
-    filemode <span class="token operator">=</span> <span class="token boolean">true</span>
-    bare <span class="token operator">=</span> <span class="token boolean">false</span>
-    logallrefupdates <span class="token operator">=</span> <span class="token boolean">true</span>
-    ignorecase <span class="token operator">=</span> <span class="token boolean">true</span>
-    precomposeunicode <span class="token operator">=</span> <span class="token boolean">true</span>
-<span class="token punctuation">[</span>remote <span class="token string">"origin"</span><span class="token punctuation">]</span>
-    url <span class="token operator">=</span> git@github.com:AsiaMa/xunfeiasia.git
-    fetch <span class="token operator">=</span> +refs/heads/*:refs/remotes/origin/*
-<span class="token punctuation">[</span>branch <span class="token string">"master"</span><span class="token punctuation">]</span>
-    remote <span class="token operator">=</span> origin
-    merge <span class="token operator">=</span> refs/heads/master
-<span class="token punctuation">[</span>user<span class="token punctuation">]</span>
-    name <span class="token operator">=</span> xiu
-    email <span class="token operator">=</span> xiu@163.com</code></pre>
-<p>refs: 里面有heads、remotes、tags三个文件夹</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">cd</span> refs
-$ ll
-drwxr-xr-x  5 asiama  staff   160B  9 21 21:59 heads
-drwxr-xr-x  3 asiama  staff    96B  9 20 20:26 remotes
-drwxr-xr-x  2 asiama  staff    64B  9 20 20:26 tags
-$ <span class="token function">cd</span> heads
-$ ll
--rw-r--r--  1 asiama  staff    41B  9 20 20:26 master
--rw-r--r--  1 asiama  staff    41B  9 20 22:18 temp
-$ <span class="token function">cat</span> master
-3aadece1f41abceaca380ff25d9872da112644e4 <span class="token comment" spellcheck="true">#master分支最新提交</span>
-$ <span class="token function">git</span> cat-file -t 3aadece1f41abceaca380ff25d9872da112644e4
-commit
-$ <span class="token function">cat</span> temp
-dc8aff7c2cce1c3956113e701f54f43585a4e730 <span class="token comment" spellcheck="true">#temp分支最新提交</span>
-$ <span class="token function">git</span> cat-file -t dc8aff7c2cce1c3956113e701f54f43585a4e730
-commit</code></pre>
-<p>objects: 核心文件夹</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">cd</span> objects
-$ ll
-drwxr-xr-x  3 asiama  staff    96B  9 21 21:59 57
-drwxr-xr-x  3 asiama  staff    96B  9 21 21:59 9d
-drwxr-xr-x  3 asiama  staff    96B  9 21 21:57 b9
-drwxr-xr-x  2 asiama  staff    64B  9 20 20:26 info
-drwxr-xr-x  4 asiama  staff   128B  9 20 20:26 pack <span class="token comment" spellcheck="true"># 松散的文件比较多时，会进行打包放在这里面</span>
-$ <span class="token function">cd</span> 57
-0d12a33be783aeb557d44c17f66ac17cec10d7
-<span class="token comment" spellcheck="true"># 需要前面拼接57</span>
-$ <span class="token function">git</span> cat-file -t 570d12a33be783aeb557d44c17f66ac17cec10d7
-commit
-<span class="token comment" spellcheck="true"># 再看b9</span>
-$ <span class="token function">cd</span> <span class="token punctuation">..</span>
-$ <span class="token function">ls</span> b9/
-67cf8fdb60314c33f2bceacd8ff1c4567f5b53
-<span class="token comment" spellcheck="true"># 需要前面拼接b9</span>
-$ <span class="token function">git</span> cat-file -t b967cf8fdb60314c33f2bceacd8ff1c4567f5b53
-blob
-$ <span class="token function">git</span> cat-file -p b967cf8fdb60314c33f2bceacd8ff1c4567f5b53
-<span class="token comment" spellcheck="true"># 提交的文件里的内容</span>
-ifjksjdfkfldjslfj
-费德勒快速反击撒了接口
-的快感和附近的恐慌感
-ijdk
-$ <span class="token function">ls</span> 9d/
-a73a42ec544fe149927f595a4fec01ea3f5018
-<span class="token comment" spellcheck="true"># 需要前面拼接9d</span>
-$ <span class="token function">git</span> cat-file -t 9da73a42ec544fe149927f595a4fec01ea3f5018
-tree
-$ <span class="token function">git</span> cat-file -p 9da73a42ec544fe149927f595a4fec01ea3f5018
-100644 blob 39fb081a42a86ccf8f9cf99dbccc8bdf7c828bce    .gitignore
-040000 tree b0feff2525390e998fe1c6fa596956d0b1cc3fb0    .idea
-100644 blob 72b6f3f4f7b1a4900057c2776a0dac63171ab9ff    README.md
-040000 tree b73d8756304943ab811652d55582c54ffeb4b494    app
-100644 blob 31fb06fc06923bbe3d0abf746498eb32069f778d    build.gradle
-100644 blob aac7c9b4614ccfde6c721f24994cf30885a791d0    gradle.properties
-040000 tree f76200a0891f6681e508b4af256edd7db7e0a929    gradle
-100644 blob 9d82f78915133e1c35a6ea51252590fb38efac2f    gradlew
-100644 blob 8a0b282aa6885fb573c106b3551f7275c5f17e8e    gradlew.bat
-040000 tree 460455f25404eb4775c79dbba28fb5c1a870173b    mylibrary
-100644 blob 9c982a3ebd0288b2ed9bff0c1da11828cb396b28    settings.gradle
-100644 blob b967cf8fdb60314c33f2bceacd8ff1c4567f5b53    <span class="token function">test</span></code></pre>
-<h3 id="Git对象类型-objects"><a href="#Git对象类型-objects" class="headerlink" title="Git对象类型(objects)"></a>Git对象类型(objects)</h3><p>对象库是Git版本库实现的心脏。它包含你的原始数据文件和所有日志信息、作者信息、日期，以及其它用来重建项目任意版本或分支的信息。</p>
-<p>Git放在对象库里的对象只有4种类型：块（blob）、目录树（tree）、提交（commit）和标签（tag）。这4种原子对象构成Git高层数据结构的基础。</p>
-<h4 id="块（blob）"><a href="#块（blob）" class="headerlink" title="块（blob）"></a>块（blob）</h4><p>文件的每一个版本表示为一个块（blob）。blob是“二进制大对象”（binary  large  object）的缩写，是计算机领域的常用术语，用来指代某些可以包含任意数据的变量或文件，同时其内部结构会被程序忽略。一个blob被视为一个黑盒。一个blob保存一个文件的数据，但不包含任何关于这个文件的元数据，甚至连文件名也没有「只要文件内容相同，在git眼里就是同一个blob，只有一份」。</p>
-<h4 id="目录树（tree）"><a href="#目录树（tree）" class="headerlink" title="目录树（tree）"></a>目录树（tree）</h4><p>一个目录树（tree）对象代表一层目录信息。它记录blob标识符、路径名和在一个目录里所有文件的一些元数据。它也可以递归引用其他目录树或子树对象，从而建立一个包含文件和子目录的完整层次结构。</p>
-<h4 id="提交（commit）"><a href="#提交（commit）" class="headerlink" title="提交（commit）"></a>提交（commit）</h4><p>一个提交（commit）对象保存版本库中每一次变化的元数据，包括作者、提交者、提交日期和日志消息。每一个提交对象指向一个目录树对象，这个目录树对象在一张完整的快照中捕获提交时版本库的状态。最初的提交或者根提交（root commit）是没有父提交的。大多数提交都有一个父提交。</p>
-<h4 id="标签（tag）"><a href="#标签（tag）" class="headerlink" title="标签（tag）"></a>标签（tag）</h4><p>一个标签对象分配一个任意的且人类可读的名字给一个特定对象，通常是一个提交对象。虽然9da581d910c9c4ac93557ca4859e767f5caf5169指的是一个确切且定义好的提交，但是一个更熟悉的标签名（如Ver-1.0-Alpha）可能会更有意义！</p>
-<p>随着时间的推移，所有信息在对象库中会变化和增长，项目的编辑、添加和删除都会被跟踪和建模。为了有效地利用磁盘空间和网络带宽，Git把对象压缩并存储在打包文件（packfile）里，这些文件也在对象库里。</p>
-<p><img src="https://s1.ax1x.com/2020/09/22/wXAqaj.md.png" alt="对象之间的关系"></p>
-<h3 id="索引-index"><a href="#索引-index" class="headerlink" title="索引(index)"></a>索引(index)</h3><p>索引是一个临时的、动态的二进制文件，它描述整个版本库的目录结构。更具体地说，索引捕获项目在某个时刻的整体结构的一个版本。项目的状态可以用一个提交和一棵目录树表示，它可以来自项目历史中的任意时刻，或者它可以是你正在开发的未来状态。</p>
-<p>Git的关键特色之一就是它允许你用有条理的、定义好的步骤来改变索引的内容。索引使得开发的推进与提交的变更之间能够分离开来。</p>
-<p>下面是它的工作原理。作为开发人员，你通过执行Git命令在索引中暂存（stage）变更。变更通常是添加、删除或者编辑某个文件或某些文件。索引会记录和保存那些变更，保障它们的安全直到你准备好提交了。还可以删除或替换索引中的变更。因此，索引支持一个由你主导的从复杂的版本库状态到一个可推测的更好状态的逐步过渡。</p>
-<h3 id="可寻址内容名称"><a href="#可寻址内容名称" class="headerlink" title="可寻址内容名称"></a>可寻址内容名称</h3><p>Git对象库被组织及实现成一个内容寻址的存储系统。具体而言，对象库中的每个对象都有一个唯一的名称，这个名称是向对象的内容应用SHA1得到的SHA1散列值。因为一个对象的完整内容决定了这个散列值，并且认为这个散列值能有效并唯一地对应特定的内容，所以SHA1散列值用来做对象数据库中对象的名字和索引是完全充分的。文件的任何微小变化都会导致SHA1散列值的改变，使得文件的新版本被单独编入索引。</p>
-<p>SHA1的值是一个160位的数，通常表示为一个40位的十六进制数，比如，9da581d910c9c4ac93557ca4859e767f5caf5169。有时候，在显示期间，SHA1值被简化成一个较小的、唯一的前缀。Git用户所说的SHA1、散列码和对象ID都是指同一个东西。</p>
-<blockquote>
-<p><strong>全局唯一标识符</strong></p>
-<p>SHA散列计算的一个重要特性是不管内容在哪里，它对同样的内容始终产生同样的ID。换言之，在不同目录里甚至不同机器中的相同文件内容产生的SHA1哈希ID是完全相同的。因此，文件的SHA1散列ID是一种有效的全局唯一标识符。</p>
-<p>这里有一个强大的推论，在互联网上，文件或者任意大小的blob都可以通过仅比较它们的SHA1标识符来判断是否相同。</p>
-</blockquote>
-<h3 id="Git追踪内容"><a href="#Git追踪内容" class="headerlink" title="Git追踪内容"></a>Git追踪内容</h3><p>Git同时还是一个内容追踪系统（content tracking system）。这种区别尽管很微小，但是指导了Git的很多设计，并且也许这就是处理内部数据操作相对容易的关键原因。</p>
-<p>Git的内容追踪主要表现为两种关键的方式，这两种方式与大多数其他版本控制系统都不一样。首先，Git的对象库基于其对象内容的散列计算的值，而不是基于用户原始文件布局的文件名或目录名设置。因此，当Git放置一个文件到对象库中的时候，它基于数据的散列值而不是文件名。事实上，Git并不追踪那些与文件次相关的文件名或者目录名。再次强调，Git追踪的是内容而不是文件。如果两个文件的内容完全一样，无论是否在相同的目录，Git在对象库里只保存一份blob形式的内容副本。Git仅根据文件内容来计算每一个文件的散列码，如果文件有相同的SHA1值，它们的内容就是相同的，然后将这个blob对象放到对象库里，并以SHA1值作为索引。项目中的这两个文件，不管它们在用户的目录结构中处于什么位置，都使用那个相同的对象指代其内容。</p>
-<p>如果这些文件中的一个发生了变化，Git会为它计算一个新的SHA1值，识别出它现在是一个不同的blob对象，然后把这个新的blob加到对象库里。原来的blob在对象库里保持不变，为没有变化的文件所使用。</p>
-<p>其次，当文件从一个版本变到下一个版本的时候，Git的内部数据库有效地存储每个文件的每个版本，而不是它们的差异。因为Git使用一个文件的全部内容的散列值作为文件名，所以它必须对每个文件的完整副本进行操作。Git不能将工作或者对象库条目建立在文件内容的一部分或者文件的两个版本之间的差异上。</p>
-<p>Git用不同散列值的blob之间的区别来计算这个历史，而不是直接存储一个文件名和一系列差异。这似乎有些奇怪，但这个特性让Git在执行某些任务的时候非常轻松。</p>
-<h3 id="路径名与内容"><a href="#路径名与内容" class="headerlink" title="路径名与内容"></a>路径名与内容</h3><p>跟很多其他VCS一样，Git需要维护一个明确的文件列表来组成版本库的内容。然而，这个需求并不需要Git的列表基于文件名。实际上，Git把文件名视为一段区别于文件内容的数据。这样，Git就把索引从传统数据库的数据中分离出来了。</p>
-<table>
-<thead>
-<tr>
-<th>系统</th>
-<th>索机制</th>
-<th>数据存储</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>传统数据库</td>
-<td>索引顺序存取方法（ISAM）</td>
-<td>数据记录</td>
-</tr>
-<tr>
-<td>UNIX文件系统</td>
-<td>目录（/path/to/file）</td>
-<td>数据块</td>
-</tr>
-<tr>
-<td>Git</td>
-<td>.git/objects/hash、树对象内容</td>
-<td>bolb对象、树对象</td>
-</tr>
-</tbody></table>
-<p>文件名和目录名来自底层的文件系统，但是Git并不真正关心这些名字。Git仅仅记录每个路径名，并且确保能通过它的内容精确地重建文件和目录，这些是由散列值来索引的。</p>
-<p>Git的物理数据布局并不模仿用户的文件目录结构。相反，它有一个完全不同的结构却可以重建用户的原始布局。在考虑其自身的内部操作和存储方面，Git的内部结构是一种更高效的数据结构</p>
-<p>当Git需要创建一个工作目录时，它对文件系统说：“嘿！我这有这样大的一个blob数据，应该放在路径名为path/to/directory/file的地方。你能理解吗？”文件系统回复说：“啊，是啊，我认出那个字符串是一组子目录名，并且我知道把你的blob数据放在哪里！谢谢！</p>
-<h3 id="打包文件"><a href="#打包文件" class="headerlink" title="打包文件"></a>打包文件</h3><p>直接存储每个文件每个版本的完整内容是否太低效率了？即使它是压缩的，把相同文件的不同版本的全部内容都存储的效率是否太低了？如果你只添加一行到文件里，Git是不是要存储两个版本的全部内容？幸运的是，答案是“不是，不完全是！</p>
-<p>相反，Git使用了一种叫做打包文件（pack file）的更有效的存储机制。要创建一个打包文件，Git 首先定位内容非常相似的全部文件，然后为它们之一存储整个内容。之后计算相似文件之间的差异并且只存储差异。例如，如果你只是更改或者添加文件中的一行，Git 可能会存储新版本的全部内容，然后记录那一行更改作为差异，并存储在包里。</p>
-<p>存储一个文件的整个版本并存储用来构造其他版本的相似文件的差异并不是一个新伎俩。这个机制已经被其他VCS（如RCS）用了好几十年了，它们的方法本质上是相同的。</p>
-<p>然而，Git文件打包得非常巧妙。因为Git是由内容驱动的，所以它并不真正关心它计算出来的两个文件之间的差异是否属于同一个文件的两个版本。这就是说，Git可以在版本库里的任何地方取出两个文件并计算差异，只要它认为它们足够相似来产生良好的数据压缩。因此，Git有一套相当复杂的算法来定位和匹配版本库中潜在的全局候选差异。此外，Git可以构造一系列差异文件，从一个文件的一个版本到第二个，第三个，等等。</p>
-<p>Git还维护打包文件表示中每个完整文件（包括完整内容的文件和通过差异重建出来的文件）的原始blob的SHA1值。这给定位包内对象的索引机制提供了基础。打包文件跟对象库中其他对象存储在一起。它们也用于网络中版本库的高效数据传输。</p>
-<h3 id="对象库图示"><a href="#对象库图示" class="headerlink" title="对象库图示"></a>对象库图示</h3><p>让我们看看Git的对象之间是如何协作来形成完整系统的。</p>
-<p>blob对象是数据结构的“底端”；它什么也不引用而且只被树对象引用。在接下来的图里，每个blob由一个矩形表示。</p>
-<p>树对象指向若干blob对象，也可能指向其他树对象。许多不同的提交对象可能指向任何给定的树对象。每个树对象由一个三角形表示。</p>
-<p>一个圆圈表示一个提交对象。一个提交对象指向一个特定的树对象，并且这个树对象是由提交对象引入版本库的。</p>
-<p>每个标签由一个平行四边形表示。每个标签可以指向最多一个提交对象。</p>
-<p>分支不是一个基本的Git对象，但是它在命名提交对象的时候起到了至关重要的作用。把每个分支画成一个圆角矩形。</p>
-<p>下面这张图展示了所有部分如何协作。显示了一个版本库在添加了两个文件的初始提交后的状态。两个文件都在顶级目录中。同时它们的master分支和一个叫V1.0的标签都指向ID为1492的提交对象。</p>
-<p><img src="https://s1.ax1x.com/2020/09/23/wxtbUH.md.png" alt="对象图示"></p>
-<p>现在，让我们使事情变得复杂一点。保留原来的两个文件不变，添加一个包含一个文件的新子目录。对象库就如下所示：</p>
-<p><img src="https://s1.ax1x.com/2020/09/23/wxNnqU.md.png" alt="xxx"></p>
-<p>就像前一张图里，新提交对象添加了一个关联的树对象来表示目录和文件结构的总状态。在这里，它是ID为cafed00d的树对象。</p>
-<p>因为顶级目录被添加的新子目录改变了，顶级树对象的内容也跟着改变了，所以Git引进了一个新的树对象：cafed00d。</p>
-<p>然而，blob对象dead23和feeb1e在从第一次到第二次提交的时候没有发生变化。Git意识到ID没有变化，所以可以被新的cafed00d树对象直接引用和共享。</p>
-<p>请注意提交对象之间箭头的方向。父提交在时间上来得更早。因此，在Git的实现里，每个提交对象指回它的一个或多个父提交。版本库的状态通常画成反方向：数据流从父提交流向子提交。</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <categories>
-        <category>项目管理</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hello World</title>
     <url>/posts/3eeb.html</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
@@ -214,49 +31,6 @@ $ <span class="token function">git</span> cat-file -p 9da73a42ec544fe149927f595a
             document.body.appendChild(img);
           });
       </script>]]></content>
-  </entry>
-  <entry>
-    <title>使用Git之前需要做的最小配置</title>
-    <url>/posts/5174.html</url>
-    <content><![CDATA[<h3 id="配置user-name-和-user-email"><a href="#配置user-name-和-user-email" class="headerlink" title="配置user.name 和 user.email"></a>配置user.name 和 user.email</h3><p>全局配置「对当前用户所有仓库有效」</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --global user.name <span class="token string">"your_name"</span>
-$ <span class="token function">git</span> config --global user.email <span class="token string">"your_email"</span></code></pre>
-<p>缺省等同于local「只对某个仓库有效」</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --local user.name <span class="token string">"your_name"</span>
-$ <span class="token function">git</span> config --local user.email <span class="token string">"your_email"</span></code></pre>
-<p>系统配置「对系统所有登录的用户有效」</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --system user.name <span class="token string">"your_name"</span>
-$ <span class="token function">git</span> config --system user.email <span class="token string">"your_email"</span></code></pre>
-<h3 id="显示config的配置"><a href="#显示config的配置" class="headerlink" title="显示config的配置"></a>显示config的配置</h3><pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --list --local
-$ <span class="token function">git</span> config --list --global
-$ <span class="token function">git</span> config --list --system</code></pre>
-<h3 id="查看某一个属性"><a href="#查看某一个属性" class="headerlink" title="查看某一个属性"></a>查看某一个属性</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --global user.name</code></pre>
-<h3 id="移除设置"><a href="#移除设置" class="headerlink" title="移除设置"></a>移除设置</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --unset --global user.email</code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <categories>
-        <category>项目管理</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
-      </tags>
   </entry>
   <entry>
     <title>英语学习第一天</title>
@@ -356,6 +130,119 @@ $ <span class="token function">git</span> config --list --system</code></pre>
 <li>She talk loudy.（方式状语）</li>
 <li>He walks in a funny way.</li>
 </ul>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <categories>
+        <category>英语学习</category>
+      </categories>
+      <tags>
+        <tag>English</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用Git之前需要做的最小配置</title>
+    <url>/posts/5174.html</url>
+    <content><![CDATA[<h3 id="配置user-name-和-user-email"><a href="#配置user-name-和-user-email" class="headerlink" title="配置user.name 和 user.email"></a>配置user.name 和 user.email</h3><p>全局配置「对当前用户所有仓库有效」</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --global user.name <span class="token string">"your_name"</span>
+$ <span class="token function">git</span> config --global user.email <span class="token string">"your_email"</span></code></pre>
+<p>缺省等同于local「只对某个仓库有效」</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --local user.name <span class="token string">"your_name"</span>
+$ <span class="token function">git</span> config --local user.email <span class="token string">"your_email"</span></code></pre>
+<p>系统配置「对系统所有登录的用户有效」</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --system user.name <span class="token string">"your_name"</span>
+$ <span class="token function">git</span> config --system user.email <span class="token string">"your_email"</span></code></pre>
+<h3 id="显示config的配置"><a href="#显示config的配置" class="headerlink" title="显示config的配置"></a>显示config的配置</h3><pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --list --local
+$ <span class="token function">git</span> config --list --global
+$ <span class="token function">git</span> config --list --system</code></pre>
+<h3 id="查看某一个属性"><a href="#查看某一个属性" class="headerlink" title="查看某一个属性"></a>查看某一个属性</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --global user.name</code></pre>
+<h3 id="移除设置"><a href="#移除设置" class="headerlink" title="移除设置"></a>移除设置</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --unset --global user.email</code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <categories>
+        <category>项目管理</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>英语学习第二天</title>
+    <url>/posts/9511.html</url>
+    <content><![CDATA[<h3 id="为什么会有五种句型"><a href="#为什么会有五种句型" class="headerlink" title="为什么会有五种句型"></a>为什么会有五种句型</h3><p>这个句子有没有动词，没有动作就一般是主系表。如果有一个动作，我们把这个动作视为核心动词，谓语动词。根据这个动词的种类不一样，这个动作涉及到别的对象呢，还是自己就能完成。涉及到别人是涉及到一个对象还是两个对象呢？这样子会划分为四种不同的类型。</p>
+<p>定状语：状语增加动作的细节。定于增加名词的细节。动作是什么，怎么做出来的，在哪里做的，目的是什么都是动作的细节。</p>
+<h3 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h3><p>She bought a new bag.        <code>she</code> 主语    <code>bought</code> 状语     <code>a new bag</code> 表语；名词词组，冠词+形容词+名词=名词。</p>
+<p>I am happy.         <code>i</code> 主语     <code>am</code> 连系动词     <code>happy</code> 表语</p>
+<p>We love music.        <code>we</code> 主语     <code>love</code>谓语     <code>music</code> 宾语</p>
+<p>We love swimming.         <code>we</code>主语     <code>love</code>谓语     <code>swimming</code>宾语</p>
+<p>We love eating hotpot.         <code>we</code> 主语     <code>love</code>谓语     <code> eating hotpot</code>宾语（吃火锅视为一件事情）</p>
+<p>He made me sad.         <code>He</code>主语     <code>made</code>谓语     <code>me</code>宾语    <code>sad</code>宾补</p>
+<p>They invited me to dance.        <code>they</code>主语    <code>invited</code>谓语    <code>me</code>宾语    <code>to dance</code>宾补</p>
+<p>My brother passed me the salt.    <code>my brother</code>主语    <code>passed</code>谓语    <code>me</code>宾语     <code>the salt</code>宾语</p>
+<p>He sighed deeply.    <code>He</code> 主语    <code>sighed</code>谓语     <code>deeply</code>状语  叹气是不及物动词，设计不到别人的动作。</p>
+<p>He asked me to help him.    <code>He</code>主语    <code>asked</code>谓语    <code>me</code>宾语    <code>to help him</code>宾补</p>
+<p>I worry about him.    <code>i</code>主语    <code>worry about</code>谓语    <code>him</code>宾语</p>
+<p>He is looking at you.    <code>he</code>主语    <code>is looking at</code>谓语    <code>you</code>宾语</p>
+<p>Playing basketball is my biggest time.    <code>playing basketball</code>主语    <code>is</code>系动词    <code>my biggest time</code>表语</p>
+<p>He told me a joke.    <code>he</code>主语    <code>told</code>谓语    <code>me</code>宾语    <code>a joke</code>宾语</p>
+<h3 id="主语"><a href="#主语" class="headerlink" title="主语"></a>主语</h3><p>动作的发出者，或者描述的对象。一般在开头。</p>
+<ol>
+<li>名词<ul>
+<li>Pineapple is a kind of tropical fruit. <code>a kind of tropica</code>定语，意群。</li>
+<li>Success requires persistence.</li>
+<li>Monday is a workday.</li>
+<li>A good night’s sleep is the best rest.</li>
+</ul>
+</li>
+<li>代词</li>
+<li>动名词</li>
+<li>不定式</li>
+<li>主语从句</li>
+</ol>
+<h3 id="单词"><a href="#单词" class="headerlink" title="单词"></a>单词</h3><ol>
+<li>Hotpot  [ˈhɒtpɒt]    火锅</li>
+<li>Invited  [ɪnˈvaɪtɪd]  邀请</li>
+<li>Pepper [ˈpepər]  胡椒粉</li>
+<li>Shaker  [ˈʃeɪkər] 振动器；混和器；调酒器</li>
+<li>sighed  叹息</li>
+<li>Pastime  [ˈpæstaɪm]  娱乐，消遣</li>
+<li>Persistence   [pərˈsɪstəns]  坚持不懈；毅力 </li>
+<li>Pineapple  [ˈpaɪnæpl]  菠萝</li>
+<li>tropical  [ˈtrɑːpɪkl]  热带的</li>
+</ol>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
