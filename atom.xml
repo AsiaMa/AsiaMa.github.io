@@ -6,7 +6,7 @@
   <link href="https://blog.asiama.top/atom.xml" rel="self"/>
   
   <link href="https://blog.asiama.top/"/>
-  <updated>2020-12-05T09:27:52.972Z</updated>
+  <updated>2020-12-05T09:29:31.508Z</updated>
   <id>https://blog.asiama.top/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title></title>
-    <link href="https://blog.asiama.top/posts/0.html"/>
-    <id>https://blog.asiama.top/posts/0.html</id>
+    <title>MySQL基本介绍</title>
+    <link href="https://blog.asiama.top/posts/68d3.html"/>
+    <id>https://blog.asiama.top/posts/68d3.html</id>
     <published>2020-12-05T08:34:08.831Z</published>
-    <updated>2020-12-05T09:27:52.972Z</updated>
+    <updated>2020-12-05T09:29:31.508Z</updated>
     
     
       
@@ -34,6 +34,10 @@
     
     
     
+    <category term="数据库" scheme="https://blog.asiama.top/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+    
+    <category term="MySQL" scheme="https://blog.asiama.top/tags/MySQL/"/>
     
   </entry>
   
