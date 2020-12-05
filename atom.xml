@@ -6,7 +6,7 @@
   <link href="https://blog.asiama.top/atom.xml" rel="self"/>
   
   <link href="https://blog.asiama.top/"/>
-  <updated>2020-12-05T09:29:31.508Z</updated>
+  <updated>2020-12-05T10:10:10.567Z</updated>
   <id>https://blog.asiama.top/</id>
   
   <author>
@@ -17,11 +17,36 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>MySQL编码设置</title>
+    <link href="https://blog.asiama.top/posts/17fc.html"/>
+    <id>https://blog.asiama.top/posts/17fc.html</id>
+    <published>2020-12-05T09:39:05.000Z</published>
+    <updated>2020-12-05T10:10:10.567Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;命令提示符的UTF-8设置&quot;&gt;&lt;a href=&quot;#命令提示符的UTF-8设置&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="数据库" scheme="https://blog.asiama.top/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+    
+    <category term="MySQL" scheme="https://blog.asiama.top/tags/MySQL/"/>
+    
+  </entry>
+  
+  <entry>
     <title>MySQL基本介绍</title>
     <link href="https://blog.asiama.top/posts/68d3.html"/>
     <id>https://blog.asiama.top/posts/68d3.html</id>
     <published>2020-12-05T08:34:08.831Z</published>
-    <updated>2020-12-05T09:29:31.508Z</updated>
+    <updated>2020-12-05T09:29:39.455Z</updated>
     
     
       
