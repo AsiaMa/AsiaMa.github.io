@@ -33,49 +33,6 @@
       </script>]]></content>
   </entry>
   <entry>
-    <title>使用Git之前需要做的最小配置</title>
-    <url>/posts/5174.html</url>
-    <content><![CDATA[<h3 id="配置user-name-和-user-email"><a href="#配置user-name-和-user-email" class="headerlink" title="配置user.name 和 user.email"></a>配置user.name 和 user.email</h3><p>全局配置「对当前用户所有仓库有效」</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --global user.name <span class="token string">"your_name"</span>
-$ <span class="token function">git</span> config --global user.email <span class="token string">"your_email"</span></code></pre>
-<p>缺省等同于local「只对某个仓库有效」</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --local user.name <span class="token string">"your_name"</span>
-$ <span class="token function">git</span> config --local user.email <span class="token string">"your_email"</span></code></pre>
-<p>系统配置「对系统所有登录的用户有效」</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --system user.name <span class="token string">"your_name"</span>
-$ <span class="token function">git</span> config --system user.email <span class="token string">"your_email"</span></code></pre>
-<h3 id="显示config的配置"><a href="#显示config的配置" class="headerlink" title="显示config的配置"></a>显示config的配置</h3><pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --list --local
-$ <span class="token function">git</span> config --list --global
-$ <span class="token function">git</span> config --list --system</code></pre>
-<h3 id="查看某一个属性"><a href="#查看某一个属性" class="headerlink" title="查看某一个属性"></a>查看某一个属性</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --global user.name</code></pre>
-<h3 id="移除设置"><a href="#移除设置" class="headerlink" title="移除设置"></a>移除设置</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --unset --global user.email</code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <categories>
-        <category>项目管理</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>英语学习第一天</title>
     <url>/posts/56b.html</url>
     <content><![CDATA[<h2 id="五种基本句型"><a href="#五种基本句型" class="headerlink" title="五种基本句型"></a>五种基本句型</h2><p>主语：动作的发起者，位于句首。</p>
@@ -197,6 +154,49 @@ $ <span class="token function">git</span> config --list --system</code></pre>
       </categories>
       <tags>
         <tag>English</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用Git之前需要做的最小配置</title>
+    <url>/posts/5174.html</url>
+    <content><![CDATA[<h3 id="配置user-name-和-user-email"><a href="#配置user-name-和-user-email" class="headerlink" title="配置user.name 和 user.email"></a>配置user.name 和 user.email</h3><p>全局配置「对当前用户所有仓库有效」</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --global user.name <span class="token string">"your_name"</span>
+$ <span class="token function">git</span> config --global user.email <span class="token string">"your_email"</span></code></pre>
+<p>缺省等同于local「只对某个仓库有效」</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --local user.name <span class="token string">"your_name"</span>
+$ <span class="token function">git</span> config --local user.email <span class="token string">"your_email"</span></code></pre>
+<p>系统配置「对系统所有登录的用户有效」</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --system user.name <span class="token string">"your_name"</span>
+$ <span class="token function">git</span> config --system user.email <span class="token string">"your_email"</span></code></pre>
+<h3 id="显示config的配置"><a href="#显示config的配置" class="headerlink" title="显示config的配置"></a>显示config的配置</h3><pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --list --local
+$ <span class="token function">git</span> config --list --global
+$ <span class="token function">git</span> config --list --system</code></pre>
+<h3 id="查看某一个属性"><a href="#查看某一个属性" class="headerlink" title="查看某一个属性"></a>查看某一个属性</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --global user.name</code></pre>
+<h3 id="移除设置"><a href="#移除设置" class="headerlink" title="移除设置"></a>移除设置</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --unset --global user.email</code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <categories>
+        <category>项目管理</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
       </tags>
   </entry>
   <entry>
