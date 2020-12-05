@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="使用Git之前需要做的最小配置, Java,Git,SpringBoot,SpringCloud,SpringCloud Alibaba等">
+    <meta name="keywords" content="MySQL基础命令, Java,Git,SpringBoot,SpringCloud,SpringCloud Alibaba等">
     <meta name="description" content="专注WJava后端,大数据,分享知识,分享生活">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>使用Git之前需要做的最小配置 | 三十二道街</title>
+    <title>MySQL基础命令 | 三十二道街</title>
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/awesome/css/all.css">
@@ -309,12 +309,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/10.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/9.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">使用Git之前需要做的最小配置</h1>
+                    <h1 class="description center-align post-title">MySQL基础命令</h1>
                 </div>
             </div>
         </div>
@@ -431,8 +431,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Git/">
-                                <span class="chip bg-color">Git</span>
+                            <a href="/tags/MySQL/">
+                                <span class="chip bg-color">MySQL</span>
                             </a>
                         
                     </div>
@@ -443,8 +443,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="post-category">
-                                项目管理
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
+                                数据库
                             </a>
                         
                     </div>
@@ -456,28 +456,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-09-20
+                    2020-12-06
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-09-21
+                    2020-12-06
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    180
+                    618
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    2 分
                 </div>
                 
 
@@ -492,20 +492,29 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="配置user-name-和-user-email"><a href="#配置user-name-和-user-email" class="headerlink" title="配置user.name 和 user.email"></a>配置user.name 和 user.email</h3><p>全局配置「对当前用户所有仓库有效」</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --global user.name <span class="token string">"your_name"</span>
-$ <span class="token function">git</span> config --global user.email <span class="token string">"your_email"</span></code></pre>
-<p>缺省等同于local「只对某个仓库有效」</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --local user.name <span class="token string">"your_name"</span>
-$ <span class="token function">git</span> config --local user.email <span class="token string">"your_email"</span></code></pre>
-<p>系统配置「对系统所有登录的用户有效」</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --system user.name <span class="token string">"your_name"</span>
-$ <span class="token function">git</span> config --system user.email <span class="token string">"your_email"</span></code></pre>
-<h3 id="显示config的配置"><a href="#显示config的配置" class="headerlink" title="显示config的配置"></a>显示config的配置</h3><pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --list --local
-$ <span class="token function">git</span> config --list --global
-$ <span class="token function">git</span> config --list --system</code></pre>
-<h3 id="查看某一个属性"><a href="#查看某一个属性" class="headerlink" title="查看某一个属性"></a>查看某一个属性</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --global user.name</code></pre>
-<h3 id="移除设置"><a href="#移除设置" class="headerlink" title="移除设置"></a>移除设置</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --unset --global user.email</code></pre>
+                <p>在Windows和macOS的环境中不区分字符的大小写，但是在Linux环境中却区分大小写。也就是说，表tb1和表TB1在Windows和macOS环境中会作为相同的表名处理，但是在Linux环境中会作为不同的表名处理。</p>
+<h3 id="指定数据库"><a href="#指定数据库" class="headerlink" title="指定数据库"></a>指定数据库</h3><pre class=" language-mysql"><code class="language-mysql">$ use db1;
+# 或者
+\u db1</code></pre>
+<p>我们可以直接指定数据库启动MySQL监视器。</p>
+<p>在这种情况下，可以像<code>mysql db1 -u root -proot</code> 这样，通过在命令提示符中指定数据库名来执行mysql命令。</p>
+<p>数据库也有分开使用术语的情况，比如构成表的项目称为<code>字段</code>（field），构成记录的各项目的数据称为<code>列</code>。不过为了方便，可以统一使用“列”这一术语。</p>
+<blockquote>
+<p>在使用use选择数据库的状态下，也能够操作其它数据库中的表。这时可以像“数据库名.表名”这样把“数据库名”和“表名”用“.”连接起来。例如，当从其它数据库访问数据库db2中的表table的所有记录时，可以使用下面的命令。</p>
+<pre class=" language-mysql"><code class="language-mysql">SELECT * FROM db2.table;</code></pre>
+</blockquote>
+<h3 id="指定字符编码创建表"><a href="#指定字符编码创建表" class="headerlink" title="指定字符编码创建表"></a>指定字符编码创建表</h3><p>在MySQL中输入字符到表中时，会因为各种原因出现字符乱码的情况。这时有一个方法可以解决这个问题，那就是指定字符编码创建表。</p>
+<pre class=" language-mysql"><code class="language-mysql">CREATE TABLE tb1 (emp_id VARCHAR(10), name VARCHAR(10), age INT) CHARACTER=utf8</code></pre>
+<h3 id="确认表的结构"><a href="#确认表的结构" class="headerlink" title="确认表的结构"></a>确认表的结构</h3><pre class=" language-mysql"><code class="language-mysql"># DESC 表名;
+DESC db1;</code></pre>
+<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/two.png"></p>
+<p>Null 表示“允许不输入任何值”，Default表示“如果什么值都不输入就用这个值”。Field表示列名，Type表示数据类型。</p>
+<p>因为列name被设置成了VARCHAR(10)，所以我们无法输入多于10个字符的数据。但是在MySQL中，即使输入了多于指定字符数（这里是10个字符）的数据也不会报错，而是会忽略无法插入的字符（这里是指10个字符之后的数据），这一点需要注意。</p>
+<blockquote>
+<p>如果将SQL Modes设为STRICE_TRANS_TABLES时回报出Data to long for column ‘XXX’ at row XX的错误。</p>
+</blockquote>
+<h3 id="向表中插入多行记录"><a href="#向表中插入多行记录" class="headerlink" title="向表中插入多行记录"></a>向表中插入多行记录</h3><pre class=" language-mysql"><code class="language-mysql">INSERT INTO tb1 (emp_id, name, age) VALUES ('A101', '佐藤', 40), ('A102', '高桥', 28), ('A103', '中川', 20), ('A104', '渡边', 23), ('A105', '西泽', 35);</code></pre>
+<h3 id="复制表"><a href="#复制表" class="headerlink" title="复制表"></a>复制表</h3><pre class=" language-mysql"><code class="language-mysql">CREATE TABLE tb1A SELECT * FROM tb1;</code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -549,7 +558,7 @@ $ <span class="token function">git</span> config --list --system</code></pre>
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://blog.asiama.top/posts/5174.html">https://blog.asiama.top/posts/5174.html</a>
+                    <a href="https://blog.asiama.top/posts/f6d7.html">https://blog.asiama.top/posts/f6d7.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -587,8 +596,8 @@ $ <span class="token function">git</span> config --list --system</code></pre>
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Git/">
-                                    <span class="chip bg-color">Git</span>
+                                <a href="/tags/MySQL/">
+                                    <span class="chip bg-color">MySQL</span>
                                 </a>
                             
                         </div>
@@ -759,7 +768,7 @@ $ <span class="token function">git</span> config --list --system</code></pre>
         repo: 'asiama.github.io',
         owner: 'asiama',
         admin: "asiama",
-        id: '2020-09-20T14-54-45',
+        id: '2020-12-06T04-43-18',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -783,17 +792,18 @@ $ <span class="token function">git</span> config --list --system</code></pre>
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/posts/56b.html">
+                <a href="/posts/f6d7.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/9.jpg" class="responsive-img" alt="英语学习第一天">
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/9.jpg" class="responsive-img" alt="MySQL基础命令">
                         
-                        <span class="card-title">英语学习第一天</span>
+                        <span class="card-title">MySQL基础命令</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -803,26 +813,27 @@ $ <span class="token function">git</span> config --list --system</code></pre>
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-10-22
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-12-06
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E8%8B%B1%E8%AF%AD%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                    英语学习
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
+                                    数据库
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/English/">
-                        <span class="chip bg-color">English</span>
+                    <a href="/tags/MySQL/">
+                        <span class="chip bg-color">MySQL</span>
                     </a>
                     
                 </div>
@@ -836,13 +847,13 @@ $ <span class="token function">git</span> config --list --system</code></pre>
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/posts/3eeb.html">
+                <a href="/posts/8cf.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/14.jpg" class="responsive-img" alt="MySQL权限相关">
                         
-                        <span class="card-title">Hello World</span>
+                        <span class="card-title">MySQL权限相关</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -853,15 +864,27 @@ $ <span class="token function">git</span> config --list --system</code></pre>
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-09-18
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-12-05
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            AsiaMa
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
+                                    数据库
+                                </a>
+                            
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/MySQL/">
+                        <span class="chip bg-color">MySQL</span>
+                    </a>
+                    
                 </div>
                 
             </div>

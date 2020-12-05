@@ -6,7 +6,7 @@
   <link href="https://blog.asiama.top/atom.xml" rel="self"/>
   
   <link href="https://blog.asiama.top/"/>
-  <updated>2020-12-05T14:26:23.897Z</updated>
+  <updated>2020-12-05T22:11:33.250Z</updated>
   <id>https://blog.asiama.top/</id>
   
   <author>
@@ -17,11 +17,37 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>MySQL基础命令</title>
+    <link href="https://blog.asiama.top/posts/f6d7.html"/>
+    <id>https://blog.asiama.top/posts/f6d7.html</id>
+    <published>2020-12-05T20:43:18.000Z</published>
+    <updated>2020-12-05T22:11:33.250Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;在Windows和macOS的环境中不区分字符的大小写，但是在Linux环境中却区分大小写。也就是说，表tb1和表TB1在Windows和macOS环境中会作为相同的表名处理，但是在Linux环境中会作为不同的表名处理。&lt;/p&gt;
+&lt;h3 id=&quot;指定数据库&quot;&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="数据库" scheme="https://blog.asiama.top/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+    
+    <category term="MySQL" scheme="https://blog.asiama.top/tags/MySQL/"/>
+    
+  </entry>
+  
+  <entry>
     <title>MySQL权限相关</title>
     <link href="https://blog.asiama.top/posts/8cf.html"/>
     <id>https://blog.asiama.top/posts/8cf.html</id>
     <published>2020-12-05T14:07:01.000Z</published>
-    <updated>2020-12-05T14:26:23.897Z</updated>
+    <updated>2020-12-05T14:27:28.118Z</updated>
     
     
       
