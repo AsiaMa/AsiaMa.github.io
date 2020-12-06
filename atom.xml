@@ -6,7 +6,7 @@
   <link href="https://blog.asiama.top/atom.xml" rel="self"/>
   
   <link href="https://blog.asiama.top/"/>
-  <updated>2020-12-05T22:11:33.250Z</updated>
+  <updated>2020-12-06T13:06:38.113Z</updated>
   <id>https://blog.asiama.top/</id>
   
   <author>
@@ -17,11 +17,36 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Kotin介绍</title>
+    <link href="https://blog.asiama.top/posts/5487.html"/>
+    <id>https://blog.asiama.top/posts/5487.html</id>
+    <published>2020-12-06T08:24:10.000Z</published>
+    <updated>2020-12-06T13:06:38.113Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;Kotlin的主要特征&quot;&gt;&lt;a href=&quot;#Kotlin的主要特征&quot; class=&quot;headerlink&quot; title=&quot;Kotlin的主要特征&quot;&gt;&lt;/a&gt;Kotlin的主要特征&lt;/h3&gt;&lt;h4 id=&quot;静态类型&quot;&gt;&lt;a href=&quot;#静态类型&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="Kotin" scheme="https://blog.asiama.top/categories/Kotin/"/>
+    
+    
+    <category term="Kotlin" scheme="https://blog.asiama.top/tags/Kotlin/"/>
+    
+  </entry>
+  
+  <entry>
     <title>MySQL基础命令</title>
     <link href="https://blog.asiama.top/posts/f6d7.html"/>
     <id>https://blog.asiama.top/posts/f6d7.html</id>
     <published>2020-12-05T20:43:18.000Z</published>
-    <updated>2020-12-05T22:11:33.250Z</updated>
+    <updated>2020-12-05T22:23:34.510Z</updated>
     
     
       
