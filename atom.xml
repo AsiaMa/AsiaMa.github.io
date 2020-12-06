@@ -6,7 +6,7 @@
   <link href="https://blog.asiama.top/atom.xml" rel="self"/>
   
   <link href="https://blog.asiama.top/"/>
-  <updated>2020-12-06T14:33:22.787Z</updated>
+  <updated>2020-12-06T21:10:48.221Z</updated>
   <id>https://blog.asiama.top/</id>
   
   <author>
@@ -17,11 +17,65 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Java的不足</title>
+    <link href="https://blog.asiama.top/posts/26f4.html"/>
+    <id>https://blog.asiama.top/posts/26f4.html</id>
+    <published>2020-12-06T20:52:14.000Z</published>
+    <updated>2020-12-06T21:10:48.221Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;检查异常&quot;&gt;&lt;a href=&quot;#检查异常&quot; class=&quot;headerlink&quot; title=&quot;检查异常&quot;&gt;&lt;/a&gt;检查异常&lt;/h3&gt;&lt;p&gt;检查异常会在编译时强制执行try</summary>
+        
+      
+    
+    
+    
+    <category term="Kotlin" scheme="https://blog.asiama.top/categories/Kotlin/"/>
+    
+    
+    <category term="Kotin" scheme="https://blog.asiama.top/tags/Kotin/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>函数式编程</title>
+    <link href="https://blog.asiama.top/posts/f609.html"/>
+    <id>https://blog.asiama.top/posts/f609.html</id>
+    <published>2020-12-06T20:33:00.000Z</published>
+    <updated>2020-12-06T20:47:09.697Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;函数式编程的核心概念如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;头等函数：把函数（一小段行为）当作值使用，可以用变量保存它，把它当作参数传递，或者当作其它函数的返回值。&lt;/li&gt;
+&lt;li&gt;不可变性：使用不可变对象，这保证了它们的状态在其创建之后不能再变化。&lt;/li&gt;
+&lt;li&gt;无副作用</summary>
+        
+      
+    
+    
+    
+    <category term="Kotlin" scheme="https://blog.asiama.top/categories/Kotlin/"/>
+    
+    
+    <category term="Kotlin" scheme="https://blog.asiama.top/tags/Kotlin/"/>
+    
+  </entry>
+  
+  <entry>
     <title>英语学习第三天</title>
     <link href="https://blog.asiama.top/posts/9968.html"/>
     <id>https://blog.asiama.top/posts/9968.html</id>
     <published>2020-12-06T14:01:19.000Z</published>
-    <updated>2020-12-06T14:33:22.787Z</updated>
+    <updated>2020-12-06T14:41:33.252Z</updated>
     
     
       
@@ -47,7 +101,7 @@
     <link href="https://blog.asiama.top/posts/5487.html"/>
     <id>https://blog.asiama.top/posts/5487.html</id>
     <published>2020-12-06T08:24:10.000Z</published>
-    <updated>2020-12-06T13:08:11.887Z</updated>
+    <updated>2020-12-06T20:31:27.990Z</updated>
     
     
       
