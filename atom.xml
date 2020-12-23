@@ -6,7 +6,7 @@
   <link href="https://blog.asiama.top/atom.xml" rel="self"/>
   
   <link href="https://blog.asiama.top/"/>
-  <updated>2020-12-06T21:10:48.221Z</updated>
+  <updated>2020-12-23T10:46:22.232Z</updated>
   <id>https://blog.asiama.top/</id>
   
   <author>
@@ -17,11 +17,36 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Kotlin单例</title>
+    <link href="https://blog.asiama.top/posts/9fbb.html"/>
+    <id>https://blog.asiama.top/posts/9fbb.html</id>
+    <published>2020-12-23T10:07:29.000Z</published>
+    <updated>2020-12-23T10:46:22.232Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;pre class=&quot; language-kotlin&quot;&gt;&lt;code class=&quot;language-kotlin&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; Singleton &lt;span class=&quot;token</summary>
+        
+      
+    
+    
+    
+    <category term="Kotin" scheme="https://blog.asiama.top/categories/Kotin/"/>
+    
+    
+    <category term="Kotlin" scheme="https://blog.asiama.top/tags/Kotlin/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Java的不足</title>
     <link href="https://blog.asiama.top/posts/26f4.html"/>
     <id>https://blog.asiama.top/posts/26f4.html</id>
     <published>2020-12-06T20:52:14.000Z</published>
-    <updated>2020-12-06T21:10:48.221Z</updated>
+    <updated>2020-12-06T21:11:16.706Z</updated>
     
     
       
@@ -46,7 +71,7 @@
     <link href="https://blog.asiama.top/posts/f609.html"/>
     <id>https://blog.asiama.top/posts/f609.html</id>
     <published>2020-12-06T20:33:00.000Z</published>
-    <updated>2020-12-06T20:47:09.697Z</updated>
+    <updated>2020-12-06T21:11:16.708Z</updated>
     
     
       
