@@ -6,7 +6,7 @@
   <link href="https://blog.asiama.top/atom.xml" rel="self"/>
   
   <link href="https://blog.asiama.top/"/>
-  <updated>2020-12-23T10:46:22.232Z</updated>
+  <updated>2020-12-27T06:57:29.952Z</updated>
   <id>https://blog.asiama.top/</id>
   
   <author>
@@ -17,11 +17,39 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>使用Docker安装YApi</title>
+    <link href="https://blog.asiama.top/posts/b5f9.html"/>
+    <id>https://blog.asiama.top/posts/b5f9.html</id>
+    <published>2020-12-27T06:41:12.000Z</published>
+    <updated>2020-12-27T06:57:29.952Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;启动MongoDB&quot;&gt;&lt;a href=&quot;#启动MongoDB&quot; class=&quot;headerlink&quot; title=&quot;启动MongoDB&quot;&gt;&lt;/a&gt;启动MongoDB&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;默认安装mongo&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class=&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="YApi" scheme="https://blog.asiama.top/categories/YApi/"/>
+    
+    
+    <category term="YApi" scheme="https://blog.asiama.top/tags/YApi/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Kotlin单例</title>
     <link href="https://blog.asiama.top/posts/9fbb.html"/>
     <id>https://blog.asiama.top/posts/9fbb.html</id>
     <published>2020-12-23T10:07:29.000Z</published>
-    <updated>2020-12-23T10:46:22.232Z</updated>
+    <updated>2020-12-23T10:46:53.196Z</updated>
     
     
       
