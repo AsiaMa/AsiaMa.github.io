@@ -1,835 +1,345 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search>
-  <entry>
-    <title>Kotin介绍</title>
-    <url>/posts/5487.html</url>
-    <content><![CDATA[<h3 id="Kotlin的主要特征"><a href="#Kotlin的主要特征" class="headerlink" title="Kotlin的主要特征"></a>Kotlin的主要特征</h3><h4 id="静态类型"><a href="#静态类型" class="headerlink" title="静态类型"></a>静态类型</h4><p>Kotlin和Java一样是一种静态类型的编程语言。这意味着<code>所有表达式的类型在编译器已经确定了，而编译器就能验证对象是否包含了你想访问的方法或者字段</code>。</p>
-<p>这与动态类型的编程语言形成了鲜明的对比，后者在JVM上的代表包括Grovvy和JRuby。这些语言<code>允许你定义可以存储任何数据类型的变量，或者返回任何数据类型的函数，并在运行时才解析方法和字段引用</code>。这会减少代码量并增加创建数据结构的灵活性。但它的缺点是，在编译期不能发现像名字拼写错误这样的问题，继而导致运行时的错误。</p>
-<h4 id="类型推导"><a href="#类型推导" class="headerlink" title="类型推导"></a>类型推导</h4><p>另一方面，与Java不同的是，<code>Kotin不需要你在源代码中显式地声明每个变量的类型。很多情况下，变量类型可以根据上下文来自动推断</code>，这样就可以省略类型声明。如</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">val</span> x <span class="token operator">=</span> <span class="token number">1</span></code></pre>
-<p>在声明这个变量时，由于变量初始化整型值，Kotin自动判断出它的类型是Int。<code>编译器这种从上下文推断变量类型的能力称作类型推导</code>。</p>
-<h4 id="扩展函数与扩展属性"><a href="#扩展函数与扩展属性" class="headerlink" title="扩展函数与扩展属性"></a>扩展函数与扩展属性</h4><p>扩展函数与扩展属性的“好玩”之处在于，可以在不修改原来类的条件下自定义函数和属性，是它们表现得就像是属于这个类一样。例如，我们给String类型扩展一个返回字符串首字母的firstChar()函数，代码如下：</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token comment" spellcheck="true">//调用我们自定义的扩展函数</span>
-    <span class="token keyword">val</span> firstChar <span class="token operator">=</span> <span class="token string">"abc"</span><span class="token punctuation">.</span><span class="token function">firstChar</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"this first char <span class="token interpolation variable">$firstChar</span>"</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">fun</span> String<span class="token punctuation">.</span><span class="token function">firstChar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> String <span class="token punctuation">{</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> <span class="token string">""</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span></code></pre>
-<h4 id="不可空类型与空安全"><a href="#不可空类型与空安全" class="headerlink" title="不可空类型与空安全"></a>不可空类型与空安全</h4><p>Kotlin中引入了不可空类型与可空类型来明确声明一个变量是否可能为null，同时在编译器通过类型是否匹配来检查空指针异常，大大降低了空指针异常出现的概率。</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">var</span> a <span class="token operator">=</span> <span class="token string">"abc"</span>  <span class="token comment" spellcheck="true">//声明一个字符串，编译器会默认推断变量a的类型为不可空的String</span>
-a <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//不可空类型不能赋值为null</span>
-error<span class="token operator">:</span> Null can not be a value of a non<span class="token operator">-</span><span class="token keyword">null</span> type String
-
-<span class="token keyword">var</span> b<span class="token operator">:</span> String<span class="token operator">?</span> <span class="token operator">=</span> <span class="token string">"abc"</span>
-b<span class="token punctuation">.</span>length <span class="token comment" spellcheck="true">//可空类型不能直接调用方法，需要使用安全调用符?.或者断言调用!!.</span>
-b<span class="token operator">?</span><span class="token punctuation">.</span>length <span class="token comment" spellcheck="true">//使用安全调用符，null对象使用安全调用符访问length属性，直接返回null</span></code></pre>
-<p>这个问号确实非常简洁易懂，同时能够时刻提醒我们：这个调用者有可能是null的。这个语言明显比Java8中引入的Optional&lt;String&gt;更加简单、直接。</p>
-<h4 id="一等函数支持"><a href="#一等函数支持" class="headerlink" title="一等函数支持"></a>一等函数支持</h4><p>在Kotlin中函数是第一等类型：我们可以将函数像值一样传递，函数可以作为另一个函数的返回值。我们通常称之为“一等函数”支持。</p>
-<p>下面是把一个函数作为参数传递给函数的Lambda表达式的例子：</p>
-<pre class=" language-kotlin"><code class="language-kotlin"> <span class="token keyword">val</span> list <span class="token operator">=</span> <span class="token function">listOf</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">)</span>
- <span class="token keyword">val</span> filterList <span class="token operator">=</span> list<span class="token punctuation">.</span><span class="token function">filter</span> <span class="token punctuation">{</span> it <span class="token operator">%</span> <span class="token number">3</span> <span class="token operator">!=</span> <span class="token number">0</span> <span class="token punctuation">}</span></code></pre>
-<h3 id="Kotin设计哲学"><a href="#Kotin设计哲学" class="headerlink" title="Kotin设计哲学"></a>Kotin设计哲学</h3><h4 id="务实"><a href="#务实" class="headerlink" title="务实"></a>务实</h4><p>JetBrains内部和社区的开发者已经使用Kotlin的早起版本很多年，Kotlin能够帮助解决实际项目的问题。</p>
-<h4 id="简洁"><a href="#简洁" class="headerlink" title="简洁"></a>简洁</h4><p>许多标准的Java样板代码，例如getter、setter以及将构造方法的参数赋值给字段的逻辑，在Kotlin中都是隐式的，并不会使你的源代码变得混乱。</p>
-<h4 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h4><p>Kotlin设计了一个“归一化”的类型系统（一切类型皆是引用类型），纯天然地设置了一道空指针的屏障，使得Kotin比Java更加安全可靠。Kotlin有助与避免的另一种异常类型就是ClassCastException。当你把一个对象转换成一种类型，而没有事先检查它是否是正确的类型时，就会发生这个异常。Kotlin中的检查和转换被组合成了一次操作：</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">if</span><span class="token punctuation">(</span>value <span class="token keyword">is</span> String<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  <span class="token comment" spellcheck="true">//不需要额外的转换就能直接引用属于这个类型的成员</span>
-  <span class="token function">println</span><span class="token punctuation">(</span>value<span class="token punctuation">.</span><span class="token function">toUpperCase</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span></code></pre>
-<h4 id="互操作性"><a href="#互操作性" class="headerlink" title="互操作性"></a>互操作性</h4><p>Kotlin的优势是既有Java的完整生态（Kotlin完全无缝使用各类Java API框架库）,又有现代语言的高级特性（语法糖）。</p>
-<h3 id="编程哲学"><a href="#编程哲学" class="headerlink" title="编程哲学"></a>编程哲学</h3><p>编程的真正问题在于，如何把人类脑子里对问题的解决方案“具化”到机器世界，而这个“具化”过程正是编程语言所要表达的东西。如何富有表现力并且安全简洁的表达，这是所有编程语言所要解决的问题。</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
+<search> 
+  
+  
+    
+    <entry>
+      <title>使用Docker安装YApi</title>
+      <link href="posts/b5f9.html"/>
+      <url>posts/b5f9.html</url>
+      
+        <content type="html"><![CDATA[<h3 id="启动MongoDB"><a href="#启动MongoDB" class="headerlink" title="启动MongoDB"></a>启动MongoDB</h3><ol><li>默认安装mongo</li></ol><pre class=" language-bash"><code class="language-bash">docker run -d --name mongo-yapi mongo</code></pre><ol start="2"><li>挂载宿主目录安装mongo</li></ol><pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 创建挂载目录</span><span class="token function">mkdir</span> -p /data/yapi/mongodata </code></pre><ol start="3"><li>运行mongo映射主机目录/data/yapi/mongodata</li></ol><pre><code>docker run --restart always -v /data/yapi/mongodata:/data/db  -d --name mongo-yapi mongo</code></pre><h3 id="获取YApi镜像"><a href="#获取YApi镜像" class="headerlink" title="获取YApi镜像"></a>获取YApi镜像</h3><ol><li>从阿里云镜像仓库拉取</li></ol><pre class=" language-bash"><code class="language-bash">docker pull registry.cn-hangzhou.aliyuncs.com/anoy/yapi</code></pre><ol start="2"><li>初始化 Yapi 数据库索引及管理员账号</li></ol><pre class=" language-bash"><code class="language-bash">docker run -it --rm --link mongo-yapi:mongo   --entrypoint <span class="token function">npm</span>  --workdir /api/vendors  registry.cn-hangzhou.aliyuncs.com/anoy/yapi   run install-server</code></pre><blockquote><p>自定义配置文件挂载到目录 <code>/api/config.json</code>，官方自定义配置文件 -&gt; <a href="https://github.com/YMFE/yapi/blob/master/config_example.json">传送门</a></p></blockquote><ol start="3"><li>启动 Yapi 服务</li></ol><pre class=" language-bash"><code class="language-bash">docker run -d   --name yapi  --link mongo-yapi:mongo  --workdir /api/vendors   -p 3000:3000   registry.cn-hangzhou.aliyuncs.com/anoy/yapi   server/app.js</code></pre><h3 id="使用YApi"><a href="#使用YApi" class="headerlink" title="使用YApi"></a>使用YApi</h3><p>访问 <code>http://localhost:3000</code> 登录账号 <code>admin@admin.com</code>，密码 <code>ymfe.org</code></p><p>至此，帅气的 Yapi 就可以轻松使用啦！</p><h3 id="其它相关操作"><a href="#其它相关操作" class="headerlink" title="其它相关操作"></a>其它相关操作</h3><ol><li>关闭yapi</li></ol><pre class=" language-bash"><code class="language-bash">docker stop yapi</code></pre><ol start="2"><li>开启yapi</li></ol><pre><code>docker start yapi</code></pre><ol start="3"><li>升级yapi</li></ol><pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 1、停止并删除旧版容器</span>docker <span class="token function">rm</span> -f yapi<span class="token comment" spellcheck="true"># 2、获取最新镜像</span>docker pull registry.cn-hangzhou.aliyuncs.com/anoy/yapi<span class="token comment" spellcheck="true"># 3、启动新容器</span>docker run -d  --name yapi  --link mongo-yapi:mongo  --workdir /api/vendors  -p 3000:3000   registry.cn-hangzhou.aliyuncs.com/anoy/yapi   server/app.js</code></pre><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+      
+      
       <categories>
-        <category>Kotin</category>
+          
+          <category> YApi </category>
+          
       </categories>
-      <tags>
-        <tag>Kotlin</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java的不足</title>
-    <url>/posts/26f4.html</url>
-    <content><![CDATA[<h3 id="检查异常"><a href="#检查异常" class="headerlink" title="检查异常"></a>检查异常</h3><p>检查异常会在编译时强制执行try catch处理，同时还需要进行某种排序处理。检查异常是一个失败的实践，几乎所有的主要API提供者都返回可检查异常。Kotlin中摒弃了检查异常。</p>
-<h3 id="基本类型和数组"><a href="#基本类型和数组" class="headerlink" title="基本类型和数组"></a>基本类型和数组</h3><p>Java的这个设计保留了字节码的底层细节，违反了“凡事皆为对象”的原则，如泛型无法包容基本类型就是一个例子。这也使得Java的类型系统显得不是那么地简单统一。比较好的方案是，源代码不用直接使用基本类型和数组，由编译器（或者JVM）来决定是否可以帮你对其优化，而Kotlin正是这么做的。</p>
-<h3 id="静态变量"><a href="#静态变量" class="headerlink" title="静态变量"></a>静态变量</h3><p>静态方法经常会导致需要显式的定义接口，从而使得API更加复杂。一个更好的办法就是采用单例对象，单例对象在大多数情况下表现得与静态对象差不多，但是可以像一个对象被传递。Kotlin中提供了object单例对象。</p>
-<h3 id="空指针异常"><a href="#空指针异常" class="headerlink" title="空指针异常"></a>空指针异常</h3><p>在Java中我们不得不写一堆防御代码来避免令人头疼的NPE。Kotlin中引入可空类型与安全调用符、Elvis操作符等特性来实现空安全。</p>
-<h3 id="一堆getter-setter单调冗长的样板代码"><a href="#一堆getter-setter单调冗长的样板代码" class="headerlink" title="一堆getter/setter单调冗长的样板代码"></a>一堆getter/setter单调冗长的样板代码</h3><p>在Kotlin中，我们可以使用数据类：</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">Person</span><span class="token punctuation">(</span><span class="token keyword">val</span> id<span class="token operator">:</span> Int<span class="token punctuation">,</span> <span class="token keyword">val</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span></code></pre>
-<h3 id="不容易传递函数"><a href="#不容易传递函数" class="headerlink" title="不容易传递函数"></a>不容易传递函数</h3><p>Java中没有一等函数类型，函数式（FP）编程只能通过使用接口类型以及多态特性“曲线”来实现。Java会将每一个算法（方法）都放入类中，这种限制会出现这样的“荒唐事”：我们只想实现一个函数算法，而这个时候必须还要给出一个类来放置这个方法；同样，如果在其它地方调用这个方法，必须通过创建该类来实现调用。在Kotlin中直接提供了一等函数（First-Class Function Type）类型，其跟普通类型一样，函数类型可以作为值来传递，也可以作为返回值。</p>
-<blockquote>
-<p>不可否认的是，C、C++和Java语言都是非常优秀的编程语言。但是事物总是不断发展变化的。就像C++语言是对C语言的继承与发展，Java语言是对C++语言的继承与改造，而Kotlin语言也是对Java语言的继承与变革。</p>
-</blockquote>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
+      
+      
+        <tags>
+            
+            <tag> YApi </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Kotlin单例</title>
+      <link href="posts/9fbb.html"/>
+      <url>posts/9fbb.html</url>
+      
+        <content type="html"><![CDATA[<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">class</span> Singleton <span class="token keyword">private</span> <span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>    <span class="token keyword">companion</span> <span class="token keyword">object</span> <span class="token punctuation">{</span>        <span class="token keyword">fun</span> <span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> Singleton <span class="token punctuation">{</span>            <span class="token keyword">return</span> Holder<span class="token punctuation">.</span>instance        <span class="token punctuation">}</span>    <span class="token punctuation">}</span>    <span class="token keyword">private</span> <span class="token keyword">object</span> Holder <span class="token punctuation">{</span>        <span class="token keyword">val</span> instance <span class="token operator">=</span> <span class="token function">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span>    <span class="token punctuation">}</span><span class="token punctuation">}</span></code></pre><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+      
+      
       <categories>
-        <category>Kotlin</category>
+          
+          <category> Kotin </category>
+          
       </categories>
-      <tags>
-        <tag>Kotin</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Kotlin单例</title>
-    <url>/posts/9fbb.html</url>
-    <content><![CDATA[<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">class</span> Singleton <span class="token keyword">private</span> <span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-
-    <span class="token keyword">companion</span> <span class="token keyword">object</span> <span class="token punctuation">{</span>
-        <span class="token keyword">fun</span> <span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> Singleton <span class="token punctuation">{</span>
-            <span class="token keyword">return</span> Holder<span class="token punctuation">.</span>instance
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">private</span> <span class="token keyword">object</span> Holder <span class="token punctuation">{</span>
-        <span class="token keyword">val</span> instance <span class="token operator">=</span> <span class="token function">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
+      
+      
+        <tags>
+            
+            <tag> Kotlin </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Java的不足</title>
+      <link href="posts/26f4.html"/>
+      <url>posts/26f4.html</url>
+      
+        <content type="html"><![CDATA[<h3 id="检查异常"><a href="#检查异常" class="headerlink" title="检查异常"></a>检查异常</h3><p>检查异常会在编译时强制执行try catch处理，同时还需要进行某种排序处理。检查异常是一个失败的实践，几乎所有的主要API提供者都返回可检查异常。Kotlin中摒弃了检查异常。</p><h3 id="基本类型和数组"><a href="#基本类型和数组" class="headerlink" title="基本类型和数组"></a>基本类型和数组</h3><p>Java的这个设计保留了字节码的底层细节，违反了“凡事皆为对象”的原则，如泛型无法包容基本类型就是一个例子。这也使得Java的类型系统显得不是那么地简单统一。比较好的方案是，源代码不用直接使用基本类型和数组，由编译器（或者JVM）来决定是否可以帮你对其优化，而Kotlin正是这么做的。</p><h3 id="静态变量"><a href="#静态变量" class="headerlink" title="静态变量"></a>静态变量</h3><p>静态方法经常会导致需要显式的定义接口，从而使得API更加复杂。一个更好的办法就是采用单例对象，单例对象在大多数情况下表现得与静态对象差不多，但是可以像一个对象被传递。Kotlin中提供了object单例对象。</p><h3 id="空指针异常"><a href="#空指针异常" class="headerlink" title="空指针异常"></a>空指针异常</h3><p>在Java中我们不得不写一堆防御代码来避免令人头疼的NPE。Kotlin中引入可空类型与安全调用符、Elvis操作符等特性来实现空安全。</p><h3 id="一堆getter-setter单调冗长的样板代码"><a href="#一堆getter-setter单调冗长的样板代码" class="headerlink" title="一堆getter/setter单调冗长的样板代码"></a>一堆getter/setter单调冗长的样板代码</h3><p>在Kotlin中，我们可以使用数据类：</p><pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">Person</span><span class="token punctuation">(</span><span class="token keyword">val</span> id<span class="token operator">:</span> Int<span class="token punctuation">,</span> <span class="token keyword">val</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span></code></pre><h3 id="不容易传递函数"><a href="#不容易传递函数" class="headerlink" title="不容易传递函数"></a>不容易传递函数</h3><p>Java中没有一等函数类型，函数式（FP）编程只能通过使用接口类型以及多态特性“曲线”来实现。Java会将每一个算法（方法）都放入类中，这种限制会出现这样的“荒唐事”：我们只想实现一个函数算法，而这个时候必须还要给出一个类来放置这个方法；同样，如果在其它地方调用这个方法，必须通过创建该类来实现调用。在Kotlin中直接提供了一等函数（First-Class Function Type）类型，其跟普通类型一样，函数类型可以作为值来传递，也可以作为返回值。</p><blockquote><p>不可否认的是，C、C++和Java语言都是非常优秀的编程语言。但是事物总是不断发展变化的。就像C++语言是对C语言的继承与发展，Java语言是对C++语言的继承与改造，而Kotlin语言也是对Java语言的继承与变革。</p></blockquote><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+      
+      
       <categories>
-        <category>Kotin</category>
+          
+          <category> Kotlin </category>
+          
       </categories>
-      <tags>
-        <tag>Kotlin</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MySQL基础命令</title>
-    <url>/posts/f6d7.html</url>
-    <content><![CDATA[<p>在Windows和macOS的环境中不区分字符的大小写，但是在Linux环境中却区分大小写。也就是说，表tb1和表TB1在Windows和macOS环境中会作为相同的表名处理，但是在Linux环境中会作为不同的表名处理。</p>
-<h3 id="指定数据库"><a href="#指定数据库" class="headerlink" title="指定数据库"></a>指定数据库</h3><pre class=" language-mysql"><code class="language-mysql">$ use db1;
-# 或者
-$ \u db1</code></pre>
-<p>我们可以直接指定数据库启动MySQL监视器。</p>
-<p>在这种情况下，可以像<code>mysql db1 -u root -proot</code> 这样，通过在命令提示符中指定数据库名来执行mysql命令。</p>
-<p>数据库也有分开使用术语的情况，比如构成表的项目称为<code>字段</code>（field），构成记录的各项目的数据称为<code>列</code>。不过为了方便，可以统一使用“列”这一术语。</p>
-<blockquote>
-<p>在使用use选择数据库的状态下，也能够操作其它数据库中的表。这时可以像“数据库名.表名”这样把“数据库名”和“表名”用“.”连接起来。例如，当从其它数据库访问数据库db2中的表table的所有记录时，可以使用下面的命令。</p>
-<pre class=" language-mysql"><code class="language-mysql">SELECT * FROM db2.table;</code></pre>
-</blockquote>
-<h3 id="指定字符编码创建表"><a href="#指定字符编码创建表" class="headerlink" title="指定字符编码创建表"></a>指定字符编码创建表</h3><p>在MySQL中输入字符到表中时，会因为各种原因出现字符乱码的情况。这时有一个方法可以解决这个问题，那就是指定字符编码创建表。</p>
-<pre class=" language-mysql"><code class="language-mysql">CREATE TABLE tb1 (emp_id VARCHAR(10), name VARCHAR(10), age INT) CHARACTER=utf8</code></pre>
-<h3 id="确认表的结构"><a href="#确认表的结构" class="headerlink" title="确认表的结构"></a>确认表的结构</h3><pre class=" language-mysql"><code class="language-mysql"># DESC 表名;
-DESC db1;</code></pre>
-<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/two.png"></p>
-<p>Null 表示“允许不输入任何值”，Default表示“如果什么值都不输入就用这个值”。Field表示列名，Type表示数据类型。</p>
-<p>因为列name被设置成了VARCHAR(10)，所以我们无法输入多于10个字符的数据。但是在MySQL中，即使输入了多于指定字符数（这里是10个字符）的数据也不会报错，而是会忽略无法插入的字符（这里是指10个字符之后的数据），这一点需要注意。</p>
-<blockquote>
-<p>如果将SQL Modes设为STRICE_TRANS_TABLES时回报出Data to long for column ‘XXX’ at row XX的错误。</p>
-</blockquote>
-<h3 id="向表中插入多行记录"><a href="#向表中插入多行记录" class="headerlink" title="向表中插入多行记录"></a>向表中插入多行记录</h3><pre class=" language-mysql"><code class="language-mysql">INSERT INTO tb1 (emp_id, name, age) VALUES ('A101', '佐藤', 40), ('A102', '高桥', 28), ('A103', '中川', 20), ('A104', '渡边', 23), ('A105', '西泽', 35);</code></pre>
-<h3 id="复制表"><a href="#复制表" class="headerlink" title="复制表"></a>复制表</h3><pre class=" language-mysql"><code class="language-mysql">CREATE TABLE tb1A SELECT * FROM tb1;</code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
+      
+      
+        <tags>
+            
+            <tag> Kotin </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>函数式编程</title>
+      <link href="posts/f609.html"/>
+      <url>posts/f609.html</url>
+      
+        <content type="html"><![CDATA[<p>函数式编程的核心概念如下：</p><ul><li>头等函数：把函数（一小段行为）当作值使用，可以用变量保存它，把它当作参数传递，或者当作其它函数的返回值。</li><li>不可变性：使用不可变对象，这保证了它们的状态在其创建之后不能再变化。</li><li>无副作用：使用的是纯函数。此类函数在输入相同时会产生同样的结果，并且不会修改其它对象的状态，也不会和外面的世界交互。</li></ul><p>优点：</p><ol><li>简洁</li></ol><p>函数式风格的代码比相应的命令式风格的代码更优雅、更简练，因为把函数当作值可以让你获得更强大的抽象能力，从而避免重复代码。假设你有两段类似的代码，实现相似的任务（例如，在集合中寻找一个匹配的元素），但具体细节略有不同（如何判断元素式匹配的）。可以轻易地将这段逻辑公共部分提取到一个函数中，并将其它不同的部分作为参数传递给它。这些参数本身也是函数，但你可以使用一种简洁的语法来表示这些匿名函数，它被称作lambda表达式。</p><ol start="2"><li>多线程安全</li></ol><p>多线程程序中最大的错误来源之一就是，在没有采取适当同步机制的情况下，在不同的线程上修改同一份数据。如果你使用的是不可变数据结构和纯函数，就能保证这样不安全的修改根本不会发生，也就不需要考虑为其设计股灾的同步方案。</p><ol start="3"><li>易测试性</li></ol><p>没有副作用的函数可以独立地进行测试，因为不需要写大量的设置代码来构造它们所依赖的整个环境。</p><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+      
+      
       <categories>
-        <category>数据库</category>
+          
+          <category> Kotlin </category>
+          
       </categories>
-      <tags>
-        <tag>MySQL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MySQL权限相关</title>
-    <url>/posts/8cf.html</url>
-    <content><![CDATA[<h3 id="修改密码"><a href="#修改密码" class="headerlink" title="修改密码"></a>修改密码</h3><pre class=" language-mysql"><code class="language-mysql">$ SET PASSWORD FOR root@localhost='A123456!'</code></pre>
-<h3 id="创建用户"><a href="#创建用户" class="headerlink" title="创建用户"></a>创建用户</h3><pre class=" language-mysql"><code class="language-mysql"># CREATE USER 新用户名 IDENTIFIED BY '密码'
-$ CREATE USER asiama@localhost IDENTIFIED BY 'A123456!'</code></pre>
-<h3 id="设置用户权限"><a href="#设置用户权限" class="headerlink" title="设置用户权限"></a>设置用户权限</h3><pre class=" language-mysql"><code class="language-mysql"># GRANT 赋予的权限 ON 数据库名.表名 TO 用户名
-$ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
-<blockquote>
-<p>用户名需要按照“用户名@主机名”的方式书写（如果不确定主机名，可以”用户名@%”来允许所有主机）。“赋予的权限”如果是所有的权限，就设置为“ALL”；如果仅允许SELECT和UPDATE,就设置为“SELECT, UPDATE”；如果是所有的数据库的所有表，就设置为“*.*”</p>
-</blockquote>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
+      
+      
+        <tags>
+            
+            <tag> Kotlin </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>英语学习第三天</title>
+      <link href="posts/9968.html"/>
+      <url>posts/9968.html</url>
+      
+        <content type="html"><![CDATA[<h3 id="动名词作主语"><a href="#动名词作主语" class="headerlink" title="动名词作主语"></a>动名词作主语</h3><ul><li>Eating an apple a day keeps you healthy.</li><li>Running five miles is the first thing he does in the morning.</li></ul><h3 id="不定式作主语"><a href="#不定式作主语" class="headerlink" title="不定式作主语"></a>不定式作主语</h3><ul><li>To study abroad is my greatest desire.</li><li>To travel around the world is my plan for this year.</li></ul><p>动名词作主语不讨论这件事做或没做。不定式做主语，这件事情还没有做。</p><p>动词要做主语，不能用原词。可以用动名词，也可以用不定式。如果是不定式，这个动作要没做才可以。</p><blockquote><p>不定式和动名词作主语时，常出现主语过长的情况，可以用代词it代替，作形式主语放在句首，而把真正的主语，即不定式或动名词短语放在句尾。动名词移至句尾时，常改为不定式。</p></blockquote><p>Collecting stamps is one of his hobbies.</p><p><code>It</code> is one of his hobbies <code>to collect stamps</code>.</p><p>Eating an apple a day keeps you healthy.</p><p><code>It</code> keeps you healthy <code>to eat an appale</code>.</p><h3 id="单词"><a href="#单词" class="headerlink" title="单词"></a>单词</h3><p>hear from 收到….的信</p><p>hear sb do sth 听见某人做某事 </p><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+      
+      
       <categories>
-        <category>数据库</category>
+          
+          <category> 英语学习 </category>
+          
       </categories>
-      <tags>
-        <tag>MySQL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MySQL编码设置</title>
-    <url>/posts/17fc.html</url>
-    <content><![CDATA[<h3 id="命令提示符的UTF-8设置"><a href="#命令提示符的UTF-8设置" class="headerlink" title="命令提示符的UTF-8设置"></a>命令提示符的UTF-8设置</h3><p>Windows终端默认使用字符编码GBK进行数据的输入和输出，而数据库则使用UTF-8存储数据。其实我们也可以把命令终端的字符编码设置成UTF-8。我们需要按照下面的格式在命令终端执行<code>chcp</code></p>
-<pre class=" language-shell"><code class="language-shell">$ chcp 65001</code></pre>
-<p>chcp用于修改命令终端的字符编码，<code>65001代表UTF-8</code>。</p>
-<h3 id="确认MySQL中字符编码的设置情况"><a href="#确认MySQL中字符编码的设置情况" class="headerlink" title="确认MySQL中字符编码的设置情况"></a>确认MySQL中字符编码的设置情况</h3><p>启动MySQL监视器，输入status。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/one.png"></p>
-<p>1代表服务器端的字符编码设置，2代表客户端的字符编码设置。</p>
-<p>指定字符编码启动MySQL监视器</p>
-<pre class=" language-sh"><code class="language-sh">$ mysql -uroot -proot --default-character-set=gbk</code></pre>
-<p>另外字符编码设置情况还可以通过下面的命令查看</p>
-<pre class=" language-mysql"><code class="language-mysql">SHOW VARIABLES LIKE 'char%'</code></pre>
-<p>按下<code>F7键后，历史命令</code>会全部显示出来。</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
+      
+      
+        <tags>
+            
+            <tag> English </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Kotin介绍</title>
+      <link href="posts/5487.html"/>
+      <url>posts/5487.html</url>
+      
+        <content type="html"><![CDATA[<h3 id="Kotlin的主要特征"><a href="#Kotlin的主要特征" class="headerlink" title="Kotlin的主要特征"></a>Kotlin的主要特征</h3><h4 id="静态类型"><a href="#静态类型" class="headerlink" title="静态类型"></a>静态类型</h4><p>Kotlin和Java一样是一种静态类型的编程语言。这意味着<code>所有表达式的类型在编译器已经确定了，而编译器就能验证对象是否包含了你想访问的方法或者字段</code>。</p><p>这与动态类型的编程语言形成了鲜明的对比，后者在JVM上的代表包括Grovvy和JRuby。这些语言<code>允许你定义可以存储任何数据类型的变量，或者返回任何数据类型的函数，并在运行时才解析方法和字段引用</code>。这会减少代码量并增加创建数据结构的灵活性。但它的缺点是，在编译期不能发现像名字拼写错误这样的问题，继而导致运行时的错误。</p><h4 id="类型推导"><a href="#类型推导" class="headerlink" title="类型推导"></a>类型推导</h4><p>另一方面，与Java不同的是，<code>Kotin不需要你在源代码中显式地声明每个变量的类型。很多情况下，变量类型可以根据上下文来自动推断</code>，这样就可以省略类型声明。如</p><pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">val</span> x <span class="token operator">=</span> <span class="token number">1</span></code></pre><p>在声明这个变量时，由于变量初始化整型值，Kotin自动判断出它的类型是Int。<code>编译器这种从上下文推断变量类型的能力称作类型推导</code>。</p><h4 id="扩展函数与扩展属性"><a href="#扩展函数与扩展属性" class="headerlink" title="扩展函数与扩展属性"></a>扩展函数与扩展属性</h4><p>扩展函数与扩展属性的“好玩”之处在于，可以在不修改原来类的条件下自定义函数和属性，是它们表现得就像是属于这个类一样。例如，我们给String类型扩展一个返回字符串首字母的firstChar()函数，代码如下：</p><pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>    <span class="token comment" spellcheck="true">//调用我们自定义的扩展函数</span>    <span class="token keyword">val</span> firstChar <span class="token operator">=</span> <span class="token string">"abc"</span><span class="token punctuation">.</span><span class="token function">firstChar</span><span class="token punctuation">(</span><span class="token punctuation">)</span>    <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"this first char <span class="token interpolation variable">$firstChar</span>"</span><span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token keyword">fun</span> String<span class="token punctuation">.</span><span class="token function">firstChar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> String <span class="token punctuation">{</span>    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>        <span class="token keyword">return</span> <span class="token string">""</span><span class="token punctuation">;</span>    <span class="token punctuation">}</span>    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token punctuation">}</span></code></pre><h4 id="不可空类型与空安全"><a href="#不可空类型与空安全" class="headerlink" title="不可空类型与空安全"></a>不可空类型与空安全</h4><p>Kotlin中引入了不可空类型与可空类型来明确声明一个变量是否可能为null，同时在编译器通过类型是否匹配来检查空指针异常，大大降低了空指针异常出现的概率。</p><pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">var</span> a <span class="token operator">=</span> <span class="token string">"abc"</span>  <span class="token comment" spellcheck="true">//声明一个字符串，编译器会默认推断变量a的类型为不可空的String</span>a <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//不可空类型不能赋值为null</span>error<span class="token operator">:</span> Null can not be a value of a non<span class="token operator">-</span><span class="token keyword">null</span> type String<span class="token keyword">var</span> b<span class="token operator">:</span> String<span class="token operator">?</span> <span class="token operator">=</span> <span class="token string">"abc"</span>b<span class="token punctuation">.</span>length <span class="token comment" spellcheck="true">//可空类型不能直接调用方法，需要使用安全调用符?.或者断言调用!!.</span>b<span class="token operator">?</span><span class="token punctuation">.</span>length <span class="token comment" spellcheck="true">//使用安全调用符，null对象使用安全调用符访问length属性，直接返回null</span></code></pre><p>这个问号确实非常简洁易懂，同时能够时刻提醒我们：这个调用者有可能是null的。这个语言明显比Java8中引入的Optional&lt;String&gt;更加简单、直接。</p><h4 id="一等函数支持"><a href="#一等函数支持" class="headerlink" title="一等函数支持"></a>一等函数支持</h4><p>在Kotlin中函数是第一等类型：我们可以将函数像值一样传递，函数可以作为另一个函数的返回值。我们通常称之为“一等函数”支持。</p><p>下面是把一个函数作为参数传递给函数的Lambda表达式的例子：</p><pre class=" language-kotlin"><code class="language-kotlin"> <span class="token keyword">val</span> list <span class="token operator">=</span> <span class="token function">listOf</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">)</span> <span class="token keyword">val</span> filterList <span class="token operator">=</span> list<span class="token punctuation">.</span><span class="token function">filter</span> <span class="token punctuation">{</span> it <span class="token operator">%</span> <span class="token number">3</span> <span class="token operator">!=</span> <span class="token number">0</span> <span class="token punctuation">}</span></code></pre><h3 id="Kotin设计哲学"><a href="#Kotin设计哲学" class="headerlink" title="Kotin设计哲学"></a>Kotin设计哲学</h3><h4 id="务实"><a href="#务实" class="headerlink" title="务实"></a>务实</h4><p>JetBrains内部和社区的开发者已经使用Kotlin的早起版本很多年，Kotlin能够帮助解决实际项目的问题。</p><h4 id="简洁"><a href="#简洁" class="headerlink" title="简洁"></a>简洁</h4><p>许多标准的Java样板代码，例如getter、setter以及将构造方法的参数赋值给字段的逻辑，在Kotlin中都是隐式的，并不会使你的源代码变得混乱。</p><h4 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h4><p>Kotlin设计了一个“归一化”的类型系统（一切类型皆是引用类型），纯天然地设置了一道空指针的屏障，使得Kotin比Java更加安全可靠。Kotlin有助与避免的另一种异常类型就是ClassCastException。当你把一个对象转换成一种类型，而没有事先检查它是否是正确的类型时，就会发生这个异常。Kotlin中的检查和转换被组合成了一次操作：</p><pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">if</span><span class="token punctuation">(</span>value <span class="token keyword">is</span> String<span class="token punctuation">)</span><span class="token punctuation">{</span>  <span class="token comment" spellcheck="true">//不需要额外的转换就能直接引用属于这个类型的成员</span>  <span class="token function">println</span><span class="token punctuation">(</span>value<span class="token punctuation">.</span><span class="token function">toUpperCase</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">}</span></code></pre><h4 id="互操作性"><a href="#互操作性" class="headerlink" title="互操作性"></a>互操作性</h4><p>Kotlin的优势是既有Java的完整生态（Kotlin完全无缝使用各类Java API框架库）,又有现代语言的高级特性（语法糖）。</p><h3 id="编程哲学"><a href="#编程哲学" class="headerlink" title="编程哲学"></a>编程哲学</h3><p>编程的真正问题在于，如何把人类脑子里对问题的解决方案“具化”到机器世界，而这个“具化”过程正是编程语言所要表达的东西。如何富有表现力并且安全简洁的表达，这是所有编程语言所要解决的问题。</p><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+      
+      
       <categories>
-        <category>数据库</category>
+          
+          <category> Kotin </category>
+          
       </categories>
-      <tags>
-        <tag>MySQL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/posts/3eeb.html</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class=" language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span></code></pre>
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class=" language-bash"><code class="language-bash">$ hexo server</code></pre>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bash"><code class="language-bash">$ hexo generate</code></pre>
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-bash"><code class="language-bash">$ hexo deploy</code></pre>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-  </entry>
-  <entry>
-    <title>MySQL基本介绍</title>
-    <url>/posts/68d3.html</url>
-    <content><![CDATA[<h3 id="数据库是什么"><a href="#数据库是什么" class="headerlink" title="数据库是什么"></a>数据库是什么</h3><p>据说，第二次世界大战后，美军为了有效管理大量的资料，便把所有的信息都集中在一个基地里，这个集中了所有信息的基地就称为数据库。“数据库”一词便由此诞生。</p>
-<p>现在，<code>数据库表示“具有某种数据规则的集合”</code>。但提到数据库时，我们一般都默认它具备对数据进行<code>添加、查询和提取</code>等用于管理数据的功能。所以只是随便收集起来的数据的集合不能称为数据库。只有具备了<code>有效运用这些数据的管理功能</code>，才能称为数据库。</p>
-<p>使用最广泛的数据库是<code>关系数据库</code>（Relational DataBase, RDB）。其中，一条数据称为记录（record），各个项目称为列（column）。</p>
-<p><code>管理关系数据库的系统称为RDBMS</code>（Relational DataBase Management System）。MySQL也是RDBMS的一种。RDBMS是以IBM公司的埃德加·弗兰克·科德（Edgar F.Codd）与1970年发表的关系数据库相关论文为基础发展起来的。</p>
-<h3 id="主流数据库"><a href="#主流数据库" class="headerlink" title="主流数据库"></a>主流数据库</h3><table>
-<thead>
-<tr>
-<th>名称</th>
-<th>特征</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Oracle</td>
-<td>世界上最常用的商用RDBMS</td>
-</tr>
-<tr>
-<td>Access</td>
-<td>微软公司Office系列的RDBMS</td>
-</tr>
-<tr>
-<td>Microsoft SQL Servier</td>
-<td>微软公司的商用RDBMS</td>
-</tr>
-<tr>
-<td>PostgreSQL</td>
-<td>和MySQL一样是开源的RDBMS，在日本很受欢迎</td>
-</tr>
-<tr>
-<td>MySQL</td>
-<td>世界上最常用的开源RDBMS</td>
-</tr>
-</tbody></table>
-<h3 id="MySQL新功能的添加历史"><a href="#MySQL新功能的添加历史" class="headerlink" title="MySQL新功能的添加历史"></a>MySQL新功能的添加历史</h3><table>
-<thead>
-<tr>
-<th>功能</th>
-<th>添加该功能时的MySQL版本</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>事务</td>
-<td>4.0（从版本3.23.38开始可以使用该功能）</td>
-</tr>
-<tr>
-<td>合并</td>
-<td>4.0</td>
-</tr>
-<tr>
-<td>子查询</td>
-<td>4.1</td>
-</tr>
-<tr>
-<td>视图</td>
-<td>5.0</td>
-</tr>
-<tr>
-<td>存储过程</td>
-<td>5.0</td>
-</tr>
-<tr>
-<td>存储函数</td>
-<td>5.0</td>
-</tr>
-<tr>
-<td>触发器</td>
-<td>5.0</td>
-</tr>
-<tr>
-<td>默认存储引擎变为InnoDB</td>
-<td>5.5</td>
-</tr>
-<tr>
-<td>半同步复制</td>
-<td>5.5</td>
-</tr>
-<tr>
-<td>无损半同步复制</td>
-<td>5.7</td>
-</tr>
-</tbody></table>
-<h3 id="什么是SQL"><a href="#什么是SQL" class="headerlink" title="什么是SQL"></a>什么是SQL</h3><p>SQL原本是IBM公司开发的语言，但现在这门语言基本可以在所有的数据库上使用。不过麻烦的是，各个数据库使用的SQL语法稍有不同。</p>
-<p>编写查询需要遵循SQL（Structured Query Language）的规则。SQL直译过来就是结构化查询语言，用于对数据库进行操作。<code>SQL是数据库的窗口，充当用户与数据库交互的媒介</code>。</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
+      
+      
+        <tags>
+            
+            <tag> Kotlin </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>MySQL基础命令</title>
+      <link href="posts/f6d7.html"/>
+      <url>posts/f6d7.html</url>
+      
+        <content type="html"><![CDATA[<p>在Windows和macOS的环境中不区分字符的大小写，但是在Linux环境中却区分大小写。也就是说，表tb1和表TB1在Windows和macOS环境中会作为相同的表名处理，但是在Linux环境中会作为不同的表名处理。</p><h3 id="指定数据库"><a href="#指定数据库" class="headerlink" title="指定数据库"></a>指定数据库</h3><pre class=" language-mysql"><code class="language-mysql">$ use db1;# 或者$ \u db1</code></pre><p>我们可以直接指定数据库启动MySQL监视器。</p><p>在这种情况下，可以像<code>mysql db1 -u root -proot</code> 这样，通过在命令提示符中指定数据库名来执行mysql命令。</p><p>数据库也有分开使用术语的情况，比如构成表的项目称为<code>字段</code>（field），构成记录的各项目的数据称为<code>列</code>。不过为了方便，可以统一使用“列”这一术语。</p><blockquote><p>在使用use选择数据库的状态下，也能够操作其它数据库中的表。这时可以像“数据库名.表名”这样把“数据库名”和“表名”用“.”连接起来。例如，当从其它数据库访问数据库db2中的表table的所有记录时，可以使用下面的命令。</p><pre class=" language-mysql"><code class="language-mysql">SELECT * FROM db2.table;</code></pre></blockquote><h3 id="指定字符编码创建表"><a href="#指定字符编码创建表" class="headerlink" title="指定字符编码创建表"></a>指定字符编码创建表</h3><p>在MySQL中输入字符到表中时，会因为各种原因出现字符乱码的情况。这时有一个方法可以解决这个问题，那就是指定字符编码创建表。</p><pre class=" language-mysql"><code class="language-mysql">CREATE TABLE tb1 (emp_id VARCHAR(10), name VARCHAR(10), age INT) CHARACTER=utf8</code></pre><h3 id="确认表的结构"><a href="#确认表的结构" class="headerlink" title="确认表的结构"></a>确认表的结构</h3><pre class=" language-mysql"><code class="language-mysql"># DESC 表名;DESC db1;</code></pre><p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/two.png"></p><p>Null 表示“允许不输入任何值”，Default表示“如果什么值都不输入就用这个值”。Field表示列名，Type表示数据类型。</p><p>因为列name被设置成了VARCHAR(10)，所以我们无法输入多于10个字符的数据。但是在MySQL中，即使输入了多于指定字符数（这里是10个字符）的数据也不会报错，而是会忽略无法插入的字符（这里是指10个字符之后的数据），这一点需要注意。</p><blockquote><p>如果将SQL Modes设为STRICE_TRANS_TABLES时回报出Data to long for column ‘XXX’ at row XX的错误。</p></blockquote><h3 id="向表中插入多行记录"><a href="#向表中插入多行记录" class="headerlink" title="向表中插入多行记录"></a>向表中插入多行记录</h3><pre class=" language-mysql"><code class="language-mysql">INSERT INTO tb1 (emp_id, name, age) VALUES ('A101', '佐藤', 40), ('A102', '高桥', 28), ('A103', '中川', 20), ('A104', '渡边', 23), ('A105', '西泽', 35);</code></pre><h3 id="复制表"><a href="#复制表" class="headerlink" title="复制表"></a>复制表</h3><pre class=" language-mysql"><code class="language-mysql">CREATE TABLE tb1A SELECT * FROM tb1;</code></pre><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+      
+      
       <categories>
-        <category>数据库</category>
+          
+          <category> 数据库 </category>
+          
       </categories>
-      <tags>
-        <tag>MySQL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用Docker安装YApi</title>
-    <url>/posts/b5f9.html</url>
-    <content><![CDATA[<h3 id="启动MongoDB"><a href="#启动MongoDB" class="headerlink" title="启动MongoDB"></a>启动MongoDB</h3><ol>
-<li>默认安装mongo</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash">docker run -d --name mongo-yapi mongo</code></pre>
-<ol start="2">
-<li>挂载宿主目录安装mongo</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 创建挂载目录</span>
-<span class="token function">mkdir</span> -p /data/yapi/mongodata </code></pre>
-<ol start="3">
-<li>运行mongo映射主机目录/data/yapi/mongodata</li>
-</ol>
-<pre><code>docker run --restart always -v /data/yapi/mongodata:/data/db  -d --name mongo-yapi mongo</code></pre>
-<h3 id="获取YApi镜像"><a href="#获取YApi镜像" class="headerlink" title="获取YApi镜像"></a>获取YApi镜像</h3><ol>
-<li>从阿里云镜像仓库拉取</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash">docker pull registry.cn-hangzhou.aliyuncs.com/anoy/yapi</code></pre>
-<ol start="2">
-<li>初始化 Yapi 数据库索引及管理员账号</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash">docker run -it --rm --link mongo-yapi:mongo   --entrypoint <span class="token function">npm</span>  --workdir /api/vendors  registry.cn-hangzhou.aliyuncs.com/anoy/yapi   run install-server</code></pre>
-<blockquote>
-<p>自定义配置文件挂载到目录 <code>/api/config.json</code>，官方自定义配置文件 -&gt; <a href="https://github.com/YMFE/yapi/blob/master/config_example.json">传送门</a></p>
-</blockquote>
-<ol start="3">
-<li>启动 Yapi 服务</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash">docker run -d   --name yapi  --link mongo-yapi:mongo  --workdir /api/vendors   -p 3000:3000   registry.cn-hangzhou.aliyuncs.com/anoy/yapi   server/app.js</code></pre>
-<h3 id="使用YApi"><a href="#使用YApi" class="headerlink" title="使用YApi"></a>使用YApi</h3><p>访问 <a href="https://links.jianshu.com/go?to=http://localhost:3000">http://localhost:3000</a> 登录账号 <strong><a href="https://links.jianshu.com/go?to=mailto:admin@admin.com">admin@admin.com</a>**，密码 **ymfe.org</strong></p>
-<p>至此，帅气的 Yapi 就可以轻松使用啦！</p>
-<h3 id="其它相关操作"><a href="#其它相关操作" class="headerlink" title="其它相关操作"></a>其它相关操作</h3><ol>
-<li>关闭yapi</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash">docker stop yapi</code></pre>
-<ol start="2">
-<li>开启yapi</li>
-</ol>
-<pre><code>docker start yapi</code></pre>
-<ol start="3">
-<li>升级yapi</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 1、停止并删除旧版容器</span>
-docker <span class="token function">rm</span> -f yapi
-
-<span class="token comment" spellcheck="true"># 2、获取最新镜像</span>
-docker pull registry.cn-hangzhou.aliyuncs.com/anoy/yapi
-
-<span class="token comment" spellcheck="true"># 3、启动新容器</span>
-docker run -d  --name yapi  --link mongo-yapi:mongo  --workdir /api/vendors  -p 3000:3000   registry.cn-hangzhou.aliyuncs.com/anoy/yapi   server/app.js</code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
+      
+      
+        <tags>
+            
+            <tag> MySQL </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>MySQL权限相关</title>
+      <link href="posts/8cf.html"/>
+      <url>posts/8cf.html</url>
+      
+        <content type="html"><![CDATA[<h3 id="修改密码"><a href="#修改密码" class="headerlink" title="修改密码"></a>修改密码</h3><pre class=" language-mysql"><code class="language-mysql">$ SET PASSWORD FOR root@localhost='A123456!'</code></pre><h3 id="创建用户"><a href="#创建用户" class="headerlink" title="创建用户"></a>创建用户</h3><pre class=" language-mysql"><code class="language-mysql"># CREATE USER 新用户名 IDENTIFIED BY '密码'$ CREATE USER asiama@localhost IDENTIFIED BY 'A123456!'</code></pre><h3 id="设置用户权限"><a href="#设置用户权限" class="headerlink" title="设置用户权限"></a>设置用户权限</h3><pre class=" language-mysql"><code class="language-mysql"># GRANT 赋予的权限 ON 数据库名.表名 TO 用户名$ GRANT ALL ON db1.* TO asiama@localhost</code></pre><blockquote><p>用户名需要按照“用户名@主机名”的方式书写（如果不确定主机名，可以”用户名@%”来允许所有主机）。“赋予的权限”如果是所有的权限，就设置为“ALL”；如果仅允许SELECT和UPDATE,就设置为“SELECT, UPDATE”；如果是所有的数据库的所有表，就设置为“*.*”</p></blockquote><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+      
+      
       <categories>
-        <category>YApi</category>
+          
+          <category> 数据库 </category>
+          
       </categories>
-      <tags>
-        <tag>YApi</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用Git之前需要做的最小配置</title>
-    <url>/posts/5174.html</url>
-    <content><![CDATA[<h3 id="配置user-name-和-user-email"><a href="#配置user-name-和-user-email" class="headerlink" title="配置user.name 和 user.email"></a>配置user.name 和 user.email</h3><p>全局配置「对当前用户所有仓库有效」</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --global user.name <span class="token string">"your_name"</span>
-$ <span class="token function">git</span> config --global user.email <span class="token string">"your_email"</span></code></pre>
-<p>缺省等同于local「只对某个仓库有效」</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --local user.name <span class="token string">"your_name"</span>
-$ <span class="token function">git</span> config --local user.email <span class="token string">"your_email"</span></code></pre>
-<p>系统配置「对系统所有登录的用户有效」</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --system user.name <span class="token string">"your_name"</span>
-$ <span class="token function">git</span> config --system user.email <span class="token string">"your_email"</span></code></pre>
-<h3 id="显示config的配置"><a href="#显示config的配置" class="headerlink" title="显示config的配置"></a>显示config的配置</h3><pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --list --local
-$ <span class="token function">git</span> config --list --global
-$ <span class="token function">git</span> config --list --system</code></pre>
-<h3 id="查看某一个属性"><a href="#查看某一个属性" class="headerlink" title="查看某一个属性"></a>查看某一个属性</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --global user.name</code></pre>
-<h3 id="移除设置"><a href="#移除设置" class="headerlink" title="移除设置"></a>移除设置</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --unset --global user.email</code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
+      
+      
+        <tags>
+            
+            <tag> MySQL </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>MySQL编码设置</title>
+      <link href="posts/17fc.html"/>
+      <url>posts/17fc.html</url>
+      
+        <content type="html"><![CDATA[<h3 id="命令提示符的UTF-8设置"><a href="#命令提示符的UTF-8设置" class="headerlink" title="命令提示符的UTF-8设置"></a>命令提示符的UTF-8设置</h3><p>Windows终端默认使用字符编码GBK进行数据的输入和输出，而数据库则使用UTF-8存储数据。其实我们也可以把命令终端的字符编码设置成UTF-8。我们需要按照下面的格式在命令终端执行<code>chcp</code></p><pre class=" language-shell"><code class="language-shell">$ chcp 65001</code></pre><p>chcp用于修改命令终端的字符编码，<code>65001代表UTF-8</code>。</p><h3 id="确认MySQL中字符编码的设置情况"><a href="#确认MySQL中字符编码的设置情况" class="headerlink" title="确认MySQL中字符编码的设置情况"></a>确认MySQL中字符编码的设置情况</h3><p>启动MySQL监视器，输入status。</p><p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/one.png"></p><p>1代表服务器端的字符编码设置，2代表客户端的字符编码设置。</p><p>指定字符编码启动MySQL监视器</p><pre class=" language-sh"><code class="language-sh">$ mysql -uroot -proot --default-character-set=gbk</code></pre><p>另外字符编码设置情况还可以通过下面的命令查看</p><pre class=" language-mysql"><code class="language-mysql">SHOW VARIABLES LIKE 'char%'</code></pre><p>按下<code>F7键后，历史命令</code>会全部显示出来。</p><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+      
+      
       <categories>
-        <category>项目管理</category>
+          
+          <category> 数据库 </category>
+          
       </categories>
-      <tags>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>函数式编程</title>
-    <url>/posts/f609.html</url>
-    <content><![CDATA[<p>函数式编程的核心概念如下：</p>
-<ul>
-<li>头等函数：把函数（一小段行为）当作值使用，可以用变量保存它，把它当作参数传递，或者当作其它函数的返回值。</li>
-<li>不可变性：使用不可变对象，这保证了它们的状态在其创建之后不能再变化。</li>
-<li>无副作用：使用的是纯函数。此类函数在输入相同时会产生同样的结果，并且不会修改其它对象的状态，也不会和外面的世界交互。</li>
-</ul>
-<p>优点：</p>
-<ol>
-<li>简洁</li>
-</ol>
-<p>函数式风格的代码比相应的命令式风格的代码更优雅、更简练，因为把函数当作值可以让你获得更强大的抽象能力，从而避免重复代码。假设你有两段类似的代码，实现相似的任务（例如，在集合中寻找一个匹配的元素），但具体细节略有不同（如何判断元素式匹配的）。可以轻易地将这段逻辑公共部分提取到一个函数中，并将其它不同的部分作为参数传递给它。这些参数本身也是函数，但你可以使用一种简洁的语法来表示这些匿名函数，它被称作lambda表达式。</p>
-<ol start="2">
-<li>多线程安全</li>
-</ol>
-<p>多线程程序中最大的错误来源之一就是，在没有采取适当同步机制的情况下，在不同的线程上修改同一份数据。如果你使用的是不可变数据结构和纯函数，就能保证这样不安全的修改根本不会发生，也就不需要考虑为其设计股灾的同步方案。</p>
-<ol start="3">
-<li>易测试性</li>
-</ol>
-<p>没有副作用的函数可以独立地进行测试，因为不需要写大量的设置代码来构造它们所依赖的整个环境。</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
+      
+      
+        <tags>
+            
+            <tag> MySQL </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>MySQL基本介绍</title>
+      <link href="posts/68d3.html"/>
+      <url>posts/68d3.html</url>
+      
+        <content type="html"><![CDATA[<h3 id="数据库是什么"><a href="#数据库是什么" class="headerlink" title="数据库是什么"></a>数据库是什么</h3><p>据说，第二次世界大战后，美军为了有效管理大量的资料，便把所有的信息都集中在一个基地里，这个集中了所有信息的基地就称为数据库。“数据库”一词便由此诞生。</p><p>现在，<code>数据库表示“具有某种数据规则的集合”</code>。但提到数据库时，我们一般都默认它具备对数据进行<code>添加、查询和提取</code>等用于管理数据的功能。所以只是随便收集起来的数据的集合不能称为数据库。只有具备了<code>有效运用这些数据的管理功能</code>，才能称为数据库。</p><p>使用最广泛的数据库是<code>关系数据库</code>（Relational DataBase, RDB）。其中，一条数据称为记录（record），各个项目称为列（column）。</p><p><code>管理关系数据库的系统称为RDBMS</code>（Relational DataBase Management System）。MySQL也是RDBMS的一种。RDBMS是以IBM公司的埃德加·弗兰克·科德（Edgar F.Codd）与1970年发表的关系数据库相关论文为基础发展起来的。</p><h3 id="主流数据库"><a href="#主流数据库" class="headerlink" title="主流数据库"></a>主流数据库</h3><table><thead><tr><th>名称</th><th>特征</th></tr></thead><tbody><tr><td>Oracle</td><td>世界上最常用的商用RDBMS</td></tr><tr><td>Access</td><td>微软公司Office系列的RDBMS</td></tr><tr><td>Microsoft SQL Servier</td><td>微软公司的商用RDBMS</td></tr><tr><td>PostgreSQL</td><td>和MySQL一样是开源的RDBMS，在日本很受欢迎</td></tr><tr><td>MySQL</td><td>世界上最常用的开源RDBMS</td></tr></tbody></table><h3 id="MySQL新功能的添加历史"><a href="#MySQL新功能的添加历史" class="headerlink" title="MySQL新功能的添加历史"></a>MySQL新功能的添加历史</h3><table><thead><tr><th>功能</th><th>添加该功能时的MySQL版本</th></tr></thead><tbody><tr><td>事务</td><td>4.0（从版本3.23.38开始可以使用该功能）</td></tr><tr><td>合并</td><td>4.0</td></tr><tr><td>子查询</td><td>4.1</td></tr><tr><td>视图</td><td>5.0</td></tr><tr><td>存储过程</td><td>5.0</td></tr><tr><td>存储函数</td><td>5.0</td></tr><tr><td>触发器</td><td>5.0</td></tr><tr><td>默认存储引擎变为InnoDB</td><td>5.5</td></tr><tr><td>半同步复制</td><td>5.5</td></tr><tr><td>无损半同步复制</td><td>5.7</td></tr></tbody></table><h3 id="什么是SQL"><a href="#什么是SQL" class="headerlink" title="什么是SQL"></a>什么是SQL</h3><p>SQL原本是IBM公司开发的语言，但现在这门语言基本可以在所有的数据库上使用。不过麻烦的是，各个数据库使用的SQL语法稍有不同。</p><p>编写查询需要遵循SQL（Structured Query Language）的规则。SQL直译过来就是结构化查询语言，用于对数据库进行操作。<code>SQL是数据库的窗口，充当用户与数据库交互的媒介</code>。</p><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+      
+      
       <categories>
-        <category>Kotlin</category>
+          
+          <category> 数据库 </category>
+          
       </categories>
-      <tags>
-        <tag>Kotlin</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>英语学习第一天</title>
-    <url>/posts/56b.html</url>
-    <content><![CDATA[<h2 id="五种基本句型"><a href="#五种基本句型" class="headerlink" title="五种基本句型"></a>五种基本句型</h2><p>主语：动作的发起者，位于句首。</p>
-<p>谓语：核心部分，一定是动词，紧跟在主语之后。</p>
-<p>宾语：动作的承受者。</p>
-<p>连续动词：不能组成一个完整的意思，没有实际意义，一般是be动词。</p>
-<p>表语：对主语的修饰、描述。</p>
-<p>宾语补语：对宾语的修饰、描述。</p>
-<h3 id="主-连系动词-表语"><a href="#主-连系动词-表语" class="headerlink" title="主+连系动词+表语"></a>主+连系动词+表语</h3><ul>
-<li>I am cold.</li>
-<li>The food is delicious.</li>
-<li>We are friends.</li>
-<li>Make is a nice person.</li>
-</ul>
-<h3 id="主-谓"><a href="#主-谓" class="headerlink" title="主+谓"></a>主+谓</h3><ul>
-<li>He died.</li>
-<li>He smiled.</li>
-<li>He cried.</li>
-</ul>
-<h3 id="主-谓-宾"><a href="#主-谓-宾" class="headerlink" title="主+谓+宾"></a>主+谓+宾</h3><ul>
-<li>I visited him.</li>
-<li>He killed a bear.</li>
-<li>We love her.</li>
-</ul>
-<h3 id="主-谓-双宾"><a href="#主-谓-双宾" class="headerlink" title="主+谓+双宾"></a>主+谓+双宾</h3><ul>
-<li>My father bought me a car.</li>
-<li>Mary give me an apple.</li>
-<li>He wrote her a letter.</li>
-</ul>
-<h3 id="主-谓-宾-宾语补语"><a href="#主-谓-宾-宾语补语" class="headerlink" title="主+谓+宾+宾语补语"></a>主+谓+宾+宾语补语</h3><ul>
-<li>They named him Jamie.</li>
-<li>She makes me laugh.</li>
-<li>I painted the wall white.</li>
-<li>She pushed the door open.</li>
-<li>He asked me to call Tom.</li>
-<li>I wish you to be happy.</li>
-</ul>
-<h2 id="人称代词"><a href="#人称代词" class="headerlink" title="人称代词"></a>人称代词</h2><h3 id="主格"><a href="#主格" class="headerlink" title="主格"></a>主格</h3><table>
-<thead>
-<tr>
-<th></th>
-<th>单数</th>
-<th>复数</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>第一人称</td>
-<td>i</td>
-<td>we</td>
-</tr>
-<tr>
-<td>第二人称</td>
-<td>you</td>
-<td>you</td>
-</tr>
-<tr>
-<td>第三人称</td>
-<td>he/she/it</td>
-<td>they</td>
-</tr>
-</tbody></table>
-<h3 id="宾格"><a href="#宾格" class="headerlink" title="宾格"></a>宾格</h3><table>
-<thead>
-<tr>
-<th></th>
-<th>单数</th>
-<th>复数</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>第一人称</td>
-<td>me</td>
-<td>us</td>
-</tr>
-<tr>
-<td>第二人称</td>
-<td>you</td>
-<td>you</td>
-</tr>
-<tr>
-<td>第三人称</td>
-<td>him/her/it</td>
-<td>them</td>
-</tr>
-</tbody></table>
-<h2 id="定语和状语"><a href="#定语和状语" class="headerlink" title="定语和状语"></a>定语和状语</h2><p>定语：对名词起修饰限定作用，主要是形容词。</p>
-<ul>
-<li>She is a beautiful girl.</li>
-<li>She is a tall and thin server-year-old girl.</li>
-</ul>
-<p>状语：表示方式，程度，时间，地点，原因，目的…可以修饰动词，形容词和副词。</p>
-<ul>
-<li>He woke up at midnight.（时间状语）</li>
-<li>Tim studied at home.（地点状语）</li>
-<li>She talk loudy.（方式状语）</li>
-<li>He walks in a funny way.</li>
-</ul>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
+      
+      
+        <tags>
+            
+            <tag> MySQL </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>英语学习第二天</title>
+      <link href="posts/9511.html"/>
+      <url>posts/9511.html</url>
+      
+        <content type="html"><![CDATA[<h3 id="为什么会有五种句型"><a href="#为什么会有五种句型" class="headerlink" title="为什么会有五种句型"></a>为什么会有五种句型</h3><p>这个句子有没有动词，没有动作就一般是主系表。如果有一个动作，我们把这个动作视为核心动词「谓语动词」。根据这个动词的种类不一样，这个动作涉及到别的对象呢，还是自己就能完成。涉及到别人是涉及到一个对象还是两个对象呢？这样子会划分为四种不同的类型。</p><p>定状语：状语增加动作的细节。定语增加名词的细节。动作是什么，怎么做出来的，在哪里做的，目的是什么。</p><h3 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h3><p>She bought a new bag.        <code>she</code> 主语    <code>bought</code> 谓语     <code>a new bag</code> 宾语；名词词组，冠词+形容词+名词=名词。</p><p>I am happy.         <code>i</code> 主语     <code>am</code> 连系动词     <code>happy</code> 表语</p><p>We love music.        <code>we</code> 主语     <code>love</code>谓语     <code>music</code> 宾语</p><p>We love swimming.         <code>we</code>主语     <code>love</code>谓语     <code>swimming</code>宾语</p><p>We love eating hotpot.         <code>we</code> 主语     <code>love</code>谓语     <code> eating hotpot</code>宾语（吃火锅视为一件事情）</p><p>He made me sad.         <code>He</code>主语     <code>made</code>谓语     <code>me</code>宾语    <code>sad</code>宾补</p><p>They invited me to dance.        <code>they</code>主语    <code>invited</code>谓语    <code>me</code>宾语    <code>to dance</code>宾补</p><p>My brother passed me the salt.    <code>my brother</code>主语    <code>passed</code>谓语    <code>me</code>宾语     <code>the salt</code>宾语</p><p>He sighed deeply.    <code>He</code> 主语    <code>sighed</code>谓语     <code>deeply</code>状语  叹气是不及物动词，涉及不到别人的动作。</p><p>He asked me to help him.    <code>He</code>主语    <code>asked</code>谓语    <code>me</code>宾语    <code>to help him</code>宾补</p><p>I worry about him.    <code>i</code>主语    <code>worry about</code>谓语    <code>him</code>宾语</p><p>He is looking at you.    <code>he</code>主语    <code>is looking at</code>谓语    <code>you</code>宾语</p><p>Playing basketball is my biggest time.    <code>playing basketball</code>主语    <code>is</code>系动词    <code>my biggest time</code>表语</p><p>He told me a joke.    <code>he</code>主语    <code>told</code>谓语    <code>me</code>宾语    <code>a joke</code>宾语</p><h3 id="主语"><a href="#主语" class="headerlink" title="主语"></a>主语</h3><p>动作的发出者，或者描述的对象。一般在开头。</p><ol><li>名词<ul><li>Pineapple is a kind of tropical fruit. <code>a kind of tropica</code>定语，意群。</li><li>Success requires persistence.</li><li>Monday is a workday.</li><li>A good night’s sleep is the best rest.</li></ul></li><li>代词</li><li>动名词</li><li>不定式</li><li>主语从句</li></ol><h3 id="单词"><a href="#单词" class="headerlink" title="单词"></a>单词</h3><ol><li>Hotpot  [ˈhɒtpɒt]    火锅</li><li>Invited  [ɪnˈvaɪtɪd]  邀请</li><li>Pepper [ˈpepər]  胡椒粉</li><li>Shaker  [ˈʃeɪkər] 振动器；混和器；调酒器</li><li>sighed  叹息</li><li>Pastime  [ˈpæstaɪm]  娱乐，消遣</li><li>Persistence   [pərˈsɪstəns]  坚持不懈；毅力 </li><li>Pineapple  [ˈpaɪnæpl]  菠萝</li><li>tropical  [ˈtrɑːpɪkl]  热带的</li></ol><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+      
+      
       <categories>
-        <category>英语学习</category>
+          
+          <category> 英语学习 </category>
+          
       </categories>
-      <tags>
-        <tag>English</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>英语学习第三天</title>
-    <url>/posts/9968.html</url>
-    <content><![CDATA[<h3 id="动名词作主语"><a href="#动名词作主语" class="headerlink" title="动名词作主语"></a>动名词作主语</h3><ul>
-<li>Eating an apple a day keeps you healthy.</li>
-<li>Running five miles is the first thing he does in the morning.</li>
-</ul>
-<h3 id="不定式作主语"><a href="#不定式作主语" class="headerlink" title="不定式作主语"></a>不定式作主语</h3><ul>
-<li>To study abroad is my greatest desire.</li>
-<li>To travel around the world is my plan for this year.</li>
-</ul>
-<p>动名词作主语不讨论这件事做或没做。不定式做主语，这件事情还没有做。</p>
-<p>动词要做主语，不能用原词。可以用动名词，也可以用不定式。如果是不定式，这个动作要没做才可以。</p>
-<blockquote>
-<p>不定式和动名词作主语时，常出现主语过长的情况，可以用代词it代替，作形式主语放在句首，而把真正的主语，即不定式或动名词短语放在句尾。动名词移至句尾时，常改为不定式。</p>
-</blockquote>
-<p>Collecting stamps is one of his hobbies.</p>
-<p><code>It</code> is one of his hobbies <code>to collect stamps</code>.</p>
-<p>Eating an apple a day keeps you healthy.</p>
-<p><code>It</code> keeps you healthy <code>to eat an appale</code>.</p>
-<h3 id="单词"><a href="#单词" class="headerlink" title="单词"></a>单词</h3><p>hear from 收到….的信</p>
-<p>hear sb do sth 听见某人做某事 </p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
+      
+      
+        <tags>
+            
+            <tag> English </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>英语学习第一天</title>
+      <link href="posts/56b.html"/>
+      <url>posts/56b.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="五种基本句型"><a href="#五种基本句型" class="headerlink" title="五种基本句型"></a>五种基本句型</h2><p>主语：动作的发起者，位于句首。</p><p>谓语：核心部分，一定是动词，紧跟在主语之后。</p><p>宾语：动作的承受者。</p><p>连续动词：不能组成一个完整的意思，没有实际意义，一般是be动词。</p><p>表语：对主语的修饰、描述。</p><p>宾语补语：对宾语的修饰、描述。</p><h3 id="主-连系动词-表语"><a href="#主-连系动词-表语" class="headerlink" title="主+连系动词+表语"></a>主+连系动词+表语</h3><ul><li>I am cold.</li><li>The food is delicious.</li><li>We are friends.</li><li>Make is a nice person.</li></ul><h3 id="主-谓"><a href="#主-谓" class="headerlink" title="主+谓"></a>主+谓</h3><ul><li>He died.</li><li>He smiled.</li><li>He cried.</li></ul><h3 id="主-谓-宾"><a href="#主-谓-宾" class="headerlink" title="主+谓+宾"></a>主+谓+宾</h3><ul><li>I visited him.</li><li>He killed a bear.</li><li>We love her.</li></ul><h3 id="主-谓-双宾"><a href="#主-谓-双宾" class="headerlink" title="主+谓+双宾"></a>主+谓+双宾</h3><ul><li>My father bought me a car.</li><li>Mary give me an apple.</li><li>He wrote her a letter.</li></ul><h3 id="主-谓-宾-宾语补语"><a href="#主-谓-宾-宾语补语" class="headerlink" title="主+谓+宾+宾语补语"></a>主+谓+宾+宾语补语</h3><ul><li>They named him Jamie.</li><li>She makes me laugh.</li><li>I painted the wall white.</li><li>She pushed the door open.</li><li>He asked me to call Tom.</li><li>I wish you to be happy.</li></ul><h2 id="人称代词"><a href="#人称代词" class="headerlink" title="人称代词"></a>人称代词</h2><h3 id="主格"><a href="#主格" class="headerlink" title="主格"></a>主格</h3><table><thead><tr><th></th><th>单数</th><th>复数</th></tr></thead><tbody><tr><td>第一人称</td><td>i</td><td>we</td></tr><tr><td>第二人称</td><td>you</td><td>you</td></tr><tr><td>第三人称</td><td>he/she/it</td><td>they</td></tr></tbody></table><h3 id="宾格"><a href="#宾格" class="headerlink" title="宾格"></a>宾格</h3><table><thead><tr><th></th><th>单数</th><th>复数</th></tr></thead><tbody><tr><td>第一人称</td><td>me</td><td>us</td></tr><tr><td>第二人称</td><td>you</td><td>you</td></tr><tr><td>第三人称</td><td>him/her/it</td><td>them</td></tr></tbody></table><h2 id="定语和状语"><a href="#定语和状语" class="headerlink" title="定语和状语"></a>定语和状语</h2><p>定语：对名词起修饰限定作用，主要是形容词。</p><ul><li>She is a beautiful girl.</li><li>She is a tall and thin server-year-old girl.</li></ul><p>状语：表示方式，程度，时间，地点，原因，目的…可以修饰动词，形容词和副词。</p><ul><li>He woke up at midnight.（时间状语）</li><li>Tim studied at home.（地点状语）</li><li>She talk loudy.（方式状语）</li><li>He walks in a funny way.</li></ul><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+      
+      
       <categories>
-        <category>英语学习</category>
+          
+          <category> 英语学习 </category>
+          
       </categories>
-      <tags>
-        <tag>English</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>英语学习第二天</title>
-    <url>/posts/9511.html</url>
-    <content><![CDATA[<h3 id="为什么会有五种句型"><a href="#为什么会有五种句型" class="headerlink" title="为什么会有五种句型"></a>为什么会有五种句型</h3><p>这个句子有没有动词，没有动作就一般是主系表。如果有一个动作，我们把这个动作视为核心动词「谓语动词」。根据这个动词的种类不一样，这个动作涉及到别的对象呢，还是自己就能完成。涉及到别人是涉及到一个对象还是两个对象呢？这样子会划分为四种不同的类型。</p>
-<p>定状语：状语增加动作的细节。定语增加名词的细节。动作是什么，怎么做出来的，在哪里做的，目的是什么。</p>
-<h3 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h3><p>She bought a new bag.        <code>she</code> 主语    <code>bought</code> 谓语     <code>a new bag</code> 宾语；名词词组，冠词+形容词+名词=名词。</p>
-<p>I am happy.         <code>i</code> 主语     <code>am</code> 连系动词     <code>happy</code> 表语</p>
-<p>We love music.        <code>we</code> 主语     <code>love</code>谓语     <code>music</code> 宾语</p>
-<p>We love swimming.         <code>we</code>主语     <code>love</code>谓语     <code>swimming</code>宾语</p>
-<p>We love eating hotpot.         <code>we</code> 主语     <code>love</code>谓语     <code> eating hotpot</code>宾语（吃火锅视为一件事情）</p>
-<p>He made me sad.         <code>He</code>主语     <code>made</code>谓语     <code>me</code>宾语    <code>sad</code>宾补</p>
-<p>They invited me to dance.        <code>they</code>主语    <code>invited</code>谓语    <code>me</code>宾语    <code>to dance</code>宾补</p>
-<p>My brother passed me the salt.    <code>my brother</code>主语    <code>passed</code>谓语    <code>me</code>宾语     <code>the salt</code>宾语</p>
-<p>He sighed deeply.    <code>He</code> 主语    <code>sighed</code>谓语     <code>deeply</code>状语  叹气是不及物动词，涉及不到别人的动作。</p>
-<p>He asked me to help him.    <code>He</code>主语    <code>asked</code>谓语    <code>me</code>宾语    <code>to help him</code>宾补</p>
-<p>I worry about him.    <code>i</code>主语    <code>worry about</code>谓语    <code>him</code>宾语</p>
-<p>He is looking at you.    <code>he</code>主语    <code>is looking at</code>谓语    <code>you</code>宾语</p>
-<p>Playing basketball is my biggest time.    <code>playing basketball</code>主语    <code>is</code>系动词    <code>my biggest time</code>表语</p>
-<p>He told me a joke.    <code>he</code>主语    <code>told</code>谓语    <code>me</code>宾语    <code>a joke</code>宾语</p>
-<h3 id="主语"><a href="#主语" class="headerlink" title="主语"></a>主语</h3><p>动作的发出者，或者描述的对象。一般在开头。</p>
-<ol>
-<li>名词<ul>
-<li>Pineapple is a kind of tropical fruit. <code>a kind of tropica</code>定语，意群。</li>
-<li>Success requires persistence.</li>
-<li>Monday is a workday.</li>
-<li>A good night’s sleep is the best rest.</li>
-</ul>
-</li>
-<li>代词</li>
-<li>动名词</li>
-<li>不定式</li>
-<li>主语从句</li>
-</ol>
-<h3 id="单词"><a href="#单词" class="headerlink" title="单词"></a>单词</h3><ol>
-<li>Hotpot  [ˈhɒtpɒt]    火锅</li>
-<li>Invited  [ɪnˈvaɪtɪd]  邀请</li>
-<li>Pepper [ˈpepər]  胡椒粉</li>
-<li>Shaker  [ˈʃeɪkər] 振动器；混和器；调酒器</li>
-<li>sighed  叹息</li>
-<li>Pastime  [ˈpæstaɪm]  娱乐，消遣</li>
-<li>Persistence   [pərˈsɪstəns]  坚持不懈；毅力 </li>
-<li>Pineapple  [ˈpaɪnæpl]  菠萝</li>
-<li>tropical  [ˈtrɑːpɪkl]  热带的</li>
-</ol>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
+      
+      
+        <tags>
+            
+            <tag> English </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>使用Git之前需要做的最小配置</title>
+      <link href="posts/5174.html"/>
+      <url>posts/5174.html</url>
+      
+        <content type="html"><![CDATA[<h3 id="配置user-name-和-user-email"><a href="#配置user-name-和-user-email" class="headerlink" title="配置user.name 和 user.email"></a>配置user.name 和 user.email</h3><p>全局配置「对当前用户所有仓库有效」</p><pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --global user.name <span class="token string">"your_name"</span>$ <span class="token function">git</span> config --global user.email <span class="token string">"your_email"</span></code></pre><p>缺省等同于local「只对某个仓库有效」</p><pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --local user.name <span class="token string">"your_name"</span>$ <span class="token function">git</span> config --local user.email <span class="token string">"your_email"</span></code></pre><p>系统配置「对系统所有登录的用户有效」</p><pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --system user.name <span class="token string">"your_name"</span>$ <span class="token function">git</span> config --system user.email <span class="token string">"your_email"</span></code></pre><h3 id="显示config的配置"><a href="#显示config的配置" class="headerlink" title="显示config的配置"></a>显示config的配置</h3><pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --list --local$ <span class="token function">git</span> config --list --global$ <span class="token function">git</span> config --list --system</code></pre><h3 id="查看某一个属性"><a href="#查看某一个属性" class="headerlink" title="查看某一个属性"></a>查看某一个属性</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --global user.name</code></pre><h3 id="移除设置"><a href="#移除设置" class="headerlink" title="移除设置"></a>移除设置</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --unset --global user.email</code></pre><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+      
+      
       <categories>
-        <category>英语学习</category>
+          
+          <category> 项目管理 </category>
+          
       </categories>
-      <tags>
-        <tag>English</tag>
-      </tags>
-  </entry>
+      
+      
+        <tags>
+            
+            <tag> Git </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Hello World</title>
+      <link href="posts/3eeb.html"/>
+      <url>posts/3eeb.html</url>
+      
+        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class=" language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span></code></pre><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class=" language-bash"><code class="language-bash">$ hexo server</code></pre><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bash"><code class="language-bash">$ hexo generate</code></pre><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-bash"><code class="language-bash">$ hexo deploy</code></pre><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+  
+  
 </search>
