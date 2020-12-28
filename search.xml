@@ -36,7 +36,7 @@
         <category>Kotlin</category>
       </categories>
       <tags>
-        <tag>Kotin</tag>
+        <tag>Kotlin</tag>
       </tags>
   </entry>
   <entry>
@@ -202,16 +202,19 @@ DESC db1;</code></pre>
       </tags>
   </entry>
   <entry>
-    <title>MySQL权限相关</title>
-    <url>/posts/8cf.html</url>
-    <content><![CDATA[<h3 id="修改密码"><a href="#修改密码" class="headerlink" title="修改密码"></a>修改密码</h3><pre class=" language-mysql"><code class="language-mysql">$ SET PASSWORD FOR root@localhost='A123456!'</code></pre>
-<h3 id="创建用户"><a href="#创建用户" class="headerlink" title="创建用户"></a>创建用户</h3><pre class=" language-mysql"><code class="language-mysql"># CREATE USER 新用户名 IDENTIFIED BY '密码'
-$ CREATE USER asiama@localhost IDENTIFIED BY 'A123456!'</code></pre>
-<h3 id="设置用户权限"><a href="#设置用户权限" class="headerlink" title="设置用户权限"></a>设置用户权限</h3><pre class=" language-mysql"><code class="language-mysql"># GRANT 赋予的权限 ON 数据库名.表名 TO 用户名
-$ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
-<blockquote>
-<p>用户名需要按照“用户名@主机名”的方式书写（如果不确定主机名，可以”用户名@%”来允许所有主机）。“赋予的权限”如果是所有的权限，就设置为“ALL”；如果仅允许SELECT和UPDATE,就设置为“SELECT, UPDATE”；如果是所有的数据库的所有表，就设置为“*.*”</p>
-</blockquote>
+    <title>MySQL编码设置</title>
+    <url>/posts/17fc.html</url>
+    <content><![CDATA[<h3 id="命令提示符的UTF-8设置"><a href="#命令提示符的UTF-8设置" class="headerlink" title="命令提示符的UTF-8设置"></a>命令提示符的UTF-8设置</h3><p>Windows终端默认使用字符编码GBK进行数据的输入和输出，而数据库则使用UTF-8存储数据。其实我们也可以把命令终端的字符编码设置成UTF-8。我们需要按照下面的格式在命令终端执行<code>chcp</code></p>
+<pre class=" language-shell"><code class="language-shell">$ chcp 65001</code></pre>
+<p>chcp用于修改命令终端的字符编码，<code>65001代表UTF-8</code>。</p>
+<h3 id="确认MySQL中字符编码的设置情况"><a href="#确认MySQL中字符编码的设置情况" class="headerlink" title="确认MySQL中字符编码的设置情况"></a>确认MySQL中字符编码的设置情况</h3><p>启动MySQL监视器，输入status。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/one.png"></p>
+<p>1代表服务器端的字符编码设置，2代表客户端的字符编码设置。</p>
+<p>指定字符编码启动MySQL监视器</p>
+<pre class=" language-sh"><code class="language-sh">$ mysql -uroot -proot --default-character-set=gbk</code></pre>
+<p>另外字符编码设置情况还可以通过下面的命令查看</p>
+<pre class=" language-mysql"><code class="language-mysql">SHOW VARIABLES LIKE 'char%'</code></pre>
+<p>按下<code>F7键后，历史命令</code>会全部显示出来。</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -239,19 +242,16 @@ $ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
       </tags>
   </entry>
   <entry>
-    <title>MySQL编码设置</title>
-    <url>/posts/17fc.html</url>
-    <content><![CDATA[<h3 id="命令提示符的UTF-8设置"><a href="#命令提示符的UTF-8设置" class="headerlink" title="命令提示符的UTF-8设置"></a>命令提示符的UTF-8设置</h3><p>Windows终端默认使用字符编码GBK进行数据的输入和输出，而数据库则使用UTF-8存储数据。其实我们也可以把命令终端的字符编码设置成UTF-8。我们需要按照下面的格式在命令终端执行<code>chcp</code></p>
-<pre class=" language-shell"><code class="language-shell">$ chcp 65001</code></pre>
-<p>chcp用于修改命令终端的字符编码，<code>65001代表UTF-8</code>。</p>
-<h3 id="确认MySQL中字符编码的设置情况"><a href="#确认MySQL中字符编码的设置情况" class="headerlink" title="确认MySQL中字符编码的设置情况"></a>确认MySQL中字符编码的设置情况</h3><p>启动MySQL监视器，输入status。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/one.png"></p>
-<p>1代表服务器端的字符编码设置，2代表客户端的字符编码设置。</p>
-<p>指定字符编码启动MySQL监视器</p>
-<pre class=" language-sh"><code class="language-sh">$ mysql -uroot -proot --default-character-set=gbk</code></pre>
-<p>另外字符编码设置情况还可以通过下面的命令查看</p>
-<pre class=" language-mysql"><code class="language-mysql">SHOW VARIABLES LIKE 'char%'</code></pre>
-<p>按下<code>F7键后，历史命令</code>会全部显示出来。</p>
+    <title>MySQL权限相关</title>
+    <url>/posts/8cf.html</url>
+    <content><![CDATA[<h3 id="修改密码"><a href="#修改密码" class="headerlink" title="修改密码"></a>修改密码</h3><pre class=" language-mysql"><code class="language-mysql">$ SET PASSWORD FOR root@localhost='A123456!'</code></pre>
+<h3 id="创建用户"><a href="#创建用户" class="headerlink" title="创建用户"></a>创建用户</h3><pre class=" language-mysql"><code class="language-mysql"># CREATE USER 新用户名 IDENTIFIED BY '密码'
+$ CREATE USER asiama@localhost IDENTIFIED BY 'A123456!'</code></pre>
+<h3 id="设置用户权限"><a href="#设置用户权限" class="headerlink" title="设置用户权限"></a>设置用户权限</h3><pre class=" language-mysql"><code class="language-mysql"># GRANT 赋予的权限 ON 数据库名.表名 TO 用户名
+$ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
+<blockquote>
+<p>用户名需要按照“用户名@主机名”的方式书写（如果不确定主机名，可以”用户名@%”来允许所有主机）。“赋予的权限”如果是所有的权限，就设置为“ALL”；如果仅允许SELECT和UPDATE,就设置为“SELECT, UPDATE”；如果是所有的数据库的所有表，就设置为“*.*”</p>
+</blockquote>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -426,10 +426,10 @@ System<span class="token punctuation">.</span>out<span class="token punctuation"
           });
       </script>]]></content>
       <categories>
-        <category>JAVA</category>
+        <category>Stream</category>
       </categories>
       <tags>
-        <tag>Stream</tag>
+        <tag>JAVA</tag>
       </tags>
   </entry>
   <entry>
