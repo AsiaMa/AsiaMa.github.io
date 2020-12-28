@@ -6,7 +6,7 @@
   <link href="https://blog.asiama.top/atom.xml" rel="self"/>
   
   <link href="https://blog.asiama.top/"/>
-  <updated>2020-12-28T02:28:03.146Z</updated>
+  <updated>2020-12-28T03:08:37.107Z</updated>
   <id>https://blog.asiama.top/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Stream中reduce使用</title>
+    <link href="https://blog.asiama.top/posts/801f.html"/>
+    <id>https://blog.asiama.top/posts/801f.html</id>
+    <published>2020-12-28T02:42:33.000Z</published>
+    <updated>2020-12-28T03:08:37.107Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;reduce方法用于对stream中元素进行聚合求值，最常见的用法就是将stream中一连串的值合成为单个值，比如为一个包含一系列数值的数组求和。&lt;/p&gt;
+&lt;p&gt;reduce方法有三个重载的方法，方法签名如下：&lt;/p&gt;
+&lt;pre class=&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="JAVA" scheme="https://blog.asiama.top/categories/JAVA/"/>
+    
+    
+    <category term="Stream" scheme="https://blog.asiama.top/tags/Stream/"/>
+    
+  </entry>
   
   <entry>
     <title>Stream中flatmap使用</title>
