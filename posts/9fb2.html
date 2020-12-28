@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="英语学习第三天, Java,Git,SpringBoot,SpringCloud,SpringCloud Alibaba等">
+    <meta name="keywords" content="Stream中flatmap使用, Java,Git,SpringBoot,SpringCloud,SpringCloud Alibaba等">
     <meta name="description" content="专注WJava后端,大数据,分享知识,分享生活">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>英语学习第三天 | 三十二道街</title>
+    <title>Stream中flatmap使用 | 三十二道街</title>
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/awesome/css/all.css">
@@ -309,12 +309,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/18.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/9.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">英语学习第三天</h1>
+                    <h1 class="description center-align post-title">Stream中flatmap使用</h1>
                 </div>
             </div>
         </div>
@@ -431,8 +431,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/English/">
-                                <span class="chip bg-color">English</span>
+                            <a href="/tags/Stream/">
+                                <span class="chip bg-color">Stream</span>
                             </a>
                         
                     </div>
@@ -443,8 +443,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E8%8B%B1%E8%AF%AD%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                英语学习
+                            <a href="/categories/JAVA/" class="post-category">
+                                JAVA
                             </a>
                         
                     </div>
@@ -456,28 +456,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-12-06
+                    2020-12-28
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-12-06
+                    2020-12-28
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    296
+                    831
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    4 分
                 </div>
                 
 
@@ -492,25 +492,131 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="动名词作主语"><a href="#动名词作主语" class="headerlink" title="动名词作主语"></a>动名词作主语</h3><ul>
-<li>Eating an apple a day keeps you healthy.</li>
-<li>Running five miles is the first thing he does in the morning.</li>
-</ul>
-<h3 id="不定式作主语"><a href="#不定式作主语" class="headerlink" title="不定式作主语"></a>不定式作主语</h3><ul>
-<li>To study abroad is my greatest desire.</li>
-<li>To travel around the world is my plan for this year.</li>
-</ul>
-<p>动名词作主语不讨论这件事做或没做。不定式做主语，这件事情还没有做。</p>
-<p>动词要做主语，不能用原词。可以用动名词，也可以用不定式。如果是不定式，这个动作要没做才可以。</p>
-<blockquote>
-<p>不定式和动名词作主语时，常出现主语过长的情况，可以用代词it代替，作形式主语放在句首，而把真正的主语，即不定式或动名词短语放在句尾。动名词移至句尾时，常改为不定式。</p>
+                <h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><h4 id="我的理解"><a href="#我的理解" class="headerlink" title="我的理解"></a>我的理解</h4><p>map：map方法返回的是一个object，map将流中的当前元素替换为此返回值；</p>
+<p>flatMap：flatMap方法返回的是一个stream，flatMap将流中的当前元素替换为此返回流拆解的流元素；</p>
+<h4 id="官方解释"><a href="#官方解释" class="headerlink" title="官方解释"></a>官方解释</h4><blockquote>
+<p>map:Returns a stream consisting of the results of applying the given function to the elements of this stream.</p>
 </blockquote>
-<p>Collecting stamps is one of his hobbies.</p>
-<p><code>It</code> is one of his hobbies <code>to collect stamps</code>.</p>
-<p>Eating an apple a day keeps you healthy.</p>
-<p><code>It</code> keeps you healthy <code>to eat an appale</code>.</p>
-<h3 id="单词"><a href="#单词" class="headerlink" title="单词"></a>单词</h3><p>hear from 收到….的信</p>
-<p>hear sb do sth 听见某人做某事 </p>
+<p>返回一个流，包含给定函数应用在流中每一个元素后的结果</p>
+<blockquote>
+<p>flatmap:Returns a stream consisting of the results of replacing each element of this stream with the contents of a mapped stream produced by applying the provided mapping function to each element.</p>
+</blockquote>
+<p>返回一个流，包含将此流中的每个元素替换为通过给定函数映射应用于每个元素而生成的映射流的内容</p>
+<h4 id="举例说明"><a href="#举例说明" class="headerlink" title="举例说明"></a>举例说明</h4><p>有二箱鸡蛋，每箱5个，现在要把鸡蛋加工成煎蛋，然后分给学生。</p>
+<p>map做的事情：把二箱鸡蛋分别加工成煎蛋，还是放成原来的两箱，分给2组学生；</p>
+<p>flatMap做的事情：把二箱鸡蛋分别加工成煎蛋，然后放到一起【10个煎蛋】，分给10个学生；</p>
+<h3 id="用例一"><a href="#用例一" class="headerlink" title="用例一"></a>用例一</h3><pre class=" language-java"><code class="language-java">List<span class="token operator">&lt;</span>String<span class="token operator">></span> data <span class="token operator">=</span> Arrays<span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span><span class="token string">"好,好,学"</span><span class="token punctuation">,</span> <span class="token string">"习,天,天"</span><span class="token punctuation">,</span> <span class="token string">"向,上"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+List<span class="token operator">&lt;</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">></span> dataArray <span class="token operator">=</span> data<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>s <span class="token operator">-</span><span class="token operator">></span> s<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">","</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span>Collectors<span class="token punctuation">.</span><span class="token function">toList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">for</span> <span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> s <span class="token operator">:</span> dataArray<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>Arrays<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">/** 输出结果： [好, 好, 学] [习, 天, 天] [向, 上] */</span>
+
+List<span class="token operator">&lt;</span>String<span class="token operator">></span> dataList <span class="token operator">=</span> data<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">flatMap</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Function</span><span class="token operator">&lt;</span>String<span class="token punctuation">,</span> Stream<span class="token operator">&lt;</span>String<span class="token operator">>></span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token annotation punctuation">@Override</span>
+  <span class="token keyword">public</span> Stream<span class="token operator">&lt;</span>String<span class="token operator">></span> <span class="token function">apply</span><span class="token punctuation">(</span>String s<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> Arrays<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span>s<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">","</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span>Collectors<span class="token punctuation">.</span><span class="token function">toList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>dataList<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">/** 输出结果： [好, 好, 学, 习, 天, 天, 向, 上] */</span></code></pre>
+<h3 id="用例二"><a href="#用例二" class="headerlink" title="用例二"></a>用例二</h3><pre class=" language-java"><code class="language-java">List<span class="token operator">&lt;</span>String<span class="token operator">></span> teamIndia <span class="token operator">=</span> Arrays<span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span><span class="token string">"Virat"</span><span class="token punctuation">,</span> <span class="token string">"Dhoni"</span><span class="token punctuation">,</span> <span class="token string">"Jadeja"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+List<span class="token operator">&lt;</span>String<span class="token operator">></span> teamAustralia <span class="token operator">=</span> Arrays<span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span><span class="token string">"Warner"</span><span class="token punctuation">,</span> <span class="token string">"Watson"</span><span class="token punctuation">,</span> <span class="token string">"Smith"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+List<span class="token operator">&lt;</span>String<span class="token operator">></span> teamEngland <span class="token operator">=</span> Arrays<span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span><span class="token string">"Alex"</span><span class="token punctuation">,</span> <span class="token string">"Bell"</span><span class="token punctuation">,</span> <span class="token string">"Broad"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+List<span class="token operator">&lt;</span>String<span class="token operator">></span> teamNewZeland <span class="token operator">=</span> Arrays<span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span><span class="token string">"Kane"</span><span class="token punctuation">,</span> <span class="token string">"Nathan"</span><span class="token punctuation">,</span> <span class="token string">"Vettori"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+List<span class="token operator">&lt;</span>String<span class="token operator">></span> teamSouthAfrica <span class="token operator">=</span> Arrays<span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span><span class="token string">"AB"</span><span class="token punctuation">,</span> <span class="token string">"Amla"</span><span class="token punctuation">,</span> <span class="token string">"Faf"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+List<span class="token operator">&lt;</span>String<span class="token operator">></span> teamWestIndies <span class="token operator">=</span> Arrays<span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span><span class="token string">"Sammy"</span><span class="token punctuation">,</span> <span class="token string">"Gayle"</span><span class="token punctuation">,</span> <span class="token string">"Narine"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+List<span class="token operator">&lt;</span>String<span class="token operator">></span> teamSriLanka <span class="token operator">=</span> Arrays<span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span><span class="token string">"Mahela"</span><span class="token punctuation">,</span> <span class="token string">"Sanga"</span><span class="token punctuation">,</span> <span class="token string">"Dilshan"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+List<span class="token operator">&lt;</span>String<span class="token operator">></span> teamPakistan <span class="token operator">=</span> Arrays<span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span><span class="token string">"Misbah"</span><span class="token punctuation">,</span> <span class="token string">"Afridi"</span><span class="token punctuation">,</span> <span class="token string">"Shehzad"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+List<span class="token operator">&lt;</span>List<span class="token operator">&lt;</span>String<span class="token operator">>></span> playersInWorldCup2016 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+playersInWorldCup2016<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>teamIndia<span class="token punctuation">)</span><span class="token punctuation">;</span>
+playersInWorldCup2016<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>teamAustralia<span class="token punctuation">)</span><span class="token punctuation">;</span>
+playersInWorldCup2016<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>teamEngland<span class="token punctuation">)</span><span class="token punctuation">;</span>
+playersInWorldCup2016<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>teamNewZeland<span class="token punctuation">)</span><span class="token punctuation">;</span>
+playersInWorldCup2016<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>teamSouthAfrica<span class="token punctuation">)</span><span class="token punctuation">;</span>
+playersInWorldCup2016<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>teamWestIndies<span class="token punctuation">)</span><span class="token punctuation">;</span>
+playersInWorldCup2016<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>teamSriLanka<span class="token punctuation">)</span><span class="token punctuation">;</span>
+playersInWorldCup2016<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>teamPakistan<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// java8之前</span>
+List<span class="token operator">&lt;</span>String<span class="token operator">></span> listOfAllPlayers <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">for</span><span class="token punctuation">(</span>List<span class="token operator">&lt;</span>String<span class="token operator">></span> team <span class="token operator">:</span> playersInWorldCup2016<span class="token punctuation">)</span><span class="token punctuation">{</span>
+  listOfAllPlayers<span class="token punctuation">.</span><span class="token function">addAll</span><span class="token punctuation">(</span>team<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Players playing in world cup 2016"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>listOfAllPlayers<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// java8 使用flatmap</span>
+List<span class="token operator">&lt;</span>String<span class="token operator">></span> flatMapList <span class="token operator">=</span> playersInWorldCup2016<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">flatMap</span><span class="token punctuation">(</span>pList <span class="token operator">-</span><span class="token operator">></span> pList<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span>Collectors<span class="token punctuation">.</span><span class="token function">toList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"List of all Players using Java 8"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>flatMapList<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">/**
+   * 输出结果：
+   * Players playing in world cup 2016
+   * [Virat, Dhoni, Jadeja, Warner, Watson, Smith, Alex,Bell, Broad, Kane, Nathan, Vettori, AB, Amla, Faf, Sammy, Gayle, Narine, Mahela, Sanga, Dilshan, Misbah, Afridi, Shehzad]
+   * List of all Players using Java 8
+   * [Virat, Dhoni, Jadeja,Warner, Watson, Smith, Alex, Bell, Broad, Kane, Nathan, Vettori, AB, Amla, Faf, Sammy, Gayle,Narine, Mahela, Sanga, Dilshan, Misbah, Afridi, Shehzad]
+   */</span></code></pre>
+<h3 id="用例3"><a href="#用例3" class="headerlink" title="用例3"></a>用例3</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">App</span> <span class="token punctuation">{</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    List<span class="token operator">&lt;</span>KlassGroup<span class="token operator">></span> groupList <span class="token operator">=</span>
+        Arrays<span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span>
+            <span class="token keyword">new</span> <span class="token class-name">KlassGroup</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Klass</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">Klass</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">Klass</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            <span class="token keyword">new</span> <span class="token class-name">KlassGroup</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Klass</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">Klass</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">Klass</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            <span class="token keyword">new</span> <span class="token class-name">KlassGroup</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Klass</span><span class="token punctuation">(</span><span class="token number">7</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">Klass</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">Klass</span><span class="token punctuation">(</span><span class="token number">9</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            <span class="token keyword">new</span> <span class="token class-name">KlassGroup</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Klass</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    List<span class="token operator">&lt;</span>List<span class="token operator">&lt;</span>Klass<span class="token operator">>></span> result <span class="token operator">=</span>
+        groupList<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>it <span class="token operator">-</span><span class="token operator">></span> it<span class="token punctuation">.</span><span class="token function">getKlassList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span>Collectors<span class="token punctuation">.</span><span class="token function">toList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    List<span class="token operator">&lt;</span>Klass<span class="token operator">></span> result2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>KlassGroup group <span class="token operator">:</span> groupList<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      result2<span class="token punctuation">.</span><span class="token function">addAll</span><span class="token punctuation">(</span>group<span class="token punctuation">.</span><span class="token function">getKlassList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"result2 = "</span> <span class="token operator">+</span> result2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    List<span class="token operator">&lt;</span>Klass<span class="token operator">></span> result3 <span class="token operator">=</span>
+        groupList<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">flatMap</span><span class="token punctuation">(</span>it <span class="token operator">-</span><span class="token operator">></span> it<span class="token punctuation">.</span><span class="token function">getKlassList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span>Collectors<span class="token punctuation">.</span><span class="token function">toList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"result3 = "</span> <span class="token operator">+</span> result3<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">Klass</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">int</span> field<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token function">Klass</span><span class="token punctuation">(</span><span class="token keyword">int</span> field<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>field <span class="token operator">=</span> field<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> String <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">return</span> <span class="token string">"field="</span> <span class="token operator">+</span> field<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">KlassGroup</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> List<span class="token operator">&lt;</span>Klass<span class="token operator">></span> group <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token function">KlassGroup</span><span class="token punctuation">(</span>Klass<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> objList<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">for</span> <span class="token punctuation">(</span>Klass item <span class="token operator">:</span> objList<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>group<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> List<span class="token operator">&lt;</span>Klass<span class="token operator">></span> <span class="token function">getKlassList</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">return</span> group<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -554,7 +660,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://blog.asiama.top/posts/9968.html">https://blog.asiama.top/posts/9968.html</a>
+                    <a href="https://blog.asiama.top/posts/9fb2.html">https://blog.asiama.top/posts/9fb2.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -592,8 +698,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/English/">
-                                    <span class="chip bg-color">English</span>
+                                <a href="/tags/Stream/">
+                                    <span class="chip bg-color">Stream</span>
                                 </a>
                             
                         </div>
@@ -764,7 +870,7 @@
         repo: 'asiama.github.io',
         owner: 'asiama',
         admin: "asiama",
-        id: '2020-12-06T22-01-19',
+        id: '2020-12-28T09-19-59',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -788,17 +894,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/posts/f609.html">
+                <a href="/posts/9fb2.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/23.jpg" class="responsive-img" alt="函数式编程">
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/9.jpg" class="responsive-img" alt="Stream中flatmap使用">
                         
-                        <span class="card-title">函数式编程</span>
+                        <span class="card-title">Stream中flatmap使用</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -808,26 +915,27 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-12-07
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-12-28
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Kotlin/" class="post-category">
-                                    Kotlin
+                            <a href="/categories/JAVA/" class="post-category">
+                                    JAVA
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Kotlin/">
-                        <span class="chip bg-color">Kotlin</span>
+                    <a href="/tags/Stream/">
+                        <span class="chip bg-color">Stream</span>
                     </a>
                     
                 </div>
@@ -841,13 +949,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/posts/5487.html">
+                <a href="/posts/b5f9.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/15.jpg" class="responsive-img" alt="Kotin介绍">
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/2.jpg" class="responsive-img" alt="使用Docker安装YApi">
                         
-                        <span class="card-title">Kotin介绍</span>
+                        <span class="card-title">使用Docker安装YApi</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -858,14 +966,14 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-12-06
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-12-27
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Kotlin/" class="post-category">
-                                    Kotlin
+                            <a href="/categories/YApi/" class="post-category">
+                                    YApi
                                 </a>
                             
                             
@@ -875,8 +983,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Kotlin/">
-                        <span class="chip bg-color">Kotlin</span>
+                    <a href="/tags/YApi/">
+                        <span class="chip bg-color">YApi</span>
                     </a>
                     
                 </div>

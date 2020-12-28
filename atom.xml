@@ -6,7 +6,7 @@
   <link href="https://blog.asiama.top/atom.xml" rel="self"/>
   
   <link href="https://blog.asiama.top/"/>
-  <updated>2020-12-27T07:10:58.731Z</updated>
+  <updated>2020-12-28T02:13:27.685Z</updated>
   <id>https://blog.asiama.top/</id>
   
   <author>
@@ -17,11 +17,36 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Stream中flatmap使用</title>
+    <link href="https://blog.asiama.top/posts/9fb2.html"/>
+    <id>https://blog.asiama.top/posts/9fb2.html</id>
+    <published>2020-12-28T01:19:59.000Z</published>
+    <updated>2020-12-28T02:13:27.685Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;headerlink&quot; title=&quot;介绍&quot;&gt;&lt;/a&gt;介绍&lt;/h3&gt;&lt;h4 id=&quot;我的理解&quot;&gt;&lt;a href=&quot;#我的理解&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="JAVA" scheme="https://blog.asiama.top/categories/JAVA/"/>
+    
+    
+    <category term="Stream" scheme="https://blog.asiama.top/tags/Stream/"/>
+    
+  </entry>
+  
+  <entry>
     <title>使用Docker安装YApi</title>
     <link href="https://blog.asiama.top/posts/b5f9.html"/>
     <id>https://blog.asiama.top/posts/b5f9.html</id>
     <published>2020-12-27T06:41:12.000Z</published>
-    <updated>2020-12-27T07:10:58.731Z</updated>
+    <updated>2020-12-28T01:23:27.534Z</updated>
     
     
       
@@ -49,7 +74,7 @@
     <link href="https://blog.asiama.top/posts/9fbb.html"/>
     <id>https://blog.asiama.top/posts/9fbb.html</id>
     <published>2020-12-23T10:07:29.000Z</published>
-    <updated>2020-12-23T10:46:53.196Z</updated>
+    <updated>2020-12-28T01:24:33.492Z</updated>
     
     
       
@@ -62,7 +87,7 @@
     
     
     
-    <category term="Kotin" scheme="https://blog.asiama.top/categories/Kotin/"/>
+    <category term="Kotlin" scheme="https://blog.asiama.top/categories/Kotlin/"/>
     
     
     <category term="Kotlin" scheme="https://blog.asiama.top/tags/Kotlin/"/>
@@ -154,7 +179,7 @@
     <link href="https://blog.asiama.top/posts/5487.html"/>
     <id>https://blog.asiama.top/posts/5487.html</id>
     <published>2020-12-06T08:24:10.000Z</published>
-    <updated>2020-12-06T20:31:27.990Z</updated>
+    <updated>2020-12-28T01:24:14.352Z</updated>
     
     
       
@@ -167,7 +192,7 @@
     
     
     
-    <category term="Kotin" scheme="https://blog.asiama.top/categories/Kotin/"/>
+    <category term="Kotlin" scheme="https://blog.asiama.top/categories/Kotlin/"/>
     
     
     <category term="Kotlin" scheme="https://blog.asiama.top/tags/Kotlin/"/>
