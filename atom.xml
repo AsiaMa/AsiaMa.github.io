@@ -6,7 +6,7 @@
   <link href="https://blog.asiama.top/atom.xml" rel="self"/>
   
   <link href="https://blog.asiama.top/"/>
-  <updated>2020-12-28T03:08:37.107Z</updated>
+  <updated>2020-12-28T03:11:56.531Z</updated>
   <id>https://blog.asiama.top/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://blog.asiama.top/posts/801f.html"/>
     <id>https://blog.asiama.top/posts/801f.html</id>
     <published>2020-12-28T02:42:33.000Z</published>
-    <updated>2020-12-28T03:08:37.107Z</updated>
+    <updated>2020-12-28T03:11:56.531Z</updated>
     
     
       
@@ -36,10 +36,10 @@
     
     
     
-    <category term="JAVA" scheme="https://blog.asiama.top/categories/JAVA/"/>
+    <category term="Stream" scheme="https://blog.asiama.top/categories/Stream/"/>
     
     
-    <category term="Stream" scheme="https://blog.asiama.top/tags/Stream/"/>
+    <category term="JAVA" scheme="https://blog.asiama.top/tags/JAVA/"/>
     
   </entry>
   
