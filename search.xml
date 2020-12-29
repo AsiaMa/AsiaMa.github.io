@@ -40,6 +40,187 @@
       </tags>
   </entry>
   <entry>
+    <title>Kotlin常用作用域函数</title>
+    <url>/posts/c396.html</url>
+    <content><![CDATA[<h3 id="let-和-run"><a href="#let-和-run" class="headerlink" title="let 和 run"></a>let 和 run</h3><p>let 和 run 都会返回闭包的执行结果，区别在于let有闭包参数，而run没有闭包参数。</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token keyword">var</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span>
+<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">val</span> letResult<span class="token operator">:</span> String <span class="token operator">=</span> user<span class="token punctuation">.</span><span class="token function">let</span> <span class="token punctuation">{</span> user<span class="token operator">:</span> User <span class="token operator">-></span>
+        <span class="token string">"let:: <span class="token interpolation"><span class="token delimiter variable">${</span>user<span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span>
+    <span class="token punctuation">}</span>
+  <span class="token comment" spellcheck="true">/** 
+         简化写法
+         val letResult: String = user.let {
+        "let:: ${it.javaClass.simpleName}"
+    } 
+   */</span>
+
+    <span class="token function">println</span><span class="token punctuation">(</span>letResult<span class="token punctuation">)</span>
+
+    <span class="token keyword">val</span> runResult <span class="token operator">=</span> user<span class="token punctuation">.</span><span class="token function">run</span> <span class="token punctuation">{</span>
+        <span class="token string">"run:: <span class="token interpolation"><span class="token delimiter variable">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">print</span><span class="token punctuation">(</span>runResult<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">/** 输出结果：let:: User
+                         run:: User */</span></code></pre>
+<h3 id="also-和-apply"><a href="#also-和-apply" class="headerlink" title="also 和 apply"></a>also 和 apply</h3><p>also与apply都不返回闭包的执行结果，区别在于also有闭包参数，而apply没有闭包参数。</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token keyword">var</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span>
+
+<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
+
+    user<span class="token punctuation">.</span><span class="token function">also</span> <span class="token punctuation">{</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"also::<span class="token interpolation"><span class="token delimiter variable">${</span>it<span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    user<span class="token punctuation">.</span><span class="token function">apply</span> <span class="token punctuation">{</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"apply::<span class="token interpolation"><span class="token delimiter variable">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">// 在这个例子中，also 和 apply 会继续返回user这个对象，因为我们可以这么使用</span>
+        user<span class="token punctuation">.</span><span class="token function">also</span> <span class="token punctuation">{</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"also::<span class="token interpolation"><span class="token delimiter variable">${</span>it<span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">.</span><span class="token function">apply</span> <span class="token punctuation">{</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"apply::<span class="token interpolation"><span class="token delimiter variable">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">"Bob"</span>
+
+    <span class="token function">print</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">/** 输出结果：User(name=Bob) */</span></code></pre>
+<h3 id="takeIf-和-takeUnless"><a href="#takeIf-和-takeUnless" class="headerlink" title="takeIf 和 takeUnless"></a>takeIf 和 takeUnless</h3><p>takeIf 的闭包返回一个判断结果，为false时，takeIf函数会返回空。</p>
+<p>takeUnless 与 takeIf 刚好相反，闭包的判断结果，为true时函数会返回空。</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
+
+    user<span class="token punctuation">.</span><span class="token function">takeIf</span> <span class="token punctuation">{</span>
+        it<span class="token punctuation">.</span>name<span class="token punctuation">.</span><span class="token function">isNotEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">also</span> <span class="token punctuation">{</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"姓名为: <span class="token interpolation"><span class="token delimiter variable">${</span>it<span class="token punctuation">.</span>name<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token operator">?:</span> <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"姓名为空"</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/** 输出结果：姓名为: AsiaMa */</span>
+
+<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
+
+    user<span class="token punctuation">.</span><span class="token function">takeUnless</span> <span class="token punctuation">{</span>
+        it<span class="token punctuation">.</span>name<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">also</span> <span class="token punctuation">{</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"姓名为: <span class="token interpolation"><span class="token delimiter variable">${</span>it<span class="token punctuation">.</span>name<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token operator">?:</span> <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"姓名为空"</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/** 输出结果：姓名为: AsiaMa */</span></code></pre>
+<h3 id="Repeat"><a href="#Repeat" class="headerlink" title="Repeat"></a>Repeat</h3><p>重复执行当前闭包</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token keyword">var</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span>
+
+<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
+
+    <span class="token function">repeat</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token function">print</span><span class="token punctuation">(</span>user<span class="token punctuation">.</span>name<span class="token punctuation">)</span>
+        <span class="token function">println</span><span class="token punctuation">(</span>it<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/**
+输出结果：
+        AsiaMa0
+        AsiaMa1
+        AsiaMa2
+        AsiaMa3
+        AsiaMa4
+*/</span></code></pre>
+<h3 id="With"><a href="#With" class="headerlink" title="With"></a>With</h3><p>with比较特殊，不是以扩展方法的形式存在，而是一个顶级函数。可用于对象的通用属性赋值。</p>
+<pre class=" language-java"><code class="language-java">fun <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    val user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
+
+    <span class="token function">with</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">"Tom"</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">println</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span>
+
+  <span class="token comment" spellcheck="true">/** 与with相似    
+    user.apply {
+        this.name = "Rose"
+    }
+  */</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/** 输出结果：User(name=Tom) */</span></code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <categories>
+        <category>函数式编程</category>
+      </categories>
+      <tags>
+        <tag>Kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Kotlin单例</title>
+    <url>/posts/9fbb.html</url>
+    <content><![CDATA[<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">class</span> Singleton <span class="token keyword">private</span> <span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">companion</span> <span class="token keyword">object</span> <span class="token punctuation">{</span>
+        <span class="token keyword">fun</span> <span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> Singleton <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> Holder<span class="token punctuation">.</span>instance
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">object</span> Holder <span class="token punctuation">{</span>
+        <span class="token keyword">val</span> instance <span class="token operator">=</span> <span class="token function">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <categories>
+        <category>Kotlin</category>
+      </categories>
+      <tags>
+        <tag>Kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Kotin介绍</title>
     <url>/posts/5487.html</url>
     <content><![CDATA[<h3 id="Kotlin的主要特征"><a href="#Kotlin的主要特征" class="headerlink" title="Kotlin的主要特征"></a>Kotlin的主要特征</h3><h4 id="静态类型"><a href="#静态类型" class="headerlink" title="静态类型"></a>静态类型</h4><p>Kotlin和Java一样是一种静态类型的编程语言。这意味着<code>所有表达式的类型在编译器已经确定了，而编译器就能验证对象是否包含了你想访问的方法或者字段</code>。</p>
@@ -106,99 +287,6 @@ b<span class="token operator">?</span><span class="token punctuation">.</span>le
       </categories>
       <tags>
         <tag>Kotlin</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Kotlin单例</title>
-    <url>/posts/9fbb.html</url>
-    <content><![CDATA[<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">class</span> Singleton <span class="token keyword">private</span> <span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-
-    <span class="token keyword">companion</span> <span class="token keyword">object</span> <span class="token punctuation">{</span>
-        <span class="token keyword">fun</span> <span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> Singleton <span class="token punctuation">{</span>
-            <span class="token keyword">return</span> Holder<span class="token punctuation">.</span>instance
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">private</span> <span class="token keyword">object</span> Holder <span class="token punctuation">{</span>
-        <span class="token keyword">val</span> instance <span class="token operator">=</span> <span class="token function">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <categories>
-        <category>Kotlin</category>
-      </categories>
-      <tags>
-        <tag>Kotlin</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MySQL基础命令</title>
-    <url>/posts/f6d7.html</url>
-    <content><![CDATA[<p>在Windows和macOS的环境中不区分字符的大小写，但是在Linux环境中却区分大小写。也就是说，表tb1和表TB1在Windows和macOS环境中会作为相同的表名处理，但是在Linux环境中会作为不同的表名处理。</p>
-<h3 id="指定数据库"><a href="#指定数据库" class="headerlink" title="指定数据库"></a>指定数据库</h3><pre class=" language-mysql"><code class="language-mysql">$ use db1;
-# 或者
-$ \u db1</code></pre>
-<p>我们可以直接指定数据库启动MySQL监视器。</p>
-<p>在这种情况下，可以像<code>mysql db1 -u root -proot</code> 这样，通过在命令提示符中指定数据库名来执行mysql命令。</p>
-<p>数据库也有分开使用术语的情况，比如构成表的项目称为<code>字段</code>（field），构成记录的各项目的数据称为<code>列</code>。不过为了方便，可以统一使用“列”这一术语。</p>
-<blockquote>
-<p>在使用use选择数据库的状态下，也能够操作其它数据库中的表。这时可以像“数据库名.表名”这样把“数据库名”和“表名”用“.”连接起来。例如，当从其它数据库访问数据库db2中的表table的所有记录时，可以使用下面的命令。</p>
-<pre class=" language-mysql"><code class="language-mysql">SELECT * FROM db2.table;</code></pre>
-</blockquote>
-<h3 id="指定字符编码创建表"><a href="#指定字符编码创建表" class="headerlink" title="指定字符编码创建表"></a>指定字符编码创建表</h3><p>在MySQL中输入字符到表中时，会因为各种原因出现字符乱码的情况。这时有一个方法可以解决这个问题，那就是指定字符编码创建表。</p>
-<pre class=" language-mysql"><code class="language-mysql">CREATE TABLE tb1 (emp_id VARCHAR(10), name VARCHAR(10), age INT) CHARACTER=utf8</code></pre>
-<h3 id="确认表的结构"><a href="#确认表的结构" class="headerlink" title="确认表的结构"></a>确认表的结构</h3><pre class=" language-mysql"><code class="language-mysql"># DESC 表名;
-DESC db1;</code></pre>
-<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/two.png"></p>
-<p>Null 表示“允许不输入任何值”，Default表示“如果什么值都不输入就用这个值”。Field表示列名，Type表示数据类型。</p>
-<p>因为列name被设置成了VARCHAR(10)，所以我们无法输入多于10个字符的数据。但是在MySQL中，即使输入了多于指定字符数（这里是10个字符）的数据也不会报错，而是会忽略无法插入的字符（这里是指10个字符之后的数据），这一点需要注意。</p>
-<blockquote>
-<p>如果将SQL Modes设为STRICE_TRANS_TABLES时回报出Data to long for column ‘XXX’ at row XX的错误。</p>
-</blockquote>
-<h3 id="向表中插入多行记录"><a href="#向表中插入多行记录" class="headerlink" title="向表中插入多行记录"></a>向表中插入多行记录</h3><pre class=" language-mysql"><code class="language-mysql">INSERT INTO tb1 (emp_id, name, age) VALUES ('A101', '佐藤', 40), ('A102', '高桥', 28), ('A103', '中川', 20), ('A104', '渡边', 23), ('A105', '西泽', 35);</code></pre>
-<h3 id="复制表"><a href="#复制表" class="headerlink" title="复制表"></a>复制表</h3><pre class=" language-mysql"><code class="language-mysql">CREATE TABLE tb1A SELECT * FROM tb1;</code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <categories>
-        <category>数据库</category>
-      </categories>
-      <tags>
-        <tag>MySQL</tag>
       </tags>
   </entry>
   <entry>
@@ -282,6 +370,58 @@ DESC db1;</code></pre>
       </tags>
   </entry>
   <entry>
+    <title>MySQL基础命令</title>
+    <url>/posts/f6d7.html</url>
+    <content><![CDATA[<p>在Windows和macOS的环境中不区分字符的大小写，但是在Linux环境中却区分大小写。也就是说，表tb1和表TB1在Windows和macOS环境中会作为相同的表名处理，但是在Linux环境中会作为不同的表名处理。</p>
+<h3 id="指定数据库"><a href="#指定数据库" class="headerlink" title="指定数据库"></a>指定数据库</h3><pre class=" language-mysql"><code class="language-mysql">$ use db1;
+# 或者
+$ \u db1</code></pre>
+<p>我们可以直接指定数据库启动MySQL监视器。</p>
+<p>在这种情况下，可以像<code>mysql db1 -u root -proot</code> 这样，通过在命令提示符中指定数据库名来执行mysql命令。</p>
+<p>数据库也有分开使用术语的情况，比如构成表的项目称为<code>字段</code>（field），构成记录的各项目的数据称为<code>列</code>。不过为了方便，可以统一使用“列”这一术语。</p>
+<blockquote>
+<p>在使用use选择数据库的状态下，也能够操作其它数据库中的表。这时可以像“数据库名.表名”这样把“数据库名”和“表名”用“.”连接起来。例如，当从其它数据库访问数据库db2中的表table的所有记录时，可以使用下面的命令。</p>
+<pre class=" language-mysql"><code class="language-mysql">SELECT * FROM db2.table;</code></pre>
+</blockquote>
+<h3 id="指定字符编码创建表"><a href="#指定字符编码创建表" class="headerlink" title="指定字符编码创建表"></a>指定字符编码创建表</h3><p>在MySQL中输入字符到表中时，会因为各种原因出现字符乱码的情况。这时有一个方法可以解决这个问题，那就是指定字符编码创建表。</p>
+<pre class=" language-mysql"><code class="language-mysql">CREATE TABLE tb1 (emp_id VARCHAR(10), name VARCHAR(10), age INT) CHARACTER=utf8</code></pre>
+<h3 id="确认表的结构"><a href="#确认表的结构" class="headerlink" title="确认表的结构"></a>确认表的结构</h3><pre class=" language-mysql"><code class="language-mysql"># DESC 表名;
+DESC db1;</code></pre>
+<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/two.png"></p>
+<p>Null 表示“允许不输入任何值”，Default表示“如果什么值都不输入就用这个值”。Field表示列名，Type表示数据类型。</p>
+<p>因为列name被设置成了VARCHAR(10)，所以我们无法输入多于10个字符的数据。但是在MySQL中，即使输入了多于指定字符数（这里是10个字符）的数据也不会报错，而是会忽略无法插入的字符（这里是指10个字符之后的数据），这一点需要注意。</p>
+<blockquote>
+<p>如果将SQL Modes设为STRICE_TRANS_TABLES时回报出Data to long for column ‘XXX’ at row XX的错误。</p>
+</blockquote>
+<h3 id="向表中插入多行记录"><a href="#向表中插入多行记录" class="headerlink" title="向表中插入多行记录"></a>向表中插入多行记录</h3><pre class=" language-mysql"><code class="language-mysql">INSERT INTO tb1 (emp_id, name, age) VALUES ('A101', '佐藤', 40), ('A102', '高桥', 28), ('A103', '中川', 20), ('A104', '渡边', 23), ('A105', '西泽', 35);</code></pre>
+<h3 id="复制表"><a href="#复制表" class="headerlink" title="复制表"></a>复制表</h3><pre class=" language-mysql"><code class="language-mysql">CREATE TABLE tb1A SELECT * FROM tb1;</code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <categories>
+        <category>数据库</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MySQL权限相关</title>
     <url>/posts/8cf.html</url>
     <content><![CDATA[<h3 id="修改密码"><a href="#修改密码" class="headerlink" title="修改密码"></a>修改密码</h3><pre class=" language-mysql"><code class="language-mysql">$ SET PASSWORD FOR root@localhost='A123456!'</code></pre>
@@ -292,6 +432,46 @@ $ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
 <blockquote>
 <p>用户名需要按照“用户名@主机名”的方式书写（如果不确定主机名，可以”用户名@%”来允许所有主机）。“赋予的权限”如果是所有的权限，就设置为“ALL”；如果仅允许SELECT和UPDATE,就设置为“SELECT, UPDATE”；如果是所有的数据库的所有表，就设置为“*.*”</p>
 </blockquote>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <categories>
+        <category>数据库</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MySQL编码设置</title>
+    <url>/posts/17fc.html</url>
+    <content><![CDATA[<h3 id="命令提示符的UTF-8设置"><a href="#命令提示符的UTF-8设置" class="headerlink" title="命令提示符的UTF-8设置"></a>命令提示符的UTF-8设置</h3><p>Windows终端默认使用字符编码GBK进行数据的输入和输出，而数据库则使用UTF-8存储数据。其实我们也可以把命令终端的字符编码设置成UTF-8。我们需要按照下面的格式在命令终端执行<code>chcp</code></p>
+<pre class=" language-shell"><code class="language-shell">$ chcp 65001</code></pre>
+<p>chcp用于修改命令终端的字符编码，<code>65001代表UTF-8</code>。</p>
+<h3 id="确认MySQL中字符编码的设置情况"><a href="#确认MySQL中字符编码的设置情况" class="headerlink" title="确认MySQL中字符编码的设置情况"></a>确认MySQL中字符编码的设置情况</h3><p>启动MySQL监视器，输入status。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/one.png"></p>
+<p>1代表服务器端的字符编码设置，2代表客户端的字符编码设置。</p>
+<p>指定字符编码启动MySQL监视器</p>
+<pre class=" language-sh"><code class="language-sh">$ mysql -uroot -proot --default-character-set=gbk</code></pre>
+<p>另外字符编码设置情况还可以通过下面的命令查看</p>
+<pre class=" language-mysql"><code class="language-mysql">SHOW VARIABLES LIKE 'char%'</code></pre>
+<p>按下<code>F7键后，历史命令</code>会全部显示出来。</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -551,78 +731,6 @@ System<span class="token punctuation">.</span>out<span class="token punctuation"
       </tags>
   </entry>
   <entry>
-    <title>MySQL编码设置</title>
-    <url>/posts/17fc.html</url>
-    <content><![CDATA[<h3 id="命令提示符的UTF-8设置"><a href="#命令提示符的UTF-8设置" class="headerlink" title="命令提示符的UTF-8设置"></a>命令提示符的UTF-8设置</h3><p>Windows终端默认使用字符编码GBK进行数据的输入和输出，而数据库则使用UTF-8存储数据。其实我们也可以把命令终端的字符编码设置成UTF-8。我们需要按照下面的格式在命令终端执行<code>chcp</code></p>
-<pre class=" language-shell"><code class="language-shell">$ chcp 65001</code></pre>
-<p>chcp用于修改命令终端的字符编码，<code>65001代表UTF-8</code>。</p>
-<h3 id="确认MySQL中字符编码的设置情况"><a href="#确认MySQL中字符编码的设置情况" class="headerlink" title="确认MySQL中字符编码的设置情况"></a>确认MySQL中字符编码的设置情况</h3><p>启动MySQL监视器，输入status。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/one.png"></p>
-<p>1代表服务器端的字符编码设置，2代表客户端的字符编码设置。</p>
-<p>指定字符编码启动MySQL监视器</p>
-<pre class=" language-sh"><code class="language-sh">$ mysql -uroot -proot --default-character-set=gbk</code></pre>
-<p>另外字符编码设置情况还可以通过下面的命令查看</p>
-<pre class=" language-mysql"><code class="language-mysql">SHOW VARIABLES LIKE 'char%'</code></pre>
-<p>按下<code>F7键后，历史命令</code>会全部显示出来。</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <categories>
-        <category>数据库</category>
-      </categories>
-      <tags>
-        <tag>MySQL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/posts/3eeb.html</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class=" language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span></code></pre>
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class=" language-bash"><code class="language-bash">$ hexo server</code></pre>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bash"><code class="language-bash">$ hexo generate</code></pre>
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-bash"><code class="language-bash">$ hexo deploy</code></pre>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-  </entry>
-  <entry>
     <title>MySQL基本介绍</title>
     <url>/posts/68d3.html</url>
     <content><![CDATA[<h3 id="数据库是什么"><a href="#数据库是什么" class="headerlink" title="数据库是什么"></a>数据库是什么</h3><p>据说，第二次世界大战后，美军为了有效管理大量的资料，便把所有的信息都集中在一个基地里，这个集中了所有信息的基地就称为数据库。“数据库”一词便由此诞生。</p>
@@ -732,6 +840,38 @@ System<span class="token punctuation">.</span>out<span class="token punctuation"
       <tags>
         <tag>MySQL</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/posts/3eeb.html</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class=" language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span></code></pre>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class=" language-bash"><code class="language-bash">$ hexo server</code></pre>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bash"><code class="language-bash">$ hexo generate</code></pre>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-bash"><code class="language-bash">$ hexo deploy</code></pre>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
   </entry>
   <entry>
     <title>使用Docker安装YApi</title>

@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Kotin介绍, Java,Git,SpringBoot,SpringCloud,SpringCloud Alibaba等">
+    <meta name="keywords" content="Kotlin常用作用域函数, Java,Git,SpringBoot,SpringCloud,SpringCloud Alibaba等">
     <meta name="description" content="专注WJava后端,大数据,分享知识,分享生活">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Kotin介绍 | 三十二道街</title>
+    <title>Kotlin常用作用域函数 | 三十二道街</title>
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/awesome/css/all.css">
@@ -309,12 +309,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/15.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/3.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Kotin介绍</h1>
+                    <h1 class="description center-align post-title">Kotlin常用作用域函数</h1>
                 </div>
             </div>
         </div>
@@ -443,8 +443,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/Kotlin/" class="post-category">
-                                Kotlin
+                            <a href="/categories/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="post-category">
+                                函数式编程
                             </a>
                         
                     </div>
@@ -456,28 +456,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-12-06
+                    2020-12-29
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-12-28
+                    2020-12-29
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.2k
+                    466
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    4 分
+                    2 分
                 </div>
                 
 
@@ -492,46 +492,117 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="Kotlin的主要特征"><a href="#Kotlin的主要特征" class="headerlink" title="Kotlin的主要特征"></a>Kotlin的主要特征</h3><h4 id="静态类型"><a href="#静态类型" class="headerlink" title="静态类型"></a>静态类型</h4><p>Kotlin和Java一样是一种静态类型的编程语言。这意味着<code>所有表达式的类型在编译器已经确定了，而编译器就能验证对象是否包含了你想访问的方法或者字段</code>。</p>
-<p>这与动态类型的编程语言形成了鲜明的对比，后者在JVM上的代表包括Grovvy和JRuby。这些语言<code>允许你定义可以存储任何数据类型的变量，或者返回任何数据类型的函数，并在运行时才解析方法和字段引用</code>。这会减少代码量并增加创建数据结构的灵活性。但它的缺点是，在编译期不能发现像名字拼写错误这样的问题，继而导致运行时的错误。</p>
-<h4 id="类型推导"><a href="#类型推导" class="headerlink" title="类型推导"></a>类型推导</h4><p>另一方面，与Java不同的是，<code>Kotin不需要你在源代码中显式地声明每个变量的类型。很多情况下，变量类型可以根据上下文来自动推断</code>，这样就可以省略类型声明。如</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">val</span> x <span class="token operator">=</span> <span class="token number">1</span></code></pre>
-<p>在声明这个变量时，由于变量初始化整型值，Kotin自动判断出它的类型是Int。<code>编译器这种从上下文推断变量类型的能力称作类型推导</code>。</p>
-<h4 id="扩展函数与扩展属性"><a href="#扩展函数与扩展属性" class="headerlink" title="扩展函数与扩展属性"></a>扩展函数与扩展属性</h4><p>扩展函数与扩展属性的“好玩”之处在于，可以在不修改原来类的条件下自定义函数和属性，是它们表现得就像是属于这个类一样。例如，我们给String类型扩展一个返回字符串首字母的firstChar()函数，代码如下：</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token comment" spellcheck="true">//调用我们自定义的扩展函数</span>
-    <span class="token keyword">val</span> firstChar <span class="token operator">=</span> <span class="token string">"abc"</span><span class="token punctuation">.</span><span class="token function">firstChar</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"this first char <span class="token interpolation variable">$firstChar</span>"</span><span class="token punctuation">)</span>
+                <h3 id="let-和-run"><a href="#let-和-run" class="headerlink" title="let 和 run"></a>let 和 run</h3><p>let 和 run 都会返回闭包的执行结果，区别在于let有闭包参数，而run没有闭包参数。</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token keyword">var</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span>
+<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">val</span> letResult<span class="token operator">:</span> String <span class="token operator">=</span> user<span class="token punctuation">.</span><span class="token function">let</span> <span class="token punctuation">{</span> user<span class="token operator">:</span> User <span class="token operator">-></span>
+        <span class="token string">"let:: <span class="token interpolation"><span class="token delimiter variable">${</span>user<span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span>
+    <span class="token punctuation">}</span>
+  <span class="token comment" spellcheck="true">/** 
+         简化写法
+         val letResult: String = user.let {
+        "let:: ${it.javaClass.simpleName}"
+    } 
+   */</span>
+
+    <span class="token function">println</span><span class="token punctuation">(</span>letResult<span class="token punctuation">)</span>
+
+    <span class="token keyword">val</span> runResult <span class="token operator">=</span> user<span class="token punctuation">.</span><span class="token function">run</span> <span class="token punctuation">{</span>
+        <span class="token string">"run:: <span class="token interpolation"><span class="token delimiter variable">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">print</span><span class="token punctuation">(</span>runResult<span class="token punctuation">)</span>
 <span class="token punctuation">}</span>
 
-<span class="token keyword">fun</span> String<span class="token punctuation">.</span><span class="token function">firstChar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> String <span class="token punctuation">{</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> <span class="token string">""</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span></code></pre>
-<h4 id="不可空类型与空安全"><a href="#不可空类型与空安全" class="headerlink" title="不可空类型与空安全"></a>不可空类型与空安全</h4><p>Kotlin中引入了不可空类型与可空类型来明确声明一个变量是否可能为null，同时在编译器通过类型是否匹配来检查空指针异常，大大降低了空指针异常出现的概率。</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">var</span> a <span class="token operator">=</span> <span class="token string">"abc"</span>  <span class="token comment" spellcheck="true">//声明一个字符串，编译器会默认推断变量a的类型为不可空的String</span>
-a <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//不可空类型不能赋值为null</span>
-error<span class="token operator">:</span> Null can not be a value of a non<span class="token operator">-</span><span class="token keyword">null</span> type String
+<span class="token comment" spellcheck="true">/** 输出结果：let:: User
+                         run:: User */</span></code></pre>
+<h3 id="also-和-apply"><a href="#also-和-apply" class="headerlink" title="also 和 apply"></a>also 和 apply</h3><p>also与apply都不返回闭包的执行结果，区别在于also有闭包参数，而apply没有闭包参数。</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token keyword">var</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span>
 
-<span class="token keyword">var</span> b<span class="token operator">:</span> String<span class="token operator">?</span> <span class="token operator">=</span> <span class="token string">"abc"</span>
-b<span class="token punctuation">.</span>length <span class="token comment" spellcheck="true">//可空类型不能直接调用方法，需要使用安全调用符?.或者断言调用!!.</span>
-b<span class="token operator">?</span><span class="token punctuation">.</span>length <span class="token comment" spellcheck="true">//使用安全调用符，null对象使用安全调用符访问length属性，直接返回null</span></code></pre>
-<p>这个问号确实非常简洁易懂，同时能够时刻提醒我们：这个调用者有可能是null的。这个语言明显比Java8中引入的Optional&lt;String&gt;更加简单、直接。</p>
-<h4 id="一等函数支持"><a href="#一等函数支持" class="headerlink" title="一等函数支持"></a>一等函数支持</h4><p>在Kotlin中函数是第一等类型：我们可以将函数像值一样传递，函数可以作为另一个函数的返回值。我们通常称之为“一等函数”支持。</p>
-<p>下面是把一个函数作为参数传递给函数的Lambda表达式的例子：</p>
-<pre class=" language-kotlin"><code class="language-kotlin"> <span class="token keyword">val</span> list <span class="token operator">=</span> <span class="token function">listOf</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">)</span>
- <span class="token keyword">val</span> filterList <span class="token operator">=</span> list<span class="token punctuation">.</span><span class="token function">filter</span> <span class="token punctuation">{</span> it <span class="token operator">%</span> <span class="token number">3</span> <span class="token operator">!=</span> <span class="token number">0</span> <span class="token punctuation">}</span></code></pre>
-<h3 id="Kotin设计哲学"><a href="#Kotin设计哲学" class="headerlink" title="Kotin设计哲学"></a>Kotin设计哲学</h3><h4 id="务实"><a href="#务实" class="headerlink" title="务实"></a>务实</h4><p>JetBrains内部和社区的开发者已经使用Kotlin的早起版本很多年，Kotlin能够帮助解决实际项目的问题。</p>
-<h4 id="简洁"><a href="#简洁" class="headerlink" title="简洁"></a>简洁</h4><p>许多标准的Java样板代码，例如getter、setter以及将构造方法的参数赋值给字段的逻辑，在Kotlin中都是隐式的，并不会使你的源代码变得混乱。</p>
-<h4 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h4><p>Kotlin设计了一个“归一化”的类型系统（一切类型皆是引用类型），纯天然地设置了一道空指针的屏障，使得Kotin比Java更加安全可靠。Kotlin有助与避免的另一种异常类型就是ClassCastException。当你把一个对象转换成一种类型，而没有事先检查它是否是正确的类型时，就会发生这个异常。Kotlin中的检查和转换被组合成了一次操作：</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">if</span><span class="token punctuation">(</span>value <span class="token keyword">is</span> String<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  <span class="token comment" spellcheck="true">//不需要额外的转换就能直接引用属于这个类型的成员</span>
-  <span class="token function">println</span><span class="token punctuation">(</span>value<span class="token punctuation">.</span><span class="token function">toUpperCase</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span></code></pre>
-<h4 id="互操作性"><a href="#互操作性" class="headerlink" title="互操作性"></a>互操作性</h4><p>Kotlin的优势是既有Java的完整生态（Kotlin完全无缝使用各类Java API框架库）,又有现代语言的高级特性（语法糖）。</p>
-<h3 id="编程哲学"><a href="#编程哲学" class="headerlink" title="编程哲学"></a>编程哲学</h3><p>编程的真正问题在于，如何把人类脑子里对问题的解决方案“具化”到机器世界，而这个“具化”过程正是编程语言所要表达的东西。如何富有表现力并且安全简洁的表达，这是所有编程语言所要解决的问题。</p>
+<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
+
+    user<span class="token punctuation">.</span><span class="token function">also</span> <span class="token punctuation">{</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"also::<span class="token interpolation"><span class="token delimiter variable">${</span>it<span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    user<span class="token punctuation">.</span><span class="token function">apply</span> <span class="token punctuation">{</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"apply::<span class="token interpolation"><span class="token delimiter variable">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">// 在这个例子中，also 和 apply 会继续返回user这个对象，因为我们可以这么使用</span>
+        user<span class="token punctuation">.</span><span class="token function">also</span> <span class="token punctuation">{</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"also::<span class="token interpolation"><span class="token delimiter variable">${</span>it<span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">.</span><span class="token function">apply</span> <span class="token punctuation">{</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"apply::<span class="token interpolation"><span class="token delimiter variable">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">"Bob"</span>
+
+    <span class="token function">print</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">/** 输出结果：User(name=Bob) */</span></code></pre>
+<h3 id="takeIf-和-takeUnless"><a href="#takeIf-和-takeUnless" class="headerlink" title="takeIf 和 takeUnless"></a>takeIf 和 takeUnless</h3><p>takeIf 的闭包返回一个判断结果，为false时，takeIf函数会返回空。</p>
+<p>takeUnless 与 takeIf 刚好相反，闭包的判断结果，为true时函数会返回空。</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
+
+    user<span class="token punctuation">.</span><span class="token function">takeIf</span> <span class="token punctuation">{</span>
+        it<span class="token punctuation">.</span>name<span class="token punctuation">.</span><span class="token function">isNotEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">also</span> <span class="token punctuation">{</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"姓名为: <span class="token interpolation"><span class="token delimiter variable">${</span>it<span class="token punctuation">.</span>name<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token operator">?:</span> <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"姓名为空"</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/** 输出结果：姓名为: AsiaMa */</span>
+
+<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
+
+    user<span class="token punctuation">.</span><span class="token function">takeUnless</span> <span class="token punctuation">{</span>
+        it<span class="token punctuation">.</span>name<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">also</span> <span class="token punctuation">{</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"姓名为: <span class="token interpolation"><span class="token delimiter variable">${</span>it<span class="token punctuation">.</span>name<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token operator">?:</span> <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"姓名为空"</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/** 输出结果：姓名为: AsiaMa */</span></code></pre>
+<h3 id="Repeat"><a href="#Repeat" class="headerlink" title="Repeat"></a>Repeat</h3><p>重复执行当前闭包</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token keyword">var</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span>
+
+<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
+
+    <span class="token function">repeat</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token function">print</span><span class="token punctuation">(</span>user<span class="token punctuation">.</span>name<span class="token punctuation">)</span>
+        <span class="token function">println</span><span class="token punctuation">(</span>it<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/**
+输出结果：
+        AsiaMa0
+        AsiaMa1
+        AsiaMa2
+        AsiaMa3
+        AsiaMa4
+*/</span></code></pre>
+<h3 id="With"><a href="#With" class="headerlink" title="With"></a>With</h3><p>with比较特殊，不是以扩展方法的形式存在，而是一个顶级函数。可用于对象的通用属性赋值。</p>
+<pre class=" language-java"><code class="language-java">fun <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    val user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
+
+    <span class="token function">with</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">"Tom"</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">println</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span>
+
+  <span class="token comment" spellcheck="true">/** 与with相似    
+    user.apply {
+        this.name = "Rose"
+    }
+  */</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/** 输出结果：User(name=Tom) */</span></code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -575,7 +646,7 @@ b<span class="token operator">?</span><span class="token punctuation">.</span>le
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://blog.asiama.top/posts/5487.html">https://blog.asiama.top/posts/5487.html</a>
+                    <a href="https://blog.asiama.top/posts/c396.html">https://blog.asiama.top/posts/c396.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -785,7 +856,7 @@ b<span class="token operator">?</span><span class="token punctuation">.</span>le
         repo: 'asiama.github.io',
         owner: 'asiama',
         admin: "asiama",
-        id: '2020-12-06T16-24-10',
+        id: '2020-12-29T12-38-09',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -809,17 +880,18 @@ b<span class="token operator">?</span><span class="token punctuation">.</span>le
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/posts/9968.html">
+                <a href="/posts/c396.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/18.jpg" class="responsive-img" alt="英语学习第三天">
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/3.jpg" class="responsive-img" alt="Kotlin常用作用域函数">
                         
-                        <span class="card-title">英语学习第三天</span>
+                        <span class="card-title">Kotlin常用作用域函数</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -829,26 +901,27 @@ b<span class="token operator">?</span><span class="token punctuation">.</span>le
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-12-06
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-12-29
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E8%8B%B1%E8%AF%AD%E5%AD%A6%E4%B9%A0/" class="post-category">
-                                    英语学习
+                            <a href="/categories/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="post-category">
+                                    函数式编程
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/English/">
-                        <span class="chip bg-color">English</span>
+                    <a href="/tags/Kotlin/">
+                        <span class="chip bg-color">Kotlin</span>
                     </a>
                     
                 </div>
@@ -862,13 +935,13 @@ b<span class="token operator">?</span><span class="token punctuation">.</span>le
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/posts/f6d7.html">
+                <a href="/posts/8051.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/9.jpg" class="responsive-img" alt="MySQL基础命令">
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/15.jpg" class="responsive-img" alt="Kotlin自定义操作符">
                         
-                        <span class="card-title">MySQL基础命令</span>
+                        <span class="card-title">Kotlin自定义操作符</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -879,14 +952,14 @@ b<span class="token operator">?</span><span class="token punctuation">.</span>le
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-12-06
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-12-28
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-category">
-                                    数据库
+                            <a href="/categories/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="post-category">
+                                    函数式编程
                                 </a>
                             
                             
@@ -896,8 +969,8 @@ b<span class="token operator">?</span><span class="token punctuation">.</span>le
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/MySQL/">
-                        <span class="chip bg-color">MySQL</span>
+                    <a href="/tags/Kotlin/">
+                        <span class="chip bg-color">Kotlin</span>
                     </a>
                     
                 </div>
