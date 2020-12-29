@@ -32,9 +32,6 @@
             document.body.appendChild(img);
           });
       </script>]]></content>
-      <categories>
-        <category>Kotlin</category>
-      </categories>
       <tags>
         <tag>Kotlin</tag>
       </tags>
@@ -101,9 +98,6 @@ b<span class="token operator">?</span><span class="token punctuation">.</span>le
             document.body.appendChild(img);
           });
       </script>]]></content>
-      <categories>
-        <category>Kotlin</category>
-      </categories>
       <tags>
         <tag>Kotlin</tag>
       </tags>
@@ -142,308 +136,8 @@ b<span class="token operator">?</span><span class="token punctuation">.</span>le
             document.body.appendChild(img);
           });
       </script>]]></content>
-      <categories>
-        <category>Kotlin</category>
-      </categories>
       <tags>
         <tag>Kotlin</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Kotlin常用作用域函数</title>
-    <url>/posts/c396.html</url>
-    <content><![CDATA[<h3 id="let-和-run"><a href="#let-和-run" class="headerlink" title="let 和 run"></a>let 和 run</h3><p>let 和 run 都会返回闭包的执行结果，区别在于let有闭包参数，而run没有闭包参数。</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token keyword">var</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span>
-<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-
-    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
-
-    <span class="token keyword">val</span> letResult<span class="token operator">:</span> String <span class="token operator">=</span> user<span class="token punctuation">.</span><span class="token function">let</span> <span class="token punctuation">{</span> user<span class="token operator">:</span> User <span class="token operator">-></span>
-        <span class="token string">"let:: <span class="token interpolation"><span class="token delimiter variable">${</span>user<span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span>
-    <span class="token punctuation">}</span>
-  <span class="token comment" spellcheck="true">/** 
-         简化写法
-         val letResult: String = user.let {
-        "let:: ${it.javaClass.simpleName}"
-    } 
-   */</span>
-
-    <span class="token function">println</span><span class="token punctuation">(</span>letResult<span class="token punctuation">)</span>
-
-    <span class="token keyword">val</span> runResult <span class="token operator">=</span> user<span class="token punctuation">.</span><span class="token function">run</span> <span class="token punctuation">{</span>
-        <span class="token string">"run:: <span class="token interpolation"><span class="token delimiter variable">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span>
-    <span class="token punctuation">}</span>
-    <span class="token function">print</span><span class="token punctuation">(</span>runResult<span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-
-<span class="token comment" spellcheck="true">/** 输出结果：let:: User
-                         run:: User */</span></code></pre>
-<h3 id="also-和-apply"><a href="#also-和-apply" class="headerlink" title="also 和 apply"></a>also 和 apply</h3><p>also与apply都不返回闭包的执行结果，区别在于also有闭包参数，而apply没有闭包参数。</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token keyword">var</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span>
-
-<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-
-    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
-
-    user<span class="token punctuation">.</span><span class="token function">also</span> <span class="token punctuation">{</span>
-        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"also::<span class="token interpolation"><span class="token delimiter variable">${</span>it<span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-
-    user<span class="token punctuation">.</span><span class="token function">apply</span> <span class="token punctuation">{</span>
-        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"apply::<span class="token interpolation"><span class="token delimiter variable">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-<span class="token comment" spellcheck="true">// 在这个例子中，also 和 apply 会继续返回user这个对象，因为我们可以这么使用</span>
-        user<span class="token punctuation">.</span><span class="token function">also</span> <span class="token punctuation">{</span>
-        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"also::<span class="token interpolation"><span class="token delimiter variable">${</span>it<span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span><span class="token punctuation">.</span><span class="token function">apply</span> <span class="token punctuation">{</span>
-        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"apply::<span class="token interpolation"><span class="token delimiter variable">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span><span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">"Bob"</span>
-
-    <span class="token function">print</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span>
-<span class="token comment" spellcheck="true">/** 输出结果：User(name=Bob) */</span></code></pre>
-<h3 id="takeIf-和-takeUnless"><a href="#takeIf-和-takeUnless" class="headerlink" title="takeIf 和 takeUnless"></a>takeIf 和 takeUnless</h3><p>takeIf 的闭包返回一个判断结果，为false时，takeIf函数会返回空。</p>
-<p>takeUnless 与 takeIf 刚好相反，闭包的判断结果，为true时函数会返回空。</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-
-    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
-
-    user<span class="token punctuation">.</span><span class="token function">takeIf</span> <span class="token punctuation">{</span>
-        it<span class="token punctuation">.</span>name<span class="token punctuation">.</span><span class="token function">isNotEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span><span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">also</span> <span class="token punctuation">{</span>
-        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"姓名为: <span class="token interpolation"><span class="token delimiter variable">${</span>it<span class="token punctuation">.</span>name<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span><span class="token operator">?:</span> <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"姓名为空"</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">/** 输出结果：姓名为: AsiaMa */</span>
-
-<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-
-    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
-
-    user<span class="token punctuation">.</span><span class="token function">takeUnless</span> <span class="token punctuation">{</span>
-        it<span class="token punctuation">.</span>name<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span><span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">also</span> <span class="token punctuation">{</span>
-        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"姓名为: <span class="token interpolation"><span class="token delimiter variable">${</span>it<span class="token punctuation">.</span>name<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span><span class="token operator">?:</span> <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"姓名为空"</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">/** 输出结果：姓名为: AsiaMa */</span></code></pre>
-<h3 id="Repeat"><a href="#Repeat" class="headerlink" title="Repeat"></a>Repeat</h3><p>重复执行当前闭包</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token keyword">var</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span>
-
-<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
-
-    <span class="token function">repeat</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token function">print</span><span class="token punctuation">(</span>user<span class="token punctuation">.</span>name<span class="token punctuation">)</span>
-        <span class="token function">println</span><span class="token punctuation">(</span>it<span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">/**
-输出结果：
-        AsiaMa0
-        AsiaMa1
-        AsiaMa2
-        AsiaMa3
-        AsiaMa4
-*/</span></code></pre>
-<h3 id="With"><a href="#With" class="headerlink" title="With"></a>With</h3><p>with比较特殊，不是以扩展方法的形式存在，而是一个顶级函数。可用于对象的通用属性赋值。</p>
-<pre class=" language-java"><code class="language-java">fun <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    val user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
-
-    <span class="token function">with</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">"Tom"</span>
-    <span class="token punctuation">}</span>
-    <span class="token function">println</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span>
-
-  <span class="token comment" spellcheck="true">/** 与with相似    
-    user.apply {
-        this.name = "Rose"
-    }
-  */</span>
-<span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">/** 输出结果：User(name=Tom) */</span></code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <categories>
-        <category>函数式编程</category>
-      </categories>
-      <tags>
-        <tag>Kotlin</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Kotlin自定义操作符</title>
-    <url>/posts/8051.html</url>
-    <content><![CDATA[<h3 id="自定义Convert操作符"><a href="#自定义Convert操作符" class="headerlink" title="自定义Convert操作符"></a>自定义Convert操作符</h3><pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token function">myOperation</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">fun</span> <span class="token function">myOperation</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">val</span> list<span class="token operator">:</span> List<span class="token operator">&lt;</span>Int<span class="token operator">></span> <span class="token operator">=</span> <span class="token function">listOf</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span>
-    list<span class="token punctuation">.</span><span class="token function">covert</span> <span class="token punctuation">{</span>
-        it <span class="token operator">+</span> <span class="token number">1</span>
-    <span class="token punctuation">}</span><span class="token punctuation">.</span><span class="token function">forEach</span> <span class="token punctuation">{</span>
-        <span class="token function">print</span><span class="token punctuation">(</span>it<span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">inline</span> <span class="token keyword">fun</span> <span class="token operator">&lt;</span>T<span class="token punctuation">,</span> E<span class="token operator">></span> List<span class="token operator">&lt;</span>T<span class="token operator">></span><span class="token punctuation">.</span><span class="token function">covert</span><span class="token punctuation">(</span>action<span class="token operator">:</span> <span class="token punctuation">(</span>T<span class="token punctuation">)</span> <span class="token operator">-></span> E<span class="token punctuation">)</span><span class="token operator">:</span> Iterable<span class="token operator">&lt;</span>E<span class="token operator">></span> <span class="token punctuation">{</span>
-    <span class="token keyword">val</span> list<span class="token operator">:</span> MutableList<span class="token operator">&lt;</span>E<span class="token operator">></span> <span class="token operator">=</span> <span class="token function">mutableListOf</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span>item<span class="token operator">:</span> T <span class="token keyword">in</span> <span class="token keyword">this</span><span class="token punctuation">)</span>
-        list<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token function">action</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">)</span>
-    <span class="token keyword">return</span> list
-<span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">/** 输出结果：23456 */</span></code></pre>
-<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p>在最近的这个项目中，需要导出Excel，产品经理希望导出的时候在每一行的行首都增加一个行号，从1开始，这个时候自定义集合操作符就派上用场了。</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token comment" spellcheck="true">// rowIndex 导出excel时使用</span>
-<span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token keyword">var</span> rowIndex<span class="token operator">:</span> Int <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token keyword">val</span> name<span class="token operator">:</span> String<span class="token punctuation">,</span> <span class="token keyword">val</span> age<span class="token operator">:</span> Int<span class="token punctuation">)</span>
-
-<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">val</span> u1 <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"AsiaMa"</span><span class="token punctuation">,</span> age <span class="token operator">=</span> <span class="token number">23</span><span class="token punctuation">)</span>
-    <span class="token keyword">val</span> u2 <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"Xiu"</span><span class="token punctuation">,</span> age <span class="token operator">=</span> <span class="token number">30</span><span class="token punctuation">)</span>
-    <span class="token keyword">val</span> u3 <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"Ghost"</span><span class="token punctuation">,</span> age <span class="token operator">=</span> <span class="token number">11</span><span class="token punctuation">)</span>
-    <span class="token keyword">val</span> u4 <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"Lost"</span><span class="token punctuation">,</span> age <span class="token operator">=</span> <span class="token number">16</span><span class="token punctuation">)</span>
-
-    <span class="token keyword">val</span> userList <span class="token operator">=</span> <span class="token function">listOf</span><span class="token punctuation">(</span>u1<span class="token punctuation">,</span> u2<span class="token punctuation">,</span> u3<span class="token punctuation">,</span> u4<span class="token punctuation">)</span>
-    userList<span class="token punctuation">.</span><span class="token function">covert</span> <span class="token punctuation">{</span>
-        it
-    <span class="token punctuation">}</span><span class="token punctuation">.</span><span class="token function">forEach</span> <span class="token punctuation">{</span>
-        <span class="token function">print</span><span class="token punctuation">(</span>it<span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">inline</span> <span class="token keyword">fun</span> List<span class="token operator">&lt;</span>User<span class="token operator">></span><span class="token punctuation">.</span><span class="token function">covert</span><span class="token punctuation">(</span>action<span class="token operator">:</span> <span class="token punctuation">(</span>User<span class="token punctuation">)</span> <span class="token operator">-></span> User<span class="token punctuation">)</span><span class="token operator">:</span> MutableList<span class="token operator">&lt;</span>User<span class="token operator">></span> <span class="token punctuation">{</span>
-    <span class="token keyword">val</span> list<span class="token operator">:</span> MutableList<span class="token operator">&lt;</span>User<span class="token operator">></span> <span class="token operator">=</span> <span class="token function">mutableListOf</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>index<span class="token operator">:</span> Int<span class="token punctuation">,</span> item<span class="token operator">:</span> User<span class="token punctuation">)</span> <span class="token keyword">in</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">withIndex</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token comment" spellcheck="true">// 设置行号</span>
-        <span class="token function">action</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">.</span>rowIndex <span class="token operator">=</span> index <span class="token operator">+</span> <span class="token number">1</span>
-        list<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token function">action</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">return</span> list
-<span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">/** 输出结果：User(rowIndex=1, name=AsiaMa, age=23)
-                        User(rowIndex=2, name=Xiu, age=30)
-                        User(rowIndex=3, name=Ghost, age=11)
-                        User(rowIndex=4, name=Lost, age=16) */</span></code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <categories>
-        <category>函数式编程</category>
-      </categories>
-      <tags>
-        <tag>Kotlin</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MySQL权限相关</title>
-    <url>/posts/8cf.html</url>
-    <content><![CDATA[<h3 id="修改密码"><a href="#修改密码" class="headerlink" title="修改密码"></a>修改密码</h3><pre class=" language-mysql"><code class="language-mysql">$ SET PASSWORD FOR root@localhost='A123456!'</code></pre>
-<h3 id="创建用户"><a href="#创建用户" class="headerlink" title="创建用户"></a>创建用户</h3><pre class=" language-mysql"><code class="language-mysql"># CREATE USER 新用户名 IDENTIFIED BY '密码'
-$ CREATE USER asiama@localhost IDENTIFIED BY 'A123456!'</code></pre>
-<h3 id="设置用户权限"><a href="#设置用户权限" class="headerlink" title="设置用户权限"></a>设置用户权限</h3><pre class=" language-mysql"><code class="language-mysql"># GRANT 赋予的权限 ON 数据库名.表名 TO 用户名
-$ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
-<blockquote>
-<p>用户名需要按照“用户名@主机名”的方式书写（如果不确定主机名，可以”用户名@%”来允许所有主机）。“赋予的权限”如果是所有的权限，就设置为“ALL”；如果仅允许SELECT和UPDATE,就设置为“SELECT, UPDATE”；如果是所有的数据库的所有表，就设置为“*.*”</p>
-</blockquote>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <categories>
-        <category>数据库</category>
-      </categories>
-      <tags>
-        <tag>MySQL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MySQL编码设置</title>
-    <url>/posts/17fc.html</url>
-    <content><![CDATA[<h3 id="命令提示符的UTF-8设置"><a href="#命令提示符的UTF-8设置" class="headerlink" title="命令提示符的UTF-8设置"></a>命令提示符的UTF-8设置</h3><p>Windows终端默认使用字符编码GBK进行数据的输入和输出，而数据库则使用UTF-8存储数据。其实我们也可以把命令终端的字符编码设置成UTF-8。我们需要按照下面的格式在命令终端执行<code>chcp</code></p>
-<pre class=" language-shell"><code class="language-shell">$ chcp 65001</code></pre>
-<p>chcp用于修改命令终端的字符编码，<code>65001代表UTF-8</code>。</p>
-<h3 id="确认MySQL中字符编码的设置情况"><a href="#确认MySQL中字符编码的设置情况" class="headerlink" title="确认MySQL中字符编码的设置情况"></a>确认MySQL中字符编码的设置情况</h3><p>启动MySQL监视器，输入status。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/one.png"></p>
-<p>1代表服务器端的字符编码设置，2代表客户端的字符编码设置。</p>
-<p>指定字符编码启动MySQL监视器</p>
-<pre class=" language-sh"><code class="language-sh">$ mysql -uroot -proot --default-character-set=gbk</code></pre>
-<p>另外字符编码设置情况还可以通过下面的命令查看</p>
-<pre class=" language-mysql"><code class="language-mysql">SHOW VARIABLES LIKE 'char%'</code></pre>
-<p>按下<code>F7键后，历史命令</code>会全部显示出来。</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <categories>
-        <category>数据库</category>
-      </categories>
-      <tags>
-        <tag>MySQL</tag>
       </tags>
   </entry>
   <entry>
@@ -491,9 +185,40 @@ DESC db1;</code></pre>
             document.body.appendChild(img);
           });
       </script>]]></content>
-      <categories>
-        <category>数据库</category>
-      </categories>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MySQL权限相关</title>
+    <url>/posts/8cf.html</url>
+    <content><![CDATA[<h3 id="修改密码"><a href="#修改密码" class="headerlink" title="修改密码"></a>修改密码</h3><pre class=" language-mysql"><code class="language-mysql">$ SET PASSWORD FOR root@localhost='A123456!'</code></pre>
+<h3 id="创建用户"><a href="#创建用户" class="headerlink" title="创建用户"></a>创建用户</h3><pre class=" language-mysql"><code class="language-mysql"># CREATE USER 新用户名 IDENTIFIED BY '密码'
+$ CREATE USER asiama@localhost IDENTIFIED BY 'A123456!'</code></pre>
+<h3 id="设置用户权限"><a href="#设置用户权限" class="headerlink" title="设置用户权限"></a>设置用户权限</h3><pre class=" language-mysql"><code class="language-mysql"># GRANT 赋予的权限 ON 数据库名.表名 TO 用户名
+$ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
+<blockquote>
+<p>用户名需要按照“用户名@主机名”的方式书写（如果不确定主机名，可以”用户名@%”来允许所有主机）。“赋予的权限”如果是所有的权限，就设置为“ALL”；如果仅允许SELECT和UPDATE,就设置为“SELECT, UPDATE”；如果是所有的数据库的所有表，就设置为“*.*”</p>
+</blockquote>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
       <tags>
         <tag>MySQL</tag>
       </tags>
@@ -653,6 +378,43 @@ System<span class="token punctuation">.</span>out<span class="token punctuation"
       </tags>
   </entry>
   <entry>
+    <title>MySQL编码设置</title>
+    <url>/posts/17fc.html</url>
+    <content><![CDATA[<h3 id="命令提示符的UTF-8设置"><a href="#命令提示符的UTF-8设置" class="headerlink" title="命令提示符的UTF-8设置"></a>命令提示符的UTF-8设置</h3><p>Windows终端默认使用字符编码GBK进行数据的输入和输出，而数据库则使用UTF-8存储数据。其实我们也可以把命令终端的字符编码设置成UTF-8。我们需要按照下面的格式在命令终端执行<code>chcp</code></p>
+<pre class=" language-shell"><code class="language-shell">$ chcp 65001</code></pre>
+<p>chcp用于修改命令终端的字符编码，<code>65001代表UTF-8</code>。</p>
+<h3 id="确认MySQL中字符编码的设置情况"><a href="#确认MySQL中字符编码的设置情况" class="headerlink" title="确认MySQL中字符编码的设置情况"></a>确认MySQL中字符编码的设置情况</h3><p>启动MySQL监视器，输入status。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/one.png"></p>
+<p>1代表服务器端的字符编码设置，2代表客户端的字符编码设置。</p>
+<p>指定字符编码启动MySQL监视器</p>
+<pre class=" language-sh"><code class="language-sh">$ mysql -uroot -proot --default-character-set=gbk</code></pre>
+<p>另外字符编码设置情况还可以通过下面的命令查看</p>
+<pre class=" language-mysql"><code class="language-mysql">SHOW VARIABLES LIKE 'char%'</code></pre>
+<p>按下<code>F7键后，历史命令</code>会全部显示出来。</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Stream中reduce使用</title>
     <url>/posts/801f.html</url>
     <content><![CDATA[<p>reduce方法用于对stream中元素进行聚合求值，最常见的用法就是将stream中一连串的值合成为单个值，比如为一个包含一系列数值的数组求和。</p>
@@ -763,58 +525,6 @@ System<span class="token punctuation">.</span>out<span class="token punctuation"
       </script>]]></content>
   </entry>
   <entry>
-    <title>kotlin集合常用操作符</title>
-    <url>/posts/fb3b.html</url>
-    <content><![CDATA[<h3 id="元素操作类"><a href="#元素操作类" class="headerlink" title="元素操作类"></a>元素操作类</h3><p>contanis        ——     判断是否有指定元素</p>
-<p>elementAt     ——     返回对应的元素，越界会抛出IndexOutOfBoundsException</p>
-<p>firstOrNull     ——     返回符合条件的第一个元素，没有返回null</p>
-<p>lastOrNull     ——     返回符合条件的最后一个元素，没有返回null</p>
-<p>indexOf         ——     返回指定元素的下标，没有返回-1</p>
-<p>singleOrNull ——     返回符合条件的单个元素，如果没有符合或超过一个，返回null</p>
-<h3 id="判断类"><a href="#判断类" class="headerlink" title="判断类"></a>判断类</h3><p>any        ——     判断集合中是否有满足条件的元素</p>
-<p>all          ——     判断集合中的元素是否都满足条件</p>
-<p>none     ——     判断集合中是否都不满足条件，是则返回true</p>
-<p>count    ——     查询集合中满足条件的元素个数 </p>
-<h3 id="过滤类"><a href="#过滤类" class="headerlink" title="过滤类"></a>过滤类</h3><p>filter                    ——     过滤出所有满足条件的元素</p>
-<p>filterNot             ——     过滤出所有不满足条件的元素</p>
-<p>filterNotNull      ——     过滤NULL</p>
-<p>take                     ——     返回前n个元素</p>
-<h3 id="转换类"><a href="#转换类" class="headerlink" title="转换类"></a>转换类</h3><p>map                     ——     转换成另一个集合</p>
-<p>mapIndexed      ——     除了转换成另一个集合，还可以拿到Index(下标)</p>
-<p>mapNotNull       ——     执行转换钱过滤掉为NULL的元素</p>
-<p>flatMap               ——     自定义逻辑合并两个集合</p>
-<p>groupBy              ——     按照某个条件分组，返回Map</p>
-<h3 id="排序类"><a href="#排序类" class="headerlink" title="排序类"></a>排序类</h3><p>reversed                     ——     反序</p>
-<p>sorted                         ——     升序</p>
-<p>sortedBy                     ——    自定义排序</p>
-<p>sortedDescending     ——     降序</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <categories>
-        <category>函数式编程</category>
-      </categories>
-      <tags>
-        <tag>Kotlin</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>MySQL基本介绍</title>
     <url>/posts/68d3.html</url>
     <content><![CDATA[<h3 id="数据库是什么"><a href="#数据库是什么" class="headerlink" title="数据库是什么"></a>数据库是什么</h3><p>据说，第二次世界大战后，美军为了有效管理大量的资料，便把所有的信息都集中在一个基地里，这个集中了所有信息的基地就称为数据库。“数据库”一词便由此诞生。</p>
@@ -918,11 +628,48 @@ System<span class="token punctuation">.</span>out<span class="token punctuation"
             document.body.appendChild(img);
           });
       </script>]]></content>
-      <categories>
-        <category>数据库</category>
-      </categories>
       <tags>
         <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用Git之前需要做的最小配置</title>
+    <url>/posts/5174.html</url>
+    <content><![CDATA[<h3 id="配置user-name-和-user-email"><a href="#配置user-name-和-user-email" class="headerlink" title="配置user.name 和 user.email"></a>配置user.name 和 user.email</h3><p>全局配置「对当前用户所有仓库有效」</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --global user.name <span class="token string">"your_name"</span>
+$ <span class="token function">git</span> config --global user.email <span class="token string">"your_email"</span></code></pre>
+<p>缺省等同于local「只对某个仓库有效」</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --local user.name <span class="token string">"your_name"</span>
+$ <span class="token function">git</span> config --local user.email <span class="token string">"your_email"</span></code></pre>
+<p>系统配置「对系统所有登录的用户有效」</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --system user.name <span class="token string">"your_name"</span>
+$ <span class="token function">git</span> config --system user.email <span class="token string">"your_email"</span></code></pre>
+<h3 id="显示config的配置"><a href="#显示config的配置" class="headerlink" title="显示config的配置"></a>显示config的配置</h3><pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --list --local
+$ <span class="token function">git</span> config --list --global
+$ <span class="token function">git</span> config --list --system</code></pre>
+<h3 id="查看某一个属性"><a href="#查看某一个属性" class="headerlink" title="查看某一个属性"></a>查看某一个属性</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --global user.name</code></pre>
+<h3 id="移除设置"><a href="#移除设置" class="headerlink" title="移除设置"></a>移除设置</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --unset --global user.email</code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Git</tag>
       </tags>
   </entry>
   <entry>
@@ -996,54 +743,8 @@ docker run -d  --name yapi  --link mongo-yapi:mongo  --workdir /api/vendors  -p 
             document.body.appendChild(img);
           });
       </script>]]></content>
-      <categories>
-        <category>YApi</category>
-      </categories>
       <tags>
         <tag>YApi</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用Git之前需要做的最小配置</title>
-    <url>/posts/5174.html</url>
-    <content><![CDATA[<h3 id="配置user-name-和-user-email"><a href="#配置user-name-和-user-email" class="headerlink" title="配置user.name 和 user.email"></a>配置user.name 和 user.email</h3><p>全局配置「对当前用户所有仓库有效」</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --global user.name <span class="token string">"your_name"</span>
-$ <span class="token function">git</span> config --global user.email <span class="token string">"your_email"</span></code></pre>
-<p>缺省等同于local「只对某个仓库有效」</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --local user.name <span class="token string">"your_name"</span>
-$ <span class="token function">git</span> config --local user.email <span class="token string">"your_email"</span></code></pre>
-<p>系统配置「对系统所有登录的用户有效」</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --system user.name <span class="token string">"your_name"</span>
-$ <span class="token function">git</span> config --system user.email <span class="token string">"your_email"</span></code></pre>
-<h3 id="显示config的配置"><a href="#显示config的配置" class="headerlink" title="显示config的配置"></a>显示config的配置</h3><pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --list --local
-$ <span class="token function">git</span> config --list --global
-$ <span class="token function">git</span> config --list --system</code></pre>
-<h3 id="查看某一个属性"><a href="#查看某一个属性" class="headerlink" title="查看某一个属性"></a>查看某一个属性</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --global user.name</code></pre>
-<h3 id="移除设置"><a href="#移除设置" class="headerlink" title="移除设置"></a>移除设置</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --unset --global user.email</code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <categories>
-        <category>项目管理</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
       </tags>
   </entry>
   <entry>
@@ -1087,8 +788,295 @@ $ <span class="token function">git</span> config --list --system</code></pre>
             document.body.appendChild(img);
           });
       </script>]]></content>
+      <tags>
+        <tag>编程范式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Kotlin常用作用域函数</title>
+    <url>/posts/c396.html</url>
+    <content><![CDATA[<h3 id="let-和-run"><a href="#let-和-run" class="headerlink" title="let 和 run"></a>let 和 run</h3><p>let 和 run 都会返回闭包的执行结果，区别在于let有闭包参数，而run没有闭包参数。</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token keyword">var</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span>
+<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">val</span> letResult<span class="token operator">:</span> String <span class="token operator">=</span> user<span class="token punctuation">.</span><span class="token function">let</span> <span class="token punctuation">{</span> user<span class="token operator">:</span> User <span class="token operator">-></span>
+        <span class="token string">"let:: <span class="token interpolation"><span class="token delimiter variable">${</span>user<span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span>
+    <span class="token punctuation">}</span>
+  <span class="token comment" spellcheck="true">/** 
+         简化写法
+         val letResult: String = user.let {
+        "let:: ${it.javaClass.simpleName}"
+    } 
+   */</span>
+
+    <span class="token function">println</span><span class="token punctuation">(</span>letResult<span class="token punctuation">)</span>
+
+    <span class="token keyword">val</span> runResult <span class="token operator">=</span> user<span class="token punctuation">.</span><span class="token function">run</span> <span class="token punctuation">{</span>
+        <span class="token string">"run:: <span class="token interpolation"><span class="token delimiter variable">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">print</span><span class="token punctuation">(</span>runResult<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">/** 输出结果：let:: User
+                         run:: User */</span></code></pre>
+<h3 id="also-和-apply"><a href="#also-和-apply" class="headerlink" title="also 和 apply"></a>also 和 apply</h3><p>also与apply都不返回闭包的执行结果，区别在于also有闭包参数，而apply没有闭包参数。</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token keyword">var</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span>
+
+<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
+
+    user<span class="token punctuation">.</span><span class="token function">also</span> <span class="token punctuation">{</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"also::<span class="token interpolation"><span class="token delimiter variable">${</span>it<span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    user<span class="token punctuation">.</span><span class="token function">apply</span> <span class="token punctuation">{</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"apply::<span class="token interpolation"><span class="token delimiter variable">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">// 在这个例子中，also 和 apply 会继续返回user这个对象，因为我们可以这么使用</span>
+        user<span class="token punctuation">.</span><span class="token function">also</span> <span class="token punctuation">{</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"also::<span class="token interpolation"><span class="token delimiter variable">${</span>it<span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">.</span><span class="token function">apply</span> <span class="token punctuation">{</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"apply::<span class="token interpolation"><span class="token delimiter variable">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">"Bob"</span>
+
+    <span class="token function">print</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">/** 输出结果：User(name=Bob) */</span></code></pre>
+<h3 id="takeIf-和-takeUnless"><a href="#takeIf-和-takeUnless" class="headerlink" title="takeIf 和 takeUnless"></a>takeIf 和 takeUnless</h3><p>takeIf 的闭包返回一个判断结果，为false时，takeIf函数会返回空。</p>
+<p>takeUnless 与 takeIf 刚好相反，闭包的判断结果，为true时函数会返回空。</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
+
+    user<span class="token punctuation">.</span><span class="token function">takeIf</span> <span class="token punctuation">{</span>
+        it<span class="token punctuation">.</span>name<span class="token punctuation">.</span><span class="token function">isNotEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">also</span> <span class="token punctuation">{</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"姓名为: <span class="token interpolation"><span class="token delimiter variable">${</span>it<span class="token punctuation">.</span>name<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token operator">?:</span> <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"姓名为空"</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/** 输出结果：姓名为: AsiaMa */</span>
+
+<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
+
+    user<span class="token punctuation">.</span><span class="token function">takeUnless</span> <span class="token punctuation">{</span>
+        it<span class="token punctuation">.</span>name<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">also</span> <span class="token punctuation">{</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"姓名为: <span class="token interpolation"><span class="token delimiter variable">${</span>it<span class="token punctuation">.</span>name<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token operator">?:</span> <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"姓名为空"</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/** 输出结果：姓名为: AsiaMa */</span></code></pre>
+<h3 id="Repeat"><a href="#Repeat" class="headerlink" title="Repeat"></a>Repeat</h3><p>重复执行当前闭包</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token keyword">var</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span>
+
+<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
+
+    <span class="token function">repeat</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token function">print</span><span class="token punctuation">(</span>user<span class="token punctuation">.</span>name<span class="token punctuation">)</span>
+        <span class="token function">println</span><span class="token punctuation">(</span>it<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/**
+输出结果：
+    AsiaMa0
+    AsiaMa1
+    AsiaMa2
+    AsiaMa3
+    AsiaMa4
+*/</span></code></pre>
+<h3 id="With"><a href="#With" class="headerlink" title="With"></a>With</h3><p>with比较特殊，不是以扩展方法的形式存在，而是一个顶级函数。可用于对象的通用属性赋值。</p>
+<pre class=" language-java"><code class="language-java">fun <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    val user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
+
+    <span class="token function">with</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">"Tom"</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">println</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span>
+
+  <span class="token comment" spellcheck="true">/** 与with相似    
+    user.apply {
+        this.name = "Rose"
+    }
+  */</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/** 输出结果：User(name=Tom) */</span></code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
       <categories>
-        <category>Kotlin</category>
+        <category>函数式编程</category>
+      </categories>
+      <tags>
+        <tag>Kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>自定义中缀表达式</title>
+    <url>/posts/8a52.html</url>
+    <content><![CDATA[<p>一个函数只有用与两个角色类似的对象时才将其声明为中缀函数。</p>
+<p>推荐示例：and、to、zip        反例：add</p>
+<p>如果一个方法会改动其接受者，那么不要声明为中缀形式。</p>
+<p>定义自己的中缀表达式：</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">sealed</span> <span class="token keyword">class</span> CompareResult <span class="token punctuation">{</span>
+    <span class="token keyword">object</span> LESS <span class="token operator">:</span> <span class="token function">CompareResult</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">override</span> <span class="token keyword">fun</span> <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> String <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token string">"小于"</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">object</span> MORE <span class="token operator">:</span> <span class="token function">CompareResult</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">override</span> <span class="token keyword">fun</span> <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> String <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token string">"大于"</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">object</span> EQUAL <span class="token operator">:</span> <span class="token function">CompareResult</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">override</span> <span class="token keyword">fun</span> <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> String <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token string">"等于"</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+infix <span class="token keyword">fun</span> Int<span class="token punctuation">.</span><span class="token function">vs</span><span class="token punctuation">(</span>num<span class="token operator">:</span> Int<span class="token punctuation">)</span><span class="token operator">:</span> CompareResult <span class="token operator">=</span>
+    <span class="token keyword">when</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span> <span class="token operator">-</span> num <span class="token operator">></span> <span class="token number">0</span> <span class="token operator">-></span> <span class="token punctuation">{</span>
+            CompareResult<span class="token punctuation">.</span>MORE
+        <span class="token punctuation">}</span>
+        <span class="token keyword">this</span> <span class="token operator">-</span> num <span class="token operator">&lt;</span> <span class="token number">0</span> <span class="token operator">-></span> <span class="token punctuation">{</span>
+            CompareResult<span class="token punctuation">.</span>LESS
+        <span class="token punctuation">}</span>
+        <span class="token keyword">else</span> <span class="token operator">-></span> <span class="token punctuation">{</span>
+            CompareResult<span class="token punctuation">.</span>EQUAL
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">println</span><span class="token punctuation">(</span><span class="token number">5</span> vs <span class="token number">6</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/** 输出结果：小于 */</span></code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Kotlin自定义操作符</title>
+    <url>/posts/8051.html</url>
+    <content><![CDATA[<h3 id="自定义Convert操作符"><a href="#自定义Convert操作符" class="headerlink" title="自定义Convert操作符"></a>自定义Convert操作符</h3><pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">myOperation</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">fun</span> <span class="token function">myOperation</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">val</span> list<span class="token operator">:</span> List<span class="token operator">&lt;</span>Int<span class="token operator">></span> <span class="token operator">=</span> <span class="token function">listOf</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span>
+    list<span class="token punctuation">.</span><span class="token function">covert</span> <span class="token punctuation">{</span>
+        it <span class="token operator">+</span> <span class="token number">1</span>
+    <span class="token punctuation">}</span><span class="token punctuation">.</span><span class="token function">forEach</span> <span class="token punctuation">{</span>
+        <span class="token function">print</span><span class="token punctuation">(</span>it<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">inline</span> <span class="token keyword">fun</span> <span class="token operator">&lt;</span>T<span class="token punctuation">,</span> E<span class="token operator">></span> List<span class="token operator">&lt;</span>T<span class="token operator">></span><span class="token punctuation">.</span><span class="token function">covert</span><span class="token punctuation">(</span>action<span class="token operator">:</span> <span class="token punctuation">(</span>T<span class="token punctuation">)</span> <span class="token operator">-></span> E<span class="token punctuation">)</span><span class="token operator">:</span> Iterable<span class="token operator">&lt;</span>E<span class="token operator">></span> <span class="token punctuation">{</span>
+    <span class="token keyword">val</span> list<span class="token operator">:</span> MutableList<span class="token operator">&lt;</span>E<span class="token operator">></span> <span class="token operator">=</span> <span class="token function">mutableListOf</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>item<span class="token operator">:</span> T <span class="token keyword">in</span> <span class="token keyword">this</span><span class="token punctuation">)</span>
+        list<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token function">action</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> list
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/** 输出结果：23456 */</span></code></pre>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p>在最近的这个项目中，需要导出Excel，产品经理希望导出的时候在每一行的行首都增加一个行号，从1开始，这个时候自定义集合操作符就派上用场了。</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token comment" spellcheck="true">// rowIndex 导出excel时使用</span>
+<span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token keyword">var</span> rowIndex<span class="token operator">:</span> Int <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token keyword">val</span> name<span class="token operator">:</span> String<span class="token punctuation">,</span> <span class="token keyword">val</span> age<span class="token operator">:</span> Int<span class="token punctuation">)</span>
+
+<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">val</span> u1 <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"AsiaMa"</span><span class="token punctuation">,</span> age <span class="token operator">=</span> <span class="token number">23</span><span class="token punctuation">)</span>
+    <span class="token keyword">val</span> u2 <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"Xiu"</span><span class="token punctuation">,</span> age <span class="token operator">=</span> <span class="token number">30</span><span class="token punctuation">)</span>
+    <span class="token keyword">val</span> u3 <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"Ghost"</span><span class="token punctuation">,</span> age <span class="token operator">=</span> <span class="token number">11</span><span class="token punctuation">)</span>
+    <span class="token keyword">val</span> u4 <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"Lost"</span><span class="token punctuation">,</span> age <span class="token operator">=</span> <span class="token number">16</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">val</span> userList <span class="token operator">=</span> <span class="token function">listOf</span><span class="token punctuation">(</span>u1<span class="token punctuation">,</span> u2<span class="token punctuation">,</span> u3<span class="token punctuation">,</span> u4<span class="token punctuation">)</span>
+    userList<span class="token punctuation">.</span><span class="token function">covert</span> <span class="token punctuation">{</span>
+        it
+    <span class="token punctuation">}</span><span class="token punctuation">.</span><span class="token function">forEach</span> <span class="token punctuation">{</span>
+        <span class="token function">print</span><span class="token punctuation">(</span>it<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">inline</span> <span class="token keyword">fun</span> List<span class="token operator">&lt;</span>User<span class="token operator">></span><span class="token punctuation">.</span><span class="token function">covert</span><span class="token punctuation">(</span>action<span class="token operator">:</span> <span class="token punctuation">(</span>User<span class="token punctuation">)</span> <span class="token operator">-></span> User<span class="token punctuation">)</span><span class="token operator">:</span> MutableList<span class="token operator">&lt;</span>User<span class="token operator">></span> <span class="token punctuation">{</span>
+    <span class="token keyword">val</span> list<span class="token operator">:</span> MutableList<span class="token operator">&lt;</span>User<span class="token operator">></span> <span class="token operator">=</span> <span class="token function">mutableListOf</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>index<span class="token operator">:</span> Int<span class="token punctuation">,</span> item<span class="token operator">:</span> User<span class="token punctuation">)</span> <span class="token keyword">in</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">withIndex</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// 设置行号</span>
+        <span class="token function">action</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">.</span>rowIndex <span class="token operator">=</span> index <span class="token operator">+</span> <span class="token number">1</span>
+        list<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token function">action</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> list
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/** 
+    输出结果：
+        User(rowIndex=1, name=AsiaMa, age=23)
+        User(rowIndex=2, name=Xiu, age=30)
+        User(rowIndex=3, name=Ghost, age=11)
+        User(rowIndex=4, name=Lost, age=16) 
+*/</span></code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <categories>
+        <category>函数式编程</category>
       </categories>
       <tags>
         <tag>Kotlin</tag>
@@ -1211,9 +1199,6 @@ $ <span class="token function">git</span> config --list --system</code></pre>
             document.body.appendChild(img);
           });
       </script>]]></content>
-      <categories>
-        <category>英语学习</category>
-      </categories>
       <tags>
         <tag>English</tag>
       </tags>
@@ -1259,9 +1244,6 @@ $ <span class="token function">git</span> config --list --system</code></pre>
             document.body.appendChild(img);
           });
       </script>]]></content>
-      <categories>
-        <category>英语学习</category>
-      </categories>
       <tags>
         <tag>English</tag>
       </tags>
@@ -1329,11 +1311,60 @@ $ <span class="token function">git</span> config --list --system</code></pre>
             document.body.appendChild(img);
           });
       </script>]]></content>
-      <categories>
-        <category>英语学习</category>
-      </categories>
       <tags>
         <tag>English</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>kotlin集合常用操作符</title>
+    <url>/posts/fb3b.html</url>
+    <content><![CDATA[<h3 id="元素操作类"><a href="#元素操作类" class="headerlink" title="元素操作类"></a>元素操作类</h3><p>contanis        ——     判断是否有指定元素</p>
+<p>elementAt     ——     返回对应的元素，越界会抛出IndexOutOfBoundsException</p>
+<p>firstOrNull     ——     返回符合条件的第一个元素，没有返回null</p>
+<p>lastOrNull     ——     返回符合条件的最后一个元素，没有返回null</p>
+<p>indexOf         ——     返回指定元素的下标，没有返回-1</p>
+<p>singleOrNull ——     返回符合条件的单个元素，如果没有符合或超过一个，返回null</p>
+<h3 id="判断类"><a href="#判断类" class="headerlink" title="判断类"></a>判断类</h3><p>any        ——     判断集合中是否有满足条件的元素</p>
+<p>all          ——     判断集合中的元素是否都满足条件</p>
+<p>none     ——     判断集合中是否都不满足条件，是则返回true</p>
+<p>count    ——     查询集合中满足条件的元素个数 </p>
+<h3 id="过滤类"><a href="#过滤类" class="headerlink" title="过滤类"></a>过滤类</h3><p>filter                    ——     过滤出所有满足条件的元素</p>
+<p>filterNot             ——     过滤出所有不满足条件的元素</p>
+<p>filterNotNull      ——     过滤NULL</p>
+<p>take                     ——     返回前n个元素</p>
+<h3 id="转换类"><a href="#转换类" class="headerlink" title="转换类"></a>转换类</h3><p>map                     ——     转换成另一个集合</p>
+<p>mapIndexed      ——     除了转换成另一个集合，还可以拿到Index(下标)</p>
+<p>mapNotNull       ——     执行转换钱过滤掉为NULL的元素</p>
+<p>flatMap               ——     自定义逻辑合并两个集合</p>
+<p>groupBy              ——     按照某个条件分组，返回Map</p>
+<h3 id="排序类"><a href="#排序类" class="headerlink" title="排序类"></a>排序类</h3><p>reversed                     ——     反序</p>
+<p>sorted                         ——     升序</p>
+<p>sortedBy                     ——    自定义排序</p>
+<p>sortedDescending     ——     降序</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <categories>
+        <category>函数式编程</category>
+      </categories>
+      <tags>
+        <tag>Kotlin</tag>
       </tags>
   </entry>
 </search>
