@@ -554,7 +554,6 @@ System<span class="token punctuation">.</span>out<span class="token punctuation"
   <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     String a <span class="token operator">=</span> <span class="token punctuation">(</span>String<span class="token punctuation">)</span>null<span class="token punctuation">;</span>
     String str1 <span class="token operator">=</span> <span class="token function">getValue</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">boolean</span> bool <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
     System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>str1<span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token punctuation">}</span>
 
@@ -581,7 +580,6 @@ System<span class="token punctuation">.</span>out<span class="token punctuation"
   <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     String a <span class="token operator">=</span> <span class="token string">"abc"</span><span class="token punctuation">;</span>
     String str1 <span class="token operator">=</span> <span class="token function">getValue</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
     System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>str1<span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token punctuation">}</span>
 
@@ -615,114 +613,6 @@ System<span class="token punctuation">.</span>out<span class="token punctuation"
       </tags>
   </entry>
   <entry>
-    <title>MySQL基本介绍</title>
-    <url>/posts/68d3.html</url>
-    <content><![CDATA[<h3 id="数据库是什么"><a href="#数据库是什么" class="headerlink" title="数据库是什么"></a>数据库是什么</h3><p>据说，第二次世界大战后，美军为了有效管理大量的资料，便把所有的信息都集中在一个基地里，这个集中了所有信息的基地就称为数据库。“数据库”一词便由此诞生。</p>
-<p>现在，<code>数据库表示“具有某种数据规则的集合”</code>。但提到数据库时，我们一般都默认它具备对数据进行<code>添加、查询和提取</code>等用于管理数据的功能。所以只是随便收集起来的数据的集合不能称为数据库。只有具备了<code>有效运用这些数据的管理功能</code>，才能称为数据库。</p>
-<p>使用最广泛的数据库是<code>关系数据库</code>（Relational DataBase, RDB）。其中，一条数据称为记录（record），各个项目称为列（column）。</p>
-<p><code>管理关系数据库的系统称为RDBMS</code>（Relational DataBase Management System）。MySQL也是RDBMS的一种。RDBMS是以IBM公司的埃德加·弗兰克·科德（Edgar F.Codd）与1970年发表的关系数据库相关论文为基础发展起来的。</p>
-<h3 id="主流数据库"><a href="#主流数据库" class="headerlink" title="主流数据库"></a>主流数据库</h3><table>
-<thead>
-<tr>
-<th>名称</th>
-<th>特征</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Oracle</td>
-<td>世界上最常用的商用RDBMS</td>
-</tr>
-<tr>
-<td>Access</td>
-<td>微软公司Office系列的RDBMS</td>
-</tr>
-<tr>
-<td>Microsoft SQL Servier</td>
-<td>微软公司的商用RDBMS</td>
-</tr>
-<tr>
-<td>PostgreSQL</td>
-<td>和MySQL一样是开源的RDBMS，在日本很受欢迎</td>
-</tr>
-<tr>
-<td>MySQL</td>
-<td>世界上最常用的开源RDBMS</td>
-</tr>
-</tbody></table>
-<h3 id="MySQL新功能的添加历史"><a href="#MySQL新功能的添加历史" class="headerlink" title="MySQL新功能的添加历史"></a>MySQL新功能的添加历史</h3><table>
-<thead>
-<tr>
-<th>功能</th>
-<th>添加该功能时的MySQL版本</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>事务</td>
-<td>4.0（从版本3.23.38开始可以使用该功能）</td>
-</tr>
-<tr>
-<td>合并</td>
-<td>4.0</td>
-</tr>
-<tr>
-<td>子查询</td>
-<td>4.1</td>
-</tr>
-<tr>
-<td>视图</td>
-<td>5.0</td>
-</tr>
-<tr>
-<td>存储过程</td>
-<td>5.0</td>
-</tr>
-<tr>
-<td>存储函数</td>
-<td>5.0</td>
-</tr>
-<tr>
-<td>触发器</td>
-<td>5.0</td>
-</tr>
-<tr>
-<td>默认存储引擎变为InnoDB</td>
-<td>5.5</td>
-</tr>
-<tr>
-<td>半同步复制</td>
-<td>5.5</td>
-</tr>
-<tr>
-<td>无损半同步复制</td>
-<td>5.7</td>
-</tr>
-</tbody></table>
-<h3 id="什么是SQL"><a href="#什么是SQL" class="headerlink" title="什么是SQL"></a>什么是SQL</h3><p>SQL原本是IBM公司开发的语言，但现在这门语言基本可以在所有的数据库上使用。不过麻烦的是，各个数据库使用的SQL语法稍有不同。</p>
-<p>编写查询需要遵循SQL（Structured Query Language）的规则。SQL直译过来就是结构化查询语言，用于对数据库进行操作。<code>SQL是数据库的窗口，充当用户与数据库交互的媒介</code>。</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>MySQL</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>var与val</title>
     <url>/posts/318f.html</url>
     <content><![CDATA[<h3 id="声明一个变量的完整语法"><a href="#声明一个变量的完整语法" class="headerlink" title="声明一个变量的完整语法"></a>声明一个变量的完整语法</h3><p>var &lt;propertyName&gt;[:&lt;PropertyType&gt;]  [= &lt;property_initializer&gt;]</p>
@@ -731,7 +621,8 @@ System<span class="token punctuation">.</span>out<span class="token punctuation"
 <p>变量名：变量类型 = 变量初始值</p>
 <p>​    getter</p>
 <p>​    setter</p>
-<h3 id="var-与-val"><a href="#var-与-val" class="headerlink" title="var 与 val"></a>var 与 val</h3><p>var 与 val 声明的变量，最本质的区别是：val 不能有setter</p>
+<h3 id="var-与-val"><a href="#var-与-val" class="headerlink" title="var 与 val"></a>var 与 val</h3><p>var 与 val 声明的变量，最本质的区别是：val 不能有setter。</p>
+<p>var变量的声明：</p>
 <pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">class</span> Hello <span class="token punctuation">{</span>
     <span class="token keyword">var</span> str<span class="token operator">:</span> String<span class="token operator">?</span> <span class="token operator">=</span> <span class="token keyword">null</span>
         <span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -757,6 +648,17 @@ System<span class="token punctuation">.</span>out<span class="token punctuation"
     hello<span class="token punctuation">.</span>str <span class="token operator">=</span> <span class="token string">"world"</span>
     <span class="token function">print</span><span class="token punctuation">(</span>hello<span class="token punctuation">.</span>str<span class="token punctuation">)</span>        <span class="token comment" spellcheck="true">// worldsethello</span>
 <span class="token punctuation">}</span></code></pre>
+<p>val变量的声明：</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">class</span> Hello <span class="token punctuation">{</span>
+      <span class="token keyword">val</span> str2<span class="token operator">:</span> String<span class="token operator">?</span> <span class="token operator">=</span> <span class="token keyword">null</span>
+        <span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> field <span class="token operator">+</span> <span class="token string">"hello"</span>
+        <span class="token punctuation">}</span>
+          <span class="token comment" spellcheck="true">/**
+        set(value) { // 编译报错： A 'val'-property cannot have a setter
+            field = value + "set"
+        } */</span>
+<span class="token punctuation">}</span></code></pre>
 <h3 id="val-常量"><a href="#val-常量" class="headerlink" title="val == 常量?"></a>val == 常量?</h3><pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">class</span> <span class="token function">Person</span><span class="token punctuation">(</span><span class="token keyword">private</span> <span class="token keyword">var</span> birthYear<span class="token operator">:</span> Int<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">val</span> age<span class="token operator">:</span> Int
         <span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -776,6 +678,7 @@ System<span class="token punctuation">.</span>out<span class="token punctuation"
     person<span class="token punctuation">.</span><span class="token function">plusYear</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
     <span class="token function">println</span><span class="token punctuation">(</span>person<span class="token punctuation">.</span>age<span class="token punctuation">)</span>    <span class="token comment" spellcheck="true">// 19</span>
 <span class="token punctuation">}</span></code></pre>
+<p>可以看到，val与常量是不等价的。</p>
 <h3 id="编译时常量"><a href="#编译时常量" class="headerlink" title="编译时常量"></a>编译时常量</h3><p>const 只能修饰 object 的属性，或 top-level 变量。</p>
 <p>const变量的值必须在编译期间确定下来，所以它的类型只能是String或基本类型。</p>
 <pre class=" language-java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">Perfect</span><span class="token punctuation">{</span>
@@ -930,6 +833,114 @@ $ <span class="token function">git</span> config --list --system</code></pre>
       </script>]]></content>
       <tags>
         <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MySQL基本介绍</title>
+    <url>/posts/68d3.html</url>
+    <content><![CDATA[<h3 id="数据库是什么"><a href="#数据库是什么" class="headerlink" title="数据库是什么"></a>数据库是什么</h3><p>据说，第二次世界大战后，美军为了有效管理大量的资料，便把所有的信息都集中在一个基地里，这个集中了所有信息的基地就称为数据库。“数据库”一词便由此诞生。</p>
+<p>现在，<code>数据库表示“具有某种数据规则的集合”</code>。但提到数据库时，我们一般都默认它具备对数据进行<code>添加、查询和提取</code>等用于管理数据的功能。所以只是随便收集起来的数据的集合不能称为数据库。只有具备了<code>有效运用这些数据的管理功能</code>，才能称为数据库。</p>
+<p>使用最广泛的数据库是<code>关系数据库</code>（Relational DataBase, RDB）。其中，一条数据称为记录（record），各个项目称为列（column）。</p>
+<p><code>管理关系数据库的系统称为RDBMS</code>（Relational DataBase Management System）。MySQL也是RDBMS的一种。RDBMS是以IBM公司的埃德加·弗兰克·科德（Edgar F.Codd）与1970年发表的关系数据库相关论文为基础发展起来的。</p>
+<h3 id="主流数据库"><a href="#主流数据库" class="headerlink" title="主流数据库"></a>主流数据库</h3><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>特征</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Oracle</td>
+<td>世界上最常用的商用RDBMS</td>
+</tr>
+<tr>
+<td>Access</td>
+<td>微软公司Office系列的RDBMS</td>
+</tr>
+<tr>
+<td>Microsoft SQL Servier</td>
+<td>微软公司的商用RDBMS</td>
+</tr>
+<tr>
+<td>PostgreSQL</td>
+<td>和MySQL一样是开源的RDBMS，在日本很受欢迎</td>
+</tr>
+<tr>
+<td>MySQL</td>
+<td>世界上最常用的开源RDBMS</td>
+</tr>
+</tbody></table>
+<h3 id="MySQL新功能的添加历史"><a href="#MySQL新功能的添加历史" class="headerlink" title="MySQL新功能的添加历史"></a>MySQL新功能的添加历史</h3><table>
+<thead>
+<tr>
+<th>功能</th>
+<th>添加该功能时的MySQL版本</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>事务</td>
+<td>4.0（从版本3.23.38开始可以使用该功能）</td>
+</tr>
+<tr>
+<td>合并</td>
+<td>4.0</td>
+</tr>
+<tr>
+<td>子查询</td>
+<td>4.1</td>
+</tr>
+<tr>
+<td>视图</td>
+<td>5.0</td>
+</tr>
+<tr>
+<td>存储过程</td>
+<td>5.0</td>
+</tr>
+<tr>
+<td>存储函数</td>
+<td>5.0</td>
+</tr>
+<tr>
+<td>触发器</td>
+<td>5.0</td>
+</tr>
+<tr>
+<td>默认存储引擎变为InnoDB</td>
+<td>5.5</td>
+</tr>
+<tr>
+<td>半同步复制</td>
+<td>5.5</td>
+</tr>
+<tr>
+<td>无损半同步复制</td>
+<td>5.7</td>
+</tr>
+</tbody></table>
+<h3 id="什么是SQL"><a href="#什么是SQL" class="headerlink" title="什么是SQL"></a>什么是SQL</h3><p>SQL原本是IBM公司开发的语言，但现在这门语言基本可以在所有的数据库上使用。不过麻烦的是，各个数据库使用的SQL语法稍有不同。</p>
+<p>编写查询需要遵循SQL（Structured Query Language）的规则。SQL直译过来就是结构化查询语言，用于对数据库进行操作。<code>SQL是数据库的窗口，充当用户与数据库交互的媒介</code>。</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>MySQL</tag>
       </tags>
   </entry>
   <entry>
@@ -1434,58 +1445,6 @@ infix <span class="token keyword">fun</span> Int<span class="token punctuation">
       </tags>
   </entry>
   <entry>
-    <title>kotlin集合常用操作符</title>
-    <url>/posts/fb3b.html</url>
-    <content><![CDATA[<h3 id="元素操作类"><a href="#元素操作类" class="headerlink" title="元素操作类"></a>元素操作类</h3><p>contanis        ——     判断是否有指定元素</p>
-<p>elementAt     ——     返回对应的元素，越界会抛出IndexOutOfBoundsException</p>
-<p>firstOrNull     ——     返回符合条件的第一个元素，没有返回null</p>
-<p>lastOrNull     ——     返回符合条件的最后一个元素，没有返回null</p>
-<p>indexOf         ——     返回指定元素的下标，没有返回-1</p>
-<p>singleOrNull ——     返回符合条件的单个元素，如果没有符合或超过一个，返回null</p>
-<h3 id="判断类"><a href="#判断类" class="headerlink" title="判断类"></a>判断类</h3><p>any        ——     判断集合中是否有满足条件的元素</p>
-<p>all          ——     判断集合中的元素是否都满足条件</p>
-<p>none     ——     判断集合中是否都不满足条件，是则返回true</p>
-<p>count    ——     查询集合中满足条件的元素个数 </p>
-<h3 id="过滤类"><a href="#过滤类" class="headerlink" title="过滤类"></a>过滤类</h3><p>filter                    ——     过滤出所有满足条件的元素</p>
-<p>filterNot             ——     过滤出所有不满足条件的元素</p>
-<p>filterNotNull      ——     过滤NULL</p>
-<p>take                     ——     返回前n个元素</p>
-<h3 id="转换类"><a href="#转换类" class="headerlink" title="转换类"></a>转换类</h3><p>map                     ——     转换成另一个集合</p>
-<p>mapIndexed      ——     除了转换成另一个集合，还可以拿到Index(下标)</p>
-<p>mapNotNull       ——     执行转换钱过滤掉为NULL的元素</p>
-<p>flatMap               ——     自定义逻辑合并两个集合</p>
-<p>groupBy              ——     按照某个条件分组，返回Map</p>
-<h3 id="排序类"><a href="#排序类" class="headerlink" title="排序类"></a>排序类</h3><p>reversed                     ——     反序</p>
-<p>sorted                         ——     升序</p>
-<p>sortedBy                     ——    自定义排序</p>
-<p>sortedDescending     ——     降序</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <categories>
-        <category>函数式编程</category>
-      </categories>
-      <tags>
-        <tag>Kotlin</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>英语学习第二天</title>
     <url>/posts/9511.html</url>
     <content><![CDATA[<h3 id="为什么会有五种句型"><a href="#为什么会有五种句型" class="headerlink" title="为什么会有五种句型"></a>为什么会有五种句型</h3><p>这个句子有没有动词，没有动作就一般是主系表。如果有一个动作，我们把这个动作视为核心动词「谓语动词」。根据这个动词的种类不一样，这个动作涉及到别的对象呢，还是自己就能完成。涉及到别人是涉及到一个对象还是两个对象呢？这样子会划分为四种不同的类型。</p>
@@ -1550,6 +1509,58 @@ infix <span class="token keyword">fun</span> Int<span class="token punctuation">
       </script>]]></content>
       <tags>
         <tag>English</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>kotlin集合常用操作符</title>
+    <url>/posts/fb3b.html</url>
+    <content><![CDATA[<h3 id="元素操作类"><a href="#元素操作类" class="headerlink" title="元素操作类"></a>元素操作类</h3><p>contanis        ——     判断是否有指定元素</p>
+<p>elementAt     ——     返回对应的元素，越界会抛出IndexOutOfBoundsException</p>
+<p>firstOrNull     ——     返回符合条件的第一个元素，没有返回null</p>
+<p>lastOrNull     ——     返回符合条件的最后一个元素，没有返回null</p>
+<p>indexOf         ——     返回指定元素的下标，没有返回-1</p>
+<p>singleOrNull ——     返回符合条件的单个元素，如果没有符合或超过一个，返回null</p>
+<h3 id="判断类"><a href="#判断类" class="headerlink" title="判断类"></a>判断类</h3><p>any        ——     判断集合中是否有满足条件的元素</p>
+<p>all          ——     判断集合中的元素是否都满足条件</p>
+<p>none     ——     判断集合中是否都不满足条件，是则返回true</p>
+<p>count    ——     查询集合中满足条件的元素个数 </p>
+<h3 id="过滤类"><a href="#过滤类" class="headerlink" title="过滤类"></a>过滤类</h3><p>filter                    ——     过滤出所有满足条件的元素</p>
+<p>filterNot             ——     过滤出所有不满足条件的元素</p>
+<p>filterNotNull      ——     过滤NULL</p>
+<p>take                     ——     返回前n个元素</p>
+<h3 id="转换类"><a href="#转换类" class="headerlink" title="转换类"></a>转换类</h3><p>map                     ——     转换成另一个集合</p>
+<p>mapIndexed      ——     除了转换成另一个集合，还可以拿到Index(下标)</p>
+<p>mapNotNull       ——     执行转换钱过滤掉为NULL的元素</p>
+<p>flatMap               ——     自定义逻辑合并两个集合</p>
+<p>groupBy              ——     按照某个条件分组，返回Map</p>
+<h3 id="排序类"><a href="#排序类" class="headerlink" title="排序类"></a>排序类</h3><p>reversed                     ——     反序</p>
+<p>sorted                         ——     升序</p>
+<p>sortedBy                     ——    自定义排序</p>
+<p>sortedDescending     ——     降序</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <categories>
+        <category>函数式编程</category>
+      </categories>
+      <tags>
+        <tag>Kotlin</tag>
       </tags>
   </entry>
 </search>

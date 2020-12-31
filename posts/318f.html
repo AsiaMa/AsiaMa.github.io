@@ -461,7 +461,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    302
+                    353
                 </div>
                 
 
@@ -489,7 +489,8 @@
 <p>变量名：变量类型 = 变量初始值</p>
 <p>​    getter</p>
 <p>​    setter</p>
-<h3 id="var-与-val"><a href="#var-与-val" class="headerlink" title="var 与 val"></a>var 与 val</h3><p>var 与 val 声明的变量，最本质的区别是：val 不能有setter</p>
+<h3 id="var-与-val"><a href="#var-与-val" class="headerlink" title="var 与 val"></a>var 与 val</h3><p>var 与 val 声明的变量，最本质的区别是：val 不能有setter。</p>
+<p>var变量的声明：</p>
 <pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">class</span> Hello <span class="token punctuation">{</span>
     <span class="token keyword">var</span> str<span class="token operator">:</span> String<span class="token operator">?</span> <span class="token operator">=</span> <span class="token keyword">null</span>
         <span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -515,6 +516,17 @@
     hello<span class="token punctuation">.</span>str <span class="token operator">=</span> <span class="token string">"world"</span>
     <span class="token function">print</span><span class="token punctuation">(</span>hello<span class="token punctuation">.</span>str<span class="token punctuation">)</span>        <span class="token comment" spellcheck="true">// worldsethello</span>
 <span class="token punctuation">}</span></code></pre>
+<p>val变量的声明：</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">class</span> Hello <span class="token punctuation">{</span>
+      <span class="token keyword">val</span> str2<span class="token operator">:</span> String<span class="token operator">?</span> <span class="token operator">=</span> <span class="token keyword">null</span>
+        <span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> field <span class="token operator">+</span> <span class="token string">"hello"</span>
+        <span class="token punctuation">}</span>
+          <span class="token comment" spellcheck="true">/**
+        set(value) { // 编译报错： A 'val'-property cannot have a setter
+            field = value + "set"
+        } */</span>
+<span class="token punctuation">}</span></code></pre>
 <h3 id="val-常量"><a href="#val-常量" class="headerlink" title="val == 常量?"></a>val == 常量?</h3><pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">class</span> <span class="token function">Person</span><span class="token punctuation">(</span><span class="token keyword">private</span> <span class="token keyword">var</span> birthYear<span class="token operator">:</span> Int<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">val</span> age<span class="token operator">:</span> Int
         <span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -534,6 +546,7 @@
     person<span class="token punctuation">.</span><span class="token function">plusYear</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
     <span class="token function">println</span><span class="token punctuation">(</span>person<span class="token punctuation">.</span>age<span class="token punctuation">)</span>    <span class="token comment" spellcheck="true">// 19</span>
 <span class="token punctuation">}</span></code></pre>
+<p>可以看到，val与常量是不等价的。</p>
 <h3 id="编译时常量"><a href="#编译时常量" class="headerlink" title="编译时常量"></a>编译时常量</h3><p>const 只能修饰 object 的属性，或 top-level 变量。</p>
 <p>const变量的值必须在编译期间确定下来，所以它的类型只能是String或基本类型。</p>
 <pre class=" language-java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">Perfect</span><span class="token punctuation">{</span>
@@ -1062,7 +1075,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">10.5k</span>&nbsp;字
+                class="white-color">10.6k</span>&nbsp;字
             
             
             
