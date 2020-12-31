@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="使用Git之前需要做的最小配置, Java,Git,SpringBoot,SpringCloud,SpringCloud Alibaba等">
+    <meta name="keywords" content="var与val, Java,Git,SpringBoot,SpringCloud,SpringCloud Alibaba等">
     <meta name="description" content="专注WJava后端,大数据,分享知识,分享生活">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>使用Git之前需要做的最小配置 | 三十二道街</title>
+    <title>var与val | 三十二道街</title>
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/awesome/css/all.css">
@@ -309,12 +309,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/10.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/2.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">使用Git之前需要做的最小配置</h1>
+                    <h1 class="description center-align post-title">var与val</h1>
                 </div>
             </div>
         </div>
@@ -431,8 +431,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Git/">
-                                <span class="chip bg-color">Git</span>
+                            <a href="/tags/Kotlin/">
+                                <span class="chip bg-color">Kotlin</span>
                             </a>
                         
                     </div>
@@ -447,21 +447,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-09-20
+                    2020-12-31
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-12-29
+                    2020-12-31
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    180
+                    302
                 </div>
                 
 
@@ -483,20 +483,75 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="配置user-name-和-user-email"><a href="#配置user-name-和-user-email" class="headerlink" title="配置user.name 和 user.email"></a>配置user.name 和 user.email</h3><p>全局配置「对当前用户所有仓库有效」</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --global user.name <span class="token string">"your_name"</span>
-$ <span class="token function">git</span> config --global user.email <span class="token string">"your_email"</span></code></pre>
-<p>缺省等同于local「只对某个仓库有效」</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --local user.name <span class="token string">"your_name"</span>
-$ <span class="token function">git</span> config --local user.email <span class="token string">"your_email"</span></code></pre>
-<p>系统配置「对系统所有登录的用户有效」</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --system user.name <span class="token string">"your_name"</span>
-$ <span class="token function">git</span> config --system user.email <span class="token string">"your_email"</span></code></pre>
-<h3 id="显示config的配置"><a href="#显示config的配置" class="headerlink" title="显示config的配置"></a>显示config的配置</h3><pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --list --local
-$ <span class="token function">git</span> config --list --global
-$ <span class="token function">git</span> config --list --system</code></pre>
-<h3 id="查看某一个属性"><a href="#查看某一个属性" class="headerlink" title="查看某一个属性"></a>查看某一个属性</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --global user.name</code></pre>
-<h3 id="移除设置"><a href="#移除设置" class="headerlink" title="移除设置"></a>移除设置</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --unset --global user.email</code></pre>
+                <h3 id="声明一个变量的完整语法"><a href="#声明一个变量的完整语法" class="headerlink" title="声明一个变量的完整语法"></a>声明一个变量的完整语法</h3><p>var &lt;propertyName&gt;[:&lt;PropertyType&gt;]  [= &lt;property_initializer&gt;]</p>
+<p>​        [&lt;gettter&gt;]</p>
+<p>​        [&lt;setter&gt;]</p>
+<p>变量名：变量类型 = 变量初始值</p>
+<p>​    getter</p>
+<p>​    setter</p>
+<h3 id="var-与-val"><a href="#var-与-val" class="headerlink" title="var 与 val"></a>var 与 val</h3><p>var 与 val 声明的变量，最本质的区别是：val 不能有setter</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">class</span> Hello <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> str<span class="token operator">:</span> String<span class="token operator">?</span> <span class="token operator">=</span> <span class="token keyword">null</span>
+        <span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> field <span class="token operator">+</span> <span class="token string">"hello"</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">set</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            field <span class="token operator">=</span> value <span class="token operator">+</span> <span class="token string">"set"</span>
+        <span class="token punctuation">}</span>
+      <span class="token keyword">val</span> str2<span class="token operator">:</span> String<span class="token operator">?</span> <span class="token operator">=</span> <span class="token keyword">null</span>
+        <span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> field <span class="token operator">+</span> <span class="token string">"hello"</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">set</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">// 编译报错： A 'val'-property cannot have a setter</span>
+            field <span class="token operator">=</span> value <span class="token operator">+</span> <span class="token string">"set"</span>
+        <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+
+<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">val</span> hello <span class="token operator">=</span> <span class="token function">Hello</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">println</span><span class="token punctuation">(</span>hello<span class="token punctuation">.</span>str<span class="token punctuation">)</span>        <span class="token comment" spellcheck="true">// nullhello </span>
+
+    hello<span class="token punctuation">.</span>str <span class="token operator">=</span> <span class="token string">"world"</span>
+    <span class="token function">print</span><span class="token punctuation">(</span>hello<span class="token punctuation">.</span>str<span class="token punctuation">)</span>        <span class="token comment" spellcheck="true">// worldsethello</span>
+<span class="token punctuation">}</span></code></pre>
+<h3 id="val-常量"><a href="#val-常量" class="headerlink" title="val == 常量?"></a>val == 常量?</h3><pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">class</span> <span class="token function">Person</span><span class="token punctuation">(</span><span class="token keyword">private</span> <span class="token keyword">var</span> birthYear<span class="token operator">:</span> Int<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">val</span> age<span class="token operator">:</span> Int
+        <span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> Calendar<span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>Calendar<span class="token punctuation">.</span>YEAR<span class="token punctuation">)</span> <span class="token operator">-</span> birthYear
+        <span class="token punctuation">}</span>
+
+    <span class="token keyword">fun</span> <span class="token function">plusYear</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        birthYear<span class="token operator">++</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+
+<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">val</span> person <span class="token operator">=</span> <span class="token function">Person</span><span class="token punctuation">(</span><span class="token number">2000</span><span class="token punctuation">)</span>
+    <span class="token function">println</span><span class="token punctuation">(</span>person<span class="token punctuation">.</span>age<span class="token punctuation">)</span>    <span class="token comment" spellcheck="true">// 20</span>
+
+    person<span class="token punctuation">.</span><span class="token function">plusYear</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token function">println</span><span class="token punctuation">(</span>person<span class="token punctuation">.</span>age<span class="token punctuation">)</span>    <span class="token comment" spellcheck="true">// 19</span>
+<span class="token punctuation">}</span></code></pre>
+<h3 id="编译时常量"><a href="#编译时常量" class="headerlink" title="编译时常量"></a>编译时常量</h3><p>const 只能修饰 object 的属性，或 top-level 变量。</p>
+<p>const变量的值必须在编译期间确定下来，所以它的类型只能是String或基本类型。</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">Perfect</span><span class="token punctuation">{</span>
+    <span class="token keyword">const</span> val  TOP <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 编译报错：Const 'val' are only allowed on top level or in objects</span>
+<span class="token punctuation">}</span>
+
+object Perfect<span class="token punctuation">{</span>
+    <span class="token keyword">const</span> val  TOP <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// OK</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Perfect</span> <span class="token punctuation">{</span>
+    companion object <span class="token punctuation">{</span>
+        <span class="token keyword">const</span> val TOP <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// OK</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">// top-level</span>
+<span class="token keyword">const</span> val TOP <span class="token operator">=</span> <span class="token number">1</span> </code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -540,7 +595,7 @@ $ <span class="token function">git</span> config --list --system</code></pre>
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://blog.asiama.top/posts/5174.html">https://blog.asiama.top/posts/5174.html</a>
+                    <a href="https://blog.asiama.top/posts/318f.html">https://blog.asiama.top/posts/318f.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -578,8 +633,8 @@ $ <span class="token function">git</span> config --list --system</code></pre>
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Git/">
-                                    <span class="chip bg-color">Git</span>
+                                <a href="/tags/Kotlin/">
+                                    <span class="chip bg-color">Kotlin</span>
                                 </a>
                             
                         </div>
@@ -750,7 +805,7 @@ $ <span class="token function">git</span> config --list --system</code></pre>
         repo: 'asiama.github.io',
         owner: 'asiama',
         admin: "asiama",
-        id: '2020-09-20T14-54-45',
+        id: '2020-12-31T15-44-11',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -774,17 +829,18 @@ $ <span class="token function">git</span> config --list --system</code></pre>
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/posts/56b.html">
+                <a href="/posts/318f.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/9.jpg" class="responsive-img" alt="英语学习第一天">
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/2.jpg" class="responsive-img" alt="var与val">
                         
-                        <span class="card-title">英语学习第一天</span>
+                        <span class="card-title">var与val</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -794,9 +850,9 @@ $ <span class="token function">git</span> config --list --system</code></pre>
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-10-22
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-12-31
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -805,11 +861,12 @@ $ <span class="token function">git</span> config --list --system</code></pre>
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/English/">
-                        <span class="chip bg-color">English</span>
+                    <a href="/tags/Kotlin/">
+                        <span class="chip bg-color">Kotlin</span>
                     </a>
                     
                 </div>
@@ -823,13 +880,13 @@ $ <span class="token function">git</span> config --list --system</code></pre>
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/posts/3eeb.html">
+                <a href="/posts/8a52.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/13.jpg" class="responsive-img" alt="自定义中缀表达式">
                         
-                        <span class="card-title">Hello World</span>
+                        <span class="card-title">自定义中缀表达式</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -840,7 +897,7 @@ $ <span class="token function">git</span> config --list --system</code></pre>
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-09-18
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-12-29
                             </span>
                         <span class="publish-author">
                             
@@ -849,6 +906,14 @@ $ <span class="token function">git</span> config --list --system</code></pre>
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Kotlin/">
+                        <span class="chip bg-color">Kotlin</span>
+                    </a>
+                    
                 </div>
                 
             </div>
