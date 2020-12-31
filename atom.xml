@@ -6,7 +6,7 @@
   <link href="https://blog.asiama.top/atom.xml" rel="self"/>
   
   <link href="https://blog.asiama.top/"/>
-  <updated>2020-12-31T08:32:31.351Z</updated>
+  <updated>2020-12-31T09:16:07.429Z</updated>
   <id>https://blog.asiama.top/</id>
   
   <author>
@@ -17,11 +17,41 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>kotlin如何实现空安全</title>
+    <link href="https://blog.asiama.top/posts/b698.html"/>
+    <id>https://blog.asiama.top/posts/b698.html</id>
+    <published>2020-12-31T09:01:43.000Z</published>
+    <updated>2020-12-31T09:16:07.429Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;通过静态代码检查，编译插件检查，在编译器避免空指针异常&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;每次引用对象的时候，都去进行对象判空，在运行期间避免对象空指针&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;p&gt;将一个对象的两种类型（可以为空的类型与</summary>
+        
+      
+    
+    
+    
+    
+    <category term="Kotlin" scheme="https://blog.asiama.top/tags/Kotlin/"/>
+    
+  </entry>
+  
+  <entry>
     <title>var与val</title>
     <link href="https://blog.asiama.top/posts/318f.html"/>
     <id>https://blog.asiama.top/posts/318f.html</id>
     <published>2020-12-31T07:44:11.000Z</published>
-    <updated>2020-12-31T08:32:31.351Z</updated>
+    <updated>2020-12-31T08:44:03.929Z</updated>
     
     
       
@@ -476,29 +506,6 @@
     
     
     <category term="English" scheme="https://blog.asiama.top/tags/English/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>使用Git之前需要做的最小配置</title>
-    <link href="https://blog.asiama.top/posts/5174.html"/>
-    <id>https://blog.asiama.top/posts/5174.html</id>
-    <published>2020-09-20T06:54:45.000Z</published>
-    <updated>2020-12-29T14:48:24.102Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;配置user-name-和-user-email&quot;&gt;&lt;a href=&quot;#配置user-name-和-user-email&quot; class=&quot;headerlink&quot; title=&quot;配置user.name 和 user.email&quot;&gt;&lt;/a&gt;配置user.name 和</summary>
-        
-      
-    
-    
-    
-    
-    <category term="Git" scheme="https://blog.asiama.top/tags/Git/"/>
     
   </entry>
   
