@@ -525,121 +525,6 @@ System<span class="token punctuation">.</span>out<span class="token punctuation"
       </script>]]></content>
   </entry>
   <entry>
-    <title>使用Docker安装YApi</title>
-    <url>/posts/b5f9.html</url>
-    <content><![CDATA[<h3 id="启动MongoDB"><a href="#启动MongoDB" class="headerlink" title="启动MongoDB"></a>启动MongoDB</h3><ol>
-<li>默认安装mongo</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash">docker run -d --name mongo-yapi mongo</code></pre>
-<ol start="2">
-<li>挂载宿主目录安装mongo</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 创建挂载目录</span>
-<span class="token function">mkdir</span> -p /data/yapi/mongodata </code></pre>
-<ol start="3">
-<li>运行mongo映射主机目录/data/yapi/mongodata</li>
-</ol>
-<pre><code>docker run --restart always -v /data/yapi/mongodata:/data/db  -d --name mongo-yapi mongo</code></pre>
-<h3 id="获取YApi镜像"><a href="#获取YApi镜像" class="headerlink" title="获取YApi镜像"></a>获取YApi镜像</h3><ol>
-<li>从阿里云镜像仓库拉取</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash">docker pull registry.cn-hangzhou.aliyuncs.com/anoy/yapi</code></pre>
-<ol start="2">
-<li>初始化 Yapi 数据库索引及管理员账号</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash">docker run -it --rm --link mongo-yapi:mongo   --entrypoint <span class="token function">npm</span>  --workdir /api/vendors  registry.cn-hangzhou.aliyuncs.com/anoy/yapi   run install-server</code></pre>
-<blockquote>
-<p>自定义配置文件挂载到目录 <code>/api/config.json</code>，官方自定义配置文件 -&gt; <a href="https://github.com/YMFE/yapi/blob/master/config_example.json">传送门</a></p>
-</blockquote>
-<ol start="3">
-<li>启动 Yapi 服务</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash">docker run -d   --name yapi  --link mongo-yapi:mongo  --workdir /api/vendors   -p 3000:3000   registry.cn-hangzhou.aliyuncs.com/anoy/yapi   server/app.js</code></pre>
-<h3 id="使用YApi"><a href="#使用YApi" class="headerlink" title="使用YApi"></a>使用YApi</h3><p>访问 <code>http://localhost:3000</code> 登录账号 <code>admin@admin.com</code>，密码 <code>ymfe.org</code></p>
-<p>至此，帅气的 Yapi 就可以轻松使用啦！</p>
-<h3 id="其它相关操作"><a href="#其它相关操作" class="headerlink" title="其它相关操作"></a>其它相关操作</h3><ol>
-<li>关闭yapi</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash">docker stop yapi</code></pre>
-<ol start="2">
-<li>开启yapi</li>
-</ol>
-<pre><code>docker start yapi</code></pre>
-<ol start="3">
-<li>升级yapi</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 1、停止并删除旧版容器</span>
-docker <span class="token function">rm</span> -f yapi
-
-<span class="token comment" spellcheck="true"># 2、获取最新镜像</span>
-docker pull registry.cn-hangzhou.aliyuncs.com/anoy/yapi
-
-<span class="token comment" spellcheck="true"># 3、启动新容器</span>
-docker run -d  --name yapi  --link mongo-yapi:mongo  --workdir /api/vendors  -p 3000:3000   registry.cn-hangzhou.aliyuncs.com/anoy/yapi   server/app.js</code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>YApi</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用Git之前需要做的最小配置</title>
-    <url>/posts/5174.html</url>
-    <content><![CDATA[<h3 id="配置user-name-和-user-email"><a href="#配置user-name-和-user-email" class="headerlink" title="配置user.name 和 user.email"></a>配置user.name 和 user.email</h3><p>全局配置「对当前用户所有仓库有效」</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --global user.name <span class="token string">"your_name"</span>
-$ <span class="token function">git</span> config --global user.email <span class="token string">"your_email"</span></code></pre>
-<p>缺省等同于local「只对某个仓库有效」</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --local user.name <span class="token string">"your_name"</span>
-$ <span class="token function">git</span> config --local user.email <span class="token string">"your_email"</span></code></pre>
-<p>系统配置「对系统所有登录的用户有效」</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --system user.name <span class="token string">"your_name"</span>
-$ <span class="token function">git</span> config --system user.email <span class="token string">"your_email"</span></code></pre>
-<h3 id="显示config的配置"><a href="#显示config的配置" class="headerlink" title="显示config的配置"></a>显示config的配置</h3><pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --list --local
-$ <span class="token function">git</span> config --list --global
-$ <span class="token function">git</span> config --list --system</code></pre>
-<h3 id="查看某一个属性"><a href="#查看某一个属性" class="headerlink" title="查看某一个属性"></a>查看某一个属性</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --global user.name</code></pre>
-<h3 id="移除设置"><a href="#移除设置" class="headerlink" title="移除设置"></a>移除设置</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --unset --global user.email</code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>kotlin如何实现空安全</title>
     <url>/posts/b698.html</url>
     <content><![CDATA[<ol>
@@ -704,109 +589,6 @@ $ <span class="token function">git</span> config --list --system</code></pre>
     <span class="token keyword">return</span> <span class="token string">"1"</span> <span class="token operator">+</span> s<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>Kotlin</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>var与val</title>
-    <url>/posts/318f.html</url>
-    <content><![CDATA[<h3 id="声明一个变量的完整语法"><a href="#声明一个变量的完整语法" class="headerlink" title="声明一个变量的完整语法"></a>声明一个变量的完整语法</h3><p>var &lt;propertyName&gt;[:&lt;PropertyType&gt;]  [= &lt;property_initializer&gt;]</p>
-<p>​        [&lt;gettter&gt;]</p>
-<p>​        [&lt;setter&gt;]</p>
-<p>变量名：变量类型 = 变量初始值</p>
-<p>​    getter</p>
-<p>​    setter</p>
-<h3 id="var-与-val"><a href="#var-与-val" class="headerlink" title="var 与 val"></a>var 与 val</h3><p>var 与 val 声明的变量，最本质的区别是：val 不能有setter。</p>
-<p>var变量的声明：</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">class</span> Hello <span class="token punctuation">{</span>
-    <span class="token keyword">var</span> str<span class="token operator">:</span> String<span class="token operator">?</span> <span class="token operator">=</span> <span class="token keyword">null</span>
-        <span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">return</span> field <span class="token operator">+</span> <span class="token string">"hello"</span>
-        <span class="token punctuation">}</span>
-        <span class="token keyword">set</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            field <span class="token operator">=</span> value <span class="token operator">+</span> <span class="token string">"set"</span>
-        <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-
-<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">val</span> hello <span class="token operator">=</span> <span class="token function">Hello</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">println</span><span class="token punctuation">(</span>hello<span class="token punctuation">.</span>str<span class="token punctuation">)</span>        <span class="token comment" spellcheck="true">// nullhello </span>
-
-    hello<span class="token punctuation">.</span>str <span class="token operator">=</span> <span class="token string">"world"</span>
-    <span class="token function">print</span><span class="token punctuation">(</span>hello<span class="token punctuation">.</span>str<span class="token punctuation">)</span>        <span class="token comment" spellcheck="true">// worldsethello</span>
-<span class="token punctuation">}</span></code></pre>
-<p>val变量的声明：</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">class</span> Hello <span class="token punctuation">{</span>
-      <span class="token keyword">val</span> str2<span class="token operator">:</span> String<span class="token operator">?</span> <span class="token operator">=</span> <span class="token keyword">null</span>
-        <span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">return</span> field <span class="token operator">+</span> <span class="token string">"hello"</span>
-        <span class="token punctuation">}</span>
-              <span class="token comment" spellcheck="true">/**
-        set(value) { // 编译报错： A 'val'-property cannot have a setter
-            field = value + "set"
-        } */</span>
-<span class="token punctuation">}</span></code></pre>
-<h3 id="val-常量"><a href="#val-常量" class="headerlink" title="val == 常量?"></a>val == 常量?</h3><pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">class</span> <span class="token function">Person</span><span class="token punctuation">(</span><span class="token keyword">private</span> <span class="token keyword">var</span> birthYear<span class="token operator">:</span> Int<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">val</span> age<span class="token operator">:</span> Int
-        <span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">return</span> Calendar<span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>Calendar<span class="token punctuation">.</span>YEAR<span class="token punctuation">)</span> <span class="token operator">-</span> birthYear
-        <span class="token punctuation">}</span>
-
-    <span class="token keyword">fun</span> <span class="token function">plusYear</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        birthYear<span class="token operator">++</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-
-<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">val</span> person <span class="token operator">=</span> <span class="token function">Person</span><span class="token punctuation">(</span><span class="token number">2000</span><span class="token punctuation">)</span>
-    <span class="token function">println</span><span class="token punctuation">(</span>person<span class="token punctuation">.</span>age<span class="token punctuation">)</span>    <span class="token comment" spellcheck="true">// 20</span>
-
-    person<span class="token punctuation">.</span><span class="token function">plusYear</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token function">println</span><span class="token punctuation">(</span>person<span class="token punctuation">.</span>age<span class="token punctuation">)</span>    <span class="token comment" spellcheck="true">// 19</span>
-<span class="token punctuation">}</span></code></pre>
-<p>可以看到，val与常量是不等价的。</p>
-<h3 id="编译时常量"><a href="#编译时常量" class="headerlink" title="编译时常量"></a>编译时常量</h3><p>const 只能修饰 object 的属性，或 top-level 变量。</p>
-<p>const变量的值必须在编译期间确定下来，所以它的类型只能是String或基本类型。</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">Perfect</span><span class="token punctuation">{</span>
-      <span class="token comment" spellcheck="true">/**
-    const val  TOP = 1; // 编译报错：Const 'val' are only allowed on top level or in objects
-    */</span>
-<span class="token punctuation">}</span>
-
-object Perfect<span class="token punctuation">{</span>
-    <span class="token keyword">const</span> val  TOP <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// OK</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">class</span> <span class="token class-name">Perfect</span> <span class="token punctuation">{</span>
-    companion object <span class="token punctuation">{</span>
-        <span class="token keyword">const</span> val TOP <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// OK</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-<span class="token comment" spellcheck="true">// top-level</span>
-<span class="token keyword">const</span> val TOP <span class="token operator">=</span> <span class="token number">1</span>    <span class="token comment" spellcheck="true">// OK</span></code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -936,6 +718,224 @@ object Perfect<span class="token punctuation">{</span>
       </script>]]></content>
       <tags>
         <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>var与val</title>
+    <url>/posts/318f.html</url>
+    <content><![CDATA[<h3 id="声明一个变量的完整语法"><a href="#声明一个变量的完整语法" class="headerlink" title="声明一个变量的完整语法"></a>声明一个变量的完整语法</h3><p>var &lt;propertyName&gt;[:&lt;PropertyType&gt;]  [= &lt;property_initializer&gt;]</p>
+<p>​        [&lt;gettter&gt;]</p>
+<p>​        [&lt;setter&gt;]</p>
+<p>变量名：变量类型 = 变量初始值</p>
+<p>​    getter</p>
+<p>​    setter</p>
+<h3 id="var-与-val"><a href="#var-与-val" class="headerlink" title="var 与 val"></a>var 与 val</h3><p>var 与 val 声明的变量，最本质的区别是：val 不能有setter。</p>
+<p>var变量的声明：</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">class</span> Hello <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> str<span class="token operator">:</span> String<span class="token operator">?</span> <span class="token operator">=</span> <span class="token keyword">null</span>
+        <span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> field <span class="token operator">+</span> <span class="token string">"hello"</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">set</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            field <span class="token operator">=</span> value <span class="token operator">+</span> <span class="token string">"set"</span>
+        <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+
+<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">val</span> hello <span class="token operator">=</span> <span class="token function">Hello</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">println</span><span class="token punctuation">(</span>hello<span class="token punctuation">.</span>str<span class="token punctuation">)</span>        <span class="token comment" spellcheck="true">// nullhello </span>
+
+    hello<span class="token punctuation">.</span>str <span class="token operator">=</span> <span class="token string">"world"</span>
+    <span class="token function">print</span><span class="token punctuation">(</span>hello<span class="token punctuation">.</span>str<span class="token punctuation">)</span>        <span class="token comment" spellcheck="true">// worldsethello</span>
+<span class="token punctuation">}</span></code></pre>
+<p>val变量的声明：</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">class</span> Hello <span class="token punctuation">{</span>
+      <span class="token keyword">val</span> str2<span class="token operator">:</span> String<span class="token operator">?</span> <span class="token operator">=</span> <span class="token keyword">null</span>
+        <span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> field <span class="token operator">+</span> <span class="token string">"hello"</span>
+        <span class="token punctuation">}</span>
+              <span class="token comment" spellcheck="true">/**
+        set(value) { // 编译报错： A 'val'-property cannot have a setter
+            field = value + "set"
+        } */</span>
+<span class="token punctuation">}</span></code></pre>
+<h3 id="val-常量"><a href="#val-常量" class="headerlink" title="val == 常量?"></a>val == 常量?</h3><pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">class</span> <span class="token function">Person</span><span class="token punctuation">(</span><span class="token keyword">private</span> <span class="token keyword">var</span> birthYear<span class="token operator">:</span> Int<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">val</span> age<span class="token operator">:</span> Int
+        <span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> Calendar<span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>Calendar<span class="token punctuation">.</span>YEAR<span class="token punctuation">)</span> <span class="token operator">-</span> birthYear
+        <span class="token punctuation">}</span>
+
+    <span class="token keyword">fun</span> <span class="token function">plusYear</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        birthYear<span class="token operator">++</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+
+<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">val</span> person <span class="token operator">=</span> <span class="token function">Person</span><span class="token punctuation">(</span><span class="token number">2000</span><span class="token punctuation">)</span>
+    <span class="token function">println</span><span class="token punctuation">(</span>person<span class="token punctuation">.</span>age<span class="token punctuation">)</span>    <span class="token comment" spellcheck="true">// 20</span>
+
+    person<span class="token punctuation">.</span><span class="token function">plusYear</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token function">println</span><span class="token punctuation">(</span>person<span class="token punctuation">.</span>age<span class="token punctuation">)</span>    <span class="token comment" spellcheck="true">// 19</span>
+<span class="token punctuation">}</span></code></pre>
+<p>可以看到，val与常量是不等价的。</p>
+<h3 id="编译时常量"><a href="#编译时常量" class="headerlink" title="编译时常量"></a>编译时常量</h3><p>const 只能修饰 object 的属性，或 top-level 变量。</p>
+<p>const变量的值必须在编译期间确定下来，所以它的类型只能是String或基本类型。</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">Perfect</span><span class="token punctuation">{</span>
+      <span class="token comment" spellcheck="true">/**
+    const val  TOP = 1; // 编译报错：Const 'val' are only allowed on top level or in objects
+    */</span>
+<span class="token punctuation">}</span>
+
+object Perfect<span class="token punctuation">{</span>
+    <span class="token keyword">const</span> val  TOP <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// OK</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Perfect</span> <span class="token punctuation">{</span>
+    companion object <span class="token punctuation">{</span>
+        <span class="token keyword">const</span> val TOP <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// OK</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">// top-level</span>
+<span class="token keyword">const</span> val TOP <span class="token operator">=</span> <span class="token number">1</span>    <span class="token comment" spellcheck="true">// OK</span></code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用Docker安装YApi</title>
+    <url>/posts/b5f9.html</url>
+    <content><![CDATA[<h3 id="启动MongoDB"><a href="#启动MongoDB" class="headerlink" title="启动MongoDB"></a>启动MongoDB</h3><ol>
+<li>默认安装mongo</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">docker run -d --name mongo-yapi mongo</code></pre>
+<ol start="2">
+<li>挂载宿主目录安装mongo</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 创建挂载目录</span>
+<span class="token function">mkdir</span> -p /data/yapi/mongodata </code></pre>
+<ol start="3">
+<li>运行mongo映射主机目录/data/yapi/mongodata</li>
+</ol>
+<pre><code>docker run --restart always -v /data/yapi/mongodata:/data/db  -d --name mongo-yapi mongo</code></pre>
+<h3 id="获取YApi镜像"><a href="#获取YApi镜像" class="headerlink" title="获取YApi镜像"></a>获取YApi镜像</h3><ol>
+<li>从阿里云镜像仓库拉取</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">docker pull registry.cn-hangzhou.aliyuncs.com/anoy/yapi</code></pre>
+<ol start="2">
+<li>初始化 Yapi 数据库索引及管理员账号</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">docker run -it --rm --link mongo-yapi:mongo   --entrypoint <span class="token function">npm</span>  --workdir /api/vendors  registry.cn-hangzhou.aliyuncs.com/anoy/yapi   run install-server</code></pre>
+<blockquote>
+<p>自定义配置文件挂载到目录 <code>/api/config.json</code>，官方自定义配置文件 -&gt; <a href="https://github.com/YMFE/yapi/blob/master/config_example.json">传送门</a></p>
+</blockquote>
+<ol start="3">
+<li>启动 Yapi 服务</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">docker run -d   --name yapi  --link mongo-yapi:mongo  --workdir /api/vendors   -p 3000:3000   registry.cn-hangzhou.aliyuncs.com/anoy/yapi   server/app.js</code></pre>
+<h3 id="使用YApi"><a href="#使用YApi" class="headerlink" title="使用YApi"></a>使用YApi</h3><p>访问 <code>http://localhost:3000</code> 登录账号 <code>admin@admin.com</code>，密码 <code>ymfe.org</code></p>
+<p>至此，帅气的 Yapi 就可以轻松使用啦！</p>
+<h3 id="其它相关操作"><a href="#其它相关操作" class="headerlink" title="其它相关操作"></a>其它相关操作</h3><ol>
+<li>关闭yapi</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">docker stop yapi</code></pre>
+<ol start="2">
+<li>开启yapi</li>
+</ol>
+<pre><code>docker start yapi</code></pre>
+<ol start="3">
+<li>升级yapi</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 1、停止并删除旧版容器</span>
+docker <span class="token function">rm</span> -f yapi
+
+<span class="token comment" spellcheck="true"># 2、获取最新镜像</span>
+docker pull registry.cn-hangzhou.aliyuncs.com/anoy/yapi
+
+<span class="token comment" spellcheck="true"># 3、启动新容器</span>
+docker run -d  --name yapi  --link mongo-yapi:mongo  --workdir /api/vendors  -p 3000:3000   registry.cn-hangzhou.aliyuncs.com/anoy/yapi   server/app.js</code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>YApi</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用Git之前需要做的最小配置</title>
+    <url>/posts/5174.html</url>
+    <content><![CDATA[<h3 id="配置user-name-和-user-email"><a href="#配置user-name-和-user-email" class="headerlink" title="配置user.name 和 user.email"></a>配置user.name 和 user.email</h3><p>全局配置「对当前用户所有仓库有效」</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --global user.name <span class="token string">"your_name"</span>
+$ <span class="token function">git</span> config --global user.email <span class="token string">"your_email"</span></code></pre>
+<p>缺省等同于local「只对某个仓库有效」</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --local user.name <span class="token string">"your_name"</span>
+$ <span class="token function">git</span> config --local user.email <span class="token string">"your_email"</span></code></pre>
+<p>系统配置「对系统所有登录的用户有效」</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --system user.name <span class="token string">"your_name"</span>
+$ <span class="token function">git</span> config --system user.email <span class="token string">"your_email"</span></code></pre>
+<h3 id="显示config的配置"><a href="#显示config的配置" class="headerlink" title="显示config的配置"></a>显示config的配置</h3><pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --list --local
+$ <span class="token function">git</span> config --list --global
+$ <span class="token function">git</span> config --list --system</code></pre>
+<h3 id="查看某一个属性"><a href="#查看某一个属性" class="headerlink" title="查看某一个属性"></a>查看某一个属性</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --global user.name</code></pre>
+<h3 id="移除设置"><a href="#移除设置" class="headerlink" title="移除设置"></a>移除设置</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --unset --global user.email</code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Git</tag>
       </tags>
   </entry>
   <entry>
@@ -1126,7 +1126,7 @@ object Perfect<span class="token punctuation">{</span>
   <entry>
     <title>探讨复杂的 if-else 语句“优雅处理”的思路</title>
     <url>/posts/afc9.html</url>
-    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在之前文章说到，简单 if-else，可以使用 卫语句 进行优化。但是在实际开发中，往往不是简单 if-else 结构，我们通常会不经意间写下如下代码：</p>
+    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在实际开发中，往往不是简单 if-else 结构，我们通常会不经意间写下如下代码：</p>
 <pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// -------------------- 理想中的 if-else  --------------------</span>
 <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">today</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isWeekend</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -1156,7 +1156,7 @@ object Perfect<span class="token punctuation">{</span>
 <span class="token punctuation">}</span>
 <span class="token comment" spellcheck="true">//省略 n 个 if-else ......</span></code></pre>
 <p>毫不夸张的说，我们都写过类似的代码，回想起被 if-else 支配的恐惧，我们常常无所下手，甚至不了了之。</p>
-<p>下面分享一下我在开发中遇到复杂的 if-else 语句“优雅处理”思路。如有不妥，欢迎大家一起交流学习。</p>
+<p>下面分享一下我遇到复杂的 if-else 语句“优雅处理”思路。如有不妥，欢迎大家一起交流学习。</p>
 <h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><p>假设有这么一个需求：</p>
 <p>一个电商系统，当用户消费满1000 金额，可以根据用户VIP等级，享受打折优惠。根据用户VIP等级，计算出用户最终的费用。</p>
 <ul>
@@ -1584,51 +1584,6 @@ infix <span class="token keyword">fun</span> Int<span class="token punctuation">
       </tags>
   </entry>
   <entry>
-    <title>英语学习第三天</title>
-    <url>/posts/9968.html</url>
-    <content><![CDATA[<h3 id="动名词作主语"><a href="#动名词作主语" class="headerlink" title="动名词作主语"></a>动名词作主语</h3><ul>
-<li>Eating an apple a day keeps you healthy.</li>
-<li>Running five miles is the first thing he does in the morning.</li>
-</ul>
-<h3 id="不定式作主语"><a href="#不定式作主语" class="headerlink" title="不定式作主语"></a>不定式作主语</h3><ul>
-<li>To study abroad is my greatest desire.</li>
-<li>To travel around the world is my plan for this year.</li>
-</ul>
-<p>动名词作主语不讨论这件事做或没做。不定式做主语，这件事情还没有做。</p>
-<p>动词要做主语，不能用原词。可以用动名词，也可以用不定式。如果是不定式，这个动作要没做才可以。</p>
-<blockquote>
-<p>不定式和动名词作主语时，常出现主语过长的情况，可以用代词it代替，作形式主语放在句首，而把真正的主语，即不定式或动名词短语放在句尾。动名词移至句尾时，常改为不定式。</p>
-</blockquote>
-<p>Collecting stamps is one of his hobbies.</p>
-<p><code>It</code> is one of his hobbies <code>to collect stamps</code>.</p>
-<p>Eating an apple a day keeps you healthy.</p>
-<p><code>It</code> keeps you healthy <code>to eat an appale</code>.</p>
-<h3 id="单词"><a href="#单词" class="headerlink" title="单词"></a>单词</h3><p>hear from 收到….的信</p>
-<p>hear sb do sth 听见某人做某事 </p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>English</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>英语学习第一天</title>
     <url>/posts/56b.html</url>
     <content><![CDATA[<h2 id="五种基本句型"><a href="#五种基本句型" class="headerlink" title="五种基本句型"></a>五种基本句型</h2><p>主语：动作的发起者，位于句首。</p>
@@ -1726,6 +1681,51 @@ infix <span class="token keyword">fun</span> Int<span class="token punctuation">
 <li>She talk loudy.（方式状语）</li>
 <li>He walks in a funny way.</li>
 </ul>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>English</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>英语学习第三天</title>
+    <url>/posts/9968.html</url>
+    <content><![CDATA[<h3 id="动名词作主语"><a href="#动名词作主语" class="headerlink" title="动名词作主语"></a>动名词作主语</h3><ul>
+<li>Eating an apple a day keeps you healthy.</li>
+<li>Running five miles is the first thing he does in the morning.</li>
+</ul>
+<h3 id="不定式作主语"><a href="#不定式作主语" class="headerlink" title="不定式作主语"></a>不定式作主语</h3><ul>
+<li>To study abroad is my greatest desire.</li>
+<li>To travel around the world is my plan for this year.</li>
+</ul>
+<p>动名词作主语不讨论这件事做或没做。不定式做主语，这件事情还没有做。</p>
+<p>动词要做主语，不能用原词。可以用动名词，也可以用不定式。如果是不定式，这个动作要没做才可以。</p>
+<blockquote>
+<p>不定式和动名词作主语时，常出现主语过长的情况，可以用代词it代替，作形式主语放在句首，而把真正的主语，即不定式或动名词短语放在句尾。动名词移至句尾时，常改为不定式。</p>
+</blockquote>
+<p>Collecting stamps is one of his hobbies.</p>
+<p><code>It</code> is one of his hobbies <code>to collect stamps</code>.</p>
+<p>Eating an apple a day keeps you healthy.</p>
+<p><code>It</code> keeps you healthy <code>to eat an appale</code>.</p>
+<h3 id="单词"><a href="#单词" class="headerlink" title="单词"></a>单词</h3><p>hear from 收到….的信</p>
+<p>hear sb do sth 听见某人做某事 </p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {

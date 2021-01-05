@@ -496,7 +496,7 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在之前文章说到，简单 if-else，可以使用 卫语句 进行优化。但是在实际开发中，往往不是简单 if-else 结构，我们通常会不经意间写下如下代码：</p>
+                <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在实际开发中，往往不是简单 if-else 结构，我们通常会不经意间写下如下代码：</p>
 <pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// -------------------- 理想中的 if-else  --------------------</span>
 <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">today</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isWeekend</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -526,7 +526,7 @@
 <span class="token punctuation">}</span>
 <span class="token comment" spellcheck="true">//省略 n 个 if-else ......</span></code></pre>
 <p>毫不夸张的说，我们都写过类似的代码，回想起被 if-else 支配的恐惧，我们常常无所下手，甚至不了了之。</p>
-<p>下面分享一下我在开发中遇到复杂的 if-else 语句“优雅处理”思路。如有不妥，欢迎大家一起交流学习。</p>
+<p>下面分享一下我遇到复杂的 if-else 语句“优雅处理”思路。如有不妥，欢迎大家一起交流学习。</p>
 <h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><p>假设有这么一个需求：</p>
 <p>一个电商系统，当用户消费满1000 金额，可以根据用户VIP等级，享受打折优惠。根据用户VIP等级，计算出用户最终的费用。</p>
 <ul>
