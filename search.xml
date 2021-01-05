@@ -190,19 +190,16 @@ DESC db1;</code></pre>
       </tags>
   </entry>
   <entry>
-    <title>MySQL编码设置</title>
-    <url>/posts/17fc.html</url>
-    <content><![CDATA[<h3 id="命令提示符的UTF-8设置"><a href="#命令提示符的UTF-8设置" class="headerlink" title="命令提示符的UTF-8设置"></a>命令提示符的UTF-8设置</h3><p>Windows终端默认使用字符编码GBK进行数据的输入和输出，而数据库则使用UTF-8存储数据。其实我们也可以把命令终端的字符编码设置成UTF-8。我们需要按照下面的格式在命令终端执行<code>chcp</code></p>
-<pre class=" language-shell"><code class="language-shell">$ chcp 65001</code></pre>
-<p>chcp用于修改命令终端的字符编码，<code>65001代表UTF-8</code>。</p>
-<h3 id="确认MySQL中字符编码的设置情况"><a href="#确认MySQL中字符编码的设置情况" class="headerlink" title="确认MySQL中字符编码的设置情况"></a>确认MySQL中字符编码的设置情况</h3><p>启动MySQL监视器，输入status。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/one.png"></p>
-<p>1代表服务器端的字符编码设置，2代表客户端的字符编码设置。</p>
-<p>指定字符编码启动MySQL监视器</p>
-<pre class=" language-sh"><code class="language-sh">$ mysql -uroot -proot --default-character-set=gbk</code></pre>
-<p>另外字符编码设置情况还可以通过下面的命令查看</p>
-<pre class=" language-mysql"><code class="language-mysql">SHOW VARIABLES LIKE 'char%'</code></pre>
-<p>按下<code>F7键后，历史命令</code>会全部显示出来。</p>
+    <title>MySQL权限相关</title>
+    <url>/posts/8cf.html</url>
+    <content><![CDATA[<h3 id="修改密码"><a href="#修改密码" class="headerlink" title="修改密码"></a>修改密码</h3><pre class=" language-mysql"><code class="language-mysql">$ SET PASSWORD FOR root@localhost='A123456!'</code></pre>
+<h3 id="创建用户"><a href="#创建用户" class="headerlink" title="创建用户"></a>创建用户</h3><pre class=" language-mysql"><code class="language-mysql"># CREATE USER 新用户名 IDENTIFIED BY '密码'
+$ CREATE USER asiama@localhost IDENTIFIED BY 'A123456!'</code></pre>
+<h3 id="设置用户权限"><a href="#设置用户权限" class="headerlink" title="设置用户权限"></a>设置用户权限</h3><pre class=" language-mysql"><code class="language-mysql"># GRANT 赋予的权限 ON 数据库名.表名 TO 用户名
+$ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
+<blockquote>
+<p>用户名需要按照“用户名@主机名”的方式书写（如果不确定主机名，可以”用户名@%”来允许所有主机）。“赋予的权限”如果是所有的权限，就设置为“ALL”；如果仅允许SELECT和UPDATE,就设置为“SELECT, UPDATE”；如果是所有的数据库的所有表，就设置为“*.*”</p>
+</blockquote>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -227,16 +224,19 @@ DESC db1;</code></pre>
       </tags>
   </entry>
   <entry>
-    <title>MySQL权限相关</title>
-    <url>/posts/8cf.html</url>
-    <content><![CDATA[<h3 id="修改密码"><a href="#修改密码" class="headerlink" title="修改密码"></a>修改密码</h3><pre class=" language-mysql"><code class="language-mysql">$ SET PASSWORD FOR root@localhost='A123456!'</code></pre>
-<h3 id="创建用户"><a href="#创建用户" class="headerlink" title="创建用户"></a>创建用户</h3><pre class=" language-mysql"><code class="language-mysql"># CREATE USER 新用户名 IDENTIFIED BY '密码'
-$ CREATE USER asiama@localhost IDENTIFIED BY 'A123456!'</code></pre>
-<h3 id="设置用户权限"><a href="#设置用户权限" class="headerlink" title="设置用户权限"></a>设置用户权限</h3><pre class=" language-mysql"><code class="language-mysql"># GRANT 赋予的权限 ON 数据库名.表名 TO 用户名
-$ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
-<blockquote>
-<p>用户名需要按照“用户名@主机名”的方式书写（如果不确定主机名，可以”用户名@%”来允许所有主机）。“赋予的权限”如果是所有的权限，就设置为“ALL”；如果仅允许SELECT和UPDATE,就设置为“SELECT, UPDATE”；如果是所有的数据库的所有表，就设置为“*.*”</p>
-</blockquote>
+    <title>MySQL编码设置</title>
+    <url>/posts/17fc.html</url>
+    <content><![CDATA[<h3 id="命令提示符的UTF-8设置"><a href="#命令提示符的UTF-8设置" class="headerlink" title="命令提示符的UTF-8设置"></a>命令提示符的UTF-8设置</h3><p>Windows终端默认使用字符编码GBK进行数据的输入和输出，而数据库则使用UTF-8存储数据。其实我们也可以把命令终端的字符编码设置成UTF-8。我们需要按照下面的格式在命令终端执行<code>chcp</code></p>
+<pre class=" language-shell"><code class="language-shell">$ chcp 65001</code></pre>
+<p>chcp用于修改命令终端的字符编码，<code>65001代表UTF-8</code>。</p>
+<h3 id="确认MySQL中字符编码的设置情况"><a href="#确认MySQL中字符编码的设置情况" class="headerlink" title="确认MySQL中字符编码的设置情况"></a>确认MySQL中字符编码的设置情况</h3><p>启动MySQL监视器，输入status。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/one.png"></p>
+<p>1代表服务器端的字符编码设置，2代表客户端的字符编码设置。</p>
+<p>指定字符编码启动MySQL监视器</p>
+<pre class=" language-sh"><code class="language-sh">$ mysql -uroot -proot --default-character-set=gbk</code></pre>
+<p>另外字符编码设置情况还可以通过下面的命令查看</p>
+<pre class=" language-mysql"><code class="language-mysql">SHOW VARIABLES LIKE 'char%'</code></pre>
+<p>按下<code>F7键后，历史命令</code>会全部显示出来。</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -525,202 +525,6 @@ System<span class="token punctuation">.</span>out<span class="token punctuation"
       </script>]]></content>
   </entry>
   <entry>
-    <title>kotlin如何实现空安全</title>
-    <url>/posts/b698.html</url>
-    <content><![CDATA[<ol>
-<li><p>通过静态代码检查，编译插件检查，在编译器避免空指针异常</p>
-</li>
-<li><p>每次引用对象的时候，都去进行对象判空，在运行期间避免对象空指针</p>
-</li>
-</ol>
-<blockquote>
-<p>将一个对象的两种类型（可以为空的类型与不可以为空的类型）做一个彻底的分离。如果是不可能为空的对象，在编译期会禁止赋一个null值（编译期避免）；如果是有可能为空的对象，那么在对这个对象进行调用的时候，都会进行的非空判断（运行期避免）。</p>
-</blockquote>
-<h3 id="可空对象"><a href="#可空对象" class="headerlink" title="可空对象"></a>可空对象</h3><pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">val</span> a<span class="token operator">:</span> String<span class="token operator">?</span> <span class="token operator">=</span> <span class="token keyword">null</span>
-    <span class="token function">println</span><span class="token punctuation">(</span><span class="token function">getValue</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">fun</span> <span class="token function">getValue</span><span class="token punctuation">(</span>s<span class="token operator">:</span> String<span class="token operator">?</span><span class="token punctuation">)</span><span class="token operator">:</span> String <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> <span class="token string">"1"</span> <span class="token operator">+</span> s<span class="token operator">?</span><span class="token punctuation">.</span>length
-<span class="token punctuation">}</span></code></pre>
-<p>对生成的class文件进行反编译，可以看到kotlin生成的class文件进行了非空处理。</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">import</span> kotlin<span class="token punctuation">.</span>Metadata<span class="token punctuation">;</span>
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>jetbrains<span class="token punctuation">.</span>annotations<span class="token punctuation">.</span>NotNull<span class="token punctuation">;</span>
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>jetbrains<span class="token punctuation">.</span>annotations<span class="token punctuation">.</span>Nullable<span class="token punctuation">;</span>
-
-<span class="token annotation punctuation">@Metadata</span><span class="token punctuation">(</span>mv <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">,</span> bv <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">}</span><span class="token punctuation">,</span> k <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">,</span> d1 <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"\000\020\n\000\n\002\020\016\n\002\b\002\n\002\020\002\n\000\032\020\020\000\032\0020\0012\b\020\002\032\004\030\0010\001\032\006\020\003\032\0020\004\006\005"</span><span class="token punctuation">}</span><span class="token punctuation">,</span> d2 <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"getValue"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"s"</span><span class="token punctuation">,</span> <span class="token string">"main"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"my-kotlin"</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
-<span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">HelloKt</span> <span class="token punctuation">{</span>
-  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    String a <span class="token operator">=</span> <span class="token punctuation">(</span>String<span class="token punctuation">)</span>null<span class="token punctuation">;</span>
-    String str1 <span class="token operator">=</span> <span class="token function">getValue</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>str1<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-
-  <span class="token annotation punctuation">@NotNull</span>
-  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> String <span class="token function">getValue</span><span class="token punctuation">(</span><span class="token annotation punctuation">@Nullable</span> String s<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> <span class="token string">"1"</span> <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>s <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token punctuation">(</span>String<span class="token punctuation">)</span>Integer<span class="token punctuation">.</span><span class="token function">valueOf</span><span class="token punctuation">(</span>s<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">:</span> null<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
-<h3 id="不可空对象"><a href="#不可空对象" class="headerlink" title="不可空对象"></a>不可空对象</h3><pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">val</span> a<span class="token operator">:</span> String <span class="token operator">=</span> <span class="token string">"abc"</span>
-    <span class="token function">println</span><span class="token punctuation">(</span><span class="token function">getValue</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">fun</span> <span class="token function">getValue</span><span class="token punctuation">(</span>s<span class="token operator">:</span> String<span class="token punctuation">)</span><span class="token operator">:</span> String <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> <span class="token string">"1"</span> <span class="token operator">+</span> s<span class="token punctuation">.</span>length
-<span class="token punctuation">}</span></code></pre>
-<p>对生成的class文件进行反编译，可以看到kotlin生成的class文件直接进行了断言（断言对象不会为null）</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">import</span> kotlin<span class="token punctuation">.</span>Metadata<span class="token punctuation">;</span>
-<span class="token keyword">import</span> kotlin<span class="token punctuation">.</span>jvm<span class="token punctuation">.</span>internal<span class="token punctuation">.</span>Intrinsics<span class="token punctuation">;</span>
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>jetbrains<span class="token punctuation">.</span>annotations<span class="token punctuation">.</span>NotNull<span class="token punctuation">;</span>
-
-<span class="token annotation punctuation">@Metadata</span><span class="token punctuation">(</span>mv <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">,</span> bv <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">}</span><span class="token punctuation">,</span> k <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">,</span> d1 <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"\000\020\n\000\n\002\020\016\n\002\b\002\n\002\020\002\n\000\032\016\020\000\032\0020\0012\006\020\002\032\0020\001\032\006\020\003\032\0020\004\006\005"</span><span class="token punctuation">}</span><span class="token punctuation">,</span> d2 <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"getValue"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"s"</span><span class="token punctuation">,</span> <span class="token string">"main"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"my-kotlin"</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
-<span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">HelloKt</span> <span class="token punctuation">{</span>
-  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    String a <span class="token operator">=</span> <span class="token string">"abc"</span><span class="token punctuation">;</span>
-    String str1 <span class="token operator">=</span> <span class="token function">getValue</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>str1<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-
-  <span class="token annotation punctuation">@NotNull</span>
-  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> String <span class="token function">getValue</span><span class="token punctuation">(</span><span class="token annotation punctuation">@NotNull</span> String s<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    Intrinsics<span class="token punctuation">.</span><span class="token function">checkNotNullParameter</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> <span class="token string">"s"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token string">"1"</span> <span class="token operator">+</span> s<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>Kotlin</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>var与val</title>
-    <url>/posts/318f.html</url>
-    <content><![CDATA[<h3 id="声明一个变量的完整语法"><a href="#声明一个变量的完整语法" class="headerlink" title="声明一个变量的完整语法"></a>声明一个变量的完整语法</h3><p>var &lt;propertyName&gt;[:&lt;PropertyType&gt;]  [= &lt;property_initializer&gt;]</p>
-<p>​        [&lt;gettter&gt;]</p>
-<p>​        [&lt;setter&gt;]</p>
-<p>变量名：变量类型 = 变量初始值</p>
-<p>​    getter</p>
-<p>​    setter</p>
-<h3 id="var-与-val"><a href="#var-与-val" class="headerlink" title="var 与 val"></a>var 与 val</h3><p>var 与 val 声明的变量，最本质的区别是：val 不能有setter。</p>
-<p>var变量的声明：</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">class</span> Hello <span class="token punctuation">{</span>
-    <span class="token keyword">var</span> str<span class="token operator">:</span> String<span class="token operator">?</span> <span class="token operator">=</span> <span class="token keyword">null</span>
-        <span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">return</span> field <span class="token operator">+</span> <span class="token string">"hello"</span>
-        <span class="token punctuation">}</span>
-        <span class="token keyword">set</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            field <span class="token operator">=</span> value <span class="token operator">+</span> <span class="token string">"set"</span>
-        <span class="token punctuation">}</span>
-      <span class="token keyword">val</span> str2<span class="token operator">:</span> String<span class="token operator">?</span> <span class="token operator">=</span> <span class="token keyword">null</span>
-        <span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">return</span> field <span class="token operator">+</span> <span class="token string">"hello"</span>
-        <span class="token punctuation">}</span>
-        <span class="token keyword">set</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">// 编译报错： A 'val'-property cannot have a setter</span>
-            field <span class="token operator">=</span> value <span class="token operator">+</span> <span class="token string">"set"</span>
-        <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-
-<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">val</span> hello <span class="token operator">=</span> <span class="token function">Hello</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">println</span><span class="token punctuation">(</span>hello<span class="token punctuation">.</span>str<span class="token punctuation">)</span>        <span class="token comment" spellcheck="true">// nullhello </span>
-
-    hello<span class="token punctuation">.</span>str <span class="token operator">=</span> <span class="token string">"world"</span>
-    <span class="token function">print</span><span class="token punctuation">(</span>hello<span class="token punctuation">.</span>str<span class="token punctuation">)</span>        <span class="token comment" spellcheck="true">// worldsethello</span>
-<span class="token punctuation">}</span></code></pre>
-<p>val变量的声明：</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">class</span> Hello <span class="token punctuation">{</span>
-      <span class="token keyword">val</span> str2<span class="token operator">:</span> String<span class="token operator">?</span> <span class="token operator">=</span> <span class="token keyword">null</span>
-        <span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">return</span> field <span class="token operator">+</span> <span class="token string">"hello"</span>
-        <span class="token punctuation">}</span>
-          <span class="token comment" spellcheck="true">/**
-        set(value) { // 编译报错： A 'val'-property cannot have a setter
-            field = value + "set"
-        } */</span>
-<span class="token punctuation">}</span></code></pre>
-<h3 id="val-常量"><a href="#val-常量" class="headerlink" title="val == 常量?"></a>val == 常量?</h3><pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">class</span> <span class="token function">Person</span><span class="token punctuation">(</span><span class="token keyword">private</span> <span class="token keyword">var</span> birthYear<span class="token operator">:</span> Int<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">val</span> age<span class="token operator">:</span> Int
-        <span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">return</span> Calendar<span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>Calendar<span class="token punctuation">.</span>YEAR<span class="token punctuation">)</span> <span class="token operator">-</span> birthYear
-        <span class="token punctuation">}</span>
-
-    <span class="token keyword">fun</span> <span class="token function">plusYear</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        birthYear<span class="token operator">++</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-
-<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">val</span> person <span class="token operator">=</span> <span class="token function">Person</span><span class="token punctuation">(</span><span class="token number">2000</span><span class="token punctuation">)</span>
-    <span class="token function">println</span><span class="token punctuation">(</span>person<span class="token punctuation">.</span>age<span class="token punctuation">)</span>    <span class="token comment" spellcheck="true">// 20</span>
-
-    person<span class="token punctuation">.</span><span class="token function">plusYear</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token function">println</span><span class="token punctuation">(</span>person<span class="token punctuation">.</span>age<span class="token punctuation">)</span>    <span class="token comment" spellcheck="true">// 19</span>
-<span class="token punctuation">}</span></code></pre>
-<p>可以看到，val与常量是不等价的。</p>
-<h3 id="编译时常量"><a href="#编译时常量" class="headerlink" title="编译时常量"></a>编译时常量</h3><p>const 只能修饰 object 的属性，或 top-level 变量。</p>
-<p>const变量的值必须在编译期间确定下来，所以它的类型只能是String或基本类型。</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">Perfect</span><span class="token punctuation">{</span>
-    <span class="token keyword">const</span> val  TOP <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 编译报错：Const 'val' are only allowed on top level or in objects</span>
-<span class="token punctuation">}</span>
-
-object Perfect<span class="token punctuation">{</span>
-    <span class="token keyword">const</span> val  TOP <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// OK</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">class</span> <span class="token class-name">Perfect</span> <span class="token punctuation">{</span>
-    companion object <span class="token punctuation">{</span>
-        <span class="token keyword">const</span> val TOP <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// OK</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-<span class="token comment" spellcheck="true">// top-level</span>
-<span class="token keyword">const</span> val TOP <span class="token operator">=</span> <span class="token number">1</span> </code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>Kotlin</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>使用Docker安装YApi</title>
     <url>/posts/b5f9.html</url>
     <content><![CDATA[<h3 id="启动MongoDB"><a href="#启动MongoDB" class="headerlink" title="启动MongoDB"></a>启动MongoDB</h3><ol>
@@ -833,6 +637,197 @@ $ <span class="token function">git</span> config --list --system</code></pre>
       </script>]]></content>
       <tags>
         <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>kotlin如何实现空安全</title>
+    <url>/posts/b698.html</url>
+    <content><![CDATA[<ol>
+<li><p>通过静态代码检查，编译插件检查，在编译器避免空指针异常</p>
+</li>
+<li><p>每次引用对象的时候，都去进行对象判空，在运行期间避免对象空指针</p>
+</li>
+</ol>
+<blockquote>
+<p>将一个对象的两种类型（可以为空的类型与不可以为空的类型）做一个彻底的分离。如果是不可能为空的对象，在编译期会禁止赋一个null值（编译期避免）；如果是有可能为空的对象，那么在对这个对象进行调用的时候，都会进行的非空判断（运行期避免）。</p>
+</blockquote>
+<h3 id="可空对象"><a href="#可空对象" class="headerlink" title="可空对象"></a>可空对象</h3><pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">val</span> a<span class="token operator">:</span> String<span class="token operator">?</span> <span class="token operator">=</span> <span class="token keyword">null</span>
+    <span class="token function">println</span><span class="token punctuation">(</span><span class="token function">getValue</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">fun</span> <span class="token function">getValue</span><span class="token punctuation">(</span>s<span class="token operator">:</span> String<span class="token operator">?</span><span class="token punctuation">)</span><span class="token operator">:</span> String <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token string">"1"</span> <span class="token operator">+</span> s<span class="token operator">?</span><span class="token punctuation">.</span>length
+<span class="token punctuation">}</span></code></pre>
+<p>进行反编译，可以看到kotlin生成的class文件中进行了非空判断。</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">import</span> kotlin<span class="token punctuation">.</span>Metadata<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>jetbrains<span class="token punctuation">.</span>annotations<span class="token punctuation">.</span>NotNull<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>jetbrains<span class="token punctuation">.</span>annotations<span class="token punctuation">.</span>Nullable<span class="token punctuation">;</span>
+
+<span class="token annotation punctuation">@Metadata</span><span class="token punctuation">(</span>mv <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">,</span> bv <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">}</span><span class="token punctuation">,</span> k <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">,</span> d1 <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"\000\020\n\000\n\002\020\016\n\002\b\002\n\002\020\002\n\000\032\020\020\000\032\0020\0012\b\020\002\032\004\030\0010\001\032\006\020\003\032\0020\004\006\005"</span><span class="token punctuation">}</span><span class="token punctuation">,</span> d2 <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"getValue"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"s"</span><span class="token punctuation">,</span> <span class="token string">"main"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"my-kotlin"</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">HelloKt</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    String a <span class="token operator">=</span> <span class="token punctuation">(</span>String<span class="token punctuation">)</span>null<span class="token punctuation">;</span>
+    String str1 <span class="token operator">=</span> <span class="token function">getValue</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>str1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token annotation punctuation">@NotNull</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> String <span class="token function">getValue</span><span class="token punctuation">(</span><span class="token annotation punctuation">@Nullable</span> String s<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token string">"1"</span> <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>s <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token punctuation">(</span>String<span class="token punctuation">)</span>Integer<span class="token punctuation">.</span><span class="token function">valueOf</span><span class="token punctuation">(</span>s<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">:</span> null<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<h3 id="不可空对象"><a href="#不可空对象" class="headerlink" title="不可空对象"></a>不可空对象</h3><pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">val</span> a<span class="token operator">:</span> String <span class="token operator">=</span> <span class="token string">"abc"</span>
+    <span class="token function">println</span><span class="token punctuation">(</span><span class="token function">getValue</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">fun</span> <span class="token function">getValue</span><span class="token punctuation">(</span>s<span class="token operator">:</span> String<span class="token punctuation">)</span><span class="token operator">:</span> String <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token string">"1"</span> <span class="token operator">+</span> s<span class="token punctuation">.</span>length
+<span class="token punctuation">}</span></code></pre>
+<p>进行反编译，可以看到kotlin生成的class文件中直接进行了断言（断言对象不会为null）</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">import</span> kotlin<span class="token punctuation">.</span>Metadata<span class="token punctuation">;</span>
+<span class="token keyword">import</span> kotlin<span class="token punctuation">.</span>jvm<span class="token punctuation">.</span>internal<span class="token punctuation">.</span>Intrinsics<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>jetbrains<span class="token punctuation">.</span>annotations<span class="token punctuation">.</span>NotNull<span class="token punctuation">;</span>
+
+<span class="token annotation punctuation">@Metadata</span><span class="token punctuation">(</span>mv <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">,</span> bv <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">}</span><span class="token punctuation">,</span> k <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">,</span> d1 <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"\000\020\n\000\n\002\020\016\n\002\b\002\n\002\020\002\n\000\032\016\020\000\032\0020\0012\006\020\002\032\0020\001\032\006\020\003\032\0020\004\006\005"</span><span class="token punctuation">}</span><span class="token punctuation">,</span> d2 <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"getValue"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"s"</span><span class="token punctuation">,</span> <span class="token string">"main"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"my-kotlin"</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">HelloKt</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    String a <span class="token operator">=</span> <span class="token string">"abc"</span><span class="token punctuation">;</span>
+    String str1 <span class="token operator">=</span> <span class="token function">getValue</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>str1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token annotation punctuation">@NotNull</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> String <span class="token function">getValue</span><span class="token punctuation">(</span><span class="token annotation punctuation">@NotNull</span> String s<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    Intrinsics<span class="token punctuation">.</span><span class="token function">checkNotNullParameter</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> <span class="token string">"s"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token string">"1"</span> <span class="token operator">+</span> s<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>var与val</title>
+    <url>/posts/318f.html</url>
+    <content><![CDATA[<h3 id="声明一个变量的完整语法"><a href="#声明一个变量的完整语法" class="headerlink" title="声明一个变量的完整语法"></a>声明一个变量的完整语法</h3><p>var &lt;propertyName&gt;[:&lt;PropertyType&gt;]  [= &lt;property_initializer&gt;]</p>
+<p>​        [&lt;gettter&gt;]</p>
+<p>​        [&lt;setter&gt;]</p>
+<p>变量名：变量类型 = 变量初始值</p>
+<p>​    getter</p>
+<p>​    setter</p>
+<h3 id="var-与-val"><a href="#var-与-val" class="headerlink" title="var 与 val"></a>var 与 val</h3><p>var 与 val 声明的变量，最本质的区别是：val 不能有setter。</p>
+<p>var变量的声明：</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">class</span> Hello <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> str<span class="token operator">:</span> String<span class="token operator">?</span> <span class="token operator">=</span> <span class="token keyword">null</span>
+        <span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> field <span class="token operator">+</span> <span class="token string">"hello"</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">set</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            field <span class="token operator">=</span> value <span class="token operator">+</span> <span class="token string">"set"</span>
+        <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+
+<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">val</span> hello <span class="token operator">=</span> <span class="token function">Hello</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">println</span><span class="token punctuation">(</span>hello<span class="token punctuation">.</span>str<span class="token punctuation">)</span>        <span class="token comment" spellcheck="true">// nullhello </span>
+
+    hello<span class="token punctuation">.</span>str <span class="token operator">=</span> <span class="token string">"world"</span>
+    <span class="token function">print</span><span class="token punctuation">(</span>hello<span class="token punctuation">.</span>str<span class="token punctuation">)</span>        <span class="token comment" spellcheck="true">// worldsethello</span>
+<span class="token punctuation">}</span></code></pre>
+<p>val变量的声明：</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">class</span> Hello <span class="token punctuation">{</span>
+      <span class="token keyword">val</span> str2<span class="token operator">:</span> String<span class="token operator">?</span> <span class="token operator">=</span> <span class="token keyword">null</span>
+        <span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> field <span class="token operator">+</span> <span class="token string">"hello"</span>
+        <span class="token punctuation">}</span>
+              <span class="token comment" spellcheck="true">/**
+        set(value) { // 编译报错： A 'val'-property cannot have a setter
+            field = value + "set"
+        } */</span>
+<span class="token punctuation">}</span></code></pre>
+<h3 id="val-常量"><a href="#val-常量" class="headerlink" title="val == 常量?"></a>val == 常量?</h3><pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">class</span> <span class="token function">Person</span><span class="token punctuation">(</span><span class="token keyword">private</span> <span class="token keyword">var</span> birthYear<span class="token operator">:</span> Int<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">val</span> age<span class="token operator">:</span> Int
+        <span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> Calendar<span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>Calendar<span class="token punctuation">.</span>YEAR<span class="token punctuation">)</span> <span class="token operator">-</span> birthYear
+        <span class="token punctuation">}</span>
+
+    <span class="token keyword">fun</span> <span class="token function">plusYear</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        birthYear<span class="token operator">++</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+
+<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">val</span> person <span class="token operator">=</span> <span class="token function">Person</span><span class="token punctuation">(</span><span class="token number">2000</span><span class="token punctuation">)</span>
+    <span class="token function">println</span><span class="token punctuation">(</span>person<span class="token punctuation">.</span>age<span class="token punctuation">)</span>    <span class="token comment" spellcheck="true">// 20</span>
+
+    person<span class="token punctuation">.</span><span class="token function">plusYear</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token function">println</span><span class="token punctuation">(</span>person<span class="token punctuation">.</span>age<span class="token punctuation">)</span>    <span class="token comment" spellcheck="true">// 19</span>
+<span class="token punctuation">}</span></code></pre>
+<p>可以看到，val与常量是不等价的。</p>
+<h3 id="编译时常量"><a href="#编译时常量" class="headerlink" title="编译时常量"></a>编译时常量</h3><p>const 只能修饰 object 的属性，或 top-level 变量。</p>
+<p>const变量的值必须在编译期间确定下来，所以它的类型只能是String或基本类型。</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">Perfect</span><span class="token punctuation">{</span>
+      <span class="token comment" spellcheck="true">/**
+    const val  TOP = 1; // 编译报错：Const 'val' are only allowed on top level or in objects
+    */</span>
+<span class="token punctuation">}</span>
+
+object Perfect<span class="token punctuation">{</span>
+    <span class="token keyword">const</span> val  TOP <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// OK</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Perfect</span> <span class="token punctuation">{</span>
+    companion object <span class="token punctuation">{</span>
+        <span class="token keyword">const</span> val TOP <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// OK</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">// top-level</span>
+<span class="token keyword">const</span> val TOP <span class="token operator">=</span> <span class="token number">1</span>    <span class="token comment" spellcheck="true">// OK</span></code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Kotlin</tag>
       </tags>
   </entry>
   <entry>
@@ -1129,6 +1124,316 @@ $ <span class="token function">git</span> config --list --system</code></pre>
       </tags>
   </entry>
   <entry>
+    <title>探讨复杂的 if-else 语句“优雅处理”的思路</title>
+    <url>/posts/afc9.html</url>
+    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在之前文章说到，简单 if-else，可以使用 卫语句 进行优化。但是在实际开发中，往往不是简单 if-else 结构，我们通常会不经意间写下如下代码：</p>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// -------------------- 理想中的 if-else  --------------------</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">today</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isWeekend</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"玩游戏"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"上班!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">// -------------------- 现实中的 if-else  --------------------</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>money <span class="token operator">>=</span> <span class="token number">1000</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>type <span class="token operator">==</span> UserType<span class="token punctuation">.</span>SILVER_VIP<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"白银会员 优惠50元"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        result <span class="token operator">=</span> money <span class="token operator">-</span> <span class="token number">50</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>type <span class="token operator">==</span> UserType<span class="token punctuation">.</span>GOLD_VIP<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"黄金会员 8折"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        result <span class="token operator">=</span> money <span class="token operator">*</span> <span class="token number">0.8</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>type <span class="token operator">==</span> UserType<span class="token punctuation">.</span>PLATINUM_VIP<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"白金会员 优惠50元，再打7折"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        result <span class="token operator">=</span> <span class="token punctuation">(</span>money <span class="token operator">-</span> <span class="token number">50</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">0.7</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"普通会员 不打折"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        result <span class="token operator">=</span> money<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">//省略 n 个 if-else ......</span></code></pre>
+<p>毫不夸张的说，我们都写过类似的代码，回想起被 if-else 支配的恐惧，我们常常无所下手，甚至不了了之。</p>
+<p>下面分享一下我在开发中遇到复杂的 if-else 语句“优雅处理”思路。如有不妥，欢迎大家一起交流学习。</p>
+<h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><p>假设有这么一个需求：</p>
+<p>一个电商系统，当用户消费满1000 金额，可以根据用户VIP等级，享受打折优惠。根据用户VIP等级，计算出用户最终的费用。</p>
+<ul>
+<li>普通会员 不打折</li>
+<li>白银会员 优惠50元</li>
+<li>黄金会员 8折</li>
+<li>白金会员 优惠50元，再打7折</li>
+</ul>
+<h3 id="编码实现"><a href="#编码实现" class="headerlink" title="编码实现"></a>编码实现</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">double</span> <span class="token function">getResult</span><span class="token punctuation">(</span><span class="token keyword">long</span> money<span class="token punctuation">,</span> <span class="token keyword">int</span> type<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">double</span> result <span class="token operator">=</span> money<span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>money <span class="token operator">>=</span> <span class="token number">1000</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>type <span class="token operator">==</span> UserType<span class="token punctuation">.</span>SILVER_VIP<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"白银会员 优惠50元"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            result <span class="token operator">=</span> money <span class="token operator">-</span> <span class="token number">50</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>type <span class="token operator">==</span> UserType<span class="token punctuation">.</span>GOLD_VIP<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"黄金会员 8折"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            result <span class="token operator">=</span> money <span class="token operator">*</span> <span class="token number">0.8</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>type <span class="token operator">==</span> UserType<span class="token punctuation">.</span>PLATINUM_VIP<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"白金会员 优惠50元，再打7折"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            result <span class="token operator">=</span> <span class="token punctuation">(</span>money <span class="token operator">-</span> <span class="token number">50</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">0.7</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"普通会员 不打折"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            result <span class="token operator">=</span> money<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">return</span> result<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>为了方便演示，代码上我进行了简单实现，但实际上 if - else 会进行复杂的逻辑计费。从功能上来说，基本完成，但是对于我这种有代码洁癖的人来说，代码质量上不忍直视。我们开始着手 优化一下我们的第一版代码吧。</p>
+<h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><p>看到如上代码，聪明的朋友首先想到的是，这不是典型的策略模式吗？</p>
+<p>你可真是个机灵鬼，我们先尝试用策略模式来优化一下代码吧。</p>
+<h3 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h3><blockquote>
+<p>可能有的朋友还不清楚，什么是策略模式。策略模式是定义一系列的算法,把它们一个个封装起来, 并且使它们可相互替换。</p>
+<p>比如上述需求，有返利、有打折、有折上折等等。这些算法本身就是一种策略。并且这些算法可以相互替换的，比如今天我想让 白银会员优惠50，明天可以替换为 白银会员打9折。</p>
+<p>说了那么多，不如编码来得实在。</p>
+</blockquote>
+<h3 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Strategy</span> <span class="token punctuation">{</span>
+
+    <span class="token comment" spellcheck="true">// 计费方法</span>
+    <span class="token keyword">double</span> <span class="token function">compute</span><span class="token punctuation">(</span><span class="token keyword">long</span> money<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">// 普通会员策略</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">OrdinaryStrategy</span> <span class="token keyword">implements</span> <span class="token class-name">Strategy</span> <span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">double</span> <span class="token function">compute</span><span class="token punctuation">(</span><span class="token keyword">long</span> money<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"普通会员 不打折"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> money<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">// 白银会员策略</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SilverStrategy</span> <span class="token keyword">implements</span> <span class="token class-name">Strategy</span> <span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">double</span> <span class="token function">compute</span><span class="token punctuation">(</span><span class="token keyword">long</span> money<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"白银会员 优惠50元"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> money <span class="token operator">-</span> <span class="token number">50</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">// 黄金会员策略</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">GoldStrategy</span> <span class="token keyword">implements</span> <span class="token class-name">Strategy</span><span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">double</span> <span class="token function">compute</span><span class="token punctuation">(</span><span class="token keyword">long</span> money<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"黄金会员 8折"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> money <span class="token operator">*</span> <span class="token number">0.8</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">// 白金会员策略</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">PlatinumStrategy</span> <span class="token keyword">implements</span> <span class="token class-name">Strategy</span> <span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">double</span> <span class="token function">compute</span><span class="token punctuation">(</span><span class="token keyword">long</span> money<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"白金会员 优惠50元，再打7折"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token punctuation">(</span>money <span class="token operator">-</span> <span class="token number">50</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">0.7</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>我们定义来一个 Strategy 接口，并且定义 四个子类，实现接口。在对应的 compute方法 实现自身策略的计费逻辑。</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">double</span> <span class="token function">getResult</span><span class="token punctuation">(</span><span class="token keyword">long</span> money<span class="token punctuation">,</span> <span class="token keyword">int</span> type<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">double</span> result <span class="token operator">=</span> money<span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>money <span class="token operator">>=</span> <span class="token number">1000</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>type <span class="token operator">==</span> UserType<span class="token punctuation">.</span>SILVER_VIP<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+            result <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SilverStrategy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">compute</span><span class="token punctuation">(</span>money<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>type <span class="token operator">==</span> UserType<span class="token punctuation">.</span>GOLD_VIP<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+            result <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">GoldStrategy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">compute</span><span class="token punctuation">(</span>money<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>type <span class="token operator">==</span> UserType<span class="token punctuation">.</span>PLATINUM_VIP<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+            result <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">PlatinumStrategy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">compute</span><span class="token punctuation">(</span>money<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            result <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">OrdinaryStrategy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">compute</span><span class="token punctuation">(</span>money<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">return</span> result<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>然后对应 getResult 方法，根据 type 替换为对应的 用户VIP 策略。这里代码上出现了重复的调用 compute ，我们可以尝试进一步优化</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">double</span> <span class="token function">getResult</span><span class="token punctuation">(</span><span class="token keyword">long</span> money<span class="token punctuation">,</span> <span class="token keyword">int</span> type<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>money <span class="token operator">&lt;</span> <span class="token number">1000</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> money<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    Strategy strategy<span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>type <span class="token operator">==</span> UserType<span class="token punctuation">.</span>SILVER_VIP<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        strategy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SilverStrategy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>type <span class="token operator">==</span> UserType<span class="token punctuation">.</span>GOLD_VIP<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        strategy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">GoldStrategy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>type <span class="token operator">==</span> UserType<span class="token punctuation">.</span>PLATINUM_VIP<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        strategy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">PlatinumStrategy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        strategy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">OrdinaryStrategy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">return</span> strategy<span class="token punctuation">.</span><span class="token function">compute</span><span class="token punctuation">(</span>money<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>我们在这里把 money &lt; 1000 的情况提前 return。更关注于满1000逻辑 ,也可以减少不必要的缩进。</p>
+<h3 id="深思"><a href="#深思" class="headerlink" title="深思"></a>深思</h3><p>我曾一度 以为 策略模式不过如此。以为代码优化到这已经可以了。</p>
+<p>但是还有一个恐怖的事情，if-else 依然存在 ：）</p>
+<p>我尝试翻阅了许多书籍，查看如何消除 策略模式中的 if-else</p>
+<p>书中大部分的方法是，使用简单工厂 + 策略模式。把 if - else 切换为 switch 创建一个工厂方法而已。</p>
+<p>但是这远远没有达到我想要的效果，打倒 if - else</p>
+<p>直到某一天夜里，我大佬在群里分享一个 Java8 小技巧时，从此打开新世界。</p>
+<h3 id="工厂-策略"><a href="#工厂-策略" class="headerlink" title="工厂 + 策略"></a>工厂 + 策略</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Strategy</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">double</span> <span class="token function">compute</span><span class="token punctuation">(</span><span class="token keyword">long</span> money<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// 返回 type</span>
+    <span class="token keyword">int</span> <span class="token function">getType</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">OrdinaryStrategy</span> <span class="token keyword">implements</span> <span class="token class-name">Strategy</span> <span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">double</span> <span class="token function">compute</span><span class="token punctuation">(</span><span class="token keyword">long</span> money<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"普通会员 不打折"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> money<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">// 添加 type 返回</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getType</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> UserType<span class="token punctuation">.</span>SILVER_VIP<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SilverStrategy</span> <span class="token keyword">implements</span> <span class="token class-name">Strategy</span> <span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">double</span> <span class="token function">compute</span><span class="token punctuation">(</span><span class="token keyword">long</span> money<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"白银会员 优惠50元"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> money <span class="token operator">-</span> <span class="token number">50</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">// type 返回</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getType</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> UserType<span class="token punctuation">.</span>SILVER_VIP<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">//....省略剩下 Strategy</span></code></pre>
+<p>我们先在 Strategy 新增一个 getType 方法，用来表示 该策略的 type 值。代码相对简单，这里就不过多介绍了</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">StrategyFactory</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">private</span> Map<span class="token operator">&lt;</span>Integer<span class="token punctuation">,</span> Strategy<span class="token operator">></span> map<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token function">StrategyFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+        List<span class="token operator">&lt;</span>Strategy<span class="token operator">></span> strategies <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        strategies<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">OrdinaryStrategy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        strategies<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">SilverStrategy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        strategies<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">GoldStrategy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        strategies<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">PlatinumStrategy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        strategies<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">PlatinumStrategy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment" spellcheck="true">// 看这里 看这里 看这里！</span>
+        map <span class="token operator">=</span> strategies<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span>Collectors<span class="token punctuation">.</span><span class="token function">toMap</span><span class="token punctuation">(</span>Strategy<span class="token operator">:</span><span class="token operator">:</span>getType<span class="token punctuation">,</span> strategy <span class="token operator">-</span><span class="token operator">></span> strategy<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment" spellcheck="true">/* 等同上面
+        map = new HashMap&lt;>();
+        for (Strategy strategy : strategies) {
+            map.put(strategy.getType(), strategy);
+        }*/</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">Holder</span> <span class="token punctuation">{</span>
+        <span class="token keyword">public</span> <span class="token keyword">static</span> StrategyFactory instance <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">StrategyFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> StrategyFactory <span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> Holder<span class="token punctuation">.</span>instance<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> Strategy <span class="token function">get</span><span class="token punctuation">(</span>Integer type<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> map<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>type<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>静态内部类单例，单例模式实现的一种，不是本文重点，如不了解，可以自行 google</p>
+<p>我们再着手创建一个 StrategyFactory 工厂类。StrategyFactory 这里我使用的是静态内部类单例，在构造方法的时候，初始化好 需要的 Strategy，并把 list 转化为 map。</p>
+<p>这里 转化就是“灵魂”所在。</p>
+<h3 id="toMap"><a href="#toMap" class="headerlink" title="toMap"></a>toMap</h3><p>我们先来看看 Java8 语法中的小技巧。通常情况下，我们遍历 List，手动put到 Map 中。</p>
+<pre class=" language-java"><code class="language-java"><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>  before <span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+
+map <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashMap</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span>Strategy strategy <span class="token operator">:</span> strategies<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    map<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>strategy<span class="token punctuation">.</span><span class="token function">getType</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> strategy<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>  after Java8 <span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+
+map <span class="token operator">=</span> strategies<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span>Collectors<span class="token punctuation">.</span><span class="token function">toMap</span><span class="token punctuation">(</span>Strategy<span class="token operator">:</span><span class="token operator">:</span>getType<span class="token punctuation">,</span> strategy <span class="token operator">-</span><span class="token operator">></span> strategy<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>toMap 第一个参数是一个Function，对应 Map 中的 key，第二个参数也是一个Function，strategy -&gt; strategy， 左边strategy 是遍历 strategies 中的每一个strategy，右边strategy则是 Map 对应 value 值。</p>
+<p>若是不了解 Java8 语法的朋友，强烈建议看 《Java8 实战》，书中详细的介绍了 Lambda表达式、Stream等语法。</p>
+<h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">double</span> <span class="token function">getResult</span><span class="token punctuation">(</span><span class="token keyword">long</span> money<span class="token punctuation">,</span> <span class="token keyword">int</span> type<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>money <span class="token operator">&lt;</span> <span class="token number">1000</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> money<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    Strategy strategy <span class="token operator">=</span> StrategyFactory<span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>type<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>strategy <span class="token operator">==</span> null<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">IllegalArgumentException</span><span class="token punctuation">(</span><span class="token string">"please input right type"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">return</span> strategy<span class="token punctuation">.</span><span class="token function">compute</span><span class="token punctuation">(</span>money<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>至此，通过一个工厂类，在我们在 getResult（）调用的时候，根据传入 type，即可获取到 对应 Strategy</p>
+<p>再也没有可怕的 if-else 语句。</p>
+<p>完结撒花撒花 : )</p>
+<h3 id="后续"><a href="#后续" class="headerlink" title="后续"></a>后续</h3><p>后续代码优化上，若是 Java 项目，可以尝试使用自定义注解，注解 Strategy 实现类。</p>
+<p>这样可以简化原来需在工厂类 List 添加一个 Stratey 策略。</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <categories>
+        <category>设计模式</category>
+      </categories>
+      <tags>
+        <tag>策略</tag>
+        <tag>工厂</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>自定义中缀表达式</title>
     <url>/posts/8a52.html</url>
     <content><![CDATA[<p>一个函数只有用与两个角色类似的对象时才将其声明为中缀函数。</p>
@@ -1279,6 +1584,51 @@ infix <span class="token keyword">fun</span> Int<span class="token punctuation">
       </tags>
   </entry>
   <entry>
+    <title>英语学习第三天</title>
+    <url>/posts/9968.html</url>
+    <content><![CDATA[<h3 id="动名词作主语"><a href="#动名词作主语" class="headerlink" title="动名词作主语"></a>动名词作主语</h3><ul>
+<li>Eating an apple a day keeps you healthy.</li>
+<li>Running five miles is the first thing he does in the morning.</li>
+</ul>
+<h3 id="不定式作主语"><a href="#不定式作主语" class="headerlink" title="不定式作主语"></a>不定式作主语</h3><ul>
+<li>To study abroad is my greatest desire.</li>
+<li>To travel around the world is my plan for this year.</li>
+</ul>
+<p>动名词作主语不讨论这件事做或没做。不定式做主语，这件事情还没有做。</p>
+<p>动词要做主语，不能用原词。可以用动名词，也可以用不定式。如果是不定式，这个动作要没做才可以。</p>
+<blockquote>
+<p>不定式和动名词作主语时，常出现主语过长的情况，可以用代词it代替，作形式主语放在句首，而把真正的主语，即不定式或动名词短语放在句尾。动名词移至句尾时，常改为不定式。</p>
+</blockquote>
+<p>Collecting stamps is one of his hobbies.</p>
+<p><code>It</code> is one of his hobbies <code>to collect stamps</code>.</p>
+<p>Eating an apple a day keeps you healthy.</p>
+<p><code>It</code> keeps you healthy <code>to eat an appale</code>.</p>
+<h3 id="单词"><a href="#单词" class="headerlink" title="单词"></a>单词</h3><p>hear from 收到….的信</p>
+<p>hear sb do sth 听见某人做某事 </p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>English</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>英语学习第一天</title>
     <url>/posts/56b.html</url>
     <content><![CDATA[<h2 id="五种基本句型"><a href="#五种基本句型" class="headerlink" title="五种基本句型"></a>五种基本句型</h2><p>主语：动作的发起者，位于句首。</p>
@@ -1376,51 +1726,6 @@ infix <span class="token keyword">fun</span> Int<span class="token punctuation">
 <li>She talk loudy.（方式状语）</li>
 <li>He walks in a funny way.</li>
 </ul>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>English</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>英语学习第三天</title>
-    <url>/posts/9968.html</url>
-    <content><![CDATA[<h3 id="动名词作主语"><a href="#动名词作主语" class="headerlink" title="动名词作主语"></a>动名词作主语</h3><ul>
-<li>Eating an apple a day keeps you healthy.</li>
-<li>Running five miles is the first thing he does in the morning.</li>
-</ul>
-<h3 id="不定式作主语"><a href="#不定式作主语" class="headerlink" title="不定式作主语"></a>不定式作主语</h3><ul>
-<li>To study abroad is my greatest desire.</li>
-<li>To travel around the world is my plan for this year.</li>
-</ul>
-<p>动名词作主语不讨论这件事做或没做。不定式做主语，这件事情还没有做。</p>
-<p>动词要做主语，不能用原词。可以用动名词，也可以用不定式。如果是不定式，这个动作要没做才可以。</p>
-<blockquote>
-<p>不定式和动名词作主语时，常出现主语过长的情况，可以用代词it代替，作形式主语放在句首，而把真正的主语，即不定式或动名词短语放在句尾。动名词移至句尾时，常改为不定式。</p>
-</blockquote>
-<p>Collecting stamps is one of his hobbies.</p>
-<p><code>It</code> is one of his hobbies <code>to collect stamps</code>.</p>
-<p>Eating an apple a day keeps you healthy.</p>
-<p><code>It</code> keeps you healthy <code>to eat an appale</code>.</p>
-<h3 id="单词"><a href="#单词" class="headerlink" title="单词"></a>单词</h3><p>hear from 收到….的信</p>
-<p>hear sb do sth 听见某人做某事 </p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {

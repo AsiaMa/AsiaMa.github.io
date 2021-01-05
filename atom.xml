@@ -6,7 +6,7 @@
   <link href="https://blog.asiama.top/atom.xml" rel="self"/>
   
   <link href="https://blog.asiama.top/"/>
-  <updated>2020-12-31T09:30:23.777Z</updated>
+  <updated>2021-01-05T03:40:45.936Z</updated>
   <id>https://blog.asiama.top/</id>
   
   <author>
@@ -17,11 +17,38 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>探讨复杂的 if-else 语句“优雅处理”的思路</title>
+    <link href="https://blog.asiama.top/posts/afc9.html"/>
+    <id>https://blog.asiama.top/posts/afc9.html</id>
+    <published>2021-01-05T03:15:09.000Z</published>
+    <updated>2021-01-05T03:40:45.936Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;在之前文章说到，简单 if-else，可以使用 卫语句 进行优化。但是在实际开发中，往往不是简单 if-else</summary>
+        
+      
+    
+    
+    
+    <category term="设计模式" scheme="https://blog.asiama.top/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+    
+    <category term="策略" scheme="https://blog.asiama.top/tags/%E7%AD%96%E7%95%A5/"/>
+    
+    <category term="工厂" scheme="https://blog.asiama.top/tags/%E5%B7%A5%E5%8E%82/"/>
+    
+  </entry>
+  
+  <entry>
     <title>kotlin如何实现空安全</title>
     <link href="https://blog.asiama.top/posts/b698.html"/>
     <id>https://blog.asiama.top/posts/b698.html</id>
     <published>2020-12-31T09:01:43.000Z</published>
-    <updated>2020-12-31T09:30:23.777Z</updated>
+    <updated>2020-12-31T09:42:41.853Z</updated>
     
     
       
@@ -51,7 +78,7 @@
     <link href="https://blog.asiama.top/posts/318f.html"/>
     <id>https://blog.asiama.top/posts/318f.html</id>
     <published>2020-12-31T07:44:11.000Z</published>
-    <updated>2020-12-31T09:33:41.711Z</updated>
+    <updated>2020-12-31T09:40:50.257Z</updated>
     
     
       
@@ -476,29 +503,6 @@
         
         
     <summary type="html">&lt;h3 id=&quot;为什么会有五种句型&quot;&gt;&lt;a href=&quot;#为什么会有五种句型&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    
-    <category term="English" scheme="https://blog.asiama.top/tags/English/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>英语学习第一天</title>
-    <link href="https://blog.asiama.top/posts/56b.html"/>
-    <id>https://blog.asiama.top/posts/56b.html</id>
-    <published>2020-10-22T15:02:12.000Z</published>
-    <updated>2020-12-29T14:50:01.824Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;五种基本句型&quot;&gt;&lt;a href=&quot;#五种基本句型&quot; class=&quot;headerlink&quot;</summary>
         
       
     

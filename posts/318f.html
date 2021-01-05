@@ -461,7 +461,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    353
+                    330
                 </div>
                 
 
@@ -499,13 +499,6 @@
         <span class="token keyword">set</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span> <span class="token punctuation">{</span>
             field <span class="token operator">=</span> value <span class="token operator">+</span> <span class="token string">"set"</span>
         <span class="token punctuation">}</span>
-      <span class="token keyword">val</span> str2<span class="token operator">:</span> String<span class="token operator">?</span> <span class="token operator">=</span> <span class="token keyword">null</span>
-        <span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">return</span> field <span class="token operator">+</span> <span class="token string">"hello"</span>
-        <span class="token punctuation">}</span>
-        <span class="token keyword">set</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">// 编译报错： A 'val'-property cannot have a setter</span>
-            field <span class="token operator">=</span> value <span class="token operator">+</span> <span class="token string">"set"</span>
-        <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
 
 
@@ -522,7 +515,7 @@
         <span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
             <span class="token keyword">return</span> field <span class="token operator">+</span> <span class="token string">"hello"</span>
         <span class="token punctuation">}</span>
-          <span class="token comment" spellcheck="true">/**
+              <span class="token comment" spellcheck="true">/**
         set(value) { // 编译报错： A 'val'-property cannot have a setter
             field = value + "set"
         } */</span>
@@ -550,7 +543,9 @@
 <h3 id="编译时常量"><a href="#编译时常量" class="headerlink" title="编译时常量"></a>编译时常量</h3><p>const 只能修饰 object 的属性，或 top-level 变量。</p>
 <p>const变量的值必须在编译期间确定下来，所以它的类型只能是String或基本类型。</p>
 <pre class=" language-java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">Perfect</span><span class="token punctuation">{</span>
-    <span class="token keyword">const</span> val  TOP <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 编译报错：Const 'val' are only allowed on top level or in objects</span>
+      <span class="token comment" spellcheck="true">/**
+    const val  TOP = 1; // 编译报错：Const 'val' are only allowed on top level or in objects
+    */</span>
 <span class="token punctuation">}</span>
 
 object Perfect<span class="token punctuation">{</span>
@@ -564,7 +559,7 @@ object Perfect<span class="token punctuation">{</span>
 <span class="token punctuation">}</span>
 
 <span class="token comment" spellcheck="true">// top-level</span>
-<span class="token keyword">const</span> val TOP <span class="token operator">=</span> <span class="token number">1</span> </code></pre>
+<span class="token keyword">const</span> val TOP <span class="token operator">=</span> <span class="token number">1</span>    <span class="token comment" spellcheck="true">// OK</span></code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -1075,7 +1070,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">10.6k</span>&nbsp;字
+                class="white-color">12.4k</span>&nbsp;字
             
             
             
