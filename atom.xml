@@ -6,7 +6,7 @@
   <link href="https://blog.asiama.top/atom.xml" rel="self"/>
   
   <link href="https://blog.asiama.top/"/>
-  <updated>2021-01-05T04:55:43.636Z</updated>
+  <updated>2021-01-10T13:42:03.630Z</updated>
   <id>https://blog.asiama.top/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Kotlin内联:noinline与crossinline</title>
+    <link href="https://blog.asiama.top/posts/11c5.html"/>
+    <id>https://blog.asiama.top/posts/11c5.html</id>
+    <published>2021-01-10T13:06:46.000Z</published>
+    <updated>2021-01-10T13:42:03.630Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;在Kotlin中，内部Lambda是不允许中断外部函数执行的。inline的Lambda可以中断外部函数调用。&lt;/p&gt;
+&lt;pre class=&quot; language-kotlin&quot;&gt;&lt;code class=&quot;language-kotlin&quot;&gt;&lt;span</summary>
+        
+      
+    
+    
+    
+    
+    <category term="Kotlin" scheme="https://blog.asiama.top/tags/Kotlin/"/>
+    
+  </entry>
   
   <entry>
     <title>探讨复杂的 if-else 语句“优雅处理”的思路</title>
@@ -488,29 +512,6 @@
     
     
     <category term="MySQL" scheme="https://blog.asiama.top/tags/MySQL/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>英语学习第二天</title>
-    <link href="https://blog.asiama.top/posts/9511.html"/>
-    <id>https://blog.asiama.top/posts/9511.html</id>
-    <published>2020-10-25T13:03:57.000Z</published>
-    <updated>2020-12-29T14:49:50.035Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;为什么会有五种句型&quot;&gt;&lt;a href=&quot;#为什么会有五种句型&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    
-    <category term="English" scheme="https://blog.asiama.top/tags/English/"/>
     
   </entry>
   
