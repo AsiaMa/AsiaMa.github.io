@@ -6,7 +6,7 @@
   <link href="https://blog.asiama.top/atom.xml" rel="self"/>
   
   <link href="https://blog.asiama.top/"/>
-  <updated>2021-01-10T13:42:03.630Z</updated>
+  <updated>2021-01-10T14:12:51.628Z</updated>
   <id>https://blog.asiama.top/</id>
   
   <author>
@@ -17,19 +17,43 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>kotlin泛型</title>
+    <link href="https://blog.asiama.top/posts/3e59.html"/>
+    <id>https://blog.asiama.top/posts/3e59.html</id>
+    <published>2021-01-10T14:02:01.000Z</published>
+    <updated>2021-01-10T14:12:51.628Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;通过&lt;code&gt;where&lt;/code&gt;关键字，对泛型参数限定满足所有条件&lt;/p&gt;
+&lt;pre class=&quot; language-kotlin&quot;&gt;&lt;code class=&quot;language-kotlin&quot;&gt;&lt;span class=&quot;token</summary>
+        
+      
+    
+    
+    
+    
+    <category term="Kotlin" scheme="https://blog.asiama.top/tags/Kotlin/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Kotlin内联:noinline与crossinline</title>
     <link href="https://blog.asiama.top/posts/11c5.html"/>
     <id>https://blog.asiama.top/posts/11c5.html</id>
     <published>2021-01-10T13:06:46.000Z</published>
-    <updated>2021-01-10T13:42:03.630Z</updated>
+    <updated>2021-01-10T13:56:34.195Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;p&gt;在Kotlin中，内部Lambda是不允许中断外部函数执行的。inline的Lambda可以中断外部函数调用。&lt;/p&gt;
-&lt;pre class=&quot; language-kotlin&quot;&gt;&lt;code class=&quot;language-kotlin&quot;&gt;&lt;span</summary>
+    <summary type="html">&lt;p&gt;在Kotlin中，内部Lambda是不允许中断外部函数执行的。&lt;/p&gt;
+&lt;pre class=&quot; language-kotlin&quot;&gt;&lt;code class=&quot;language-kotlin&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;fun&lt;/span&gt;</summary>
         
       
     
@@ -482,29 +506,6 @@
         
         
     <summary type="html">&lt;h3 id=&quot;命令提示符的UTF-8设置&quot;&gt;&lt;a href=&quot;#命令提示符的UTF-8设置&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    
-    <category term="MySQL" scheme="https://blog.asiama.top/tags/MySQL/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>MySQL基本介绍</title>
-    <link href="https://blog.asiama.top/posts/68d3.html"/>
-    <id>https://blog.asiama.top/posts/68d3.html</id>
-    <published>2020-12-05T08:34:08.831Z</published>
-    <updated>2020-12-29T14:50:14.816Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;数据库是什么&quot;&gt;&lt;a href=&quot;#数据库是什么&quot; class=&quot;headerlink&quot;</summary>
         
       
     
