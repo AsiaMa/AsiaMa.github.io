@@ -1,6 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Bean 延迟查找</title>
+    <url>/posts/cdfc.html</url>
+    <content><![CDATA[<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ObjectProviderDemo</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">// @Configuration 是非必须注解</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 创建 BeanFactory 容器</span>
+    AnnotationConfigApplicationContext annotationConfigApplicationContext <span class="token operator">=</span>
+        <span class="token keyword">new</span> <span class="token class-name">AnnotationConfigApplicationContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 注册配置类</span>
+    annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">register</span><span class="token punctuation">(</span>ObjectProviderDemo<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 启动应用上下文</span>
+    annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">refresh</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 依赖查找集合对象</span>
+    <span class="token function">lookupByObjectProvider</span><span class="token punctuation">(</span>annotationConfigApplicationContext<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 关闭应用上下文</span>
+    annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token annotation punctuation">@Bean</span>
+  <span class="token keyword">public</span> String <span class="token function">helloWorld</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">//方法名就是 Bean 名称 = "helloWorld</span>
+    <span class="token keyword">return</span> <span class="token string">"hello, world!"</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">lookupByObjectProvider</span><span class="token punctuation">(</span>
+      AnnotationConfigApplicationContext annotationConfigApplicationContext<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    ObjectProvider<span class="token operator">&lt;</span>String<span class="token operator">></span> objectProvider <span class="token operator">=</span> annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">getBeanProvider</span><span class="token punctuation">(</span>String<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>objectProvider<span class="token punctuation">.</span><span class="token function">getObject</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/** 输出结果：hello, world! */</span></code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <categories>
+        <category>JAVA</category>
+      </categories>
+      <tags>
+        <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Bean的初始化方式</title>
     <url>/posts/c3f8.html</url>
     <content><![CDATA[<h3 id="PostConstruct标注方法"><a href="#PostConstruct标注方法" class="headerlink" title="@PostConstruct标注方法"></a>@PostConstruct标注方法</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Employee</span> <span class="token punctuation">{</span>
@@ -379,6 +435,44 @@ b<span class="token operator">?</span><span class="token punctuation">.</span>le
       </tags>
   </entry>
   <entry>
+    <title>Kotlin单例</title>
+    <url>/posts/9fbb.html</url>
+    <content><![CDATA[<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">class</span> Singleton <span class="token keyword">private</span> <span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">companion</span> <span class="token keyword">object</span> <span class="token punctuation">{</span>
+        <span class="token keyword">fun</span> <span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> Singleton <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> Holder<span class="token punctuation">.</span>instance
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">object</span> Holder <span class="token punctuation">{</span>
+        <span class="token keyword">val</span> instance <span class="token operator">=</span> <span class="token function">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MySQL基础命令</title>
     <url>/posts/f6d7.html</url>
     <content><![CDATA[<p>在Windows和macOS的环境中不区分字符的大小写，但是在Linux环境中却区分大小写。也就是说，表tb1和表TB1在Windows和macOS环境中会作为相同的表名处理，但是在Linux环境中会作为不同的表名处理。</p>
@@ -425,44 +519,6 @@ DESC db1;</code></pre>
       </script>]]></content>
       <tags>
         <tag>MySQL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Kotlin单例</title>
-    <url>/posts/9fbb.html</url>
-    <content><![CDATA[<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">class</span> Singleton <span class="token keyword">private</span> <span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-
-    <span class="token keyword">companion</span> <span class="token keyword">object</span> <span class="token punctuation">{</span>
-        <span class="token keyword">fun</span> <span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> Singleton <span class="token punctuation">{</span>
-            <span class="token keyword">return</span> Holder<span class="token punctuation">.</span>instance
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">private</span> <span class="token keyword">object</span> Holder <span class="token punctuation">{</span>
-        <span class="token keyword">val</span> instance <span class="token operator">=</span> <span class="token function">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>Kotlin</tag>
       </tags>
   </entry>
   <entry>
@@ -801,6 +857,94 @@ System<span class="token punctuation">.</span>out<span class="token punctuation"
       </script>]]></content>
   </entry>
   <entry>
+    <title>kotlin如何实现空安全</title>
+    <url>/posts/b698.html</url>
+    <content><![CDATA[<ol>
+<li><p>通过静态代码检查，编译插件检查，在编译器避免空指针异常</p>
+</li>
+<li><p>每次引用对象的时候，都去进行对象判空，在运行期间避免对象空指针</p>
+</li>
+</ol>
+<blockquote>
+<p>将一个对象的两种类型（可以为空的类型与不可以为空的类型）做一个彻底的分离。如果是不可能为空的对象，在编译期会禁止赋一个null值（编译期避免）；如果是有可能为空的对象，那么在对这个对象进行调用的时候，都会进行的非空判断（运行期避免）。</p>
+</blockquote>
+<h3 id="可空对象"><a href="#可空对象" class="headerlink" title="可空对象"></a>可空对象</h3><pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">val</span> a<span class="token operator">:</span> String<span class="token operator">?</span> <span class="token operator">=</span> <span class="token keyword">null</span>
+    <span class="token function">println</span><span class="token punctuation">(</span><span class="token function">getValue</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">fun</span> <span class="token function">getValue</span><span class="token punctuation">(</span>s<span class="token operator">:</span> String<span class="token operator">?</span><span class="token punctuation">)</span><span class="token operator">:</span> String <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token string">"1"</span> <span class="token operator">+</span> s<span class="token operator">?</span><span class="token punctuation">.</span>length
+<span class="token punctuation">}</span></code></pre>
+<p>进行反编译，可以看到kotlin生成的class文件中进行了非空判断。</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">import</span> kotlin<span class="token punctuation">.</span>Metadata<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>jetbrains<span class="token punctuation">.</span>annotations<span class="token punctuation">.</span>NotNull<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>jetbrains<span class="token punctuation">.</span>annotations<span class="token punctuation">.</span>Nullable<span class="token punctuation">;</span>
+
+<span class="token annotation punctuation">@Metadata</span><span class="token punctuation">(</span>mv <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">,</span> bv <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">}</span><span class="token punctuation">,</span> k <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">,</span> d1 <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"\000\020\n\000\n\002\020\016\n\002\b\002\n\002\020\002\n\000\032\020\020\000\032\0020\0012\b\020\002\032\004\030\0010\001\032\006\020\003\032\0020\004\006\005"</span><span class="token punctuation">}</span><span class="token punctuation">,</span> d2 <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"getValue"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"s"</span><span class="token punctuation">,</span> <span class="token string">"main"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"my-kotlin"</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">HelloKt</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    String a <span class="token operator">=</span> <span class="token punctuation">(</span>String<span class="token punctuation">)</span>null<span class="token punctuation">;</span>
+    String str1 <span class="token operator">=</span> <span class="token function">getValue</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>str1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token annotation punctuation">@NotNull</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> String <span class="token function">getValue</span><span class="token punctuation">(</span><span class="token annotation punctuation">@Nullable</span> String s<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token string">"1"</span> <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>s <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token punctuation">(</span>String<span class="token punctuation">)</span>Integer<span class="token punctuation">.</span><span class="token function">valueOf</span><span class="token punctuation">(</span>s<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">:</span> null<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<h3 id="不可空对象"><a href="#不可空对象" class="headerlink" title="不可空对象"></a>不可空对象</h3><pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">val</span> a<span class="token operator">:</span> String <span class="token operator">=</span> <span class="token string">"abc"</span>
+    <span class="token function">println</span><span class="token punctuation">(</span><span class="token function">getValue</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">fun</span> <span class="token function">getValue</span><span class="token punctuation">(</span>s<span class="token operator">:</span> String<span class="token punctuation">)</span><span class="token operator">:</span> String <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token string">"1"</span> <span class="token operator">+</span> s<span class="token punctuation">.</span>length
+<span class="token punctuation">}</span></code></pre>
+<p>进行反编译，可以看到kotlin生成的class文件中直接进行了断言（断言对象不会为null）</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">import</span> kotlin<span class="token punctuation">.</span>Metadata<span class="token punctuation">;</span>
+<span class="token keyword">import</span> kotlin<span class="token punctuation">.</span>jvm<span class="token punctuation">.</span>internal<span class="token punctuation">.</span>Intrinsics<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>jetbrains<span class="token punctuation">.</span>annotations<span class="token punctuation">.</span>NotNull<span class="token punctuation">;</span>
+
+<span class="token annotation punctuation">@Metadata</span><span class="token punctuation">(</span>mv <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">,</span> bv <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">}</span><span class="token punctuation">,</span> k <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">,</span> d1 <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"\000\020\n\000\n\002\020\016\n\002\b\002\n\002\020\002\n\000\032\016\020\000\032\0020\0012\006\020\002\032\0020\001\032\006\020\003\032\0020\004\006\005"</span><span class="token punctuation">}</span><span class="token punctuation">,</span> d2 <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"getValue"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"s"</span><span class="token punctuation">,</span> <span class="token string">"main"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"my-kotlin"</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">HelloKt</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    String a <span class="token operator">=</span> <span class="token string">"abc"</span><span class="token punctuation">;</span>
+    String str1 <span class="token operator">=</span> <span class="token function">getValue</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>str1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token annotation punctuation">@NotNull</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> String <span class="token function">getValue</span><span class="token punctuation">(</span><span class="token annotation punctuation">@NotNull</span> String s<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    Intrinsics<span class="token punctuation">.</span><span class="token function">checkNotNullParameter</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> <span class="token string">"s"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token string">"1"</span> <span class="token operator">+</span> s<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>kotlin泛型</title>
     <url>/posts/3e59.html</url>
     <content><![CDATA[<p>通过<code>where</code>关键字，对泛型参数限定满足所有条件</p>
@@ -968,94 +1112,6 @@ System<span class="token punctuation">.</span>out<span class="token punctuation"
       </script>]]></content>
       <tags>
         <tag>MySQL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>kotlin如何实现空安全</title>
-    <url>/posts/b698.html</url>
-    <content><![CDATA[<ol>
-<li><p>通过静态代码检查，编译插件检查，在编译器避免空指针异常</p>
-</li>
-<li><p>每次引用对象的时候，都去进行对象判空，在运行期间避免对象空指针</p>
-</li>
-</ol>
-<blockquote>
-<p>将一个对象的两种类型（可以为空的类型与不可以为空的类型）做一个彻底的分离。如果是不可能为空的对象，在编译期会禁止赋一个null值（编译期避免）；如果是有可能为空的对象，那么在对这个对象进行调用的时候，都会进行的非空判断（运行期避免）。</p>
-</blockquote>
-<h3 id="可空对象"><a href="#可空对象" class="headerlink" title="可空对象"></a>可空对象</h3><pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">val</span> a<span class="token operator">:</span> String<span class="token operator">?</span> <span class="token operator">=</span> <span class="token keyword">null</span>
-    <span class="token function">println</span><span class="token punctuation">(</span><span class="token function">getValue</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">fun</span> <span class="token function">getValue</span><span class="token punctuation">(</span>s<span class="token operator">:</span> String<span class="token operator">?</span><span class="token punctuation">)</span><span class="token operator">:</span> String <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> <span class="token string">"1"</span> <span class="token operator">+</span> s<span class="token operator">?</span><span class="token punctuation">.</span>length
-<span class="token punctuation">}</span></code></pre>
-<p>进行反编译，可以看到kotlin生成的class文件中进行了非空判断。</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">import</span> kotlin<span class="token punctuation">.</span>Metadata<span class="token punctuation">;</span>
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>jetbrains<span class="token punctuation">.</span>annotations<span class="token punctuation">.</span>NotNull<span class="token punctuation">;</span>
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>jetbrains<span class="token punctuation">.</span>annotations<span class="token punctuation">.</span>Nullable<span class="token punctuation">;</span>
-
-<span class="token annotation punctuation">@Metadata</span><span class="token punctuation">(</span>mv <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">,</span> bv <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">}</span><span class="token punctuation">,</span> k <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">,</span> d1 <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"\000\020\n\000\n\002\020\016\n\002\b\002\n\002\020\002\n\000\032\020\020\000\032\0020\0012\b\020\002\032\004\030\0010\001\032\006\020\003\032\0020\004\006\005"</span><span class="token punctuation">}</span><span class="token punctuation">,</span> d2 <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"getValue"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"s"</span><span class="token punctuation">,</span> <span class="token string">"main"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"my-kotlin"</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
-<span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">HelloKt</span> <span class="token punctuation">{</span>
-  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    String a <span class="token operator">=</span> <span class="token punctuation">(</span>String<span class="token punctuation">)</span>null<span class="token punctuation">;</span>
-    String str1 <span class="token operator">=</span> <span class="token function">getValue</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>str1<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-
-  <span class="token annotation punctuation">@NotNull</span>
-  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> String <span class="token function">getValue</span><span class="token punctuation">(</span><span class="token annotation punctuation">@Nullable</span> String s<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> <span class="token string">"1"</span> <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>s <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token punctuation">(</span>String<span class="token punctuation">)</span>Integer<span class="token punctuation">.</span><span class="token function">valueOf</span><span class="token punctuation">(</span>s<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">:</span> null<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
-<h3 id="不可空对象"><a href="#不可空对象" class="headerlink" title="不可空对象"></a>不可空对象</h3><pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">val</span> a<span class="token operator">:</span> String <span class="token operator">=</span> <span class="token string">"abc"</span>
-    <span class="token function">println</span><span class="token punctuation">(</span><span class="token function">getValue</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">fun</span> <span class="token function">getValue</span><span class="token punctuation">(</span>s<span class="token operator">:</span> String<span class="token punctuation">)</span><span class="token operator">:</span> String <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> <span class="token string">"1"</span> <span class="token operator">+</span> s<span class="token punctuation">.</span>length
-<span class="token punctuation">}</span></code></pre>
-<p>进行反编译，可以看到kotlin生成的class文件中直接进行了断言（断言对象不会为null）</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">import</span> kotlin<span class="token punctuation">.</span>Metadata<span class="token punctuation">;</span>
-<span class="token keyword">import</span> kotlin<span class="token punctuation">.</span>jvm<span class="token punctuation">.</span>internal<span class="token punctuation">.</span>Intrinsics<span class="token punctuation">;</span>
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>jetbrains<span class="token punctuation">.</span>annotations<span class="token punctuation">.</span>NotNull<span class="token punctuation">;</span>
-
-<span class="token annotation punctuation">@Metadata</span><span class="token punctuation">(</span>mv <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">,</span> bv <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">}</span><span class="token punctuation">,</span> k <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">,</span> d1 <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"\000\020\n\000\n\002\020\016\n\002\b\002\n\002\020\002\n\000\032\016\020\000\032\0020\0012\006\020\002\032\0020\001\032\006\020\003\032\0020\004\006\005"</span><span class="token punctuation">}</span><span class="token punctuation">,</span> d2 <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"getValue"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"s"</span><span class="token punctuation">,</span> <span class="token string">"main"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"my-kotlin"</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
-<span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">HelloKt</span> <span class="token punctuation">{</span>
-  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    String a <span class="token operator">=</span> <span class="token string">"abc"</span><span class="token punctuation">;</span>
-    String str1 <span class="token operator">=</span> <span class="token function">getValue</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>str1<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-
-  <span class="token annotation punctuation">@NotNull</span>
-  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> String <span class="token function">getValue</span><span class="token punctuation">(</span><span class="token annotation punctuation">@NotNull</span> String s<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    Intrinsics<span class="token punctuation">.</span><span class="token function">checkNotNullParameter</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> <span class="token string">"s"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token string">"1"</span> <span class="token operator">+</span> s<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>Kotlin</tag>
       </tags>
   </entry>
   <entry>
@@ -1237,6 +1293,46 @@ docker run -d  --name yapi  --link mongo-yapi:mongo  --workdir /api/vendors  -p 
       </tags>
   </entry>
   <entry>
+    <title>使用Git之前需要做的最小配置</title>
+    <url>/posts/5174.html</url>
+    <content><![CDATA[<h3 id="配置user-name-和-user-email"><a href="#配置user-name-和-user-email" class="headerlink" title="配置user.name 和 user.email"></a>配置user.name 和 user.email</h3><p>全局配置「对当前用户所有仓库有效」</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --global user.name <span class="token string">"your_name"</span>
+$ <span class="token function">git</span> config --global user.email <span class="token string">"your_email"</span></code></pre>
+<p>缺省等同于local「只对某个仓库有效」</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --local user.name <span class="token string">"your_name"</span>
+$ <span class="token function">git</span> config --local user.email <span class="token string">"your_email"</span></code></pre>
+<p>系统配置「对系统所有登录的用户有效」</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --system user.name <span class="token string">"your_name"</span>
+$ <span class="token function">git</span> config --system user.email <span class="token string">"your_email"</span></code></pre>
+<h3 id="显示config的配置"><a href="#显示config的配置" class="headerlink" title="显示config的配置"></a>显示config的配置</h3><pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --list --local
+$ <span class="token function">git</span> config --list --global
+$ <span class="token function">git</span> config --list --system</code></pre>
+<h3 id="查看某一个属性"><a href="#查看某一个属性" class="headerlink" title="查看某一个属性"></a>查看某一个属性</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --global user.name</code></pre>
+<h3 id="移除设置"><a href="#移除设置" class="headerlink" title="移除设置"></a>移除设置</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --unset --global user.email</code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>函数式编程</title>
     <url>/posts/f609.html</url>
     <content><![CDATA[<p>函数式编程的核心概念如下：</p>
@@ -1279,46 +1375,6 @@ docker run -d  --name yapi  --link mongo-yapi:mongo  --workdir /api/vendors  -p 
       </script>]]></content>
       <tags>
         <tag>编程范式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用Git之前需要做的最小配置</title>
-    <url>/posts/5174.html</url>
-    <content><![CDATA[<h3 id="配置user-name-和-user-email"><a href="#配置user-name-和-user-email" class="headerlink" title="配置user.name 和 user.email"></a>配置user.name 和 user.email</h3><p>全局配置「对当前用户所有仓库有效」</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --global user.name <span class="token string">"your_name"</span>
-$ <span class="token function">git</span> config --global user.email <span class="token string">"your_email"</span></code></pre>
-<p>缺省等同于local「只对某个仓库有效」</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --local user.name <span class="token string">"your_name"</span>
-$ <span class="token function">git</span> config --local user.email <span class="token string">"your_email"</span></code></pre>
-<p>系统配置「对系统所有登录的用户有效」</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --system user.name <span class="token string">"your_name"</span>
-$ <span class="token function">git</span> config --system user.email <span class="token string">"your_email"</span></code></pre>
-<h3 id="显示config的配置"><a href="#显示config的配置" class="headerlink" title="显示config的配置"></a>显示config的配置</h3><pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --list --local
-$ <span class="token function">git</span> config --list --global
-$ <span class="token function">git</span> config --list --system</code></pre>
-<h3 id="查看某一个属性"><a href="#查看某一个属性" class="headerlink" title="查看某一个属性"></a>查看某一个属性</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --global user.name</code></pre>
-<h3 id="移除设置"><a href="#移除设置" class="headerlink" title="移除设置"></a>移除设置</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --unset --global user.email</code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>Git</tag>
       </tags>
   </entry>
   <entry>
@@ -2584,59 +2640,6 @@ infix <span class="token keyword">fun</span> Int<span class="token punctuation">
       </tags>
   </entry>
   <entry>
-    <title>通过外部单体对象来注册 Spring Bean</title>
-    <url>/posts/de54.html</url>
-    <content><![CDATA[<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Employee</span> <span class="token keyword">implements</span> <span class="token class-name">InitializingBean</span><span class="token punctuation">,</span> DisposableBean <span class="token punctuation">{</span>
-  <span class="token keyword">private</span> String name<span class="token punctuation">;</span>
-  <span class="token keyword">private</span> Integer age<span class="token punctuation">;</span>
-
-  <span class="token comment" spellcheck="true">// 省略setter getter</span>
-<span class="token punctuation">}</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SingletonBeanRegistrationDemo</span> <span class="token punctuation">{</span>
-  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token comment" spellcheck="true">// 创建 BeanFactory 容器</span>
-    AnnotationConfigApplicationContext applicationContext <span class="token operator">=</span>
-        <span class="token keyword">new</span> <span class="token class-name">AnnotationConfigApplicationContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">// 创建一个外部 Employee 对象</span>
-    Employee employee <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Employee</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ConfigurableListableBeanFactory beanFactory <span class="token operator">=</span> applicationContext<span class="token punctuation">.</span><span class="token function">getBeanFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">// 注册外部的单例对象</span>
-    beanFactory<span class="token punctuation">.</span><span class="token function">registerSingleton</span><span class="token punctuation">(</span><span class="token string">"employee"</span><span class="token punctuation">,</span> employee<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">// 启动 Spring 应用上下文</span>
-    applicationContext<span class="token punctuation">.</span><span class="token function">refresh</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token comment" spellcheck="true">// 通过依赖查找的方式来获取 Employee</span>
-    Employee employeeByLookup <span class="token operator">=</span> beanFactory<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token string">"employee"</span><span class="token punctuation">,</span> Employee<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"employee == employeeLookup : "</span> <span class="token operator">+</span> <span class="token punctuation">(</span>employee <span class="token operator">==</span> employeeByLookup<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <categories>
-        <category>JAVA</category>
-      </categories>
-      <tags>
-        <tag>Spring</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>英语学习第二天</title>
     <url>/posts/9511.html</url>
     <content><![CDATA[<h3 id="为什么会有五种句型"><a href="#为什么会有五种句型" class="headerlink" title="为什么会有五种句型"></a>为什么会有五种句型</h3><p>这个句子有没有动词，没有动作就一般是主系表。如果有一个动作，我们把这个动作视为核心动词「谓语动词」。根据这个动词的种类不一样，这个动作涉及到别的对象呢，还是自己就能完成。涉及到别人是涉及到一个对象还是两个对象呢？这样子会划分为四种不同的类型。</p>
@@ -2701,6 +2704,59 @@ infix <span class="token keyword">fun</span> Int<span class="token punctuation">
       </script>]]></content>
       <tags>
         <tag>English</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>通过外部单体对象来注册 Spring Bean</title>
+    <url>/posts/de54.html</url>
+    <content><![CDATA[<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Employee</span> <span class="token keyword">implements</span> <span class="token class-name">InitializingBean</span><span class="token punctuation">,</span> DisposableBean <span class="token punctuation">{</span>
+  <span class="token keyword">private</span> String name<span class="token punctuation">;</span>
+  <span class="token keyword">private</span> Integer age<span class="token punctuation">;</span>
+
+  <span class="token comment" spellcheck="true">// 省略setter getter</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SingletonBeanRegistrationDemo</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 创建 BeanFactory 容器</span>
+    AnnotationConfigApplicationContext applicationContext <span class="token operator">=</span>
+        <span class="token keyword">new</span> <span class="token class-name">AnnotationConfigApplicationContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 创建一个外部 Employee 对象</span>
+    Employee employee <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Employee</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ConfigurableListableBeanFactory beanFactory <span class="token operator">=</span> applicationContext<span class="token punctuation">.</span><span class="token function">getBeanFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 注册外部的单例对象</span>
+    beanFactory<span class="token punctuation">.</span><span class="token function">registerSingleton</span><span class="token punctuation">(</span><span class="token string">"employee"</span><span class="token punctuation">,</span> employee<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 启动 Spring 应用上下文</span>
+    applicationContext<span class="token punctuation">.</span><span class="token function">refresh</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// 通过依赖查找的方式来获取 Employee</span>
+    Employee employeeByLookup <span class="token operator">=</span> beanFactory<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token string">"employee"</span><span class="token punctuation">,</span> Employee<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"employee == employeeLookup : "</span> <span class="token operator">+</span> <span class="token punctuation">(</span>employee <span class="token operator">==</span> employeeByLookup<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <categories>
+        <category>JAVA</category>
+      </categories>
+      <tags>
+        <tag>Spring</tag>
       </tags>
   </entry>
   <entry>

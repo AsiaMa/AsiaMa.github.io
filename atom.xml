@@ -6,7 +6,7 @@
   <link href="https://blog.asiama.top/atom.xml" rel="self"/>
   
   <link href="https://blog.asiama.top/"/>
-  <updated>2021-01-16T07:30:44.665Z</updated>
+  <updated>2021-01-16T08:17:58.652Z</updated>
   <id>https://blog.asiama.top/</id>
   
   <author>
@@ -17,11 +17,36 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Bean 延迟查找</title>
+    <link href="https://blog.asiama.top/posts/cdfc.html"/>
+    <id>https://blog.asiama.top/posts/cdfc.html</id>
+    <published>2021-01-16T08:16:53.000Z</published>
+    <updated>2021-01-16T08:17:58.652Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;pre class=&quot; language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt;</summary>
+        
+      
+    
+    
+    
+    <category term="JAVA" scheme="https://blog.asiama.top/categories/JAVA/"/>
+    
+    
+    <category term="Spring" scheme="https://blog.asiama.top/tags/Spring/"/>
+    
+  </entry>
+  
+  <entry>
     <title>通过外部单体对象来注册 Spring Bean</title>
     <link href="https://blog.asiama.top/posts/de54.html"/>
     <id>https://blog.asiama.top/posts/de54.html</id>
     <published>2021-01-16T07:28:49.000Z</published>
-    <updated>2021-01-16T07:30:44.665Z</updated>
+    <updated>2021-01-16T07:31:51.561Z</updated>
     
     
       
@@ -46,7 +71,7 @@
     <link href="https://blog.asiama.top/posts/581e.html"/>
     <id>https://blog.asiama.top/posts/581e.html</id>
     <published>2021-01-16T06:28:20.000Z</published>
-    <updated>2021-01-16T06:41:47.635Z</updated>
+    <updated>2021-01-16T07:31:51.560Z</updated>
     
     
       
@@ -495,29 +520,6 @@
         
         
     <summary type="html">&lt;pre class=&quot; language-kotlin&quot;&gt;&lt;code class=&quot;language-kotlin&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; Singleton &lt;span class=&quot;token</summary>
-        
-      
-    
-    
-    
-    
-    <category term="Kotlin" scheme="https://blog.asiama.top/tags/Kotlin/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Java的不足</title>
-    <link href="https://blog.asiama.top/posts/26f4.html"/>
-    <id>https://blog.asiama.top/posts/26f4.html</id>
-    <published>2020-12-06T20:52:14.000Z</published>
-    <updated>2020-12-29T14:51:55.838Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;检查异常&quot;&gt;&lt;a href=&quot;#检查异常&quot; class=&quot;headerlink&quot; title=&quot;检查异常&quot;&gt;&lt;/a&gt;检查异常&lt;/h3&gt;&lt;p&gt;检查异常会在编译时强制执行try</summary>
         
       
     
