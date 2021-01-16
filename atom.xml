@@ -6,7 +6,7 @@
   <link href="https://blog.asiama.top/atom.xml" rel="self"/>
   
   <link href="https://blog.asiama.top/"/>
-  <updated>2021-01-16T02:29:25.167Z</updated>
+  <updated>2021-01-16T04:29:45.662Z</updated>
   <id>https://blog.asiama.top/</id>
   
   <author>
@@ -17,11 +17,36 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Bean的初始化方式</title>
+    <link href="https://blog.asiama.top/posts/c3f8.html"/>
+    <id>https://blog.asiama.top/posts/c3f8.html</id>
+    <published>2021-01-16T02:37:46.000Z</published>
+    <updated>2021-01-16T04:29:45.662Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;PostConstruct标注方法&quot;&gt;&lt;a href=&quot;#PostConstruct标注方法&quot; class=&quot;headerlink&quot; title=&quot;@PostConstruct标注方法&quot;&gt;&lt;/a&gt;@PostConstruct标注方法&lt;/h3&gt;&lt;pre</summary>
+        
+      
+    
+    
+    
+    <category term="JAVA" scheme="https://blog.asiama.top/categories/JAVA/"/>
+    
+    
+    <category term="Spring" scheme="https://blog.asiama.top/tags/Spring/"/>
+    
+  </entry>
+  
+  <entry>
     <title>实例化Spring Bean</title>
     <link href="https://blog.asiama.top/posts/b731.html"/>
     <id>https://blog.asiama.top/posts/b731.html</id>
     <published>2021-01-12T13:06:48.000Z</published>
-    <updated>2021-01-16T02:29:25.167Z</updated>
+    <updated>2021-01-16T03:42:42.337Z</updated>
     
     
       
@@ -485,29 +510,6 @@
         
     <summary type="html">&lt;p&gt;在Windows和macOS的环境中不区分字符的大小写，但是在Linux环境中却区分大小写。也就是说，表tb1和表TB1在Windows和macOS环境中会作为相同的表名处理，但是在Linux环境中会作为不同的表名处理。&lt;/p&gt;
 &lt;h3 id=&quot;指定数据库&quot;&gt;&lt;a</summary>
-        
-      
-    
-    
-    
-    
-    <category term="MySQL" scheme="https://blog.asiama.top/tags/MySQL/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>MySQL权限相关</title>
-    <link href="https://blog.asiama.top/posts/8cf.html"/>
-    <id>https://blog.asiama.top/posts/8cf.html</id>
-    <published>2020-12-05T14:07:01.000Z</published>
-    <updated>2020-12-29T14:50:38.163Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;修改密码&quot;&gt;&lt;a href=&quot;#修改密码&quot; class=&quot;headerlink&quot; title=&quot;修改密码&quot;&gt;&lt;/a&gt;修改密码&lt;/h3&gt;&lt;pre class=&quot; language-mysql&quot;&gt;&lt;code class=&quot;language-mysql&quot;&gt;$ SET</summary>
         
       
     
