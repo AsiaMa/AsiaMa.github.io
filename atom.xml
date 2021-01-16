@@ -6,7 +6,7 @@
   <link href="https://blog.asiama.top/atom.xml" rel="self"/>
   
   <link href="https://blog.asiama.top/"/>
-  <updated>2021-01-10T14:12:51.628Z</updated>
+  <updated>2021-01-16T02:29:25.167Z</updated>
   <id>https://blog.asiama.top/</id>
   
   <author>
@@ -17,11 +17,36 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>实例化Spring Bean</title>
+    <link href="https://blog.asiama.top/posts/b731.html"/>
+    <id>https://blog.asiama.top/posts/b731.html</id>
+    <published>2021-01-12T13:06:48.000Z</published>
+    <updated>2021-01-16T02:29:25.167Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;常规的四种方式&quot;&gt;&lt;a href=&quot;#常规的四种方式&quot; class=&quot;headerlink&quot; title=&quot;常规的四种方式&quot;&gt;&lt;/a&gt;常规的四种方式&lt;/h3&gt;&lt;h4 id=&quot;通过构造器&quot;&gt;&lt;a href=&quot;#通过构造器&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="JAVA" scheme="https://blog.asiama.top/categories/JAVA/"/>
+    
+    
+    <category term="Spring" scheme="https://blog.asiama.top/tags/Spring/"/>
+    
+  </entry>
+  
+  <entry>
     <title>kotlin泛型</title>
     <link href="https://blog.asiama.top/posts/3e59.html"/>
     <id>https://blog.asiama.top/posts/3e59.html</id>
     <published>2021-01-10T14:02:01.000Z</published>
-    <updated>2021-01-10T14:12:51.628Z</updated>
+    <updated>2021-01-10T14:14:31.152Z</updated>
     
     
       
@@ -483,29 +508,6 @@
         
         
     <summary type="html">&lt;h3 id=&quot;修改密码&quot;&gt;&lt;a href=&quot;#修改密码&quot; class=&quot;headerlink&quot; title=&quot;修改密码&quot;&gt;&lt;/a&gt;修改密码&lt;/h3&gt;&lt;pre class=&quot; language-mysql&quot;&gt;&lt;code class=&quot;language-mysql&quot;&gt;$ SET</summary>
-        
-      
-    
-    
-    
-    
-    <category term="MySQL" scheme="https://blog.asiama.top/tags/MySQL/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>MySQL编码设置</title>
-    <link href="https://blog.asiama.top/posts/17fc.html"/>
-    <id>https://blog.asiama.top/posts/17fc.html</id>
-    <published>2020-12-05T09:39:05.000Z</published>
-    <updated>2020-12-29T14:50:26.623Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;命令提示符的UTF-8设置&quot;&gt;&lt;a href=&quot;#命令提示符的UTF-8设置&quot; class=&quot;headerlink&quot;</summary>
         
       
     
