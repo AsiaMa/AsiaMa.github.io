@@ -6,7 +6,7 @@
   <link href="https://blog.asiama.top/atom.xml" rel="self"/>
   
   <link href="https://blog.asiama.top/"/>
-  <updated>2021-01-16T04:29:45.662Z</updated>
+  <updated>2021-01-16T05:54:17.417Z</updated>
   <id>https://blog.asiama.top/</id>
   
   <author>
@@ -17,11 +17,61 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>销毁 Spring Bean</title>
+    <link href="https://blog.asiama.top/posts/bd02.html"/>
+    <id>https://blog.asiama.top/posts/bd02.html</id>
+    <published>2021-01-16T05:13:54.000Z</published>
+    <updated>2021-01-16T05:54:17.417Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;PreDestroy&quot;&gt;&lt;a href=&quot;#PreDestroy&quot; class=&quot;headerlink&quot; title=&quot;@PreDestroy&quot;&gt;&lt;/a&gt;@PreDestroy&lt;/h3&gt;&lt;pre class=&quot; language-java&quot;&gt;&lt;code</summary>
+        
+      
+    
+    
+    
+    <category term="JAVA" scheme="https://blog.asiama.top/categories/JAVA/"/>
+    
+    
+    <category term="Spring" scheme="https://blog.asiama.top/tags/Spring/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>延迟初始化 Spring Bean</title>
+    <link href="https://blog.asiama.top/posts/861c.html"/>
+    <id>https://blog.asiama.top/posts/861c.html</id>
+    <published>2021-01-16T04:31:31.000Z</published>
+    <updated>2021-01-16T04:57:43.508Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;Bean延迟初始化-（Lazy-Initialization）&quot;&gt;&lt;a href=&quot;#Bean延迟初始化-（Lazy-Initialization）&quot; class=&quot;headerlink&quot; title=&quot;Bean延迟初始化 （Lazy</summary>
+        
+      
+    
+    
+    
+    <category term="JAVA" scheme="https://blog.asiama.top/categories/JAVA/"/>
+    
+    
+    <category term="Spring" scheme="https://blog.asiama.top/tags/Spring/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Bean的初始化方式</title>
     <link href="https://blog.asiama.top/posts/c3f8.html"/>
     <id>https://blog.asiama.top/posts/c3f8.html</id>
     <published>2021-01-16T02:37:46.000Z</published>
-    <updated>2021-01-16T04:29:45.662Z</updated>
+    <updated>2021-01-16T04:30:16.398Z</updated>
     
     
       
@@ -470,53 +520,6 @@
     
     
     <category term="English" scheme="https://blog.asiama.top/tags/English/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Kotin介绍</title>
-    <link href="https://blog.asiama.top/posts/5487.html"/>
-    <id>https://blog.asiama.top/posts/5487.html</id>
-    <published>2020-12-06T08:24:10.000Z</published>
-    <updated>2020-12-29T14:50:55.527Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;Kotlin的主要特征&quot;&gt;&lt;a href=&quot;#Kotlin的主要特征&quot; class=&quot;headerlink&quot; title=&quot;Kotlin的主要特征&quot;&gt;&lt;/a&gt;Kotlin的主要特征&lt;/h3&gt;&lt;h4 id=&quot;静态类型&quot;&gt;&lt;a href=&quot;#静态类型&quot;</summary>
-        
-      
-    
-    
-    
-    
-    <category term="Kotlin" scheme="https://blog.asiama.top/tags/Kotlin/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>MySQL基础命令</title>
-    <link href="https://blog.asiama.top/posts/f6d7.html"/>
-    <id>https://blog.asiama.top/posts/f6d7.html</id>
-    <published>2020-12-05T20:43:18.000Z</published>
-    <updated>2020-12-29T14:50:46.636Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;在Windows和macOS的环境中不区分字符的大小写，但是在Linux环境中却区分大小写。也就是说，表tb1和表TB1在Windows和macOS环境中会作为相同的表名处理，但是在Linux环境中会作为不同的表名处理。&lt;/p&gt;
-&lt;h3 id=&quot;指定数据库&quot;&gt;&lt;a</summary>
-        
-      
-    
-    
-    
-    
-    <category term="MySQL" scheme="https://blog.asiama.top/tags/MySQL/"/>
     
   </entry>
   
