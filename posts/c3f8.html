@@ -470,7 +470,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    549
+                    573
                 </div>
                 
 
@@ -591,7 +591,10 @@
 
     annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">refresh</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/** 输出结果：
+    @PostConstruct Employee 初始化中...
+    自定义初始化方法 initEmployee : Employee 初始化中... */</span></code></pre>
 <h3 id="实现InitialzingBean接口的afterPropertiesSet方法"><a href="#实现InitialzingBean接口的afterPropertiesSet方法" class="headerlink" title="实现InitialzingBean接口的afterPropertiesSet方法"></a>实现InitialzingBean接口的afterPropertiesSet方法</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Employee</span> <span class="token keyword">implements</span> <span class="token class-name">InitializingBean</span> <span class="token punctuation">{</span>
   <span class="token keyword">private</span> String name<span class="token punctuation">;</span>
   <span class="token keyword">private</span> Integer age<span class="token punctuation">;</span>
@@ -1155,7 +1158,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">15.8k</span>&nbsp;字
+                class="white-color">16.3k</span>&nbsp;字
             
             
             
