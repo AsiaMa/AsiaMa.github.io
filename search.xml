@@ -473,6 +473,40 @@ b<span class="token operator">?</span><span class="token punctuation">.</span>le
       </tags>
   </entry>
   <entry>
+    <title>MySQL权限相关</title>
+    <url>/posts/8cf.html</url>
+    <content><![CDATA[<h3 id="修改密码"><a href="#修改密码" class="headerlink" title="修改密码"></a>修改密码</h3><pre class=" language-mysql"><code class="language-mysql">$ SET PASSWORD FOR root@localhost='A123456!'</code></pre>
+<h3 id="创建用户"><a href="#创建用户" class="headerlink" title="创建用户"></a>创建用户</h3><pre class=" language-mysql"><code class="language-mysql"># CREATE USER 新用户名 IDENTIFIED BY '密码'
+$ CREATE USER asiama@localhost IDENTIFIED BY 'A123456!'</code></pre>
+<h3 id="设置用户权限"><a href="#设置用户权限" class="headerlink" title="设置用户权限"></a>设置用户权限</h3><pre class=" language-mysql"><code class="language-mysql"># GRANT 赋予的权限 ON 数据库名.表名 TO 用户名
+$ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
+<blockquote>
+<p>用户名需要按照“用户名@主机名”的方式书写（如果不确定主机名，可以”用户名@%”来允许所有主机）。“赋予的权限”如果是所有的权限，就设置为“ALL”；如果仅允许SELECT和UPDATE,就设置为“SELECT, UPDATE”；如果是所有的数据库的所有表，就设置为“*.*”</p>
+</blockquote>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MySQL基础命令</title>
     <url>/posts/f6d7.html</url>
     <content><![CDATA[<p>在Windows和macOS的环境中不区分字符的大小写，但是在Linux环境中却区分大小写。也就是说，表tb1和表TB1在Windows和macOS环境中会作为相同的表名处理，但是在Linux环境中会作为不同的表名处理。</p>
@@ -498,40 +532,6 @@ DESC db1;</code></pre>
 </blockquote>
 <h3 id="向表中插入多行记录"><a href="#向表中插入多行记录" class="headerlink" title="向表中插入多行记录"></a>向表中插入多行记录</h3><pre class=" language-mysql"><code class="language-mysql">INSERT INTO tb1 (emp_id, name, age) VALUES ('A101', '佐藤', 40), ('A102', '高桥', 28), ('A103', '中川', 20), ('A104', '渡边', 23), ('A105', '西泽', 35);</code></pre>
 <h3 id="复制表"><a href="#复制表" class="headerlink" title="复制表"></a>复制表</h3><pre class=" language-mysql"><code class="language-mysql">CREATE TABLE tb1A SELECT * FROM tb1;</code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>MySQL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MySQL权限相关</title>
-    <url>/posts/8cf.html</url>
-    <content><![CDATA[<h3 id="修改密码"><a href="#修改密码" class="headerlink" title="修改密码"></a>修改密码</h3><pre class=" language-mysql"><code class="language-mysql">$ SET PASSWORD FOR root@localhost='A123456!'</code></pre>
-<h3 id="创建用户"><a href="#创建用户" class="headerlink" title="创建用户"></a>创建用户</h3><pre class=" language-mysql"><code class="language-mysql"># CREATE USER 新用户名 IDENTIFIED BY '密码'
-$ CREATE USER asiama@localhost IDENTIFIED BY 'A123456!'</code></pre>
-<h3 id="设置用户权限"><a href="#设置用户权限" class="headerlink" title="设置用户权限"></a>设置用户权限</h3><pre class=" language-mysql"><code class="language-mysql"># GRANT 赋予的权限 ON 数据库名.表名 TO 用户名
-$ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
-<blockquote>
-<p>用户名需要按照“用户名@主机名”的方式书写（如果不确定主机名，可以”用户名@%”来允许所有主机）。“赋予的权限”如果是所有的权限，就设置为“ALL”；如果仅允许SELECT和UPDATE,就设置为“SELECT, UPDATE”；如果是所有的数据库的所有表，就设置为“*.*”</p>
-</blockquote>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -2707,32 +2707,45 @@ infix <span class="token keyword">fun</span> Int<span class="token punctuation">
       </tags>
   </entry>
   <entry>
-    <title>通过外部单体对象来注册 Spring Bean</title>
-    <url>/posts/de54.html</url>
-    <content><![CDATA[<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Employee</span> <span class="token keyword">implements</span> <span class="token class-name">InitializingBean</span><span class="token punctuation">,</span> DisposableBean <span class="token punctuation">{</span>
-  <span class="token keyword">private</span> String name<span class="token punctuation">;</span>
-  <span class="token keyword">private</span> Integer age<span class="token punctuation">;</span>
-
-  <span class="token comment" spellcheck="true">// 省略setter getter</span>
-<span class="token punctuation">}</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SingletonBeanRegistrationDemo</span> <span class="token punctuation">{</span>
-  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token comment" spellcheck="true">// 创建 BeanFactory 容器</span>
-    AnnotationConfigApplicationContext applicationContext <span class="token operator">=</span>
-        <span class="token keyword">new</span> <span class="token class-name">AnnotationConfigApplicationContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">// 创建一个外部 Employee 对象</span>
-    Employee employee <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Employee</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ConfigurableListableBeanFactory beanFactory <span class="token operator">=</span> applicationContext<span class="token punctuation">.</span><span class="token function">getBeanFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">// 注册外部的单例对象</span>
-    beanFactory<span class="token punctuation">.</span><span class="token function">registerSingleton</span><span class="token punctuation">(</span><span class="token string">"employee"</span><span class="token punctuation">,</span> employee<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">// 启动 Spring 应用上下文</span>
-    applicationContext<span class="token punctuation">.</span><span class="token function">refresh</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token comment" spellcheck="true">// 通过依赖查找的方式来获取 Employee</span>
-    Employee employeeByLookup <span class="token operator">=</span> beanFactory<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token string">"employee"</span><span class="token punctuation">,</span> Employee<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"employee == employeeLookup : "</span> <span class="token operator">+</span> <span class="token punctuation">(</span>employee <span class="token operator">==</span> employeeByLookup<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
+    <title>英语学习第五天</title>
+    <url>/posts/3517.html</url>
+    <content><![CDATA[<h3 id="名词作宾语"><a href="#名词作宾语" class="headerlink" title="名词作宾语"></a>名词作宾语</h3><p>When you’re the bos s, you can make up your own rules.</p>
+<p>She loves her Snow White costume.</p>
+<p>她喜欢她的白雪公主戏服。</p>
+<h3 id="代词作宾语"><a href="#代词作宾语" class="headerlink" title="代词作宾语"></a>代词作宾语</h3><p>I didn’t notice him.</p>
+<p>Thomas brags about this every single day.</p>
+<p>I forgive you.</p>
+<h3 id="动名词作宾语"><a href="#动名词作宾语" class="headerlink" title="动名词作宾语"></a>动名词作宾语</h3><p>I hate riding bicycle.</p>
+<p>I can’t imagine going on a date with him.</p>
+<h3 id="不定式作宾语"><a href="#不定式作宾语" class="headerlink" title="不定式作宾语"></a>不定式作宾语</h3><p>I want to see him now.</p>
+<p>I like to go swimming on a hot day like this.</p>
+<h3 id="it-作形式宾语"><a href="#it-作形式宾语" class="headerlink" title="it 作形式宾语"></a>it 作形式宾语</h3><p>She found it difficult to convince him.</p>
+<p>He made it a rule to do an hour’s work in the garden every day.</p>
+<h3 id="宾语从句"><a href="#宾语从句" class="headerlink" title="宾语从句"></a>宾语从句</h3><ul>
+<li>that</li>
+</ul>
+<p>I think that we should cooperate.</p>
+<p>They feel that it’s impossible to win the game.</p>
+<ul>
+<li>whether</li>
+</ul>
+<p>I wonder whether he can do it.</p>
+<p>I don’t know whether the typhoon will come.</p>
+<h3 id="单词"><a href="#单词" class="headerlink" title="单词"></a>单词</h3><p>forbid [fərˈbɪd]] 禁止</p>
+<p>ban [bæn] 禁止</p>
+<p>dessert [dɪˈzɜːrt] 餐后甜点</p>
+<p>costume [ˈkɑːstuːm] 服装</p>
+<p>cooperate [koʊˈɑːpəreɪt] 合作</p>
+<p>typhoon [aɪˈfuːn] 台风</p>
+<p>act [ækt] 行动</p>
+<p>argue [ˈɑːrɡjuː] 争论</p>
+<p>brags about 吹牛</p>
+<p>going on date with sb 与某人约会</p>
+<p>take it for granted 理所当然的</p>
+<blockquote>
+<p>the + 形容词 = 名词</p>
+<p>The rick should help the poor.</p>
+</blockquote>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -2752,12 +2765,6 @@ infix <span class="token keyword">fun</span> Int<span class="token punctuation">
             document.body.appendChild(img);
           });
       </script>]]></content>
-      <categories>
-        <category>JAVA</category>
-      </categories>
-      <tags>
-        <tag>Spring</tag>
-      </tags>
   </entry>
   <entry>
     <title>英语学习第四天</title>
@@ -2856,6 +2863,59 @@ infix <span class="token keyword">fun</span> Int<span class="token punctuation">
       </script>]]></content>
       <tags>
         <tag>English</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>通过外部单体对象来注册 Spring Bean</title>
+    <url>/posts/de54.html</url>
+    <content><![CDATA[<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Employee</span> <span class="token keyword">implements</span> <span class="token class-name">InitializingBean</span><span class="token punctuation">,</span> DisposableBean <span class="token punctuation">{</span>
+  <span class="token keyword">private</span> String name<span class="token punctuation">;</span>
+  <span class="token keyword">private</span> Integer age<span class="token punctuation">;</span>
+
+  <span class="token comment" spellcheck="true">// 省略setter getter</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SingletonBeanRegistrationDemo</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 创建 BeanFactory 容器</span>
+    AnnotationConfigApplicationContext applicationContext <span class="token operator">=</span>
+        <span class="token keyword">new</span> <span class="token class-name">AnnotationConfigApplicationContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 创建一个外部 Employee 对象</span>
+    Employee employee <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Employee</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ConfigurableListableBeanFactory beanFactory <span class="token operator">=</span> applicationContext<span class="token punctuation">.</span><span class="token function">getBeanFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 注册外部的单例对象</span>
+    beanFactory<span class="token punctuation">.</span><span class="token function">registerSingleton</span><span class="token punctuation">(</span><span class="token string">"employee"</span><span class="token punctuation">,</span> employee<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 启动 Spring 应用上下文</span>
+    applicationContext<span class="token punctuation">.</span><span class="token function">refresh</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// 通过依赖查找的方式来获取 Employee</span>
+    Employee employeeByLookup <span class="token operator">=</span> beanFactory<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token string">"employee"</span><span class="token punctuation">,</span> Employee<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"employee == employeeLookup : "</span> <span class="token operator">+</span> <span class="token punctuation">(</span>employee <span class="token operator">==</span> employeeByLookup<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <categories>
+        <category>JAVA</category>
+      </categories>
+      <tags>
+        <tag>Spring</tag>
       </tags>
   </entry>
   <entry>

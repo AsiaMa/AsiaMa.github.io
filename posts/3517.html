@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Bean 延迟查找, Java,Git,SpringBoot,SpringCloud,SpringCloud Alibaba等">
+    <meta name="keywords" content="英语学习第五天, Java,Git,SpringBoot,SpringCloud,SpringCloud Alibaba等">
     <meta name="description" content="专注WJava后端,大数据,分享知识,分享生活">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Bean 延迟查找 | 三十二道街</title>
+    <title>英语学习第五天 | 三十二道街</title>
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/awesome/css/all.css">
@@ -309,12 +309,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/2.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/5.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Bean 延迟查找</h1>
+                    <h1 class="description center-align post-title">英语学习第五天</h1>
                 </div>
             </div>
         </div>
@@ -429,25 +429,12 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                    <div class="article-tag">
-                        
-                            <a href="/tags/Spring/">
-                                <span class="chip bg-color">Spring</span>
-                            </a>
-                        
-                    </div>
+                          <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                          </div>
                     
                 </div>
                 <div class="col s5 right-align">
-                    
-                    <div class="post-cate">
-                        <i class="fas fa-bookmark fa-fw icon-category"></i>
-                        
-                            <a href="/categories/JAVA/" class="post-category">
-                                JAVA
-                            </a>
-                        
-                    </div>
                     
                 </div>
             </div>
@@ -456,21 +443,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-01-16
+                    2021-01-17
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-01-16
+                    2021-01-17
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    155
+                    302
                 </div>
                 
 
@@ -492,33 +479,43 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ObjectProviderDemo</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">// @Configuration 是非必须注解</span>
-  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token comment" spellcheck="true">// 创建 BeanFactory 容器</span>
-    AnnotationConfigApplicationContext annotationConfigApplicationContext <span class="token operator">=</span>
-        <span class="token keyword">new</span> <span class="token class-name">AnnotationConfigApplicationContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">// 注册配置类</span>
-    annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">register</span><span class="token punctuation">(</span>ObjectProviderDemo<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">// 启动应用上下文</span>
-    annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">refresh</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">// 依赖查找集合对象</span>
-    <span class="token function">lookupByObjectProvider</span><span class="token punctuation">(</span>annotationConfigApplicationContext<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">// 关闭应用上下文</span>
-    annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-
-  <span class="token annotation punctuation">@Bean</span>
-  <span class="token keyword">public</span> String <span class="token function">helloWorld</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">//方法名就是 Bean 名称 = "helloWorld</span>
-    <span class="token keyword">return</span> <span class="token string">"hello, world!"</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-
-  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">lookupByObjectProvider</span><span class="token punctuation">(</span>
-      AnnotationConfigApplicationContext annotationConfigApplicationContext<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    ObjectProvider<span class="token operator">&lt;</span>String<span class="token operator">></span> objectProvider <span class="token operator">=</span> annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">getBeanProvider</span><span class="token punctuation">(</span>String<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>objectProvider<span class="token punctuation">.</span><span class="token function">getObject</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">/** 输出结果：hello, world! */</span></code></pre>
+                <h3 id="名词作宾语"><a href="#名词作宾语" class="headerlink" title="名词作宾语"></a>名词作宾语</h3><p>When you’re the bos s, you can make up your own rules.</p>
+<p>She loves her Snow White costume.</p>
+<p>她喜欢她的白雪公主戏服。</p>
+<h3 id="代词作宾语"><a href="#代词作宾语" class="headerlink" title="代词作宾语"></a>代词作宾语</h3><p>I didn’t notice him.</p>
+<p>Thomas brags about this every single day.</p>
+<p>I forgive you.</p>
+<h3 id="动名词作宾语"><a href="#动名词作宾语" class="headerlink" title="动名词作宾语"></a>动名词作宾语</h3><p>I hate riding bicycle.</p>
+<p>I can’t imagine going on a date with him.</p>
+<h3 id="不定式作宾语"><a href="#不定式作宾语" class="headerlink" title="不定式作宾语"></a>不定式作宾语</h3><p>I want to see him now.</p>
+<p>I like to go swimming on a hot day like this.</p>
+<h3 id="it-作形式宾语"><a href="#it-作形式宾语" class="headerlink" title="it 作形式宾语"></a>it 作形式宾语</h3><p>She found it difficult to convince him.</p>
+<p>He made it a rule to do an hour’s work in the garden every day.</p>
+<h3 id="宾语从句"><a href="#宾语从句" class="headerlink" title="宾语从句"></a>宾语从句</h3><ul>
+<li>that</li>
+</ul>
+<p>I think that we should cooperate.</p>
+<p>They feel that it’s impossible to win the game.</p>
+<ul>
+<li>whether</li>
+</ul>
+<p>I wonder whether he can do it.</p>
+<p>I don’t know whether the typhoon will come.</p>
+<h3 id="单词"><a href="#单词" class="headerlink" title="单词"></a>单词</h3><p>forbid [fərˈbɪd]] 禁止</p>
+<p>ban [bæn] 禁止</p>
+<p>dessert [dɪˈzɜːrt] 餐后甜点</p>
+<p>costume [ˈkɑːstuːm] 服装</p>
+<p>cooperate [koʊˈɑːpəreɪt] 合作</p>
+<p>typhoon [aɪˈfuːn] 台风</p>
+<p>act [ækt] 行动</p>
+<p>argue [ˈɑːrɡjuː] 争论</p>
+<p>brags about 吹牛</p>
+<p>going on date with sb 与某人约会</p>
+<p>take it for granted 理所当然的</p>
+<blockquote>
+<p>the + 形容词 = 名词</p>
+<p>The rick should help the poor.</p>
+</blockquote>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -562,7 +559,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://blog.asiama.top/posts/cdfc.html">https://blog.asiama.top/posts/cdfc.html</a>
+                    <a href="https://blog.asiama.top/posts/3517.html">https://blog.asiama.top/posts/3517.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -599,11 +596,7 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            
-                                <a href="/tags/Spring/">
-                                    <span class="chip bg-color">Spring</span>
-                                </a>
-                            
+                            <span class="chip bg-color">无标签</span>
                         </div>
                     
                 </div>
@@ -772,7 +765,7 @@
         repo: 'asiama.github.io',
         owner: 'asiama',
         admin: "asiama",
-        id: '2021-01-16T16-16-53',
+        id: '2021-01-17T20-00-22',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -796,9 +789,48 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/posts/3517.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/5.jpg" class="responsive-img" alt="英语学习第五天">
+                        
+                        <span class="card-title">英语学习第五天</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-17
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            AsiaMa
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
             <div class="card">
                 <a href="/posts/f7a9.html">
                     <div class="card-image">
@@ -816,9 +848,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-01-17
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-17
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -832,55 +864,6 @@
                     
                     <a href="/tags/English/">
                         <span class="chip bg-color">English</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/posts/de54.html">
-                    <div class="card-image">
-                        
-                        
-                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/23.jpg" class="responsive-img" alt="通过外部单体对象来注册 Spring Bean">
-                        
-                        <span class="card-title">通过外部单体对象来注册 Spring Bean</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-16
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/JAVA/" class="post-category">
-                                    JAVA
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/Spring/">
-                        <span class="chip bg-color">Spring</span>
                     </a>
                     
                 </div>
