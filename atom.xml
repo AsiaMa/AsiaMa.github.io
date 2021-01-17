@@ -6,7 +6,7 @@
   <link href="https://blog.asiama.top/atom.xml" rel="self"/>
   
   <link href="https://blog.asiama.top/"/>
-  <updated>2021-01-16T08:17:58.652Z</updated>
+  <updated>2021-01-17T11:53:25.384Z</updated>
   <id>https://blog.asiama.top/</id>
   
   <author>
@@ -17,11 +17,34 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>英语学习第四天</title>
+    <link href="https://blog.asiama.top/posts/f7a9.html"/>
+    <id>https://blog.asiama.top/posts/f7a9.html</id>
+    <published>2021-01-17T10:50:17.000Z</published>
+    <updated>2021-01-17T11:53:25.384Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;主语从句&quot;&gt;&lt;a href=&quot;#主语从句&quot; class=&quot;headerlink&quot; title=&quot;主语从句&quot;&gt;&lt;/a&gt;主语从句&lt;/h3&gt;&lt;h4 id=&quot;that-陈述句&quot;&gt;&lt;a href=&quot;#that-陈述句&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    
+    <category term="English" scheme="https://blog.asiama.top/tags/English/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Bean 延迟查找</title>
     <link href="https://blog.asiama.top/posts/cdfc.html"/>
     <id>https://blog.asiama.top/posts/cdfc.html</id>
     <published>2021-01-16T08:16:53.000Z</published>
-    <updated>2021-01-16T08:17:58.652Z</updated>
+    <updated>2021-01-16T11:08:46.725Z</updated>
     
     
       
@@ -504,29 +527,6 @@
     
     
     <category term="YApi" scheme="https://blog.asiama.top/tags/YApi/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Kotlin单例</title>
-    <link href="https://blog.asiama.top/posts/9fbb.html"/>
-    <id>https://blog.asiama.top/posts/9fbb.html</id>
-    <published>2020-12-23T10:07:29.000Z</published>
-    <updated>2020-12-29T14:52:03.869Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;pre class=&quot; language-kotlin&quot;&gt;&lt;code class=&quot;language-kotlin&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt; Singleton &lt;span class=&quot;token</summary>
-        
-      
-    
-    
-    
-    
-    <category term="Kotlin" scheme="https://blog.asiama.top/tags/Kotlin/"/>
     
   </entry>
   

@@ -2559,12 +2559,12 @@ infix <span class="token keyword">fun</span> Int<span class="token punctuation">
 <td>them</td>
 </tr>
 </tbody></table>
-<h2 id="定语和状语"><a href="#定语和状语" class="headerlink" title="定语和状语"></a>定语和状语</h2><p>定语：对名词起修饰限定作用，主要是形容词。</p>
+<h2 id="定语和状语"><a href="#定语和状语" class="headerlink" title="定语和状语"></a>定语和状语</h2><p>定语：主要增加修饰名词的细节。对名词起修饰限定作用，主要是形容词。</p>
 <ul>
 <li>She is a beautiful girl.</li>
 <li>She is a tall and thin server-year-old girl.</li>
 </ul>
-<p>状语：表示方式，程度，时间，地点，原因，目的…可以修饰动词，形容词和副词。</p>
+<p>状语：主要增加动词的细节。表示方式，程度，时间，地点，原因，目的…可以修饰动词，形容词和副词。</p>
 <ul>
 <li>He woke up at midnight.（时间状语）</li>
 <li>Tim studied at home.（地点状语）</li>
@@ -2757,6 +2757,105 @@ infix <span class="token keyword">fun</span> Int<span class="token punctuation">
       </categories>
       <tags>
         <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>英语学习第四天</title>
+    <url>/posts/f7a9.html</url>
+    <content><![CDATA[<h3 id="主语从句"><a href="#主语从句" class="headerlink" title="主语从句"></a>主语从句</h3><h4 id="that-陈述句"><a href="#that-陈述句" class="headerlink" title="that + 陈述句"></a>that + 陈述句</h4><ul>
+<li>练习1</li>
+</ul>
+<p><code>He doesn't believe me.</code></p>
+<p><code>It hurts my feeling.</code></p>
+<p>That he doesn’t believe me hurts my feeling.</p>
+<p>It hurts my feeling that he doesn’t believe me.</p>
+<ul>
+<li>练习2</li>
+</ul>
+<p><code>All the Chinese students are good at math.</code></p>
+<p><code>It is a stereotype.</code></p>
+<p>That all the Chinese students are good at math is a stereotype.</p>
+<p>It is a stereotype that all the Chinese students are good at math.</p>
+<h4 id="whether-一般疑问句"><a href="#whether-一般疑问句" class="headerlink" title="whether + 一般疑问句"></a>whether + 一般疑问句</h4><ul>
+<li>练习1</li>
+</ul>
+<p><code>Is he married?</code></p>
+<p><code>It is not our business.</code></p>
+<p>Whether he is married is not our business.</p>
+<ul>
+<li>练习2</li>
+</ul>
+<p><code>Should i apologize?</code></p>
+<p><code>This question keeps me awake at night.</code></p>
+<p>Whether i should apologize keeps me awake at night.</p>
+<ul>
+<li>练习3</li>
+</ul>
+<p><code>Can he do it?</code></p>
+<p><code>It is uncertain.</code></p>
+<p>Whether he can do these is uncertain.</p>
+<ul>
+<li>练习4</li>
+</ul>
+<p><code>Does he like it?</code></p>
+<p><code>It is unknown to us.</code></p>
+<p>Where he like it is unknown us.</p>
+<blockquote>
+<p>Whether 后面还可以加不定式，做主语。</p>
+<p>Whether to respond is not decided.</p>
+<p>Whether to impeach the president is under debate.</p>
+</blockquote>
+<h4 id="特殊疑问句（调整为陈述句语序）"><a href="#特殊疑问句（调整为陈述句语序）" class="headerlink" title="特殊疑问句（调整为陈述句语序）"></a>特殊疑问句（调整为陈述句语序）</h4><ul>
+<li>特殊疑问词引导的特殊疑问句，改为陈述句语序。</li>
+</ul>
+<p>What i want is a new dress.</p>
+<p>我想要一个新裙子。</p>
+<p>Why he left is not important.</p>
+<p>他为什么离开不重要。</p>
+<ul>
+<li>特殊疑问词 + to do</li>
+</ul>
+<p>What to eat for dinner doesn’t matter.</p>
+<p>晚饭吃什么不重要。</p>
+<p>Where to go is still under discussion.</p>
+<p>去哪里还在讨论中。</p>
+<blockquote>
+<p>主语从句往往过长，放到句尾，而用it做形式主语放在句首。</p>
+<p>What to say is not important. It is the way talk that matters.</p>
+<p>How to solve real problem is not taught in school. It’s learned from experience.</p>
+</blockquote>
+<h3 id="单词"><a href="#单词" class="headerlink" title="单词"></a>单词</h3><p>stereotype [ˈsteriətaɪp] 陈腔烂调，老套；成见</p>
+<p>occur [əˈkɜːr] 出现；发生</p>
+<p>wonder [ˈwʌndər] 惊讶；奇迹</p>
+<p>miracle [ˈmɪrəkl] 奇迹</p>
+<p>survive  [sərˈvaɪv] 幸存</p>
+<p>arrest [əˈrest] 逮捕</p>
+<p>impeach [ɪmˈpiːtʃ] 弹劾</p>
+<p>respond [rɪˈspɑːnd] 回答；做出反应</p>
+<p>president [ˈprezɪdənt] 总统</p>
+<p>debate [dɪˈbeɪt] 讨论</p>
+<p>car crash 车祸</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>English</tag>
       </tags>
   </entry>
   <entry>
