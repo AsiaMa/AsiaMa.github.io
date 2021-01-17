@@ -1917,104 +1917,6 @@ $ <span class="token function">git</span> config --list --system</code></pre>
       </tags>
   </entry>
   <entry>
-    <title>延迟初始化 Spring Bean</title>
-    <url>/posts/861c.html</url>
-    <content><![CDATA[<h3 id="Bean延迟初始化-（Lazy-Initialization）"><a href="#Bean延迟初始化-（Lazy-Initialization）" class="headerlink" title="Bean延迟初始化 （Lazy Initialization）"></a>Bean延迟初始化 （Lazy Initialization）</h3><ul>
-<li>XML配置：&lt;bean lazy-init=”true”&gt;</li>
-<li>Java注解：@Lazy(true)</li>
-</ul>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Employee</span> <span class="token keyword">implements</span> <span class="token class-name">InitializingBean</span> <span class="token punctuation">{</span>
-  <span class="token keyword">private</span> String name<span class="token punctuation">;</span>
-  <span class="token keyword">private</span> Integer age<span class="token punctuation">;</span>
-
-  <span class="token annotation punctuation">@PostConstruct</span>
-  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"@PostConstruct Employee 初始化中..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-
-  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">initEmployee</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"自定义初始化方法 initEmployee : Employee 初始化中..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-
-  <span class="token annotation punctuation">@Override</span>
-  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">afterPropertiesSet</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"InitializingBean#afterPropertiesSet : UserFactory 初始化中..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-
-  <span class="token comment" spellcheck="true">// 省略 getter setter</span>
-<span class="token punctuation">}</span>
-
-<span class="token annotation punctuation">@Configuration</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">BeanInitializationDemo</span> <span class="token punctuation">{</span>
-  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token comment" spellcheck="true">// 创建 BeanFactory 容器</span>
-    AnnotationConfigApplicationContext annotationConfigApplicationContext <span class="token operator">=</span>
-        <span class="token keyword">new</span> <span class="token class-name">AnnotationConfigApplicationContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">// 注册Configuration Class (配置类)</span>
-    annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">register</span><span class="token punctuation">(</span>BeanInitializationDemo<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">// 启动Spring 应用上下文</span>
-    annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">refresh</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">// 非延迟初始化在 Spring 应用上下文启动完成后，被初始化</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Spring 应用上下文已启动..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    Employee employee <span class="token operator">=</span> annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span>Employee<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>employee<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">// 关闭Spring 应用上下文</span>
-    annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-
-  <span class="token annotation punctuation">@Bean</span><span class="token punctuation">(</span>initMethod <span class="token operator">=</span> <span class="token string">"initEmployee"</span><span class="token punctuation">)</span>
-  <span class="token annotation punctuation">@Lazy</span>
-  <span class="token keyword">public</span> Employee <span class="token function">employee</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Employee</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">/** 输出结果：
-    Spring 应用上下文已启动...
-    @PostConstruct Employee 初始化中...
-    InitializingBean#afterPropertiesSet : UserFactory 初始化中...
-    自定义初始化方法 initEmployee : Employee 初始化中...
-    com.asia.Employee@19dc67c2 */</span>
-
-<span class="token comment" spellcheck="true">//非延迟初始化 @Lazy(value = false)</span>
-    <span class="token annotation punctuation">@Bean</span><span class="token punctuation">(</span>initMethod <span class="token operator">=</span> <span class="token string">"initEmployee"</span><span class="token punctuation">)</span>
-  <span class="token annotation punctuation">@Lazy</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">)</span>
-  <span class="token keyword">public</span> Employee <span class="token function">employee</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Employee</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">/** 输出结果：
-    @PostConstruct Employee 初始化中...
-    InitializingBean#afterPropertiesSet : UserFactory 初始化中...
-    自定义初始化方法 initEmployee : Employee 初始化中...
-    Spring 应用上下文已启动...
-    com.asia.Employee@19dc67c2 */</span></code></pre>
-<p>其实延迟加载和非延迟加载在定义的时候，也就是Bean注册的时候是没有区别的，按照你的需要来注册，但是在依赖查找和依赖注入的时候，它的区别就体现出来了。非延迟查找是在上下文初始化完成之前，就已经初始化了；延迟加载必须在上下文初始化完成之后来进行加载。</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <categories>
-        <category>JAVA</category>
-      </categories>
-      <tags>
-        <tag>Spring</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>探讨复杂的 if-else 语句“优雅处理”的思路</title>
     <url>/posts/afc9.html</url>
     <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在实际开发中，往往不是简单 if-else 结构，我们通常会不经意间写下如下代码：</p>
@@ -2321,6 +2223,104 @@ map <span class="token operator">=</span> strategies<span class="token punctuati
       <tags>
         <tag>策略</tag>
         <tag>工厂</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>延迟初始化 Spring Bean</title>
+    <url>/posts/861c.html</url>
+    <content><![CDATA[<h3 id="Bean延迟初始化-（Lazy-Initialization）"><a href="#Bean延迟初始化-（Lazy-Initialization）" class="headerlink" title="Bean延迟初始化 （Lazy Initialization）"></a>Bean延迟初始化 （Lazy Initialization）</h3><ul>
+<li>XML配置：&lt;bean lazy-init=”true”&gt;</li>
+<li>Java注解：@Lazy(true)</li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Employee</span> <span class="token keyword">implements</span> <span class="token class-name">InitializingBean</span> <span class="token punctuation">{</span>
+  <span class="token keyword">private</span> String name<span class="token punctuation">;</span>
+  <span class="token keyword">private</span> Integer age<span class="token punctuation">;</span>
+
+  <span class="token annotation punctuation">@PostConstruct</span>
+  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"@PostConstruct Employee 初始化中..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">initEmployee</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"自定义初始化方法 initEmployee : Employee 初始化中..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token annotation punctuation">@Override</span>
+  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">afterPropertiesSet</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"InitializingBean#afterPropertiesSet : UserFactory 初始化中..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment" spellcheck="true">// 省略 getter setter</span>
+<span class="token punctuation">}</span>
+
+<span class="token annotation punctuation">@Configuration</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">BeanInitializationDemo</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 创建 BeanFactory 容器</span>
+    AnnotationConfigApplicationContext annotationConfigApplicationContext <span class="token operator">=</span>
+        <span class="token keyword">new</span> <span class="token class-name">AnnotationConfigApplicationContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 注册Configuration Class (配置类)</span>
+    annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">register</span><span class="token punctuation">(</span>BeanInitializationDemo<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 启动Spring 应用上下文</span>
+    annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">refresh</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 非延迟初始化在 Spring 应用上下文启动完成后，被初始化</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Spring 应用上下文已启动..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Employee employee <span class="token operator">=</span> annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span>Employee<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>employee<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 关闭Spring 应用上下文</span>
+    annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token annotation punctuation">@Bean</span><span class="token punctuation">(</span>initMethod <span class="token operator">=</span> <span class="token string">"initEmployee"</span><span class="token punctuation">)</span>
+  <span class="token annotation punctuation">@Lazy</span>
+  <span class="token keyword">public</span> Employee <span class="token function">employee</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Employee</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/** 输出结果：
+    Spring 应用上下文已启动...
+    @PostConstruct Employee 初始化中...
+    InitializingBean#afterPropertiesSet : UserFactory 初始化中...
+    自定义初始化方法 initEmployee : Employee 初始化中...
+    com.asia.Employee@19dc67c2 */</span>
+
+<span class="token comment" spellcheck="true">//非延迟初始化 @Lazy(value = false)</span>
+    <span class="token annotation punctuation">@Bean</span><span class="token punctuation">(</span>initMethod <span class="token operator">=</span> <span class="token string">"initEmployee"</span><span class="token punctuation">)</span>
+  <span class="token annotation punctuation">@Lazy</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> Employee <span class="token function">employee</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Employee</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/** 输出结果：
+    @PostConstruct Employee 初始化中...
+    InitializingBean#afterPropertiesSet : UserFactory 初始化中...
+    自定义初始化方法 initEmployee : Employee 初始化中...
+    Spring 应用上下文已启动...
+    com.asia.Employee@19dc67c2 */</span></code></pre>
+<p>其实延迟加载和非延迟加载在定义的时候，也就是Bean注册的时候是没有区别的，按照你的需要来注册，但是在依赖查找和依赖注入的时候，它的区别就体现出来了。非延迟查找是在上下文初始化完成之前，就已经初始化了；延迟加载必须在上下文初始化完成之后来进行加载。</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <categories>
+        <category>JAVA</category>
+      </categories>
+      <tags>
+        <tag>Spring</tag>
       </tags>
   </entry>
   <entry>
