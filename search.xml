@@ -593,6 +593,397 @@ $ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
       </tags>
   </entry>
   <entry>
+    <title>Redis位操作</title>
+    <url>/posts/5969.html</url>
+    <content><![CDATA[<h3 id="位操作命令"><a href="#位操作命令" class="headerlink" title="位操作命令"></a>位操作命令</h3><pre class=" language-bash"><code class="language-bash">$ GETBIT key offset
+$ SETBIT key offset value
+$ BITCOUNT key <span class="token punctuation">[</span>start<span class="token punctuation">]</span> <span class="token punctuation">[</span>end<span class="token punctuation">]</span>
+$ BITOP operation destkey key <span class="token punctuation">[</span>key <span class="token punctuation">..</span>.<span class="token punctuation">]</span></code></pre>
+<h3 id="演示"><a href="#演示" class="headerlink" title="演示"></a>演示</h3><p>一个字节由 8 个二进制位组成，Redis 提供了 4 个命令可以直接对二进制位进行操作。为了演示，我们首先将 foo 赋值为 bar：</p>
+<pre class=" language-bash"><code class="language-bash">$ SET foo bar
+OK</code></pre>
+<p>bar 的 3 个字母 “b”, “a” 和 “r” 对应的 ASCII 码分别为98、97 和 114，转换为二进制后分别为 1100010、1100001 和 1110010，所以 foo 键中的二进制位结构如下所示：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/14771610958236_.pic_hd.jpg"></p>
+<p><code>GETBIT</code> 命令可以获得一个字符串类型键指定位置的二进制位的值（0 或 1），索引从 0 开始：</p>
+<pre class=" language-bash"><code class="language-bash">$ GETBIT foo 0
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 0
+$ GETBIT foo 6
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1</code></pre>
+<p>如果需要获取的二进制位的索引超出了键值的二进制为的实际长度则默认值是0：</p>
+<pre class=" language-bash"><code class="language-bash">$ GETBIT foo 10000
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 0</code></pre>
+<p><code>SETBIT</code> 命令可以设置字符串类型键指定位置的二进制位的值，返回值是该位置的旧值。如我们要将 foo 键值设置为 arr，可以通过位操作将 foo 键的二进制位的索引第 6 位设为0，第 7 位设为1：</p>
+<pre class=" language-bash"><code class="language-bash">$ SETBIT foo 6 0
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1
+$ SETBIT foo 7 1
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 0
+$ GET foo
+<span class="token string">"aar"</span></code></pre>
+<p>如果要设置的位置超过了键值的二进制位的长度，<code>SETBIT</code> 命令会自动将中间的二进制位设置为 0。</p>
+<p><code>BITCOUNT</code> 命令可以获得字符串类型键中值是1的二进制位个数，如：</p>
+<pre class=" language-bash"><code class="language-bash">$ BITCOUNT foo
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 10</code></pre>
+<p>可以通过参数来限制统计的字节范围，如我们只希望统计前两个字节（即 “aa” ）:</p>
+<pre class=" language-bash"><code class="language-bash">$ BITCOUNT foo 0 1
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 6</code></pre>
+<p><code>BITOP</code> 命令可以对多个字符串类型键进行位运算，并将结果存储在 destkey 参数指定的键中。<code>BITOP</code> 命令支持的运算操作有 AND、OR、XOR 和 NOT。</p>
+<pre class=" language-bash"><code class="language-bash">$ SET foo1 bar
+OK
+$ SET foo2 aar
+OK
+$ BITOP OR res foo1 foo2
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 3
+$ GET res
+<span class="token string">"car"</span></code></pre>
+<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/14841610959643_.pic_hd.jpg"></p>
+<p><code>BITPOS</code>  命令可以获得指定键的第一个位置是 0 或者 1 的位置。还是以 ”bar“这个键值位例，如果想获取键值中的第一个二进制位为 1 的偏移量，则可以执行：</p>
+<pre class=" language-bash"><code class="language-bash">$ SET foo bar
+OK
+$ BITPOS foo 1
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1</code></pre>
+<p><code>BITOPS</code> 命令的第二个和第三个参数分别可以用来指定要查询的起始字节和结束字节。注意这里的单位不再是二进制位，而是字节。如果我们想查询的第二个字节到第三个字节之间（即 ”a“ 和 ”r“）出现的第一个值位 1 的二进制位的偏移量，则可以执行：</p>
+<pre><code>$ BITPOS foo 1 1 2
+(integer) 9</code></pre>
+<p>这里的返回结果的偏移量是从头开始算起的，与起始字节无关。</p>
+<blockquote>
+<p>如果不设置结束字节且键值的所有二进制位都是 1 ，则当要查询值为 0 的二进制位偏移量时，返回结果会是键值长度的下一个字位的偏移量。这是因为 Redis 会认为键值长度之后的二进制位都是 0。</p>
+</blockquote>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis常用命令</title>
+    <url>/posts/4f87.html</url>
+    <content><![CDATA[<ol>
+<li>获得符合规则的键名列表</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ KEYS pattern</code></pre>
+<p>pattern 支持 glob 风格通配符格式：</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>？</td>
+<td>匹配一个字符</td>
+</tr>
+<tr>
+<td>*</td>
+<td>匹配任意个（包括0个）字符</td>
+</tr>
+<tr>
+<td>[]</td>
+<td>匹配括号间的任一字符，可以使用 “-” 符号表示一个范围，如 a[b-d] 可以匹配 “ab”、“ac” 和 “ad”</td>
+</tr>
+<tr>
+<td>\x</td>
+<td>匹配字符 x，用于转义符号。如要匹配 “?” 就需要使用 ?</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>KEYS 命令需要遍历 Redis 中的所有键，当键的数量较多时会影响性能，不建议在生产环境中使用。Redis 区分命令大小写。</p>
+</blockquote>
+<ol start="2">
+<li>判断一个键是否存在</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ EXISTS key</code></pre>
+<p>如果键存在则返回整数类型1，否则返回0。</p>
+<ol start="3">
+<li>删除键</li>
+</ol>
+<pre><code>$ DEL key</code></pre>
+<p>可以删除一个或多个键，返回值是删除的键的个数。</p>
+<blockquote>
+<p><strong>技巧</strong>     DEL 命令的参数不支持通配符，但我们可以结合 Linux 的管道和 xargs 命令自己实现删除所有符合规则的键盘。比如要删除所有以 “user:” 开头的键，就可以执行<code>redis-cli KEYS "user:*" | xagrs redis cli DEL</code>。另外由于 DEL 命令支持多个键作为参数，所以还可执行如下命令来达到同样的效果，性能更好。</p>
+<pre class=" language-bash"><code class="language-bash">$ redis-cli DEL `redis-cli KEYS <span class="token string">"user:*"</span>`</code></pre>
+</blockquote>
+<ol start="4">
+<li>获得键值的数据类型</li>
+</ol>
+<pre><code>$ TYPE key</code></pre>
+<ol start="5">
+<li>赋值与取值</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ SET key value
+$ GET key</code></pre>
+<ol start="6">
+<li>递增数字</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ INCR key</code></pre>
+<ol start="7">
+<li>减少数字</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ DECR key</code></pre>
+<ol start="8">
+<li>增加指定的整数</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ INCRBY key increment</code></pre>
+<p>INCRBY 命令与 INCR 命令基本一样，只不过前者可以通过 increment 参数指定一次增加的数值，如：</p>
+<pre class=" language-bash"><code class="language-bash">$ INCRBY bar 2
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 2
+$ INCRBY bar 3
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 3</code></pre>
+<ol start="9">
+<li>减少指定的整数</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ DECRBY key decrement</code></pre>
+<ol start="10">
+<li>增加指定浮点数</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ INCRBYFLOAT key increment</code></pre>
+<ol start="11">
+<li>向尾部追加值</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ APPEND key value</code></pre>
+<p>APPENＤ 的作用是向键值的末尾追加 value。如果键不存在则将该键的值设置为 value，即相当与 SET key value。返回值的追加后字符串的总长度。如：</p>
+<pre class=" language-bash"><code class="language-bash">$ SET key hello
+Ok
+$ APPEND key <span class="token string">" world!"</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 12</code></pre>
+<ol start="12">
+<li>获取字符串长度</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ STRLEN key</code></pre>
+<ol start="13">
+<li>同时获得/设置多个键值</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ MGET key <span class="token punctuation">[</span>key <span class="token punctuation">..</span>.<span class="token punctuation">]</span>
+$ MSET key value <span class="token punctuation">[</span>key value <span class="token punctuation">..</span>.<span class="token punctuation">]</span></code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis的安装与启动</title>
+    <url>/posts/dc55.html</url>
+    <content><![CDATA[<h3 id="Redis-安装"><a href="#Redis-安装" class="headerlink" title="Redis 安装"></a>Redis 安装</h3><pre class=" language-bash"><code class="language-bash">$ <span class="token function">wget</span> https://download.redis.io/releases/redis-6.0.10.tar.gz
+$ <span class="token function">tar</span> xzf redis-6.0.10.tar.gz
+$ <span class="token function">cd</span> redis-6.0.10
+$ <span class="token function">make</span></code></pre>
+<p>Redis 没有其它外部依赖，安装过程很简单。编译后在<strong>Redis源代码目录的 src 文件夹</strong>中可以找到若干个可执行程序，最好在编译后直接执行 <code>make install</code> 命令来将这些可执行程序复制到 <code>/user/local/bin</code> 目录中以便以后执行程序时不用输入完整的路径。</p>
+<p>在实际运行 Redis 前推荐使用 <code>make test</code> 命令测试 Redis 是否编译正确，尤其是在编译一个不稳定版本的 Redis  时。</p>
+<h3 id="启动和停止-Redis"><a href="#启动和停止-Redis" class="headerlink" title="启动和停止 Redis"></a>启动和停止 Redis</h3><p>在这之前需要了解 Redis 包含的可执行文件有哪些，如下：</p>
+<table>
+<thead>
+<tr>
+<th>文件名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>redis-server</td>
+<td>Redis服务器</td>
+</tr>
+<tr>
+<td>redis-cli</td>
+<td>Redis命令行客户端</td>
+</tr>
+<tr>
+<td>redis-benchmark</td>
+<td>Redis性能测试工具</td>
+</tr>
+<tr>
+<td>redis-check-aof</td>
+<td>AOF文件修复工具</td>
+</tr>
+<tr>
+<td>redis-check-rdb</td>
+<td>RDB文件检查工具</td>
+</tr>
+<tr>
+<td>redis-sentinel</td>
+<td>Sentinel服务器</td>
+</tr>
+</tbody></table>
+<p>如果在编译后执行了 <code>make install</code> 命令，这些程序会被复制到 <code>/usr/local/bin</code> 目录内，所以在命令行中直接输入程序名称即可执行。</p>
+<h4 id="启动-Redis"><a href="#启动-Redis" class="headerlink" title="启动 Redis"></a>启动 Redis</h4><p>启动 Redis 有直接启动和通过初始化脚本启动两种方式，分别适用于开发环境和生产环境。</p>
+<ul>
+<li>直接启动</li>
+</ul>
+<pre class=" language-bash"><code class="language-bash">$ redis-server</code></pre>
+<p>Redis 服务器默认会使用 6379 端口，通过 –port 参数可以自定义端口号：</p>
+<pre class=" language-bash"><code class="language-bash">$ redis-server --port 6380</code></pre>
+<ul>
+<li>通过初始化脚本启动 redis</li>
+</ul>
+<p>在 Linux 系统中可以通过初始化脚本启动 Redis, 使得 Redis 能随系统自动运行，在生产环境中推荐使用此方法运行Redis，这 <strong>Redis 源代码目录得 utils 文件夹中有一个名为 redis_init_script 的初始化脚本文件</strong>，内容如下：</p>
+<pre class=" language-shell"><code class="language-shell">#!/bin/sh
+#
+# Simple Redis init.d script conceived to work on Linux systems
+# as it does use of the /proc filesystem.
+
+### BEGIN INIT INFO
+# Provides:     redis_6379
+# Default-Start:        2 3 4 5
+# Default-Stop:         0 1 6
+# Short-Description:    Redis data structure server
+# Description:          Redis data structure server. See https://redis.io
+### END INIT INFO
+
+REDISPORT=6379
+EXEC=/usr/local/bin/redis-server
+CLIEXEC=/usr/local/bin/redis-cli
+
+PIDFILE=/var/run/redis_${REDISPORT}.pid
+CONF="/etc/redis/${REDISPORT}.conf"
+
+case "$1" in
+    start)
+        if [ -f $PIDFILE ]
+        then
+                echo "$PIDFILE exists, process is already running or crashed"
+        else
+                echo "Starting Redis server..."
+                $EXEC $CONF
+        fi
+        ;;
+    stop)
+        if [ ! -f $PIDFILE ]
+        then
+                echo "$PIDFILE does not exist, process is not running"
+        else
+                PID=$(cat $PIDFILE)
+                echo "Stopping ..."
+                $CLIEXEC -p $REDISPORT shutdown
+                while [ -x /proc/${PID} ]
+                do
+                    echo "Waiting for Redis to shutdown ..."
+                    sleep 1
+                done
+                echo "Redis stopped"
+        fi
+        ;;
+    *)
+        echo "Please use start or stop as first argument"
+        ;;
+esac</code></pre>
+<p>我们需要配置 Redis 的运行方式和持久化文件、日志文件的存储位置等，具体步骤如下。</p>
+<ol>
+<li>配置初始化脚本。首先将初始化脚本复制到 <code>/etc/init.d</code> 目录中，文件名<strong>redis_端口号</strong>，其中端口号表示要让 Redis 监听的端口号，客户端通过该端口连接 Redis 。然后修改脚本第14行的  <code>REDISPORT</code>  变量的值为同样的端口号。</li>
+<li>建立需要的文件夹：</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>目录名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>/etc/redis</td>
+<td>存放 Redis 的配置文件</td>
+</tr>
+<tr>
+<td>/var/redis/端口号</td>
+<td>存放 Redis 的持久化文件</td>
+</tr>
+</tbody></table>
+<ol start="3">
+<li>修改配置文件。首先将配置文件模板（ Redis 提供了一个配置文件的模板 <code>redis.conf</code>，位于源代码目录的根目录中）复制到 /etc/redis 目录中，以端口号命名（如“6379.conf“），然后对其中的部分参数进行编辑：</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>daemonize</td>
+<td>yes</td>
+<td>使 Redis 以守护进程模式运行</td>
+</tr>
+<tr>
+<td>pidfile</td>
+<td>/var/run/redis_端口号.pid</td>
+<td>设置 Redis 的 PID 文件位置</td>
+</tr>
+<tr>
+<td>port</td>
+<td>端口号</td>
+<td>设置 Redis 监听的端口号</td>
+</tr>
+<tr>
+<td>dir</td>
+<td>/var/redis/端口号</td>
+<td>设置持久化文件存放位置</td>
+</tr>
+</tbody></table>
+<p>现在就可以使用如下命令来启动 Redis 了：</p>
+<pre class=" language-bash"><code class="language-bash">$ /etc/init.d/redis_端口号 start</code></pre>
+<p>设置开机自启动：</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">chkconfig</span> redis_6379 on</code></pre>
+<h3 id="停止Redis"><a href="#停止Redis" class="headerlink" title="停止Redis"></a>停止Redis</h3><p>考虑到 Redis 有可能正在将内存中的数据同步到硬盘中，强制终止 Redis 进行可能会导致数据丢失。正确停止 Redis 的方式应该是向 Redis 发送 SHUTDOWN 命令，方法为：</p>
+<pre class=" language-bash"><code class="language-bash">$ redis-cli SHUTDOWN</code></pre>
+<p>当 Redis 收到 <code>SHUTDOWN</code> 命令后，会先断开所有客户端连接，然后根据配置执行持久化，最后完成退出。</p>
+<p>Redis 可以妥善处理 SIGTERM （signal termination） 信号，所以使用 kill Redis 进行的 PID 也可以正常结束 Redis，效果与发送 SHTUDOWN 命令一样。</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Stream中flatmap使用</title>
     <url>/posts/9fb2.html</url>
     <content><![CDATA[<h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><h4 id="我的理解"><a href="#我的理解" class="headerlink" title="我的理解"></a>我的理解</h4><p>map：map方法返回的是一个object，map将流中的当前元素替换为此返回值；</p>
@@ -747,6 +1138,38 @@ System<span class="token punctuation">.</span>out<span class="token punctuation"
       </tags>
   </entry>
   <entry>
+    <title>Hello World</title>
+    <url>/posts/3eeb.html</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class=" language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span></code></pre>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class=" language-bash"><code class="language-bash">$ hexo server</code></pre>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bash"><code class="language-bash">$ hexo generate</code></pre>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-bash"><code class="language-bash">$ hexo deploy</code></pre>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+  </entry>
+  <entry>
     <title>Stream中reduce使用</title>
     <url>/posts/801f.html</url>
     <content><![CDATA[<p>reduce方法用于对stream中元素进行聚合求值，最常见的用法就是将stream中一连串的值合成为单个值，比如为一个包含一系列数值的数组求和。</p>
@@ -823,38 +1246,6 @@ System<span class="token punctuation">.</span>out<span class="token punctuation"
       <tags>
         <tag>JAVA</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/posts/3eeb.html</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class=" language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span></code></pre>
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class=" language-bash"><code class="language-bash">$ hexo server</code></pre>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bash"><code class="language-bash">$ hexo generate</code></pre>
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-bash"><code class="language-bash">$ hexo deploy</code></pre>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
   </entry>
   <entry>
     <title>kotlin如何实现空安全</title>
@@ -1462,6 +1853,193 @@ $ <span class="token function">git</span> config --list --system</code></pre>
       </tags>
   </entry>
   <entry>
+    <title>客户端连接Redis</title>
+    <url>/posts/11b.html</url>
+    <content><![CDATA[<h3 id="发送命令"><a href="#发送命令" class="headerlink" title="发送命令"></a>发送命令</h3><p>通过 redis-cli 向 Redis 发送命令有两种方式，第一种方式是将命令作为 redis-cli 的参数执行，如：</p>
+<pre class=" language-bash"><code class="language-bash">$ redis-cli SHUTDOWN</code></pre>
+<p>redis-cli 执行时会自动按照默认配置（服务器地址为 127.0.0.1，端口号为 6379）连接 Redis，通过 -h 和 -p 参数可以自定义地址和端口号：</p>
+<pre class=" language-bash"><code class="language-bash">$ redis-cli -h 127.0.0.1 -p 6379</code></pre>
+<p>第二种方式是不附带参数运行 redis-cli，这样会进入交互模式，可以自由输入命令，例如：</p>
+<pre class=" language-bash"><code class="language-bash">$ redis-cli
+127.0.0.1:6379<span class="token operator">></span> PING
+PONG</code></pre>
+<p>这种方式在输入多条命令时比较方便。</p>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>Redis 支持通过配置文件来设置启动参数，如：</p>
+<pre class=" language-bash"><code class="language-bash">$ redis-server /path/to/redis.conf</code></pre>
+<p>通过启动参数传递同名的配置选项会覆盖配置文件中相应的参数，就像这样：</p>
+<pre class=" language-bash"><code class="language-bash">$ redis-server /path/to/redis.conf --loglevel warning</code></pre>
+<p>Redis 运行时通过 CONFIG SET 命令在不重新启动 Redis 的情况下动态修改部分 Redid配置：</p>
+<pre class=" language-bash"><code class="language-bash">$ CONFIG SET loglevel warning
+OK</code></pre>
+<p>并不是所有配置都可以使用Config SET 命令修改。同样在运行的时候也可以使用 CONFIG GET 命令获得 Redis 当前的配置情况：</p>
+<pre class=" language-bash"><code class="language-bash">$ CONFIG GET loglevel
+1<span class="token punctuation">)</span> <span class="token string">"loglevel"</span>
+2<span class="token punctuation">)</span> <span class="token string">"notice"</span></code></pre>
+<p>其中第一行字符串回复表示的是选项名，第二行既是选项值。</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Kotlin常用作用域函数</title>
+    <url>/posts/c396.html</url>
+    <content><![CDATA[<h3 id="let-和-run"><a href="#let-和-run" class="headerlink" title="let 和 run"></a>let 和 run</h3><p>let 和 run 都会返回闭包的执行结果，区别在于let有闭包参数，而run没有闭包参数。</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token keyword">var</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span>
+<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">val</span> letResult<span class="token operator">:</span> String <span class="token operator">=</span> user<span class="token punctuation">.</span><span class="token function">let</span> <span class="token punctuation">{</span> user<span class="token operator">:</span> User <span class="token operator">-></span>
+        <span class="token string">"let:: <span class="token interpolation"><span class="token delimiter variable">${</span>user<span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span>
+    <span class="token punctuation">}</span>
+  <span class="token comment" spellcheck="true">/** 
+         简化写法
+         val letResult: String = user.let {
+        "let:: ${it.javaClass.simpleName}"
+    } 
+   */</span>
+
+    <span class="token function">println</span><span class="token punctuation">(</span>letResult<span class="token punctuation">)</span>
+
+    <span class="token keyword">val</span> runResult <span class="token operator">=</span> user<span class="token punctuation">.</span><span class="token function">run</span> <span class="token punctuation">{</span>
+        <span class="token string">"run:: <span class="token interpolation"><span class="token delimiter variable">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">print</span><span class="token punctuation">(</span>runResult<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">/** 输出结果：let:: User
+                         run:: User */</span></code></pre>
+<h3 id="also-和-apply"><a href="#also-和-apply" class="headerlink" title="also 和 apply"></a>also 和 apply</h3><p>also与apply都不返回闭包的执行结果，区别在于also有闭包参数，而apply没有闭包参数。</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token keyword">var</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span>
+
+<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
+
+    user<span class="token punctuation">.</span><span class="token function">also</span> <span class="token punctuation">{</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"also::<span class="token interpolation"><span class="token delimiter variable">${</span>it<span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    user<span class="token punctuation">.</span><span class="token function">apply</span> <span class="token punctuation">{</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"apply::<span class="token interpolation"><span class="token delimiter variable">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">// 在这个例子中，also 和 apply 会继续返回user这个对象，因为我们可以这么使用</span>
+        user<span class="token punctuation">.</span><span class="token function">also</span> <span class="token punctuation">{</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"also::<span class="token interpolation"><span class="token delimiter variable">${</span>it<span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">.</span><span class="token function">apply</span> <span class="token punctuation">{</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"apply::<span class="token interpolation"><span class="token delimiter variable">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">"Bob"</span>
+
+    <span class="token function">print</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">/** 输出结果：User(name=Bob) */</span></code></pre>
+<h3 id="takeIf-和-takeUnless"><a href="#takeIf-和-takeUnless" class="headerlink" title="takeIf 和 takeUnless"></a>takeIf 和 takeUnless</h3><p>takeIf 的闭包返回一个判断结果，为false时，takeIf函数会返回空。</p>
+<p>takeUnless 与 takeIf 刚好相反，闭包的判断结果，为true时函数会返回空。</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
+
+    user<span class="token punctuation">.</span><span class="token function">takeIf</span> <span class="token punctuation">{</span>
+        it<span class="token punctuation">.</span>name<span class="token punctuation">.</span><span class="token function">isNotEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">also</span> <span class="token punctuation">{</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"姓名为: <span class="token interpolation"><span class="token delimiter variable">${</span>it<span class="token punctuation">.</span>name<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token operator">?:</span> <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"姓名为空"</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/** 输出结果：姓名为: AsiaMa */</span>
+
+<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
+
+    user<span class="token punctuation">.</span><span class="token function">takeUnless</span> <span class="token punctuation">{</span>
+        it<span class="token punctuation">.</span>name<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">also</span> <span class="token punctuation">{</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"姓名为: <span class="token interpolation"><span class="token delimiter variable">${</span>it<span class="token punctuation">.</span>name<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token operator">?:</span> <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"姓名为空"</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/** 输出结果：姓名为: AsiaMa */</span></code></pre>
+<h3 id="Repeat"><a href="#Repeat" class="headerlink" title="Repeat"></a>Repeat</h3><p>重复执行当前闭包</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token keyword">var</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span>
+
+<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
+
+    <span class="token function">repeat</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token function">print</span><span class="token punctuation">(</span>user<span class="token punctuation">.</span>name<span class="token punctuation">)</span>
+        <span class="token function">println</span><span class="token punctuation">(</span>it<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/**
+输出结果：
+    AsiaMa0
+    AsiaMa1
+    AsiaMa2
+    AsiaMa3
+    AsiaMa4
+*/</span></code></pre>
+<h3 id="With"><a href="#With" class="headerlink" title="With"></a>With</h3><p>with比较特殊，不是以扩展方法的形式存在，而是一个顶级函数。可用于对象的通用属性赋值。</p>
+<pre class=" language-java"><code class="language-java">fun <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    val user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
+
+    <span class="token function">with</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">"Tom"</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">println</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span>
+
+  <span class="token comment" spellcheck="true">/** 与with相似    
+    user.apply {
+        this.name = "Rose"
+    }
+  */</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/** 输出结果：User(name=Tom) */</span></code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <categories>
+        <category>函数式编程</category>
+      </categories>
+      <tags>
+        <tag>Kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>实例化Spring Bean</title>
     <url>/posts/b731.html</url>
     <content><![CDATA[<h3 id="常规的四种方式"><a href="#常规的四种方式" class="headerlink" title="常规的四种方式"></a>常规的四种方式</h3><h4 id="通过构造器"><a href="#通过构造器" class="headerlink" title="通过构造器"></a>通过构造器</h4><pre class=" language-xml"><code class="language-xml"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8"?></span>
@@ -1777,119 +2355,77 @@ $ <span class="token function">git</span> config --list --system</code></pre>
       </tags>
   </entry>
   <entry>
-    <title>Kotlin常用作用域函数</title>
-    <url>/posts/c396.html</url>
-    <content><![CDATA[<h3 id="let-和-run"><a href="#let-和-run" class="headerlink" title="let 和 run"></a>let 和 run</h3><p>let 和 run 都会返回闭包的执行结果，区别在于let有闭包参数，而run没有闭包参数。</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token keyword">var</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span>
-<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <title>延迟初始化 Spring Bean</title>
+    <url>/posts/861c.html</url>
+    <content><![CDATA[<h3 id="Bean延迟初始化-（Lazy-Initialization）"><a href="#Bean延迟初始化-（Lazy-Initialization）" class="headerlink" title="Bean延迟初始化 （Lazy Initialization）"></a>Bean延迟初始化 （Lazy Initialization）</h3><ul>
+<li>XML配置：&lt;bean lazy-init=”true”&gt;</li>
+<li>Java注解：@Lazy(true)</li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Employee</span> <span class="token keyword">implements</span> <span class="token class-name">InitializingBean</span> <span class="token punctuation">{</span>
+  <span class="token keyword">private</span> String name<span class="token punctuation">;</span>
+  <span class="token keyword">private</span> Integer age<span class="token punctuation">;</span>
 
-    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
+  <span class="token annotation punctuation">@PostConstruct</span>
+  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"@PostConstruct Employee 初始化中..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
 
-    <span class="token keyword">val</span> letResult<span class="token operator">:</span> String <span class="token operator">=</span> user<span class="token punctuation">.</span><span class="token function">let</span> <span class="token punctuation">{</span> user<span class="token operator">:</span> User <span class="token operator">-></span>
-        <span class="token string">"let:: <span class="token interpolation"><span class="token delimiter variable">${</span>user<span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span>
-    <span class="token punctuation">}</span>
-  <span class="token comment" spellcheck="true">/** 
-         简化写法
-         val letResult: String = user.let {
-        "let:: ${it.javaClass.simpleName}"
-    } 
-   */</span>
+  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">initEmployee</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"自定义初始化方法 initEmployee : Employee 初始化中..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
 
-    <span class="token function">println</span><span class="token punctuation">(</span>letResult<span class="token punctuation">)</span>
+  <span class="token annotation punctuation">@Override</span>
+  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">afterPropertiesSet</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"InitializingBean#afterPropertiesSet : UserFactory 初始化中..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
 
-    <span class="token keyword">val</span> runResult <span class="token operator">=</span> user<span class="token punctuation">.</span><span class="token function">run</span> <span class="token punctuation">{</span>
-        <span class="token string">"run:: <span class="token interpolation"><span class="token delimiter variable">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span>
-    <span class="token punctuation">}</span>
-    <span class="token function">print</span><span class="token punctuation">(</span>runResult<span class="token punctuation">)</span>
+  <span class="token comment" spellcheck="true">// 省略 getter setter</span>
 <span class="token punctuation">}</span>
 
-<span class="token comment" spellcheck="true">/** 输出结果：let:: User
-                         run:: User */</span></code></pre>
-<h3 id="also-和-apply"><a href="#also-和-apply" class="headerlink" title="also 和 apply"></a>also 和 apply</h3><p>also与apply都不返回闭包的执行结果，区别在于also有闭包参数，而apply没有闭包参数。</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token keyword">var</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span>
+<span class="token annotation punctuation">@Configuration</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">BeanInitializationDemo</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 创建 BeanFactory 容器</span>
+    AnnotationConfigApplicationContext annotationConfigApplicationContext <span class="token operator">=</span>
+        <span class="token keyword">new</span> <span class="token class-name">AnnotationConfigApplicationContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 注册Configuration Class (配置类)</span>
+    annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">register</span><span class="token punctuation">(</span>BeanInitializationDemo<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 启动Spring 应用上下文</span>
+    annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">refresh</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 非延迟初始化在 Spring 应用上下文启动完成后，被初始化</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Spring 应用上下文已启动..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Employee employee <span class="token operator">=</span> annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span>Employee<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>employee<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 关闭Spring 应用上下文</span>
+    annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
 
-<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-
-    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
-
-    user<span class="token punctuation">.</span><span class="token function">also</span> <span class="token punctuation">{</span>
-        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"also::<span class="token interpolation"><span class="token delimiter variable">${</span>it<span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-
-    user<span class="token punctuation">.</span><span class="token function">apply</span> <span class="token punctuation">{</span>
-        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"apply::<span class="token interpolation"><span class="token delimiter variable">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
+  <span class="token annotation punctuation">@Bean</span><span class="token punctuation">(</span>initMethod <span class="token operator">=</span> <span class="token string">"initEmployee"</span><span class="token punctuation">)</span>
+  <span class="token annotation punctuation">@Lazy</span>
+  <span class="token keyword">public</span> Employee <span class="token function">employee</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Employee</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/** 输出结果：
+    Spring 应用上下文已启动...
+    @PostConstruct Employee 初始化中...
+    InitializingBean#afterPropertiesSet : UserFactory 初始化中...
+    自定义初始化方法 initEmployee : Employee 初始化中...
+    com.asia.Employee@19dc67c2 */</span>
 
-<span class="token comment" spellcheck="true">// 在这个例子中，also 和 apply 会继续返回user这个对象，因为我们可以这么使用</span>
-        user<span class="token punctuation">.</span><span class="token function">also</span> <span class="token punctuation">{</span>
-        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"also::<span class="token interpolation"><span class="token delimiter variable">${</span>it<span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span><span class="token punctuation">.</span><span class="token function">apply</span> <span class="token punctuation">{</span>
-        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"apply::<span class="token interpolation"><span class="token delimiter variable">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span><span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">"Bob"</span>
-
-    <span class="token function">print</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span>
-<span class="token comment" spellcheck="true">/** 输出结果：User(name=Bob) */</span></code></pre>
-<h3 id="takeIf-和-takeUnless"><a href="#takeIf-和-takeUnless" class="headerlink" title="takeIf 和 takeUnless"></a>takeIf 和 takeUnless</h3><p>takeIf 的闭包返回一个判断结果，为false时，takeIf函数会返回空。</p>
-<p>takeUnless 与 takeIf 刚好相反，闭包的判断结果，为true时函数会返回空。</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-
-    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
-
-    user<span class="token punctuation">.</span><span class="token function">takeIf</span> <span class="token punctuation">{</span>
-        it<span class="token punctuation">.</span>name<span class="token punctuation">.</span><span class="token function">isNotEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span><span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">also</span> <span class="token punctuation">{</span>
-        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"姓名为: <span class="token interpolation"><span class="token delimiter variable">${</span>it<span class="token punctuation">.</span>name<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span><span class="token operator">?:</span> <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"姓名为空"</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">/** 输出结果：姓名为: AsiaMa */</span>
-
-<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-
-    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
-
-    user<span class="token punctuation">.</span><span class="token function">takeUnless</span> <span class="token punctuation">{</span>
-        it<span class="token punctuation">.</span>name<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span><span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">also</span> <span class="token punctuation">{</span>
-        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"姓名为: <span class="token interpolation"><span class="token delimiter variable">${</span>it<span class="token punctuation">.</span>name<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span><span class="token operator">?:</span> <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"姓名为空"</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">/** 输出结果：姓名为: AsiaMa */</span></code></pre>
-<h3 id="Repeat"><a href="#Repeat" class="headerlink" title="Repeat"></a>Repeat</h3><p>重复执行当前闭包</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token keyword">var</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span>
-
-<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
-
-    <span class="token function">repeat</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token function">print</span><span class="token punctuation">(</span>user<span class="token punctuation">.</span>name<span class="token punctuation">)</span>
-        <span class="token function">println</span><span class="token punctuation">(</span>it<span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">/**
-输出结果：
-    AsiaMa0
-    AsiaMa1
-    AsiaMa2
-    AsiaMa3
-    AsiaMa4
-*/</span></code></pre>
-<h3 id="With"><a href="#With" class="headerlink" title="With"></a>With</h3><p>with比较特殊，不是以扩展方法的形式存在，而是一个顶级函数。可用于对象的通用属性赋值。</p>
-<pre class=" language-java"><code class="language-java">fun <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    val user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
-
-    <span class="token function">with</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">"Tom"</span>
-    <span class="token punctuation">}</span>
-    <span class="token function">println</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span>
-
-  <span class="token comment" spellcheck="true">/** 与with相似    
-    user.apply {
-        this.name = "Rose"
-    }
-  */</span>
-<span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">/** 输出结果：User(name=Tom) */</span></code></pre>
+<span class="token comment" spellcheck="true">//非延迟初始化 @Lazy(value = false)</span>
+    <span class="token annotation punctuation">@Bean</span><span class="token punctuation">(</span>initMethod <span class="token operator">=</span> <span class="token string">"initEmployee"</span><span class="token punctuation">)</span>
+  <span class="token annotation punctuation">@Lazy</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> Employee <span class="token function">employee</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Employee</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/** 输出结果：
+    @PostConstruct Employee 初始化中...
+    InitializingBean#afterPropertiesSet : UserFactory 初始化中...
+    自定义初始化方法 initEmployee : Employee 初始化中...
+    Spring 应用上下文已启动...
+    com.asia.Employee@19dc67c2 */</span></code></pre>
+<p>其实延迟加载和非延迟加载在定义的时候，也就是Bean注册的时候是没有区别的，按照你的需要来注册，但是在依赖查找和依赖注入的时候，它的区别就体现出来了。非延迟查找是在上下文初始化完成之前，就已经初始化了；延迟加载必须在上下文初始化完成之后来进行加载。</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -1910,10 +2446,10 @@ $ <span class="token function">git</span> config --list --system</code></pre>
           });
       </script>]]></content>
       <categories>
-        <category>函数式编程</category>
+        <category>JAVA</category>
       </categories>
       <tags>
-        <tag>Kotlin</tag>
+        <tag>Spring</tag>
       </tags>
   </entry>
   <entry>
@@ -2226,104 +2762,6 @@ map <span class="token operator">=</span> strategies<span class="token punctuati
       </tags>
   </entry>
   <entry>
-    <title>延迟初始化 Spring Bean</title>
-    <url>/posts/861c.html</url>
-    <content><![CDATA[<h3 id="Bean延迟初始化-（Lazy-Initialization）"><a href="#Bean延迟初始化-（Lazy-Initialization）" class="headerlink" title="Bean延迟初始化 （Lazy Initialization）"></a>Bean延迟初始化 （Lazy Initialization）</h3><ul>
-<li>XML配置：&lt;bean lazy-init=”true”&gt;</li>
-<li>Java注解：@Lazy(true)</li>
-</ul>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Employee</span> <span class="token keyword">implements</span> <span class="token class-name">InitializingBean</span> <span class="token punctuation">{</span>
-  <span class="token keyword">private</span> String name<span class="token punctuation">;</span>
-  <span class="token keyword">private</span> Integer age<span class="token punctuation">;</span>
-
-  <span class="token annotation punctuation">@PostConstruct</span>
-  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"@PostConstruct Employee 初始化中..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-
-  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">initEmployee</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"自定义初始化方法 initEmployee : Employee 初始化中..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-
-  <span class="token annotation punctuation">@Override</span>
-  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">afterPropertiesSet</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"InitializingBean#afterPropertiesSet : UserFactory 初始化中..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-
-  <span class="token comment" spellcheck="true">// 省略 getter setter</span>
-<span class="token punctuation">}</span>
-
-<span class="token annotation punctuation">@Configuration</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">BeanInitializationDemo</span> <span class="token punctuation">{</span>
-  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token comment" spellcheck="true">// 创建 BeanFactory 容器</span>
-    AnnotationConfigApplicationContext annotationConfigApplicationContext <span class="token operator">=</span>
-        <span class="token keyword">new</span> <span class="token class-name">AnnotationConfigApplicationContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">// 注册Configuration Class (配置类)</span>
-    annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">register</span><span class="token punctuation">(</span>BeanInitializationDemo<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">// 启动Spring 应用上下文</span>
-    annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">refresh</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">// 非延迟初始化在 Spring 应用上下文启动完成后，被初始化</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Spring 应用上下文已启动..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    Employee employee <span class="token operator">=</span> annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span>Employee<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>employee<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">// 关闭Spring 应用上下文</span>
-    annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-
-  <span class="token annotation punctuation">@Bean</span><span class="token punctuation">(</span>initMethod <span class="token operator">=</span> <span class="token string">"initEmployee"</span><span class="token punctuation">)</span>
-  <span class="token annotation punctuation">@Lazy</span>
-  <span class="token keyword">public</span> Employee <span class="token function">employee</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Employee</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">/** 输出结果：
-    Spring 应用上下文已启动...
-    @PostConstruct Employee 初始化中...
-    InitializingBean#afterPropertiesSet : UserFactory 初始化中...
-    自定义初始化方法 initEmployee : Employee 初始化中...
-    com.asia.Employee@19dc67c2 */</span>
-
-<span class="token comment" spellcheck="true">//非延迟初始化 @Lazy(value = false)</span>
-    <span class="token annotation punctuation">@Bean</span><span class="token punctuation">(</span>initMethod <span class="token operator">=</span> <span class="token string">"initEmployee"</span><span class="token punctuation">)</span>
-  <span class="token annotation punctuation">@Lazy</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">)</span>
-  <span class="token keyword">public</span> Employee <span class="token function">employee</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Employee</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">/** 输出结果：
-    @PostConstruct Employee 初始化中...
-    InitializingBean#afterPropertiesSet : UserFactory 初始化中...
-    自定义初始化方法 initEmployee : Employee 初始化中...
-    Spring 应用上下文已启动...
-    com.asia.Employee@19dc67c2 */</span></code></pre>
-<p>其实延迟加载和非延迟加载在定义的时候，也就是Bean注册的时候是没有区别的，按照你的需要来注册，但是在依赖查找和依赖注入的时候，它的区别就体现出来了。非延迟查找是在上下文初始化完成之前，就已经初始化了；延迟加载必须在上下文初始化完成之后来进行加载。</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <categories>
-        <category>JAVA</category>
-      </categories>
-      <tags>
-        <tag>Spring</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>自定义中缀表达式</title>
     <url>/posts/8a52.html</url>
     <content><![CDATA[<p>一个函数只有用与两个角色类似的对象时才将其声明为中缀函数。</p>
@@ -2595,51 +3033,6 @@ infix <span class="token keyword">fun</span> Int<span class="token punctuation">
       </tags>
   </entry>
   <entry>
-    <title>英语学习第三天</title>
-    <url>/posts/9968.html</url>
-    <content><![CDATA[<h3 id="动名词作主语"><a href="#动名词作主语" class="headerlink" title="动名词作主语"></a>动名词作主语</h3><ul>
-<li>Eating an apple a day keeps you healthy.</li>
-<li>Running five miles is the first thing he does in the morning.</li>
-</ul>
-<h3 id="不定式作主语"><a href="#不定式作主语" class="headerlink" title="不定式作主语"></a>不定式作主语</h3><ul>
-<li>To study abroad is my greatest desire.</li>
-<li>To travel around the world is my plan for this year.</li>
-</ul>
-<p>动名词作主语不讨论这件事做或没做。不定式做主语，这件事情还没有做。</p>
-<p>动词要做主语，不能用原词。可以用动名词，也可以用不定式。如果是不定式，这个动作要没做才可以。</p>
-<blockquote>
-<p>不定式和动名词作主语时，常出现主语过长的情况，可以用代词it代替，作形式主语放在句首，而把真正的主语，即不定式或动名词短语放在句尾。动名词移至句尾时，常改为不定式。</p>
-</blockquote>
-<p>Collecting stamps is one of his hobbies.</p>
-<p><code>It</code> is one of his hobbies <code>to collect stamps</code>.</p>
-<p>Eating an apple a day keeps you healthy.</p>
-<p><code>It</code> keeps you healthy <code>to eat an appale</code>.</p>
-<h3 id="单词"><a href="#单词" class="headerlink" title="单词"></a>单词</h3><p>hear from 收到….的信</p>
-<p>hear sb do sth 听见某人做某事 </p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>English</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>英语学习第二天</title>
     <url>/posts/9511.html</url>
     <content><![CDATA[<h3 id="为什么会有五种句型"><a href="#为什么会有五种句型" class="headerlink" title="为什么会有五种句型"></a>为什么会有五种句型</h3><p>这个句子有没有动词，没有动作就一般是主系表。如果有一个动作，我们把这个动作视为核心动词「谓语动词」。根据这个动词的种类不一样，这个动作涉及到别的对象呢，还是自己就能完成。涉及到别人是涉及到一个对象还是两个对象呢？这样子会划分为四种不同的类型。</p>
@@ -2771,6 +3164,54 @@ infix <span class="token keyword">fun</span> Int<span class="token punctuation">
             document.body.appendChild(img);
           });
       </script>]]></content>
+      <tags>
+        <tag>English</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>英语学习第三天</title>
+    <url>/posts/9968.html</url>
+    <content><![CDATA[<h3 id="动名词作主语"><a href="#动名词作主语" class="headerlink" title="动名词作主语"></a>动名词作主语</h3><ul>
+<li>Eating an apple a day keeps you healthy.</li>
+<li>Running five miles is the first thing he does in the morning.</li>
+</ul>
+<h3 id="不定式作主语"><a href="#不定式作主语" class="headerlink" title="不定式作主语"></a>不定式作主语</h3><ul>
+<li>To study abroad is my greatest desire.</li>
+<li>To travel around the world is my plan for this year.</li>
+</ul>
+<p>动名词作主语不讨论这件事做或没做。不定式做主语，这件事情还没有做。</p>
+<p>动词要做主语，不能用原词。可以用动名词，也可以用不定式。如果是不定式，这个动作要没做才可以。</p>
+<blockquote>
+<p>不定式和动名词作主语时，常出现主语过长的情况，可以用代词it代替，作形式主语放在句首，而把真正的主语，即不定式或动名词短语放在句尾。动名词移至句尾时，常改为不定式。</p>
+</blockquote>
+<p>Collecting stamps is one of his hobbies.</p>
+<p><code>It</code> is one of his hobbies <code>to collect stamps</code>.</p>
+<p>Eating an apple a day keeps you healthy.</p>
+<p><code>It</code> keeps you healthy <code>to eat an appale</code>.</p>
+<h3 id="单词"><a href="#单词" class="headerlink" title="单词"></a>单词</h3><p>hear from 收到….的信</p>
+<p>hear sb do sth 听见某人做某事 </p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>English</tag>
+      </tags>
   </entry>
   <entry>
     <title>英语学习第四天</title>

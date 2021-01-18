@@ -6,7 +6,7 @@
   <link href="https://blog.asiama.top/atom.xml" rel="self"/>
   
   <link href="https://blog.asiama.top/"/>
-  <updated>2021-01-17T13:04:28.718Z</updated>
+  <updated>2021-01-18T11:56:23.088Z</updated>
   <id>https://blog.asiama.top/</id>
   
   <author>
@@ -17,11 +17,107 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Redis位操作</title>
+    <link href="https://blog.asiama.top/posts/5969.html"/>
+    <id>https://blog.asiama.top/posts/5969.html</id>
+    <published>2021-01-18T11:49:20.000Z</published>
+    <updated>2021-01-18T11:56:23.088Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;位操作命令&quot;&gt;&lt;a href=&quot;#位操作命令&quot; class=&quot;headerlink&quot; title=&quot;位操作命令&quot;&gt;&lt;/a&gt;位操作命令&lt;/h3&gt;&lt;pre class=&quot; language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$</summary>
+        
+      
+    
+    
+    
+    
+    <category term="Redis" scheme="https://blog.asiama.top/tags/Redis/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Redis常用命令</title>
+    <link href="https://blog.asiama.top/posts/4f87.html"/>
+    <id>https://blog.asiama.top/posts/4f87.html</id>
+    <published>2021-01-18T11:48:05.000Z</published>
+    <updated>2021-01-18T11:48:29.468Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;ol&gt;
+&lt;li&gt;获得符合规则的键名列表&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class=&quot; language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ KEYS pattern&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;pattern 支持 glob</summary>
+        
+      
+    
+    
+    
+    
+    <category term="Redis" scheme="https://blog.asiama.top/tags/Redis/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>客户端连接Redis</title>
+    <link href="https://blog.asiama.top/posts/11b.html"/>
+    <id>https://blog.asiama.top/posts/11b.html</id>
+    <published>2021-01-18T11:47:15.000Z</published>
+    <updated>2021-01-18T11:47:46.208Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;发送命令&quot;&gt;&lt;a href=&quot;#发送命令&quot; class=&quot;headerlink&quot; title=&quot;发送命令&quot;&gt;&lt;/a&gt;发送命令&lt;/h3&gt;&lt;p&gt;通过 redis-cli 向 Redis 发送命令有两种方式，第一种方式是将命令作为 redis-cli</summary>
+        
+      
+    
+    
+    
+    
+    <category term="Redis" scheme="https://blog.asiama.top/tags/Redis/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Redis的安装与启动</title>
+    <link href="https://blog.asiama.top/posts/dc55.html"/>
+    <id>https://blog.asiama.top/posts/dc55.html</id>
+    <published>2021-01-18T11:44:40.000Z</published>
+    <updated>2021-01-18T11:45:19.346Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;Redis-安装&quot;&gt;&lt;a href=&quot;#Redis-安装&quot; class=&quot;headerlink&quot; title=&quot;Redis 安装&quot;&gt;&lt;/a&gt;Redis 安装&lt;/h3&gt;&lt;pre class=&quot; language-bash&quot;&gt;&lt;code</summary>
+        
+      
+    
+    
+    
+    
+    <category term="Redis" scheme="https://blog.asiama.top/tags/Redis/"/>
+    
+  </entry>
+  
+  <entry>
     <title>英语学习第五天</title>
     <link href="https://blog.asiama.top/posts/3517.html"/>
     <id>https://blog.asiama.top/posts/3517.html</id>
     <published>2021-01-17T12:00:22.000Z</published>
-    <updated>2021-01-17T13:04:28.718Z</updated>
+    <updated>2021-01-18T11:43:04.370Z</updated>
     
     
       
@@ -34,6 +130,8 @@
     
     
     
+    
+    <category term="English" scheme="https://blog.asiama.top/tags/English/"/>
     
   </entry>
   
@@ -420,108 +518,6 @@
     
     
     <category term="Kotlin" scheme="https://blog.asiama.top/tags/Kotlin/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Kotlin常用作用域函数</title>
-    <link href="https://blog.asiama.top/posts/c396.html"/>
-    <id>https://blog.asiama.top/posts/c396.html</id>
-    <published>2020-12-29T04:38:09.000Z</published>
-    <updated>2020-12-29T14:18:56.026Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;let-和-run&quot;&gt;&lt;a href=&quot;#let-和-run&quot; class=&quot;headerlink&quot; title=&quot;let 和 run&quot;&gt;&lt;/a&gt;let 和 run&lt;/h3&gt;&lt;p&gt;let 和 run</summary>
-        
-      
-    
-    
-    
-    <category term="函数式编程" scheme="https://blog.asiama.top/categories/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/"/>
-    
-    
-    <category term="Kotlin" scheme="https://blog.asiama.top/tags/Kotlin/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Kotlin自定义操作符</title>
-    <link href="https://blog.asiama.top/posts/8051.html"/>
-    <id>https://blog.asiama.top/posts/8051.html</id>
-    <published>2020-12-28T10:07:19.000Z</published>
-    <updated>2020-12-29T14:16:40.796Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;自定义Convert操作符&quot;&gt;&lt;a href=&quot;#自定义Convert操作符&quot; class=&quot;headerlink&quot; title=&quot;自定义Convert操作符&quot;&gt;&lt;/a&gt;自定义Convert操作符&lt;/h3&gt;&lt;pre class=&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="函数式编程" scheme="https://blog.asiama.top/categories/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/"/>
-    
-    
-    <category term="Kotlin" scheme="https://blog.asiama.top/tags/Kotlin/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Stream中reduce使用</title>
-    <link href="https://blog.asiama.top/posts/801f.html"/>
-    <id>https://blog.asiama.top/posts/801f.html</id>
-    <published>2020-12-28T02:42:33.000Z</published>
-    <updated>2020-12-29T06:52:03.586Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;reduce方法用于对stream中元素进行聚合求值，最常见的用法就是将stream中一连串的值合成为单个值，比如为一个包含一系列数值的数组求和。&lt;/p&gt;
-&lt;p&gt;reduce方法有三个重载的方法，方法签名如下：&lt;/p&gt;
-&lt;pre class=&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="Stream" scheme="https://blog.asiama.top/categories/Stream/"/>
-    
-    
-    <category term="JAVA" scheme="https://blog.asiama.top/tags/JAVA/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Stream中flatmap使用</title>
-    <link href="https://blog.asiama.top/posts/9fb2.html"/>
-    <id>https://blog.asiama.top/posts/9fb2.html</id>
-    <published>2020-12-28T01:19:59.000Z</published>
-    <updated>2020-12-29T06:51:38.704Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;headerlink&quot; title=&quot;介绍&quot;&gt;&lt;/a&gt;介绍&lt;/h3&gt;&lt;h4 id=&quot;我的理解&quot;&gt;&lt;a href=&quot;#我的理解&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="Stream" scheme="https://blog.asiama.top/categories/Stream/"/>
-    
-    
-    <category term="JAVA" scheme="https://blog.asiama.top/tags/JAVA/"/>
     
   </entry>
   

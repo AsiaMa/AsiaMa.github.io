@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="MySQL权限相关, Java,Git,SpringBoot,SpringCloud,SpringCloud Alibaba等">
+    <meta name="keywords" content="Redis常用命令, Java,Git,SpringBoot,SpringCloud,SpringCloud Alibaba等">
     <meta name="description" content="专注WJava后端,大数据,分享知识,分享生活">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>MySQL权限相关 | 三十二道街</title>
+    <title>Redis常用命令 | 三十二道街</title>
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/awesome/css/all.css">
@@ -309,12 +309,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/14.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/18.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">MySQL权限相关</h1>
+                    <h1 class="description center-align post-title">Redis常用命令</h1>
                 </div>
             </div>
         </div>
@@ -431,8 +431,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/MySQL/">
-                                <span class="chip bg-color">MySQL</span>
+                            <a href="/tags/Redis/">
+                                <span class="chip bg-color">Redis</span>
                             </a>
                         
                     </div>
@@ -447,28 +447,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-12-05
+                    2021-01-18
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-12-29
+                    2021-01-18
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    199
+                    570
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    2 分
                 </div>
                 
 
@@ -483,14 +483,104 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="修改密码"><a href="#修改密码" class="headerlink" title="修改密码"></a>修改密码</h3><pre class=" language-mysql"><code class="language-mysql">$ SET PASSWORD FOR root@localhost='A123456!'</code></pre>
-<h3 id="创建用户"><a href="#创建用户" class="headerlink" title="创建用户"></a>创建用户</h3><pre class=" language-mysql"><code class="language-mysql"># CREATE USER 新用户名 IDENTIFIED BY '密码'
-$ CREATE USER asiama@localhost IDENTIFIED BY 'A123456!'</code></pre>
-<h3 id="设置用户权限"><a href="#设置用户权限" class="headerlink" title="设置用户权限"></a>设置用户权限</h3><pre class=" language-mysql"><code class="language-mysql"># GRANT 赋予的权限 ON 数据库名.表名 TO 用户名
-$ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
+                <ol>
+<li>获得符合规则的键名列表</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ KEYS pattern</code></pre>
+<p>pattern 支持 glob 风格通配符格式：</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>？</td>
+<td>匹配一个字符</td>
+</tr>
+<tr>
+<td>*</td>
+<td>匹配任意个（包括0个）字符</td>
+</tr>
+<tr>
+<td>[]</td>
+<td>匹配括号间的任一字符，可以使用 “-” 符号表示一个范围，如 a[b-d] 可以匹配 “ab”、“ac” 和 “ad”</td>
+</tr>
+<tr>
+<td>\x</td>
+<td>匹配字符 x，用于转义符号。如要匹配 “?” 就需要使用 ?</td>
+</tr>
+</tbody></table>
 <blockquote>
-<p>用户名需要按照“用户名@主机名”的方式书写（如果不确定主机名，可以”用户名@%”来允许所有主机）。“赋予的权限”如果是所有的权限，就设置为“ALL”；如果仅允许SELECT和UPDATE,就设置为“SELECT, UPDATE”；如果是所有的数据库的所有表，就设置为“*.*”</p>
+<p>KEYS 命令需要遍历 Redis 中的所有键，当键的数量较多时会影响性能，不建议在生产环境中使用。Redis 区分命令大小写。</p>
 </blockquote>
+<ol start="2">
+<li>判断一个键是否存在</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ EXISTS key</code></pre>
+<p>如果键存在则返回整数类型1，否则返回0。</p>
+<ol start="3">
+<li>删除键</li>
+</ol>
+<pre><code>$ DEL key</code></pre>
+<p>可以删除一个或多个键，返回值是删除的键的个数。</p>
+<blockquote>
+<p><strong>技巧</strong>     DEL 命令的参数不支持通配符，但我们可以结合 Linux 的管道和 xargs 命令自己实现删除所有符合规则的键盘。比如要删除所有以 “user:” 开头的键，就可以执行<code>redis-cli KEYS "user:*" | xagrs redis cli DEL</code>。另外由于 DEL 命令支持多个键作为参数，所以还可执行如下命令来达到同样的效果，性能更好。</p>
+<pre class=" language-bash"><code class="language-bash">$ redis-cli DEL `redis-cli KEYS <span class="token string">"user:*"</span>`</code></pre>
+</blockquote>
+<ol start="4">
+<li>获得键值的数据类型</li>
+</ol>
+<pre><code>$ TYPE key</code></pre>
+<ol start="5">
+<li>赋值与取值</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ SET key value
+$ GET key</code></pre>
+<ol start="6">
+<li>递增数字</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ INCR key</code></pre>
+<ol start="7">
+<li>减少数字</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ DECR key</code></pre>
+<ol start="8">
+<li>增加指定的整数</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ INCRBY key increment</code></pre>
+<p>INCRBY 命令与 INCR 命令基本一样，只不过前者可以通过 increment 参数指定一次增加的数值，如：</p>
+<pre class=" language-bash"><code class="language-bash">$ INCRBY bar 2
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 2
+$ INCRBY bar 3
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 3</code></pre>
+<ol start="9">
+<li>减少指定的整数</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ DECRBY key decrement</code></pre>
+<ol start="10">
+<li>增加指定浮点数</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ INCRBYFLOAT key increment</code></pre>
+<ol start="11">
+<li>向尾部追加值</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ APPEND key value</code></pre>
+<p>APPENＤ 的作用是向键值的末尾追加 value。如果键不存在则将该键的值设置为 value，即相当与 SET key value。返回值的追加后字符串的总长度。如：</p>
+<pre class=" language-bash"><code class="language-bash">$ SET key hello
+Ok
+$ APPEND key <span class="token string">" world!"</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 12</code></pre>
+<ol start="12">
+<li>获取字符串长度</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ STRLEN key</code></pre>
+<ol start="13">
+<li>同时获得/设置多个键值</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ MGET key <span class="token punctuation">[</span>key <span class="token punctuation">..</span>.<span class="token punctuation">]</span>
+$ MSET key value <span class="token punctuation">[</span>key value <span class="token punctuation">..</span>.<span class="token punctuation">]</span></code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -534,7 +624,7 @@ $ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://blog.asiama.top/posts/8cf.html">https://blog.asiama.top/posts/8cf.html</a>
+                    <a href="https://blog.asiama.top/posts/4f87.html">https://blog.asiama.top/posts/4f87.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -572,8 +662,8 @@ $ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/MySQL/">
-                                    <span class="chip bg-color">MySQL</span>
+                                <a href="/tags/Redis/">
+                                    <span class="chip bg-color">Redis</span>
                                 </a>
                             
                         </div>
@@ -744,7 +834,7 @@ $ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
         repo: 'asiama.github.io',
         owner: 'asiama',
         admin: "asiama",
-        id: '2020-12-05T22-07-01',
+        id: '2021-01-18T19-48-05',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -772,13 +862,13 @@ $ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/posts/f6d7.html">
+                <a href="/posts/5969.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/9.jpg" class="responsive-img" alt="MySQL基础命令">
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/15.jpg" class="responsive-img" alt="Redis位操作">
                         
-                        <span class="card-title">MySQL基础命令</span>
+                        <span class="card-title">Redis位操作</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -789,7 +879,7 @@ $ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-12-06
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-01-18
                         </span>
                         <span class="publish-author">
                             
@@ -802,8 +892,8 @@ $ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/MySQL/">
-                        <span class="chip bg-color">MySQL</span>
+                    <a href="/tags/Redis/">
+                        <span class="chip bg-color">Redis</span>
                     </a>
                     
                 </div>
@@ -817,13 +907,13 @@ $ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/posts/17fc.html">
+                <a href="/posts/11b.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/11.jpg" class="responsive-img" alt="MySQL编码设置">
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/14.jpg" class="responsive-img" alt="客户端连接Redis">
                         
-                        <span class="card-title">MySQL编码设置</span>
+                        <span class="card-title">客户端连接Redis</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -834,7 +924,7 @@ $ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-12-05
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-18
                             </span>
                         <span class="publish-author">
                             
@@ -847,8 +937,8 @@ $ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/MySQL/">
-                        <span class="chip bg-color">MySQL</span>
+                    <a href="/tags/Redis/">
+                        <span class="chip bg-color">Redis</span>
                     </a>
                     
                 </div>

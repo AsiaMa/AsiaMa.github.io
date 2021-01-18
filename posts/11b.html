@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="MySQL权限相关, Java,Git,SpringBoot,SpringCloud,SpringCloud Alibaba等">
+    <meta name="keywords" content="客户端连接Redis, Java,Git,SpringBoot,SpringCloud,SpringCloud Alibaba等">
     <meta name="description" content="专注WJava后端,大数据,分享知识,分享生活">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>MySQL权限相关 | 三十二道街</title>
+    <title>客户端连接Redis | 三十二道街</title>
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/awesome/css/all.css">
@@ -314,7 +314,7 @@
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">MySQL权限相关</h1>
+                    <h1 class="description center-align post-title">客户端连接Redis</h1>
                 </div>
             </div>
         </div>
@@ -431,8 +431,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/MySQL/">
-                                <span class="chip bg-color">MySQL</span>
+                            <a href="/tags/Redis/">
+                                <span class="chip bg-color">Redis</span>
                             </a>
                         
                     </div>
@@ -447,21 +447,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-12-05
+                    2021-01-18
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-12-29
+                    2021-01-18
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    199
+                    388
                 </div>
                 
 
@@ -483,14 +483,27 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="修改密码"><a href="#修改密码" class="headerlink" title="修改密码"></a>修改密码</h3><pre class=" language-mysql"><code class="language-mysql">$ SET PASSWORD FOR root@localhost='A123456!'</code></pre>
-<h3 id="创建用户"><a href="#创建用户" class="headerlink" title="创建用户"></a>创建用户</h3><pre class=" language-mysql"><code class="language-mysql"># CREATE USER 新用户名 IDENTIFIED BY '密码'
-$ CREATE USER asiama@localhost IDENTIFIED BY 'A123456!'</code></pre>
-<h3 id="设置用户权限"><a href="#设置用户权限" class="headerlink" title="设置用户权限"></a>设置用户权限</h3><pre class=" language-mysql"><code class="language-mysql"># GRANT 赋予的权限 ON 数据库名.表名 TO 用户名
-$ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
-<blockquote>
-<p>用户名需要按照“用户名@主机名”的方式书写（如果不确定主机名，可以”用户名@%”来允许所有主机）。“赋予的权限”如果是所有的权限，就设置为“ALL”；如果仅允许SELECT和UPDATE,就设置为“SELECT, UPDATE”；如果是所有的数据库的所有表，就设置为“*.*”</p>
-</blockquote>
+                <h3 id="发送命令"><a href="#发送命令" class="headerlink" title="发送命令"></a>发送命令</h3><p>通过 redis-cli 向 Redis 发送命令有两种方式，第一种方式是将命令作为 redis-cli 的参数执行，如：</p>
+<pre class=" language-bash"><code class="language-bash">$ redis-cli SHUTDOWN</code></pre>
+<p>redis-cli 执行时会自动按照默认配置（服务器地址为 127.0.0.1，端口号为 6379）连接 Redis，通过 -h 和 -p 参数可以自定义地址和端口号：</p>
+<pre class=" language-bash"><code class="language-bash">$ redis-cli -h 127.0.0.1 -p 6379</code></pre>
+<p>第二种方式是不附带参数运行 redis-cli，这样会进入交互模式，可以自由输入命令，例如：</p>
+<pre class=" language-bash"><code class="language-bash">$ redis-cli
+127.0.0.1:6379<span class="token operator">></span> PING
+PONG</code></pre>
+<p>这种方式在输入多条命令时比较方便。</p>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>Redis 支持通过配置文件来设置启动参数，如：</p>
+<pre class=" language-bash"><code class="language-bash">$ redis-server /path/to/redis.conf</code></pre>
+<p>通过启动参数传递同名的配置选项会覆盖配置文件中相应的参数，就像这样：</p>
+<pre class=" language-bash"><code class="language-bash">$ redis-server /path/to/redis.conf --loglevel warning</code></pre>
+<p>Redis 运行时通过 CONFIG SET 命令在不重新启动 Redis 的情况下动态修改部分 Redid配置：</p>
+<pre class=" language-bash"><code class="language-bash">$ CONFIG SET loglevel warning
+OK</code></pre>
+<p>并不是所有配置都可以使用Config SET 命令修改。同样在运行的时候也可以使用 CONFIG GET 命令获得 Redis 当前的配置情况：</p>
+<pre class=" language-bash"><code class="language-bash">$ CONFIG GET loglevel
+1<span class="token punctuation">)</span> <span class="token string">"loglevel"</span>
+2<span class="token punctuation">)</span> <span class="token string">"notice"</span></code></pre>
+<p>其中第一行字符串回复表示的是选项名，第二行既是选项值。</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -534,7 +547,7 @@ $ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://blog.asiama.top/posts/8cf.html">https://blog.asiama.top/posts/8cf.html</a>
+                    <a href="https://blog.asiama.top/posts/11b.html">https://blog.asiama.top/posts/11b.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -572,8 +585,8 @@ $ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/MySQL/">
-                                    <span class="chip bg-color">MySQL</span>
+                                <a href="/tags/Redis/">
+                                    <span class="chip bg-color">Redis</span>
                                 </a>
                             
                         </div>
@@ -744,7 +757,7 @@ $ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
         repo: 'asiama.github.io',
         owner: 'asiama',
         admin: "asiama",
-        id: '2020-12-05T22-07-01',
+        id: '2021-01-18T19-47-15',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -772,13 +785,13 @@ $ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/posts/f6d7.html">
+                <a href="/posts/4f87.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/9.jpg" class="responsive-img" alt="MySQL基础命令">
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/18.jpg" class="responsive-img" alt="Redis常用命令">
                         
-                        <span class="card-title">MySQL基础命令</span>
+                        <span class="card-title">Redis常用命令</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -789,7 +802,7 @@ $ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-12-06
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-01-18
                         </span>
                         <span class="publish-author">
                             
@@ -802,8 +815,8 @@ $ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/MySQL/">
-                        <span class="chip bg-color">MySQL</span>
+                    <a href="/tags/Redis/">
+                        <span class="chip bg-color">Redis</span>
                     </a>
                     
                 </div>
@@ -817,13 +830,13 @@ $ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/posts/17fc.html">
+                <a href="/posts/dc55.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/11.jpg" class="responsive-img" alt="MySQL编码设置">
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/14.jpg" class="responsive-img" alt="Redis的安装与启动">
                         
-                        <span class="card-title">MySQL编码设置</span>
+                        <span class="card-title">Redis的安装与启动</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -834,7 +847,7 @@ $ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-12-05
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-18
                             </span>
                         <span class="publish-author">
                             
@@ -847,8 +860,8 @@ $ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/MySQL/">
-                        <span class="chip bg-color">MySQL</span>
+                    <a href="/tags/Redis/">
+                        <span class="chip bg-color">Redis</span>
                     </a>
                     
                 </div>

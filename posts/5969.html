@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="MySQL权限相关, Java,Git,SpringBoot,SpringCloud,SpringCloud Alibaba等">
+    <meta name="keywords" content="Redis位操作, Java,Git,SpringBoot,SpringCloud,SpringCloud Alibaba等">
     <meta name="description" content="专注WJava后端,大数据,分享知识,分享生活">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>MySQL权限相关 | 三十二道街</title>
+    <title>Redis位操作 | 三十二道街</title>
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/awesome/css/all.css">
@@ -309,12 +309,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/14.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/15.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">MySQL权限相关</h1>
+                    <h1 class="description center-align post-title">Redis位操作</h1>
                 </div>
             </div>
         </div>
@@ -431,8 +431,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/MySQL/">
-                                <span class="chip bg-color">MySQL</span>
+                            <a href="/tags/Redis/">
+                                <span class="chip bg-color">Redis</span>
                             </a>
                         
                     </div>
@@ -447,28 +447,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-12-05
+                    2021-01-18
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-12-29
+                    2021-01-18
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    199
+                    812
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    3 分
                 </div>
                 
 
@@ -483,13 +483,58 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="修改密码"><a href="#修改密码" class="headerlink" title="修改密码"></a>修改密码</h3><pre class=" language-mysql"><code class="language-mysql">$ SET PASSWORD FOR root@localhost='A123456!'</code></pre>
-<h3 id="创建用户"><a href="#创建用户" class="headerlink" title="创建用户"></a>创建用户</h3><pre class=" language-mysql"><code class="language-mysql"># CREATE USER 新用户名 IDENTIFIED BY '密码'
-$ CREATE USER asiama@localhost IDENTIFIED BY 'A123456!'</code></pre>
-<h3 id="设置用户权限"><a href="#设置用户权限" class="headerlink" title="设置用户权限"></a>设置用户权限</h3><pre class=" language-mysql"><code class="language-mysql"># GRANT 赋予的权限 ON 数据库名.表名 TO 用户名
-$ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
+                <h3 id="位操作命令"><a href="#位操作命令" class="headerlink" title="位操作命令"></a>位操作命令</h3><pre class=" language-bash"><code class="language-bash">$ GETBIT key offset
+$ SETBIT key offset value
+$ BITCOUNT key <span class="token punctuation">[</span>start<span class="token punctuation">]</span> <span class="token punctuation">[</span>end<span class="token punctuation">]</span>
+$ BITOP operation destkey key <span class="token punctuation">[</span>key <span class="token punctuation">..</span>.<span class="token punctuation">]</span></code></pre>
+<h3 id="演示"><a href="#演示" class="headerlink" title="演示"></a>演示</h3><p>一个字节由 8 个二进制位组成，Redis 提供了 4 个命令可以直接对二进制位进行操作。为了演示，我们首先将 foo 赋值为 bar：</p>
+<pre class=" language-bash"><code class="language-bash">$ SET foo bar
+OK</code></pre>
+<p>bar 的 3 个字母 “b”, “a” 和 “r” 对应的 ASCII 码分别为98、97 和 114，转换为二进制后分别为 1100010、1100001 和 1110010，所以 foo 键中的二进制位结构如下所示：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/14771610958236_.pic_hd.jpg"></p>
+<p><code>GETBIT</code> 命令可以获得一个字符串类型键指定位置的二进制位的值（0 或 1），索引从 0 开始：</p>
+<pre class=" language-bash"><code class="language-bash">$ GETBIT foo 0
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 0
+$ GETBIT foo 6
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1</code></pre>
+<p>如果需要获取的二进制位的索引超出了键值的二进制为的实际长度则默认值是0：</p>
+<pre class=" language-bash"><code class="language-bash">$ GETBIT foo 10000
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 0</code></pre>
+<p><code>SETBIT</code> 命令可以设置字符串类型键指定位置的二进制位的值，返回值是该位置的旧值。如我们要将 foo 键值设置为 arr，可以通过位操作将 foo 键的二进制位的索引第 6 位设为0，第 7 位设为1：</p>
+<pre class=" language-bash"><code class="language-bash">$ SETBIT foo 6 0
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1
+$ SETBIT foo 7 1
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 0
+$ GET foo
+<span class="token string">"aar"</span></code></pre>
+<p>如果要设置的位置超过了键值的二进制位的长度，<code>SETBIT</code> 命令会自动将中间的二进制位设置为 0。</p>
+<p><code>BITCOUNT</code> 命令可以获得字符串类型键中值是1的二进制位个数，如：</p>
+<pre class=" language-bash"><code class="language-bash">$ BITCOUNT foo
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 10</code></pre>
+<p>可以通过参数来限制统计的字节范围，如我们只希望统计前两个字节（即 “aa” ）:</p>
+<pre class=" language-bash"><code class="language-bash">$ BITCOUNT foo 0 1
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 6</code></pre>
+<p><code>BITOP</code> 命令可以对多个字符串类型键进行位运算，并将结果存储在 destkey 参数指定的键中。<code>BITOP</code> 命令支持的运算操作有 AND、OR、XOR 和 NOT。</p>
+<pre class=" language-bash"><code class="language-bash">$ SET foo1 bar
+OK
+$ SET foo2 aar
+OK
+$ BITOP OR res foo1 foo2
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 3
+$ GET res
+<span class="token string">"car"</span></code></pre>
+<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/14841610959643_.pic_hd.jpg"></p>
+<p><code>BITPOS</code>  命令可以获得指定键的第一个位置是 0 或者 1 的位置。还是以 ”bar“这个键值位例，如果想获取键值中的第一个二进制位为 1 的偏移量，则可以执行：</p>
+<pre class=" language-bash"><code class="language-bash">$ SET foo bar
+OK
+$ BITPOS foo 1
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1</code></pre>
+<p><code>BITOPS</code> 命令的第二个和第三个参数分别可以用来指定要查询的起始字节和结束字节。注意这里的单位不再是二进制位，而是字节。如果我们想查询的第二个字节到第三个字节之间（即 ”a“ 和 ”r“）出现的第一个值位 1 的二进制位的偏移量，则可以执行：</p>
+<pre><code>$ BITPOS foo 1 1 2
+(integer) 9</code></pre>
+<p>这里的返回结果的偏移量是从头开始算起的，与起始字节无关。</p>
 <blockquote>
-<p>用户名需要按照“用户名@主机名”的方式书写（如果不确定主机名，可以”用户名@%”来允许所有主机）。“赋予的权限”如果是所有的权限，就设置为“ALL”；如果仅允许SELECT和UPDATE,就设置为“SELECT, UPDATE”；如果是所有的数据库的所有表，就设置为“*.*”</p>
+<p>如果不设置结束字节且键值的所有二进制位都是 1 ，则当要查询值为 0 的二进制位偏移量时，返回结果会是键值长度的下一个字位的偏移量。这是因为 Redis 会认为键值长度之后的二进制位都是 0。</p>
 </blockquote>
 <script>
         document.querySelectorAll('.github-emoji')
@@ -534,7 +579,7 @@ $ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://blog.asiama.top/posts/8cf.html">https://blog.asiama.top/posts/8cf.html</a>
+                    <a href="https://blog.asiama.top/posts/5969.html">https://blog.asiama.top/posts/5969.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -572,8 +617,8 @@ $ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/MySQL/">
-                                    <span class="chip bg-color">MySQL</span>
+                                <a href="/tags/Redis/">
+                                    <span class="chip bg-color">Redis</span>
                                 </a>
                             
                         </div>
@@ -744,7 +789,7 @@ $ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
         repo: 'asiama.github.io',
         owner: 'asiama',
         admin: "asiama",
-        id: '2020-12-05T22-07-01',
+        id: '2021-01-18T19-49-20',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -768,17 +813,18 @@ $ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/posts/f6d7.html">
+                <a href="/posts/5969.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/9.jpg" class="responsive-img" alt="MySQL基础命令">
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/15.jpg" class="responsive-img" alt="Redis位操作">
                         
-                        <span class="card-title">MySQL基础命令</span>
+                        <span class="card-title">Redis位操作</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -788,9 +834,9 @@ $ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-12-06
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-18
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -799,11 +845,12 @@ $ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/MySQL/">
-                        <span class="chip bg-color">MySQL</span>
+                    <a href="/tags/Redis/">
+                        <span class="chip bg-color">Redis</span>
                     </a>
                     
                 </div>
@@ -817,13 +864,13 @@ $ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/posts/17fc.html">
+                <a href="/posts/4f87.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/11.jpg" class="responsive-img" alt="MySQL编码设置">
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/18.jpg" class="responsive-img" alt="Redis常用命令">
                         
-                        <span class="card-title">MySQL编码设置</span>
+                        <span class="card-title">Redis常用命令</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -834,7 +881,7 @@ $ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-12-05
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-18
                             </span>
                         <span class="publish-author">
                             
@@ -847,8 +894,8 @@ $ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/MySQL/">
-                        <span class="chip bg-color">MySQL</span>
+                    <a href="/tags/Redis/">
+                        <span class="chip bg-color">Redis</span>
                     </a>
                     
                 </div>
