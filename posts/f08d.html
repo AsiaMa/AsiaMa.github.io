@@ -1,0 +1,1781 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Redis常用数据类型, Java,Git,SpringBoot,SpringCloud,SpringCloud Alibaba等">
+    <meta name="description" content="专注WJava后端,大数据,分享知识,分享生活">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>Redis常用数据类型 | 三十二道街</title>
+    <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/css/my.css">
+
+    <script src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="三十二道街" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">三十二道街</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">三十二道街</div>
+        <div class="logo-desc">
+            
+            专注WJava后端,大数据,分享知识,分享生活
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/AsiaMa" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/AsiaMa" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/23.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">Redis常用数据类型</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Redis/">
+                                <span class="chip bg-color">Redis</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2021-01-19
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2021-01-19
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    5.8k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    22 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h3 id="String"><a href="#String" class="headerlink" title="String"></a>String</h3><p>字符串类型是 Redis 中最基本的数据类型，它能存储任何形式的字符串，包括二进制数据。你可以用其存储用户的邮箱、JSON化的对象甚至是一张图片。一个字符串类型键允许村塾的数据的最大容量是521MB。</p>
+<ol>
+<li>赋值与取值</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ SET key value
+$ GET key</code></pre>
+<ol start="2">
+<li>递增数字</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ INCR num</code></pre>
+<p>字符串类型可以存储任何形式的字符串，当存储的字符串是整数形式时，Redis 提供了一个实用的命令 INCR，其作用是让当前键值递增，并返回递增后的值。</p>
+<pre class=" language-bash"><code class="language-bash">$ INCR num
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1
+$ INCR num
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 2</code></pre>
+<p>当要操作的键不存在时，会默认值为 0 ，所以第一次递增后的结果是 1。当键值不是整数时 Redis 会提示错误。</p>
+<ol start="3">
+<li>增加指定的整数</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ INCRBY key increment</code></pre>
+<p>与 <code>INCR</code> 命令基本一样，只不过可以通过 <code>increment</code> 参数指定一次增加的数值。如：</p>
+<pre class=" language-bash"><code class="language-bash">$ INCRBY bar 2
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 2
+$ INCRBY bar 3
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 5</code></pre>
+<ol start="4">
+<li>减少指定的整数</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ DECR key
+$ DECRBY key increment</code></pre>
+<ol start="5">
+<li>增加指定的浮点数</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ INCRBYFLOAT key increment</code></pre>
+<p>类似 <code>INCRBY</code> 命令，差别是可以递增一个双精度浮点数。</p>
+<pre class=" language-bash"><code class="language-bash">$ INCRBYFLOAT foo 2.7
+<span class="token string">"2.7"</span>
+$ INCRBYFLOAT foo 5E+4
+<span class="token string">"50002.69999999999999929"</span></code></pre>
+<ol start="6">
+<li>向尾部追加值</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ APPEND key value</code></pre>
+<p><code>APPEND</code> 作用是向键值的末尾追加 value。如果键不存在则该键的值为 value，即相当于 SET key value。返回值是追加后字符串的长度。如：</p>
+<pre class=" language-bash"><code class="language-bash">$ SET key hello
+OK
+$ APPEND key <span class="token string">" world!"</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 12</code></pre>
+<p>此时 key 的值是“hello world!”。APPEND 命令的第二个参数加了双引号，原因是该参数包含空格，在 redis-cli 中需要输入双引号以示区别。</p>
+<ol start="7">
+<li>获取字符串长度</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ STRLEN key</code></pre>
+<ol start="8">
+<li>同时获得/设置多个键值</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ MGET key <span class="token punctuation">[</span>key <span class="token punctuation">..</span>.<span class="token punctuation">]</span>
+$ MSET key value <span class="token punctuation">[</span>key value <span class="token punctuation">..</span>.<span class="token punctuation">]</span></code></pre>
+<h3 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h3><p>散列类型（hash）的键值也是一种字典结构，其存储了字段（field）和字段值的映射，但字段值只能是字符串，不支持其它数据类型。换句话说，散列类型不能嵌套其它的数据类型。一个散列类型键可以包含至多<code>2的32次方-1</code>个字段。</p>
+<blockquote>
+<p>提示    除了散列类型，Redis 的其它数据类型同样不支持数据类型嵌套。比如集合类型的每个元素都只能是字符串，不能是另一个集合或散列表等。</p>
+</blockquote>
+<ol>
+<li>赋值与取值</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ HSET key field value
+$ HGET key field
+$ HMSET key field value <span class="token punctuation">[</span>field value <span class="token punctuation">..</span>.<span class="token punctuation">]</span>
+$ HMGET key field <span class="token punctuation">[</span>field <span class="token punctuation">..</span>.<span class="token punctuation">]</span>
+$ HGETALL key</code></pre>
+<p><code>HSET</code> 命令用来给字段赋值，而 <code>HGET</code> 命令用来获得字段的值。</p>
+<pre class=" language-bash"><code class="language-bash">$ HSET car price 500
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1
+$ HSET car name BMW
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1
+$ HGET car name
+<span class="token string">"BMW"</span></code></pre>
+<p><code>HSET</code>  命令的方便之处在于不区分插入和更新操作，这意味着修改数据时不用实现判断字段是否存在来决定要执行的是插入操作（update） 还是更新操作（insert）。当执行的是插入操作时（即之前字段不存在） <code>HSET</code>命令会返回 1 ，当执行的是更新操作时（即之前字段已经存在） <code>HSET</code> 命令会返回 0 。</p>
+<p>如果想获取键中所有字段和字段值却不知道键中有哪些字段时，应该使用 HGETALL 命令。</p>
+<pre class=" language-bash"><code class="language-bash">$ HGETALL car
+1<span class="token punctuation">)</span> <span class="token string">"price"</span>
+2<span class="token punctuation">)</span> <span class="token string">"500"</span>
+3<span class="token punctuation">)</span> <span class="token string">"name"</span>
+4<span class="token punctuation">)</span> <span class="token string">"BMW"</span></code></pre>
+<p>返回的结果是字段和字段值组成的列表，不是很直观。</p>
+<ol start="2">
+<li>判断字段是否存在</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ HEXISTS key field</code></pre>
+<p>存在返回 1 ，否则返回 0 。</p>
+<ol start="3">
+<li>当字段不存在时赋值</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ HSETNX key field value</code></pre>
+<p><code>HSETNX</code> 命令与  <code>HSET</code> 命令类似，区别在于如果字段已经存在，<code>HSETNX</code> 命令将不执行任何操作。<code>HSETNX</code> 命令是原子操作。</p>
+<ol start="4">
+<li>增加数字</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ HINCRBY key field increment</code></pre>
+<p>与字符串类型命令<code>INCRBY</code>, <code>HINCRBY</code> 命令与之类似，可以是字段值增加指定的整数。散列类型没有 <code>HINCR</code> 命令，但是可以通过 <code>HINCRBY key field 1</code> 来实现。</p>
+<pre class=" language-bash"><code class="language-bash">$ HINCRBY person score 60
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 60</code></pre>
+<p>之前 person 键不存在， <code>HINCRBY</code> 命令会自动建立该键并默认 score 字段在执行命令前的值为 “0”。命令的返回值是增值后的字段值。</p>
+<ol start="5">
+<li>删除字段</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ HDEL key field <span class="token punctuation">[</span>field <span class="token punctuation">..</span>.<span class="token punctuation">]</span></code></pre>
+<p><code>HDEL</code> 命令可以删除一个或多个字段。返回值是被删除的字段个数。</p>
+<pre class=" language-bash"><code class="language-bash">$ HDEL car price
+<span class="token punctuation">(</span>integer 1<span class="token punctuation">)</span></code></pre>
+<ol start="6">
+<li>只获取字段名或字段值</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ HKEYS key
+$ KVALS key</code></pre>
+<ol start="7">
+<li>获取字段数量</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ HLEN key</code></pre>
+<h3 id="List"><a href="#List" class="headerlink" title="List"></a>List</h3><p>列表类型（List）可以存储一个有序的字符串列表，常用的操作是向列表两端添加元素，或者获得列表的某一个片段。</p>
+<p>列表类型的内部是使用双向链表（double linked list）实现的，所以向列表两端添加元素的时间复杂度是 O(1)，获取越接近两端的元素速度就越快。这种特性使列表类型能非常快速地完成关系数据库难以应付的场景：如社交网站的新鲜事，我们关心的只是最新的内容，使用列表类型存储，即使新鲜事的总数达到几千万个，获取其中最新的100条数据也是极快的。</p>
+<p>与散列类型键最多能容纳的字段数量相同，一个列表类型键最多能容纳<code>2的32次方-1</code>个元素。</p>
+<ol>
+<li>向列表两端添加元素</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ LPUSH key value <span class="token punctuation">[</span>value <span class="token punctuation">..</span>.<span class="token punctuation">]</span>
+$ RPUSH key value <span class="token punctuation">[</span>value <span class="token punctuation">..</span>.<span class="token punctuation">]</span></code></pre>
+<p><code>LPUSH</code> 命令用来向列表左边增加元素，返回值表示增加元素后列表的长度。</p>
+<pre class=" language-bash"><code class="language-bash">$ LPUSH numbers 1
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1</code></pre>
+<p>这时 numbers 键中的数据：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/15121611018139_.pic_hd.jpg"></p>
+<p><code>LPUSH</code> 命令还支持同时增加多个元素：</p>
+<pre class=" language-bash"><code class="language-bash">$ LPUSH numbers 2 3
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 3</code></pre>
+<p><code>LPUSH</code> 会先向列表左边加入 “2”，然后再加入 “3”，所以此时 numbers 键中的数据：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/15131611018159_.pic_hd.jpg"></p>
+<p>向列表右边增加元素的话则使用 <code>RPUSH</code> 命令，其用法和 <code>LPUSH</code> 命令一样：</p>
+<pre class=" language-bash"><code class="language-bash">$ RPUSH numbers 0 -1
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 5</code></pre>
+<p>此时 numbers 键中的数据：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/15141611018309_.pic_hd.jpg"></p>
+<ol start="2">
+<li>从列表两端弹出元素</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ LPOP key
+$ RPOP key</code></pre>
+<p><code>LPOP</code> 命令可以从列表左边弹出一个元素。 <code>LPOP</code> 命令执行两步操作：第一步是将列表左边的元素从列表中移除，第二步是返回被移除元素的值。</p>
+<pre class=" language-bash"><code class="language-bash">$ LPOP numbers
+<span class="token string">"3"</span>
+$ RPOP numbers
+<span class="token string">"-1"</span></code></pre>
+<p>此时 number 键中的数据：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/15171611018928_.pic_hd.jpg"></p>
+<p>结合上面提到的 4 个命令可以使用列表类型来模拟栈和队列的操作：如果想把列表当成栈，则搭配使用 **<code>LPUSH</code> 和 <code>RPOP</code> **或 **<code>RPUSH</code> 和 <code>LPOP</code>**。</p>
+<ol start="3">
+<li>获取列表中元素的个数</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">LLEN key</code></pre>
+<p>当键不存在时 <code>LLEN</code> 会返回 0。</p>
+<pre class=" language-bash"><code class="language-bash">$ LLEN numbers
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 3</code></pre>
+<p><code>LLEN</code> 命令的功能类似 SQL 语句 <code>SELECT COUNT(*) FROM table_name</code>，但是 LLEN 的时间复杂度为 O(1)，使用时 Redis 会直接读取现成的值，而不像部分关系数据库（如使用 InnoDB 存储引擎的 MySQL 表）那样需要遍历一遍数据表来统计条目数量。</p>
+<ol start="4">
+<li>获得列表片段</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ LRANGE key start stop</code></pre>
+<p><code>LRANGE</code> 命令是列表类型最常用的命令之一，它能够获得列表中的某一片段。<code>LRANGE</code> 命令将返回索引从 start 到 top 之间的所有元素 （包含两端的元素）。Redis 的列表起始索引为 0：</p>
+<pre class=" language-bash"><code class="language-bash">$ LRANGE numbers 0 2
+1<span class="token punctuation">)</span> <span class="token string">"2"</span>
+2<span class="token punctuation">)</span> <span class="token string">"1"</span>
+3<span class="token punctuation">)</span> <span class="token string">"0"</span></code></pre>
+<p><code>LRANGE</code> 命令也支持负索引，表示从右边开始计算序数，如 “-1” 表示最右边第一个元素，“-2” 表示最右边第二个元素，依次类推：</p>
+<pre class=" language-bash"><code class="language-bash">$ LRANGE numbers -2 -1</code></pre>
+<p>显然，<code>LRANGE numbers 0 -1</code> 可以获取列表中的所有元素。另外一些特殊情况如下：</p>
+<ul>
+<li>如果 start 的索引位置比 stop 的索引位置靠后，则会返回空列表。</li>
+<li>如果 stop 大于实际的索引范围，则会返回到列表最右边的元素。</li>
+</ul>
+<ol start="5">
+<li>删除列表中指定的值</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ LREM key count value</code></pre>
+<p><code>LREM</code> 命令会删除列表中前 count 个值为 value 的元素，返回值是实际删除的元素个数。根据 count 值的不同，<code>LREM</code> 命令的执行方式会略有差异。</p>
+<ul>
+<li><p>当 count &gt; 0 时，<code>LREM</code> 命令会从列表左边开始删除前 count 个值为 value 的元素。</p>
+</li>
+<li><p>当 count &lt; 0 时，<code>LREM</code> 命令会从列表右边开始删除前 count 个值为 value 的元素。</p>
+</li>
+<li><p>当 count = 0 时，<code>LREM</code> 命令会删除所有值为 value 的元素。</p>
+</li>
+</ul>
+<pre class=" language-bash"><code class="language-bash">$ RPUSH numbers 2
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 4
+$ LRANGE numbers 0 -1
+1<span class="token punctuation">)</span> <span class="token string">"2,"</span>
+2<span class="token punctuation">)</span> <span class="token string">"1"</span>
+3<span class="token punctuation">)</span> <span class="token string">"0"</span>
+4<span class="token punctuation">)</span> <span class="token string">"2"</span>
+<span class="token comment" spellcheck="true"># 从右边开始删除第一个值为 “2” 的元素</span>
+$ LREM numbers -1 2
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1
+$ LRANGE numbers 0 -1
+1<span class="token punctuation">)</span> <span class="token string">"2"</span>
+2<span class="token punctuation">)</span> <span class="token string">"1"</span>
+3<span class="token punctuation">)</span> <span class="token string">"0"</span></code></pre>
+<ol start="6">
+<li>获得/设置指定索引的元素值</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ LINDEX key index
+$ LSET key index value</code></pre>
+<p>如果要将列表类型当作数组来用，<code>LINDEX</code> 命令是必不可少的。<code>LINDEX</code> 命令用来返回指定索引的元素，索引从 0 开始。如：</p>
+<pre class=" language-bash"><code class="language-bash">$ LINDEX numbers 2
+<span class="token string">"0"</span></code></pre>
+<p>如果 index 是负数则表示从右边开始计算的索引，最右边元素的索引是 -1。例如：</p>
+<pre class=" language-bash"><code class="language-bash">$ LINDEX numbers -1
+<span class="token string">"0"</span></code></pre>
+<p><code>LSET</code> 是一个通过索引操作列表的命令，它会将索引为 index 的元素赋值为 value。如：</p>
+<pre class=" language-bash"><code class="language-bash">$ LSET numbers 1 7
+OK
+$ LINDEX numbers 1
+<span class="token string">"7"</span></code></pre>
+<ol start="8">
+<li>只保留列表指定片段</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ LTRIM key start end</code></pre>
+<p><code>LTRIM</code> 命令可以删除指定索引范围之外的所有元素，其指定列表范围的方法和 <code>LRANGE</code> 命令相同。就像这样:</p>
+<pre class=" language-bash"><code class="language-bash">$ LRANGE numbers 0 -1
+1<span class="token punctuation">)</span> <span class="token string">"2,"</span>
+2<span class="token punctuation">)</span> <span class="token string">"7"</span>
+3<span class="token punctuation">)</span> <span class="token string">"0"</span>
+$ LTRIM numbers 0 1
+OK
+$ LRANGE numbers 0 -1
+1<span class="token punctuation">)</span> <span class="token string">"2"</span>
+2<span class="token punctuation">)</span> <span class="token string">"7"</span></code></pre>
+<p><code>LTRIM</code> 命令常和 <code>LPUSH</code> 命令一起使用来限制列表中元素的数量，比如记录日志时，我们希望只保留最近的 100 条日志，则每次接入新元素时调用一次 LTRIM 命令即可：</p>
+<pre class=" language-bash"><code class="language-bash">$ LPUSH logs <span class="token variable">$newLOg</span>
+$ LTRIM log 0 99</code></pre>
+<ol start="9">
+<li>向列表中插入元素</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ LINSET key BEFORE<span class="token operator">|</span>AFTER pivot value</code></pre>
+<p><code>LINSERT</code> 命令首先会在列表中从左到右查找值为 pivot 的元素，然后根据第二个参数是 BEFORE 还是 AFTER 来决定将 value 插入到该元素的前面还是后面。</p>
+<pre class=" language-bash"><code class="language-bash">$ LRANGE numbers 0 -1
+1<span class="token punctuation">)</span> <span class="token string">"2"</span>
+2<span class="token punctuation">)</span> <span class="token string">"7"</span>
+$ LINSERT numbers BEFORT 2 1
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 3
+$ LRANGE numbers 0 -1
+1<span class="token punctuation">)</span> <span class="token string">"1"</span>
+2<span class="token punctuation">)</span> <span class="token string">"2"</span>
+3<span class="token punctuation">)</span> <span class="token string">"7"</span></code></pre>
+<ol start="10">
+<li>将元素从一个列表转到另一个列表</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ RPOPLPUSH <span class="token function">source</span> destination</code></pre>
+<p><code>RPOPLPUSH</code> 是个很有意思的命令，从名字就可以看出它的功能：先执行 <code>RPOP</code> 命令再执行 <code>LPUSH</code> 命令。<code>RPOPLPUSH</code> 命令会先从 source 列表类型键的右边弹出一个元素，然后将其加入到 destination 列表类型键的左边，并返回这个元素的值，这个过程是原子的。</p>
+<blockquote>
+<p>当 source 和 destination 相同时， RPOPLPUSH 命令会不断地将对尾的元素移到队首。借助这个特性我们可以实现一个网站监控系统：使用一个队列存储需要监控的网址，然后监控程序不断地使用 RPOPLPUSH 命令循环取出一个网址来测试可用性。这里使用 RPOPLPUSH 命令的好处在于程序执行过程中仍然可以不断地向网址列表中加入新网址，而且整个系统容易扩展，允许多个客户端同时处理队列。</p>
+</blockquote>
+<h3 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h3><p>一个集合类型（set）键可以存储至多 <code>2的31次方-1</code> 个字符串。集合类型和列表类型有相似之处，但很容易将它们区分开来：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>集合类型</th>
+<th>列表类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>存储内容</td>
+<td>至多 <code>2的31次方-1</code> 个字符串</td>
+<td>至多 <code>2的31次方-1</code> 个字符串</td>
+</tr>
+<tr>
+<td>有序性</td>
+<td>否</td>
+<td>是</td>
+</tr>
+<tr>
+<td>唯一性</td>
+<td>是</td>
+<td>否</td>
+</tr>
+</tbody></table>
+<p>集合类型的常用操作是向集合中加入或删除元素、判断某个元素是否存在等，由于集合类型在 Redis 内部是使用值为空的散列表（hash table） 实现的，所以这些操作的时间复杂度都是 O(1)。最方便的是多个集合类型键之间还可以进行并集、交集和差集运算。</p>
+<ol>
+<li>增加/删除元素</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ SADD key member <span class="token punctuation">[</span>member <span class="token punctuation">..</span>.<span class="token punctuation">]</span>
+$ SREM key member <span class="token punctuation">[</span>member <span class="token punctuation">..</span>.<span class="token punctuation">]</span></code></pre>
+<p><code>SADD</code> 命令用来向集合中增加一个或多个元素，如果键不存在则会自动创建。因为在一个集合中不能有相同的元素，所以如果要加入的元素已经存在与集合中就会忽略这个元素。本命令的返回值是成功加入的元素数量（忽略的元素不计算在内）。</p>
+<pre class=" language-bash"><code class="language-bash">$ SADD letters a
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1
+$ SASS letters a b c
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 2</code></pre>
+<p><code>SREM</code> 命令用来从集合中删除一个或多个元素，并返回删除成功的个数：</p>
+<pre class=" language-bash"><code class="language-bash">$ SREM letters c d
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1</code></pre>
+<ol start="2">
+<li>获得集合中的所有元素</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ SMEMBERS key</code></pre>
+<ol start="3">
+<li>判断元素是否在集合中</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ SISMEMBER key member</code></pre>
+<p>当值存在时，<code>SISMEMBER</code> 命令返回 1，当值不存在或键不存在时返回 0。</p>
+<pre class=" language-bash"><code class="language-bash">$ SISMEMBER letters a
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1</code></pre>
+<ol start="4">
+<li>集合间运算</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ SDIEF key <span class="token punctuation">[</span>key <span class="token punctuation">..</span>.<span class="token punctuation">]</span>
+$ SINTER key <span class="token punctuation">[</span>key <span class="token punctuation">..</span>.<span class="token punctuation">]</span>
+$ SUNION key <span class="token punctuation">[</span>key <span class="token punctuation">..</span>.<span class="token punctuation">]</span></code></pre>
+<ul>
+<li><code>SDIFF</code> 命令用来对多个集合执行差集运算。代表所有属于A且不属于B的元素构成的集合。</li>
+</ul>
+<pre class=" language-bash"><code class="language-bash">$ SADD setA 1 2 3
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 3
+$ SADD setB 2 3 4
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 3
+$ SDIFF setA setB
+1<span class="token punctuation">)</span> <span class="token string">"1"</span>
+$ SDIFF setB setA
+1<span class="token punctuation">)</span> <span class="token string">"4"</span></code></pre>
+<p><code>SDIFF</code> 命令支持同时传入多个键：</p>
+<pre class=" language-bash"><code class="language-bash">$ SADD setC 2 3
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 2
+$ SDIFF setA setB setC
+1<span class="token punctuation">)</span> <span class="token string">"1"</span></code></pre>
+<p>计算顺序是先计算 <code>setA - setB</code> ，再计算与 <code>setC</code> 的差集。</p>
+<ul>
+<li><code>SINTER</code> 命令是用来对多个集合执行交集运算。 代表所有属于 A 且 属于 B 的元素构成的集合。</li>
+</ul>
+<pre class=" language-bash"><code class="language-bash">$ SINTER setA setB
+1<span class="token punctuation">)</span> <span class="token string">"2"</span>
+2<span class="token punctuation">)</span> <span class="token string">"3"</span></code></pre>
+<p><code>SINTER</code> 命令同样支持同时传入多个键：</p>
+<pre class=" language-bash"><code class="language-bash">$ SINTER setA setB setC
+1<span class="token punctuation">)</span> <span class="token string">"2"</span>
+2<span class="token punctuation">)</span> <span class="token string">"3"</span></code></pre>
+<ul>
+<li><code>SUNION</code> 命令用来对多个集合执行并集运算。代表所有属于 A 或 属于 B 的元素构成的集合。</li>
+</ul>
+<pre class=" language-bash"><code class="language-bash">$ SUNION setA setB
+1<span class="token punctuation">)</span> <span class="token string">"1"</span>
+2<span class="token punctuation">)</span> <span class="token string">"2"</span>
+3<span class="token punctuation">)</span> <span class="token string">"3"</span>
+4<span class="token punctuation">)</span> <span class="token string">"4"</span></code></pre>
+<p><code>SUNION</code> 命令同样支持同时传入多个键：</p>
+<pre class=" language-bash"><code class="language-bash">$ SUNION setA setB setC
+1<span class="token punctuation">)</span> <span class="token string">"1"</span>
+2<span class="token punctuation">)</span> <span class="token string">"2"</span>
+3<span class="token punctuation">)</span> <span class="token string">"3"</span>
+4<span class="token punctuation">)</span> <span class="token string">"4"</span></code></pre>
+<ol start="5">
+<li>获得集合中元素个数</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ SCARD key</code></pre>
+<ol start="6">
+<li>进行集合运算并将结果存储</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ SDIFFSTORE destination key <span class="token punctuation">[</span>key <span class="token punctuation">..</span>.<span class="token punctuation">]</span>
+$ SINTERSTORE destination key <span class="token punctuation">[</span>key <span class="token punctuation">..</span>.<span class="token punctuation">]</span>
+$ SUNIONSTORE destination key <span class="token punctuation">[</span>key <span class="token punctuation">..</span>.<span class="token punctuation">]</span></code></pre>
+<p><code>SDIFFSTORE</code> 命令和 <code>SDIFF</code> 命令功能一样，唯一的区别就是前者不会直接返回运算结果，而是将结果存储在 destination 键中。</p>
+<p><code>SDIFFSTORE</code> 命令通常用与需要进行多步集合运算的场景中，如需要先计算差集再将结果和其他键计算交集。</p>
+<p><code>SINTERSTORE</code> 和 <code>SUNIONSTORE </code> 命令与之类似。</p>
+<ol start="7">
+<li>随机获得集合中的元素</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ SRANDMEMBER key <span class="token punctuation">[</span>count<span class="token punctuation">]</span></code></pre>
+<p><code>SRANDMEMBER</code> 命令用来随机获取集合中的一个元素，还可以传递 count 参数来一次随机获得多个元素。根据 count 的正负不同，具体表现也不同。</p>
+<ul>
+<li>当 count 为整数时，<code>SRANDCOUNT</code> 会随机从集合里获得 count 个不重复元素。如果 count 的值大于集合中元素的个数，则 <code>SRANDCOUNT</code> 会返回集合中的全部元素。</li>
+<li>当 count 为负数时，<code>SRANDCOUNT</code> 会随机从集合里获得 count 个元素，这些元素可能相同。</li>
+</ul>
+<ol start="8">
+<li>从集合中弹出一个元素</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ SPOP key</code></pre>
+<p>由于集合是无序的，所以 <code>SPOP</code> 命令会从集合中随机选择一个元素弹出。</p>
+<h3 id="Sorted-Set"><a href="#Sorted-Set" class="headerlink" title="Sorted Set"></a>Sorted Set</h3><p>有序集合类型为集合中的每个元素都关联了一个分数，这使得我们不仅可以完成插入、删除和判断元素是否存在等集合类型支持的操作，还能够获得分数最高（或最低）的前 N 个元素、获得指定分数范围内的元素等与分数有关的操作。虽然集合中的每个元素都是不同的，但是它们的分数却可以相同。</p>
+<p>有序集合类型在某些方面和列表类型有些相似。</p>
+<ul>
+<li>二者都是有序的。</li>
+<li>二者都可以获得某一范围的元素。</li>
+</ul>
+<p>但是二者有着很大的区别，这使得他们的应用场景也是不同的。</p>
+<ul>
+<li>列表类型是通过链表实现的，获取靠近两端的数据速度极快，而当元素增多后，访问中间数据的速度会较慢，所以它更加适合实现如“新鲜事”或“日志”这样很少访问中间元素的应用。</li>
+<li>有序集合类型是使用散列表和跳表（Skip list）实现的，所以即使读取位于中间部分的数据，速度也很快。（时间复杂度是 O(log(N)) ）。</li>
+<li>列表中不能简单地调整某个元素的位置，但是有序集合可以（通过更改这个元素的分数）。</li>
+<li>有序集合类型要比列表类型更耗费内存。</li>
+</ul>
+<ol>
+<li>增加元素</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ ZADD key score member <span class="token punctuation">[</span>score member <span class="token punctuation">..</span>.<span class="token punctuation">]</span></code></pre>
+<p><code>ZADD</code> 命令用来向有序集合中加入一个元素和该元素的分数，如果该元素已经存在则会用新的分数替换原有的分数。<code>ZADD</code> 命令的返回值是新加入到集合中的元素的个数（不包含之前已经存在的元素）。</p>
+<p>假设我们用有序集合模拟计分板，现在要记录 Tom、Peter 和 David 三名运动员的分数（分别是 89 分、67分 和 100 分）：</p>
+<pre class=" language-bash"><code class="language-bash">$ ZADD scoreboard 89 Tom 67 Peter 100 David
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 3</code></pre>
+<p>这是我们发现 Peter 的分数录入有误，实际分数应该是 76 分，可以用 <code>ZADD</code> 命令修改 Peter 的分数：</p>
+<pre class=" language-bash"><code class="language-bash">$ ZADD scoreboard 76 Peter
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 0</code></pre>
+<p>分数不仅可以是整数，还支持双精度浮点数：</p>
+<pre class=" language-bash"><code class="language-bash">$ ZADD testboard 5E+3 a
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1
+$ ZADD testboard 1.6 b
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1
+$ ZADD testboard +inf c
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1
+$ ZADD testboard -inf d
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1</code></pre>
+<p>其中 <code>+inf</code> 和 <code>- inf</code> 分别表示正无穷和负无穷。</p>
+<ol start="2">
+<li>获得元素的分数</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ ZSCORE key member</code></pre>
+<ol start="3">
+<li>获得排名在某个范围的元素列表</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ ZRANGE key start stop <span class="token punctuation">[</span>WITHSCORES<span class="token punctuation">]</span>
+$ ZREVRANGE key start stop <span class="token punctuation">[</span>WITHSCORES<span class="token punctuation">]</span></code></pre>
+<p><code>ZRANGE</code> 命令会按照元素分数从小到大的顺序返回索引从 start 到 stop 之间的所有元素（包含两端的元素）。<code>ZRANGE</code> 命令与 <code>LRANGE</code> 命令十分相似，如果索引都是从 0 开始，负数代表从后向前查找（-1 表示最后一个元素）。</p>
+<pre class=" language-bash"><code class="language-bash">$ ZRANGE scoreboard 0 2
+1<span class="token punctuation">)</span> <span class="token string">"Peter"</span>
+2<span class="token punctuation">)</span> <span class="token string">"Tom"</span>
+3<span class="token punctuation">)</span> <span class="token string">"David"</span>
+$ ZRANGE scoreboard 1 -1
+1<span class="token punctuation">)</span> <span class="token string">"Tom"</span>
+2<span class="token punctuation">)</span> <span class="token string">"David"</span></code></pre>
+<p>如果需要同时获得元素的分数的话，可以在 <code>ZRANGE</code> 命令尾部加上  <code>WITHSCORES</code> 参数：</p>
+<pre class=" language-bash"><code class="language-bash">$ ZRANGE scoreboard 0 -1 WITHSCORES
+1<span class="token punctuation">)</span> <span class="token string">"Peter"</span>
+2<span class="token punctuation">)</span> <span class="token string">"76"</span>
+3<span class="token punctuation">)</span> <span class="token string">"Tom"</span>
+4<span class="token punctuation">)</span> <span class="token string">"89"</span>
+5<span class="token punctuation">)</span> <span class="token string">"David"</span>
+6<span class="token punctuation">)</span> <span class="token string">"100"</span></code></pre>
+<p><code>ZRANGE</code> 命令的时间复杂读为 O(log n+m)。其中 n 为有序集合的基数，m 为返回的元素个数。</p>
+<p>如果两个元素的分数相同，Redis 会按照字典顺序（即 “0” &lt; “9” &lt; “A” &lt; “Z” &lt; “a” &lt; ‘“z” 这样的顺序）来进行排列。</p>
+<p>如果元素的值是中文，则排序取决于中文的编码方式。如使用 UTF-8 编码：</p>
+<pre class=" language-bash"><code class="language-bash">$ ZADD chineseName 0 亚洲 0 非洲 0 欧洲 0 南美洲
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 4
+$ ZRANGE chineseName 0 -1
+1<span class="token punctuation">)</span> <span class="token string">"\xe4\xba\x9a\xe6\xb4\xb2"</span>
+2<span class="token punctuation">)</span> <span class="token string">"\xe5\x8d\x97\xe7\xbe\x8e\xe6\xb4\xb2"</span>
+3<span class="token punctuation">)</span> <span class="token string">"\xe6\xac\xa7\xe6\xb4\xb2"</span>
+4<span class="token punctuation">)</span> <span class="token string">"\xe9\x9d\x9e\xe6\xb4\xb2"</span></code></pre>
+<p>可见此时 Redis 依然按照字典顺序排列这些元素。</p>
+<p><code>ZREVRANGE</code> 命令和 <code>ZRANGE</code> 的唯一不同在于 <code>ZREVRANGE</code> 命令是按照元素分数从大到小的顺序给出结果的。</p>
+<ol start="4">
+<li>获得指定分数范围的元素</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ ZRANGEBYSCORE key min max <span class="token punctuation">[</span>WITHSCORES<span class="token punctuation">]</span> <span class="token punctuation">[</span>LIMIT offset count<span class="token punctuation">]</span></code></pre>
+<p>该命令按照元素分数从小到大的顺序返回分数在 min 和 max 之间（包含 min 和 max）的元素：</p>
+<pre class=" language-bash"><code class="language-bash">$ ZRANGEBYSCORE scoreboard 80 100
+1<span class="token punctuation">)</span> <span class="token string">"Tom"</span>
+2<span class="token punctuation">)</span> <span class="token string">"David"</span></code></pre>
+<p>如果希望的分数范围不包含端点值，可以在分数前加上<code>"("</code>符号。</p>
+<pre class=" language-bash"><code class="language-bash">$ ZRANGEBYSOCRE socreboard 80 <span class="token punctuation">(</span>100
+1<span class="token punctuation">)</span> <span class="token string">"Tom"</span></code></pre>
+<p>min 和 max 还支持无穷大，同 <code>ZADD</code> 命令一样，<code>-inf</code> 和 <code>+inf</code> 分别表示负无穷和正无穷。</p>
+<pre class=" language-bash"><code class="language-bash">$ ZRANGEBYSCORE scoreboard <span class="token punctuation">(</span>80 +inf
+1<span class="token punctuation">)</span> <span class="token string">"Tom"</span>
+2<span class="token punctuation">)</span> <span class="token string">"David"</span></code></pre>
+<p>WITHSCORES 参数的用户与 ZRANGE 命令一样。LIMIT offset count 与 SQL 中的用法基本相同。</p>
+<p>为了便于演示，我们先向 scoreboard 键中再增加些元素：</p>
+<pre class=" language-bash"><code class="language-bash">$ ZADD scoreboard 56 Jerry 92 Wendy 67 Yvonne
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 3
+<span class="token comment" spellcheck="true"># 现在 scoreboard 键中的所有元素</span>
+$ ZRANGE scoreboard 0 -1 WITHSCORES
+ 1<span class="token punctuation">)</span> <span class="token string">"Jerry"</span>
+ 2<span class="token punctuation">)</span> <span class="token string">"56"</span>
+ 3<span class="token punctuation">)</span> <span class="token string">"Yvonne"</span>
+ 4<span class="token punctuation">)</span> <span class="token string">"67"</span>
+ 5<span class="token punctuation">)</span> <span class="token string">"Peter"</span>
+ 6<span class="token punctuation">)</span> <span class="token string">"76"</span>
+ 7<span class="token punctuation">)</span> <span class="token string">"Tom"</span>
+ 8<span class="token punctuation">)</span> <span class="token string">"89"</span>
+ 9<span class="token punctuation">)</span> <span class="token string">"Wendy"</span>
+10<span class="token punctuation">)</span> <span class="token string">"92"</span>
+11<span class="token punctuation">)</span> <span class="token string">"David"</span>
+12<span class="token punctuation">)</span> <span class="token string">"100"</span></code></pre>
+<p>想获得分数高于 60 分的从第二个人开始的 3 个人：</p>
+<pre class=" language-bash"><code class="language-bash">$ ZRANGEBYSCORE scoreboard 60 +inf Limit 1 3
+1<span class="token punctuation">)</span> <span class="token string">"Peter"</span>
+2<span class="token punctuation">)</span> <span class="token string">"Tom"</span>
+3<span class="token punctuation">)</span> <span class="token string">"Wendy"</span></code></pre>
+<ol start="5">
+<li>增加某个元素的分数</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">ZINCRBY key increment member</code></pre>
+<p><code>ZINCRBY</code> 命令可以增加一个元素的分数，返回值是更改后的分数。</p>
+<pre class=" language-bash"><code class="language-bash">$ ZINCRBY scoreboard 4 Jerry
+<span class="token string">"60"</span></code></pre>
+<p>increment 也可以是个负数表示减分：</p>
+<pre class=" language-bash"><code class="language-bash">$ ZINCRBY scoreboard -4 Jerry
+<span class="token string">"56"</span></code></pre>
+<p>如果指定的元素不存在，Redis 再执行命令前会先建立它并将它的分数赋为 0 再执行操作。</p>
+<ol start="6">
+<li>获得集合中元素的数量</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ ZCARD key</code></pre>
+<ol start="7">
+<li>获得指定分数范围内的元素个数</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ ZCOUNT key min max</code></pre>
+<ol start="8">
+<li>删除一个或多个元素</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ ZREM key member <span class="token punctuation">[</span>member <span class="token punctuation">..</span>.<span class="token punctuation">]</span></code></pre>
+<p>ZREM 命令的返回值的成功删除的元素数量</p>
+<pre class=" language-bash"><code class="language-bash">$ ZREM scoreboard Wendy
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1</code></pre>
+<ol start="9">
+<li>按照排名范围删除元素</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ ZREMRANGEBYRANK key start stop</code></pre>
+<p>ZREMRANGEBYRANK 命令按照元素分数从小到大的顺序（即索引 0 表示最小的值），删除处在指定排名范围内的所有元素，并返回删除的元素数量。如：</p>
+<pre class=" language-bash"><code class="language-bash">$ ZADD testRem 1 a 2 b 3 c 4 d 5 e 6 f
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 6
+$ ZREMRANGEBYRANK testRem 0 2
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 3
+$ ZRANGE testRem 0 -1
+1<span class="token punctuation">)</span> <span class="token string">"d"</span>
+2<span class="token punctuation">)</span> <span class="token string">"e"</span>
+3<span class="token punctuation">)</span> <span class="token string">"f"</span></code></pre>
+<ol start="10">
+<li>按照分数范围删除元素</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ ZREMRANGEBYSCORE key min max</code></pre>
+<p><code>ZREMRANGEBYSCORE</code> 命令会删除指定分数范围内的所有元素，返回值的删除的元素数量。</p>
+<ol start="11">
+<li>获得元素的排名</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ ZRANK key member
+$ ZREVRANK key member</code></pre>
+<p><code>ZRANK</code> 命令会按照元素分数从小到大的顺序获得指定元素的排名（从 0 开始，即分数最小的元素排名为 0）。</p>
+<p><code>ZREVRANK</code> 命令则相反（分数最大的元素排名为 0 )。</p>
+<ol start="12">
+<li>计算有序集合的交集</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ ZINTERSTORE destination numkeys key <span class="token punctuation">[</span>key <span class="token punctuation">..</span>.<span class="token punctuation">]</span> <span class="token punctuation">[</span>WEIGHTS weight <span class="token punctuation">[</span>weight <span class="token punctuation">..</span>.<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token punctuation">[</span>AGGREGATE SUM<span class="token operator">|</span>MIN<span class="token operator">|</span>MAX<span class="token punctuation">]</span></code></pre>
+<p><code>ZINTERSTORE</code> 命令用来计算多个有序集合的交集并将结果存储在 destination 键中（同样以有序类型集合存储），返回值为 destination 键中的元素个数。<code>numkeys</code>必须 等于参与集合的个数。</p>
+<p>destination 键中元素的分数是由 <code>AGGREGATE</code> 参数决定的。</p>
+<ul>
+<li>当 <code>AGGREGATE</code> 是 <code>SUM</code> 时（也就是默认值），destination 键中元素的分数是每个参与计算的集合中改元素分数的和。例如：</li>
+</ul>
+<pre class=" language-bash"><code class="language-bash">$ ZADD sortedSets1 1 a 2 b
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 2
+$ ZADD sortedSets2 10 a 20 b
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 2
+$ ZINTERSTORE sortedSetsResult 2 sortedSets1 sortedSets2
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 2
+$ ZRANGE sortedSetsResult 0 -1 WITHSCORES
+1<span class="token punctuation">)</span> <span class="token string">"a"</span>
+2<span class="token punctuation">)</span> <span class="token string">"11"</span>
+3<span class="token punctuation">)</span> <span class="token string">"b"</span>
+4<span class="token punctuation">)</span> <span class="token string">"22"</span></code></pre>
+<ul>
+<li>当 <code>AGGREGATE</code> 是 <code>MIN</code> 时，destination 键中元素的分数是每个参与计算的集合中该元素分数的最小值。例如：</li>
+</ul>
+<pre class=" language-bash"><code class="language-bash">$ ZINTERSTORE sortedSetsResult 2 sortedSets1 sortedSets2 AGGREGATE MIN
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 2
+$  ZRANGE sortedSetsResult 0 -1 WITHSCORES
+1<span class="token punctuation">)</span> <span class="token string">"a"</span>
+2<span class="token punctuation">)</span> <span class="token string">"1"</span>
+3<span class="token punctuation">)</span> <span class="token string">"b"</span>
+4<span class="token punctuation">)</span> <span class="token string">"2"</span></code></pre>
+<ul>
+<li>当 <code>AGGREGATE</code> 是 <code>MAX</code> 是，destination 键中元素的分数是每个参与计算的集合中该元素分数的最大值。例如：</li>
+</ul>
+<pre class=" language-bash"><code class="language-bash">$ ZINTERSTORE sortedSetsResult 2 sortedSets1 sortedSets2 AGGREGATE MAX
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 2
+$ ZRANGE sortedSetsResult 0 -1 WITHSCORES
+1<span class="token punctuation">)</span> <span class="token string">"a"</span>
+2<span class="token punctuation">)</span> <span class="token string">"10"</span>
+3<span class="token punctuation">)</span> <span class="token string">"b"</span>
+4<span class="token punctuation">)</span> <span class="token string">"20"</span></code></pre>
+<p><code>ZINTERSTORE</code> 命令还能够通过 <code>WEIGHTS</code> 参数设置每个集合的权重，每个集合在参与计算时元素的分数会被乘上该集合的权重。例如：</p>
+<pre class=" language-bash"><code class="language-bash">$ ZINTERSTORE sortedSetsResult 2 sortedSets1 sortedSets2 WEIGHTS 1 0.1
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 2
+$ ZRANGE sortedSetsResult 0 -1 WITHSCORES
+1<span class="token punctuation">)</span> <span class="token string">"a"</span>
+2<span class="token punctuation">)</span> <span class="token string">"2"</span>
+3<span class="token punctuation">)</span> <span class="token string">"b"</span>
+4<span class="token punctuation">)</span> <span class="token string">"4"</span></code></pre>
+<p>另外还有一个命令与 <code>ZINTERSTORE </code>命令的用法一样，名为 <code>ZUNIONSTORE</code>，它的作用是计算集合间的并集，这里不再赘述。</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">AsiaMa</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://blog.asiama.top/posts/f08d.html">https://blog.asiama.top/posts/f08d.html</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">AsiaMa</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/Redis/">
+                                    <span class="chip bg-color">Redis</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="qq,qzone,wechat,weibo,douban" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: '59bf142f2e1e32208f0f',
+        clientSecret: '8fd8a8462225cf93ec37c4dbd0362c71ba21ddac',
+        repo: 'asiama.github.io',
+        owner: 'asiama',
+        admin: "asiama",
+        id: '2021-01-19T19-25-13',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/posts/f08d.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/23.jpg" class="responsive-img" alt="Redis常用数据类型">
+                        
+                        <span class="card-title">Redis常用数据类型</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-19
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            AsiaMa
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Redis/">
+                        <span class="chip bg-color">Redis</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/posts/5969.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/15.jpg" class="responsive-img" alt="Redis位操作">
+                        
+                        <span class="card-title">Redis位操作</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-18
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            AsiaMa
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Redis/">
+                        <span class="chip bg-color">Redis</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2020</span>
+            <a href="/about" target="_blank">AsiaMa</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">26k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2020";
+                    var startMonth = "09";
+                    var startDate = "20";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/AsiaMa" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:a976304624@outlook.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+    <a href="https://www.facebook.com/asia.ma.94/" class="tooltipped" target="_blank" data-tooltip="关注我的Facebook: https://www.facebook.com/asia.ma.94/" data-position="top" data-delay="50">
+        <i class="fab fa-facebook-f"></i>
+    </a>
+
+
+
+    <a href="https://twitter.com/asiama61378227" class="tooltipped" target="_blank" data-tooltip="关注我的Twitter: https://twitter.com/asiama61378227" data-position="top" data-delay="50">
+        <i class="fab fa-twitter"></i>
+    </a>
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1031588508" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1031588508" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/search.xml", 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/materialize/materialize.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/aos/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+    <!--动态线条背景-->
+    <script type="text/javascript"
+    color="233 229 224" opacity='0.4' zIndex="-2" count="80" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+    </script>
+  
+</body>
+
+</html>

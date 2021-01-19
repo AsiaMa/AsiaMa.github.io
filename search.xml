@@ -593,6 +593,90 @@ $ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
       </tags>
   </entry>
   <entry>
+    <title>Redis小热身</title>
+    <url>/posts/4f87.html</url>
+    <content><![CDATA[<ol>
+<li>获得符合规则的键名列表</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ KEYS pattern</code></pre>
+<p>pattern 支持 glob 风格通配符格式：</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>？</td>
+<td>匹配一个字符</td>
+</tr>
+<tr>
+<td>*</td>
+<td>匹配任意个（包括0个）字符</td>
+</tr>
+<tr>
+<td>[]</td>
+<td>匹配括号间的任一字符，可以使用 “-” 符号表示一个范围，如 a[b-d] 可以匹配 “ab”、“ac” 和 “ad”</td>
+</tr>
+<tr>
+<td>\x</td>
+<td>匹配字符 x，用于转义符号。如要匹配 “?” 就需要使用 ?</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>KEYS 命令需要遍历 Redis 中的所有键，当键的数量较多时会影响性能，不建议在生产环境中使用。Redis 不区分命令大小写。</p>
+</blockquote>
+<ol start="2">
+<li>判断一个键是否存在</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ EXISTS key</code></pre>
+<p>如果键存在则返回整数类型1，否则返回0。</p>
+<ol start="3">
+<li>删除键</li>
+</ol>
+<pre><code>$ DEL key</code></pre>
+<p>可以删除一个或多个键，返回值是删除的键的个数。</p>
+<blockquote>
+<p><strong>技巧</strong>     DEL 命令的参数不支持通配符，但我们可以结合 Linux 的管道和 xargs 命令自己实现删除所有符合规则的键盘。比如要删除所有以 “user:” 开头的键，就可以执行<code>redis-cli KEYS "user:*" | xagrs redis cli DEL</code>。另外由于 DEL 命令支持多个键作为参数，所以还可执行如下命令来达到同样的效果，性能更好。</p>
+<pre class=" language-bash"><code class="language-bash">$ redis-cli DEL `redis-cli KEYS <span class="token string">"user:*"</span>`</code></pre>
+<p>如果连接redis 需要密码，则可以使用下面的这个命令</p>
+<pre class=" language-bash"><code class="language-bash">$ redis-cli -a 123456 DEL `redis-cli -a 123456 keys <span class="token string">"user:*"</span>`</code></pre>
+</blockquote>
+<ol start="4">
+<li>获得键值的数据类型</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ TYPE key</code></pre>
+<ol start="5">
+<li>命名习惯</li>
+</ol>
+<blockquote>
+<p>Redis 对于键的命名并没有强制的要求，但比较好的实践是用 <strong>“对象类型:对象ID:对象属性”</strong> 来命名一个键，如使用键  <code>user:1:friends</code> 来存储 ID 为 1 的用户的好友列表。对于多个单词则推荐使用 <code>“.”</code> 分隔，一方面是沿用以前的习惯（Redis 以前版本键名不能包含空格等特殊字符），另一方面是在 redis-cli 中容易输入，无需使用双引号包裹。</p>
+</blockquote>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Redis位操作</title>
     <url>/posts/5969.html</url>
     <content><![CDATA[<h3 id="位操作命令"><a href="#位操作命令" class="headerlink" title="位操作命令"></a>位操作命令</h3><pre class=" language-bash"><code class="language-bash">$ GETBIT key offset
@@ -648,130 +732,6 @@ $ BITPOS foo 1
 <blockquote>
 <p>如果不设置结束字节且键值的所有二进制位都是 1 ，则当要查询值为 0 的二进制位偏移量时，返回结果会是键值长度的下一个字位的偏移量。这是因为 Redis 会认为键值长度之后的二进制位都是 0。</p>
 </blockquote>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>Redis</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Redis常用命令</title>
-    <url>/posts/4f87.html</url>
-    <content><![CDATA[<ol>
-<li>获得符合规则的键名列表</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash">$ KEYS pattern</code></pre>
-<p>pattern 支持 glob 风格通配符格式：</p>
-<table>
-<thead>
-<tr>
-<th>符号</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>？</td>
-<td>匹配一个字符</td>
-</tr>
-<tr>
-<td>*</td>
-<td>匹配任意个（包括0个）字符</td>
-</tr>
-<tr>
-<td>[]</td>
-<td>匹配括号间的任一字符，可以使用 “-” 符号表示一个范围，如 a[b-d] 可以匹配 “ab”、“ac” 和 “ad”</td>
-</tr>
-<tr>
-<td>\x</td>
-<td>匹配字符 x，用于转义符号。如要匹配 “?” 就需要使用 ?</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p>KEYS 命令需要遍历 Redis 中的所有键，当键的数量较多时会影响性能，不建议在生产环境中使用。Redis 区分命令大小写。</p>
-</blockquote>
-<ol start="2">
-<li>判断一个键是否存在</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash">$ EXISTS key</code></pre>
-<p>如果键存在则返回整数类型1，否则返回0。</p>
-<ol start="3">
-<li>删除键</li>
-</ol>
-<pre><code>$ DEL key</code></pre>
-<p>可以删除一个或多个键，返回值是删除的键的个数。</p>
-<blockquote>
-<p><strong>技巧</strong>     DEL 命令的参数不支持通配符，但我们可以结合 Linux 的管道和 xargs 命令自己实现删除所有符合规则的键盘。比如要删除所有以 “user:” 开头的键，就可以执行<code>redis-cli KEYS "user:*" | xagrs redis cli DEL</code>。另外由于 DEL 命令支持多个键作为参数，所以还可执行如下命令来达到同样的效果，性能更好。</p>
-<pre class=" language-bash"><code class="language-bash">$ redis-cli DEL `redis-cli KEYS <span class="token string">"user:*"</span>`</code></pre>
-</blockquote>
-<ol start="4">
-<li>获得键值的数据类型</li>
-</ol>
-<pre><code>$ TYPE key</code></pre>
-<ol start="5">
-<li>赋值与取值</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash">$ SET key value
-$ GET key</code></pre>
-<ol start="6">
-<li>递增数字</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash">$ INCR key</code></pre>
-<ol start="7">
-<li>减少数字</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash">$ DECR key</code></pre>
-<ol start="8">
-<li>增加指定的整数</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash">$ INCRBY key increment</code></pre>
-<p>INCRBY 命令与 INCR 命令基本一样，只不过前者可以通过 increment 参数指定一次增加的数值，如：</p>
-<pre class=" language-bash"><code class="language-bash">$ INCRBY bar 2
-<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 2
-$ INCRBY bar 3
-<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 3</code></pre>
-<ol start="9">
-<li>减少指定的整数</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash">$ DECRBY key decrement</code></pre>
-<ol start="10">
-<li>增加指定浮点数</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash">$ INCRBYFLOAT key increment</code></pre>
-<ol start="11">
-<li>向尾部追加值</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash">$ APPEND key value</code></pre>
-<p>APPENＤ 的作用是向键值的末尾追加 value。如果键不存在则将该键的值设置为 value，即相当与 SET key value。返回值的追加后字符串的总长度。如：</p>
-<pre class=" language-bash"><code class="language-bash">$ SET key hello
-Ok
-$ APPEND key <span class="token string">" world!"</span>
-<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 12</code></pre>
-<ol start="12">
-<li>获取字符串长度</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash">$ STRLEN key</code></pre>
-<ol start="13">
-<li>同时获得/设置多个键值</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash">$ MGET key <span class="token punctuation">[</span>key <span class="token punctuation">..</span>.<span class="token punctuation">]</span>
-$ MSET key value <span class="token punctuation">[</span>key value <span class="token punctuation">..</span>.<span class="token punctuation">]</span></code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -862,12 +822,12 @@ $ <span class="token function">make</span></code></pre>
 # Description:          Redis data structure server. See https://redis.io
 ### END INIT INFO
 
-REDISPORT=6379
-EXEC=/usr/local/bin/redis-server
-CLIEXEC=/usr/local/bin/redis-cli
+REDISPORT=6379    # 端口号
+EXEC=/usr/local/bin/redis-server # redis-server 启动脚本的位置
+CLIEXEC=/usr/local/bin/redis-cli # redis-cli 客户端启动脚本的位置
 
 PIDFILE=/var/run/redis_${REDISPORT}.pid
-CONF="/etc/redis/${REDISPORT}.conf"
+CONF="/etc/redis/${REDISPORT}.conf"    # redis.conf 配置文件的位置
 
 case "$1" in
     start)
@@ -951,11 +911,24 @@ esac</code></pre>
 <td>/var/redis/端口号</td>
 <td>设置持久化文件存放位置</td>
 </tr>
+<tr>
+<td>bind</td>
+<td>0.0.0.0</td>
+<td>允许远程连接</td>
+</tr>
+<tr>
+<td>requirepass</td>
+<td>“123456”</td>
+<td>设置连接密码123456</td>
+</tr>
 </tbody></table>
 <p>现在就可以使用如下命令来启动 Redis 了：</p>
 <pre class=" language-bash"><code class="language-bash">$ /etc/init.d/redis_端口号 start</code></pre>
 <p>设置开机自启动：</p>
 <pre class=" language-bash"><code class="language-bash">$ <span class="token function">chkconfig</span> redis_6379 on</code></pre>
+<blockquote>
+<p>系统开机启动时会去加载/etc/init.d/下面的脚本，通常而言每个脚本文件会自定义实现程序的启动；若想将新的程序开机自启动，只需在该目录下添加一个自定义启动程序的脚本，然后设置相应规则即可。<br>如在这里我们在/etc/init.d/下新建一个 redis_端口号 的脚本，开机启动时会去加载执行该脚本。</p>
+</blockquote>
 <h3 id="停止Redis"><a href="#停止Redis" class="headerlink" title="停止Redis"></a>停止Redis</h3><p>考虑到 Redis 有可能正在将内存中的数据同步到硬盘中，强制终止 Redis 进行可能会导致数据丢失。正确停止 Redis 的方式应该是向 Redis 发送 SHUTDOWN 命令，方法为：</p>
 <pre class=" language-bash"><code class="language-bash">$ redis-cli SHUTDOWN</code></pre>
 <p>当 Redis 收到 <code>SHUTDOWN</code> 命令后，会先断开所有客户端连接，然后根据配置执行持久化，最后完成退出。</p>
@@ -982,6 +955,116 @@ esac</code></pre>
       <tags>
         <tag>Redis</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Stream中reduce使用</title>
+    <url>/posts/801f.html</url>
+    <content><![CDATA[<p>reduce方法用于对stream中元素进行聚合求值，最常见的用法就是将stream中一连串的值合成为单个值，比如为一个包含一系列数值的数组求和。</p>
+<p>reduce方法有三个重载的方法，方法签名如下：</p>
+<pre class=" language-java"><code class="language-java">Optional<span class="token operator">&lt;</span>T<span class="token operator">></span> <span class="token function">reduce</span><span class="token punctuation">(</span>BinaryOperator<span class="token operator">&lt;</span>T<span class="token operator">></span> accumulator<span class="token punctuation">)</span><span class="token punctuation">;</span>
+T <span class="token function">reduce</span><span class="token punctuation">(</span>T identity<span class="token punctuation">,</span> BinaryOperator<span class="token operator">&lt;</span>T<span class="token operator">></span> accumulator<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">&lt;</span>U<span class="token operator">></span> U <span class="token function">reduce</span><span class="token punctuation">(</span>U identity<span class="token punctuation">,</span>
+                 BiFunction<span class="token operator">&lt;</span>U<span class="token punctuation">,</span> <span class="token operator">?</span> <span class="token keyword">super</span> T<span class="token punctuation">,</span> U<span class="token operator">></span> accumulator<span class="token punctuation">,</span>
+                 BinaryOperator<span class="token operator">&lt;</span>U<span class="token operator">></span> combiner<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h3 id="第一个签名方法"><a href="#第一个签名方法" class="headerlink" title="第一个签名方法"></a>第一个签名方法</h3><p>接受一个BinaryOperator类型的lambada表达式， 常规应用方法如下：</p>
+<pre class=" language-java"><code class="language-java">List<span class="token operator">&lt;</span>Integer<span class="token operator">></span> numList <span class="token operator">=</span> Arrays<span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> result <span class="token operator">=</span> numList<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span>b<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> a <span class="token operator">+</span> b <span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>代码实现了对numList中的元素累加。lambada表达式的a参数是表达式的执行结果的缓存，也就是表达式这一次的执行结果会被作为下一次执行的参数，而第二个参数b则是依次为stream中每个元素。如果表达式是第一次被执行，a则是stream中的第一个元素。</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">int</span> result <span class="token operator">=</span> numList<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span>b<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">{</span>
+  System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"a="</span> <span class="token operator">+</span> a <span class="token operator">+</span> <span class="token string">",b="</span> <span class="token operator">+</span> b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> a <span class="token operator">+</span> b<span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>在表达式中假如打印参数的代码，打印出来的内容如下：</p>
+<pre class=" language-java"><code class="language-java">a<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span>b<span class="token operator">=</span><span class="token number">2</span>
+a<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">,</span>b<span class="token operator">=</span><span class="token number">3</span>
+a<span class="token operator">=</span><span class="token number">6</span><span class="token punctuation">,</span>b<span class="token operator">=</span><span class="token number">4</span>
+a<span class="token operator">=</span><span class="token number">10</span><span class="token punctuation">,</span>b<span class="token operator">=</span><span class="token number">5</span></code></pre>
+<p>表达式被调用了4次， 第一次a和b分别为stream的第一和第二个元素，因为第一次没有中间结果可以传递， 所以 reduce方法实现为直接将第一个元素作为中间结果传递。</p>
+<h3 id="第二个签名方法"><a href="#第二个签名方法" class="headerlink" title="第二个签名方法"></a>第二个签名方法</h3><pre class=" language-java"><code class="language-java">T <span class="token function">reduce</span><span class="token punctuation">(</span>T identity<span class="token punctuation">,</span> BinaryOperator<span class="token operator">&lt;</span>T<span class="token operator">></span> accumulator<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>与第一个签名的实现的唯一区别是它首次执行时表达式第一次参数并不是stream的第一个元素，而是通过签名的第一个参数identity来指定。我们来通过这个签名对之前的求和代码进行改进：</p>
+<pre class=" language-java"><code class="language-java">List<span class="token operator">&lt;</span>Integer<span class="token operator">></span> numList <span class="token operator">=</span> Arrays<span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> result <span class="token operator">=</span> numList<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span>b<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span>  a <span class="token operator">+</span> b <span class="token punctuation">)</span><span class="token punctuation">;</span>
+System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>其实这两种实现几乎差别，第一种比第一种仅仅多了一个字定义初始值罢了。 此外，因为存在stream为空的情况，所以第一种实现并不直接方法计算的结果，而是将计算结果用Optional来包装，我们可以通过它的get方法获得一个Integer类型的结果，而Integer允许null。第二种实现因为允许指定初始值，因此即使stream为空，也不会出现返回结果为null的情况，当stream为空，reduce为直接把初始值返回。</p>
+<h3 id="第三个签名方法"><a href="#第三个签名方法" class="headerlink" title="第三个签名方法"></a>第三个签名方法</h3><pre class=" language-java"><code class="language-java"><span class="token operator">&lt;</span>U<span class="token operator">></span> U <span class="token function">reduce</span><span class="token punctuation">(</span>U identity<span class="token punctuation">,</span>
+                 BiFunction<span class="token operator">&lt;</span>U<span class="token punctuation">,</span> <span class="token operator">?</span> <span class="token keyword">super</span> T<span class="token punctuation">,</span> U<span class="token operator">></span> accumulator<span class="token punctuation">,</span>
+                 BinaryOperator<span class="token operator">&lt;</span>U<span class="token operator">></span> combiner<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>第三种签名的用法相较前两种稍显复杂，由于前两种实现有一个缺陷，它们的计算结果必须和stream中的元素类型相同，如上面的代码示例，stream中的类型为int，那么计算结果也必须为int，这导致了灵活性的不足，甚至无法完成某些任务， 比入我们咬对一个一系列int值求和，但是求和的结果用一个int类型已经放不下，必须升级为long类型，此实第三签名就能发挥价值了，它不将执行结果与stream中元素的类型绑死。</p>
+<pre class=" language-java"><code class="language-java">List<span class="token operator">&lt;</span>Integer<span class="token operator">></span> numList <span class="token operator">=</span> Arrays<span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span>Integer<span class="token punctuation">.</span>MAX_VALUE<span class="token punctuation">,</span>Integer<span class="token punctuation">.</span>MAX_VALUE<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">long</span> result <span class="token operator">=</span> numList<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span>0L<span class="token punctuation">,</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span>b<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span>  a <span class="token operator">+</span> b<span class="token punctuation">,</span> <span class="token punctuation">(</span>a<span class="token punctuation">,</span>b<span class="token punctuation">)</span><span class="token operator">-</span><span class="token operator">></span> 0L <span class="token punctuation">)</span><span class="token punctuation">;</span>
+System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>如上代码所示，它能见int类型的列表合并成long类型的结果。<br> 当然这只是其中一种应用罢了，由于摆脱了类型的限制我们还可以通过他来灵活的完成许多任务，比入将一个int类型的ArrayList转换成一个String类型的ArrayList。</p>
+<pre class=" language-java"><code class="language-java">List<span class="token operator">&lt;</span>Integer<span class="token operator">></span> numList <span class="token operator">=</span> Arrays<span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ArrayList<span class="token operator">&lt;</span>String<span class="token operator">></span> result <span class="token operator">=</span> numList<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span>String<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>a<span class="token punctuation">,</span> b<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">{</span>
+    a<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">"element-"</span> <span class="token operator">+</span> b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> a<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>a<span class="token punctuation">,</span> b<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> null<span class="token punctuation">)</span><span class="token punctuation">;</span>
+System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>执行结果为：</p>
+<pre class=" language-java"><code class="language-java"><span class="token punctuation">[</span>element<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> element<span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">,</span> element<span class="token operator">-</span><span class="token number">3</span><span class="token punctuation">,</span> element<span class="token operator">-</span><span class="token number">4</span><span class="token punctuation">,</span> element<span class="token operator">-</span><span class="token number">5</span><span class="token punctuation">,</span> element<span class="token operator">-</span><span class="token number">6</span><span class="token punctuation">]</span></code></pre>
+<p>这个示例显得有点鸡肋，一点不实用，不过在这里我们的主要目的是说明代码能达到什么样的效果，因此代码示例也不必取自实际的应用场景。</p>
+<p>从上面两个示例可以看出第三个reduce比前面两个强大的多，它的功能已经完全覆盖前面两个的实现，如果我们不考虑代码的简洁性，甚至可以抛弃前面两个。</p>
+<p>另外，还需要注意的是这个reduce的签名还包含第三个参数，一个BinaryOperator&lt;U&gt;类型的表达式。在常规情况下我们可以忽略这个参数，敷衍了事的随便指定一个表达式即可，目的是为了通过编译器的检查，因为在常规的stream中它并不会被执行到，然而， 虽然此表达式形同虚设，可是我们也不是把它设置为null，否者还是会报错。 在并行stream中，此表达式则会被执行到，在这里我们不进行讲解，因为我自己也没用过。</p>
+<pre><code>numList.parallelStream()</code></pre>
+<p>可获得并行stream。</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <categories>
+        <category>Stream</category>
+      </categories>
+      <tags>
+        <tag>JAVA</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/posts/3eeb.html</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class=" language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span></code></pre>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class=" language-bash"><code class="language-bash">$ hexo server</code></pre>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bash"><code class="language-bash">$ hexo generate</code></pre>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-bash"><code class="language-bash">$ hexo deploy</code></pre>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
   </entry>
   <entry>
     <title>Stream中flatmap使用</title>
@@ -1135,204 +1218,6 @@ System<span class="token punctuation">.</span>out<span class="token punctuation"
       </categories>
       <tags>
         <tag>JAVA</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/posts/3eeb.html</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class=" language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span></code></pre>
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class=" language-bash"><code class="language-bash">$ hexo server</code></pre>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bash"><code class="language-bash">$ hexo generate</code></pre>
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-bash"><code class="language-bash">$ hexo deploy</code></pre>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-  </entry>
-  <entry>
-    <title>Stream中reduce使用</title>
-    <url>/posts/801f.html</url>
-    <content><![CDATA[<p>reduce方法用于对stream中元素进行聚合求值，最常见的用法就是将stream中一连串的值合成为单个值，比如为一个包含一系列数值的数组求和。</p>
-<p>reduce方法有三个重载的方法，方法签名如下：</p>
-<pre class=" language-java"><code class="language-java">Optional<span class="token operator">&lt;</span>T<span class="token operator">></span> <span class="token function">reduce</span><span class="token punctuation">(</span>BinaryOperator<span class="token operator">&lt;</span>T<span class="token operator">></span> accumulator<span class="token punctuation">)</span><span class="token punctuation">;</span>
-T <span class="token function">reduce</span><span class="token punctuation">(</span>T identity<span class="token punctuation">,</span> BinaryOperator<span class="token operator">&lt;</span>T<span class="token operator">></span> accumulator<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token operator">&lt;</span>U<span class="token operator">></span> U <span class="token function">reduce</span><span class="token punctuation">(</span>U identity<span class="token punctuation">,</span>
-                 BiFunction<span class="token operator">&lt;</span>U<span class="token punctuation">,</span> <span class="token operator">?</span> <span class="token keyword">super</span> T<span class="token punctuation">,</span> U<span class="token operator">></span> accumulator<span class="token punctuation">,</span>
-                 BinaryOperator<span class="token operator">&lt;</span>U<span class="token operator">></span> combiner<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<h3 id="第一个签名方法"><a href="#第一个签名方法" class="headerlink" title="第一个签名方法"></a>第一个签名方法</h3><p>接受一个BinaryOperator类型的lambada表达式， 常规应用方法如下：</p>
-<pre class=" language-java"><code class="language-java">List<span class="token operator">&lt;</span>Integer<span class="token operator">></span> numList <span class="token operator">=</span> Arrays<span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">int</span> result <span class="token operator">=</span> numList<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span>b<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> a <span class="token operator">+</span> b <span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<p>代码实现了对numList中的元素累加。lambada表达式的a参数是表达式的执行结果的缓存，也就是表达式这一次的执行结果会被作为下一次执行的参数，而第二个参数b则是依次为stream中每个元素。如果表达式是第一次被执行，a则是stream中的第一个元素。</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">int</span> result <span class="token operator">=</span> numList<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span>b<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">{</span>
-  System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"a="</span> <span class="token operator">+</span> a <span class="token operator">+</span> <span class="token string">",b="</span> <span class="token operator">+</span> b<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token keyword">return</span> a <span class="token operator">+</span> b<span class="token punctuation">;</span>
-<span class="token punctuation">}</span> <span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<p>在表达式中假如打印参数的代码，打印出来的内容如下：</p>
-<pre class=" language-java"><code class="language-java">a<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span>b<span class="token operator">=</span><span class="token number">2</span>
-a<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">,</span>b<span class="token operator">=</span><span class="token number">3</span>
-a<span class="token operator">=</span><span class="token number">6</span><span class="token punctuation">,</span>b<span class="token operator">=</span><span class="token number">4</span>
-a<span class="token operator">=</span><span class="token number">10</span><span class="token punctuation">,</span>b<span class="token operator">=</span><span class="token number">5</span></code></pre>
-<p>表达式被调用了4次， 第一次a和b分别为stream的第一和第二个元素，因为第一次没有中间结果可以传递， 所以 reduce方法实现为直接将第一个元素作为中间结果传递。</p>
-<h3 id="第二个签名方法"><a href="#第二个签名方法" class="headerlink" title="第二个签名方法"></a>第二个签名方法</h3><pre class=" language-java"><code class="language-java">T <span class="token function">reduce</span><span class="token punctuation">(</span>T identity<span class="token punctuation">,</span> BinaryOperator<span class="token operator">&lt;</span>T<span class="token operator">></span> accumulator<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<p>与第一个签名的实现的唯一区别是它首次执行时表达式第一次参数并不是stream的第一个元素，而是通过签名的第一个参数identity来指定。我们来通过这个签名对之前的求和代码进行改进：</p>
-<pre class=" language-java"><code class="language-java">List<span class="token operator">&lt;</span>Integer<span class="token operator">></span> numList <span class="token operator">=</span> Arrays<span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">int</span> result <span class="token operator">=</span> numList<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span>b<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span>  a <span class="token operator">+</span> b <span class="token punctuation">)</span><span class="token punctuation">;</span>
-System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<p>其实这两种实现几乎差别，第一种比第一种仅仅多了一个字定义初始值罢了。 此外，因为存在stream为空的情况，所以第一种实现并不直接方法计算的结果，而是将计算结果用Optional来包装，我们可以通过它的get方法获得一个Integer类型的结果，而Integer允许null。第二种实现因为允许指定初始值，因此即使stream为空，也不会出现返回结果为null的情况，当stream为空，reduce为直接把初始值返回。</p>
-<h3 id="第三个签名方法"><a href="#第三个签名方法" class="headerlink" title="第三个签名方法"></a>第三个签名方法</h3><pre class=" language-java"><code class="language-java"><span class="token operator">&lt;</span>U<span class="token operator">></span> U <span class="token function">reduce</span><span class="token punctuation">(</span>U identity<span class="token punctuation">,</span>
-                 BiFunction<span class="token operator">&lt;</span>U<span class="token punctuation">,</span> <span class="token operator">?</span> <span class="token keyword">super</span> T<span class="token punctuation">,</span> U<span class="token operator">></span> accumulator<span class="token punctuation">,</span>
-                 BinaryOperator<span class="token operator">&lt;</span>U<span class="token operator">></span> combiner<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<p>第三种签名的用法相较前两种稍显复杂，由于前两种实现有一个缺陷，它们的计算结果必须和stream中的元素类型相同，如上面的代码示例，stream中的类型为int，那么计算结果也必须为int，这导致了灵活性的不足，甚至无法完成某些任务， 比入我们咬对一个一系列int值求和，但是求和的结果用一个int类型已经放不下，必须升级为long类型，此实第三签名就能发挥价值了，它不将执行结果与stream中元素的类型绑死。</p>
-<pre class=" language-java"><code class="language-java">List<span class="token operator">&lt;</span>Integer<span class="token operator">></span> numList <span class="token operator">=</span> Arrays<span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span>Integer<span class="token punctuation">.</span>MAX_VALUE<span class="token punctuation">,</span>Integer<span class="token punctuation">.</span>MAX_VALUE<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">long</span> result <span class="token operator">=</span> numList<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span>0L<span class="token punctuation">,</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span>b<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span>  a <span class="token operator">+</span> b<span class="token punctuation">,</span> <span class="token punctuation">(</span>a<span class="token punctuation">,</span>b<span class="token punctuation">)</span><span class="token operator">-</span><span class="token operator">></span> 0L <span class="token punctuation">)</span><span class="token punctuation">;</span>
-System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<p>如上代码所示，它能见int类型的列表合并成long类型的结果。<br> 当然这只是其中一种应用罢了，由于摆脱了类型的限制我们还可以通过他来灵活的完成许多任务，比入将一个int类型的ArrayList转换成一个String类型的ArrayList。</p>
-<pre class=" language-java"><code class="language-java">List<span class="token operator">&lt;</span>Integer<span class="token operator">></span> numList <span class="token operator">=</span> Arrays<span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-ArrayList<span class="token operator">&lt;</span>String<span class="token operator">></span> result <span class="token operator">=</span> numList<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span>String<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>a<span class="token punctuation">,</span> b<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">{</span>
-    a<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">"element-"</span> <span class="token operator">+</span> b<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> a<span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>a<span class="token punctuation">,</span> b<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> null<span class="token punctuation">)</span><span class="token punctuation">;</span>
-System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<p>执行结果为：</p>
-<pre class=" language-java"><code class="language-java"><span class="token punctuation">[</span>element<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> element<span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">,</span> element<span class="token operator">-</span><span class="token number">3</span><span class="token punctuation">,</span> element<span class="token operator">-</span><span class="token number">4</span><span class="token punctuation">,</span> element<span class="token operator">-</span><span class="token number">5</span><span class="token punctuation">,</span> element<span class="token operator">-</span><span class="token number">6</span><span class="token punctuation">]</span></code></pre>
-<p>这个示例显得有点鸡肋，一点不实用，不过在这里我们的主要目的是说明代码能达到什么样的效果，因此代码示例也不必取自实际的应用场景。</p>
-<p>从上面两个示例可以看出第三个reduce比前面两个强大的多，它的功能已经完全覆盖前面两个的实现，如果我们不考虑代码的简洁性，甚至可以抛弃前面两个。</p>
-<p>另外，还需要注意的是这个reduce的签名还包含第三个参数，一个BinaryOperator&lt;U&gt;类型的表达式。在常规情况下我们可以忽略这个参数，敷衍了事的随便指定一个表达式即可，目的是为了通过编译器的检查，因为在常规的stream中它并不会被执行到，然而， 虽然此表达式形同虚设，可是我们也不是把它设置为null，否者还是会报错。 在并行stream中，此表达式则会被执行到，在这里我们不进行讲解，因为我自己也没用过。</p>
-<pre><code>numList.parallelStream()</code></pre>
-<p>可获得并行stream。</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <categories>
-        <category>Stream</category>
-      </categories>
-      <tags>
-        <tag>JAVA</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>kotlin如何实现空安全</title>
-    <url>/posts/b698.html</url>
-    <content><![CDATA[<ol>
-<li><p>通过静态代码检查，编译插件检查，在编译器避免空指针异常</p>
-</li>
-<li><p>每次引用对象的时候，都去进行对象判空，在运行期间避免对象空指针</p>
-</li>
-</ol>
-<blockquote>
-<p>将一个对象的两种类型（可以为空的类型与不可以为空的类型）做一个彻底的分离。如果是不可能为空的对象，在编译期会禁止赋一个null值（编译期避免）；如果是有可能为空的对象，那么在对这个对象进行调用的时候，都会进行的非空判断（运行期避免）。</p>
-</blockquote>
-<h3 id="可空对象"><a href="#可空对象" class="headerlink" title="可空对象"></a>可空对象</h3><pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">val</span> a<span class="token operator">:</span> String<span class="token operator">?</span> <span class="token operator">=</span> <span class="token keyword">null</span>
-    <span class="token function">println</span><span class="token punctuation">(</span><span class="token function">getValue</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">fun</span> <span class="token function">getValue</span><span class="token punctuation">(</span>s<span class="token operator">:</span> String<span class="token operator">?</span><span class="token punctuation">)</span><span class="token operator">:</span> String <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> <span class="token string">"1"</span> <span class="token operator">+</span> s<span class="token operator">?</span><span class="token punctuation">.</span>length
-<span class="token punctuation">}</span></code></pre>
-<p>进行反编译，可以看到kotlin生成的class文件中进行了非空判断。</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">import</span> kotlin<span class="token punctuation">.</span>Metadata<span class="token punctuation">;</span>
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>jetbrains<span class="token punctuation">.</span>annotations<span class="token punctuation">.</span>NotNull<span class="token punctuation">;</span>
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>jetbrains<span class="token punctuation">.</span>annotations<span class="token punctuation">.</span>Nullable<span class="token punctuation">;</span>
-
-<span class="token annotation punctuation">@Metadata</span><span class="token punctuation">(</span>mv <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">,</span> bv <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">}</span><span class="token punctuation">,</span> k <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">,</span> d1 <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"\000\020\n\000\n\002\020\016\n\002\b\002\n\002\020\002\n\000\032\020\020\000\032\0020\0012\b\020\002\032\004\030\0010\001\032\006\020\003\032\0020\004\006\005"</span><span class="token punctuation">}</span><span class="token punctuation">,</span> d2 <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"getValue"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"s"</span><span class="token punctuation">,</span> <span class="token string">"main"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"my-kotlin"</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
-<span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">HelloKt</span> <span class="token punctuation">{</span>
-  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    String a <span class="token operator">=</span> <span class="token punctuation">(</span>String<span class="token punctuation">)</span>null<span class="token punctuation">;</span>
-    String str1 <span class="token operator">=</span> <span class="token function">getValue</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>str1<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-
-  <span class="token annotation punctuation">@NotNull</span>
-  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> String <span class="token function">getValue</span><span class="token punctuation">(</span><span class="token annotation punctuation">@Nullable</span> String s<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> <span class="token string">"1"</span> <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>s <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token punctuation">(</span>String<span class="token punctuation">)</span>Integer<span class="token punctuation">.</span><span class="token function">valueOf</span><span class="token punctuation">(</span>s<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">:</span> null<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
-<h3 id="不可空对象"><a href="#不可空对象" class="headerlink" title="不可空对象"></a>不可空对象</h3><pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">val</span> a<span class="token operator">:</span> String <span class="token operator">=</span> <span class="token string">"abc"</span>
-    <span class="token function">println</span><span class="token punctuation">(</span><span class="token function">getValue</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">fun</span> <span class="token function">getValue</span><span class="token punctuation">(</span>s<span class="token operator">:</span> String<span class="token punctuation">)</span><span class="token operator">:</span> String <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> <span class="token string">"1"</span> <span class="token operator">+</span> s<span class="token punctuation">.</span>length
-<span class="token punctuation">}</span></code></pre>
-<p>进行反编译，可以看到kotlin生成的class文件中直接进行了断言（断言对象不会为null）</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">import</span> kotlin<span class="token punctuation">.</span>Metadata<span class="token punctuation">;</span>
-<span class="token keyword">import</span> kotlin<span class="token punctuation">.</span>jvm<span class="token punctuation">.</span>internal<span class="token punctuation">.</span>Intrinsics<span class="token punctuation">;</span>
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>jetbrains<span class="token punctuation">.</span>annotations<span class="token punctuation">.</span>NotNull<span class="token punctuation">;</span>
-
-<span class="token annotation punctuation">@Metadata</span><span class="token punctuation">(</span>mv <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">,</span> bv <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">}</span><span class="token punctuation">,</span> k <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">,</span> d1 <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"\000\020\n\000\n\002\020\016\n\002\b\002\n\002\020\002\n\000\032\016\020\000\032\0020\0012\006\020\002\032\0020\001\032\006\020\003\032\0020\004\006\005"</span><span class="token punctuation">}</span><span class="token punctuation">,</span> d2 <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"getValue"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"s"</span><span class="token punctuation">,</span> <span class="token string">"main"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"my-kotlin"</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
-<span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">HelloKt</span> <span class="token punctuation">{</span>
-  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    String a <span class="token operator">=</span> <span class="token string">"abc"</span><span class="token punctuation">;</span>
-    String str1 <span class="token operator">=</span> <span class="token function">getValue</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>str1<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-
-  <span class="token annotation punctuation">@NotNull</span>
-  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> String <span class="token function">getValue</span><span class="token punctuation">(</span><span class="token annotation punctuation">@NotNull</span> String s<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    Intrinsics<span class="token punctuation">.</span><span class="token function">checkNotNullParameter</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> <span class="token string">"s"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token string">"1"</span> <span class="token operator">+</span> s<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>Kotlin</tag>
       </tags>
   </entry>
   <entry>
@@ -1609,6 +1494,94 @@ object Perfect<span class="token punctuation">{</span>
       </tags>
   </entry>
   <entry>
+    <title>kotlin如何实现空安全</title>
+    <url>/posts/b698.html</url>
+    <content><![CDATA[<ol>
+<li><p>通过静态代码检查，编译插件检查，在编译器避免空指针异常</p>
+</li>
+<li><p>每次引用对象的时候，都去进行对象判空，在运行期间避免对象空指针</p>
+</li>
+</ol>
+<blockquote>
+<p>将一个对象的两种类型（可以为空的类型与不可以为空的类型）做一个彻底的分离。如果是不可能为空的对象，在编译期会禁止赋一个null值（编译期避免）；如果是有可能为空的对象，那么在对这个对象进行调用的时候，都会进行的非空判断（运行期避免）。</p>
+</blockquote>
+<h3 id="可空对象"><a href="#可空对象" class="headerlink" title="可空对象"></a>可空对象</h3><pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">val</span> a<span class="token operator">:</span> String<span class="token operator">?</span> <span class="token operator">=</span> <span class="token keyword">null</span>
+    <span class="token function">println</span><span class="token punctuation">(</span><span class="token function">getValue</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">fun</span> <span class="token function">getValue</span><span class="token punctuation">(</span>s<span class="token operator">:</span> String<span class="token operator">?</span><span class="token punctuation">)</span><span class="token operator">:</span> String <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token string">"1"</span> <span class="token operator">+</span> s<span class="token operator">?</span><span class="token punctuation">.</span>length
+<span class="token punctuation">}</span></code></pre>
+<p>进行反编译，可以看到kotlin生成的class文件中进行了非空判断。</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">import</span> kotlin<span class="token punctuation">.</span>Metadata<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>jetbrains<span class="token punctuation">.</span>annotations<span class="token punctuation">.</span>NotNull<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>jetbrains<span class="token punctuation">.</span>annotations<span class="token punctuation">.</span>Nullable<span class="token punctuation">;</span>
+
+<span class="token annotation punctuation">@Metadata</span><span class="token punctuation">(</span>mv <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">,</span> bv <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">}</span><span class="token punctuation">,</span> k <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">,</span> d1 <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"\000\020\n\000\n\002\020\016\n\002\b\002\n\002\020\002\n\000\032\020\020\000\032\0020\0012\b\020\002\032\004\030\0010\001\032\006\020\003\032\0020\004\006\005"</span><span class="token punctuation">}</span><span class="token punctuation">,</span> d2 <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"getValue"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"s"</span><span class="token punctuation">,</span> <span class="token string">"main"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"my-kotlin"</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">HelloKt</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    String a <span class="token operator">=</span> <span class="token punctuation">(</span>String<span class="token punctuation">)</span>null<span class="token punctuation">;</span>
+    String str1 <span class="token operator">=</span> <span class="token function">getValue</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>str1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token annotation punctuation">@NotNull</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> String <span class="token function">getValue</span><span class="token punctuation">(</span><span class="token annotation punctuation">@Nullable</span> String s<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token string">"1"</span> <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>s <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token punctuation">(</span>String<span class="token punctuation">)</span>Integer<span class="token punctuation">.</span><span class="token function">valueOf</span><span class="token punctuation">(</span>s<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">:</span> null<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<h3 id="不可空对象"><a href="#不可空对象" class="headerlink" title="不可空对象"></a>不可空对象</h3><pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">val</span> a<span class="token operator">:</span> String <span class="token operator">=</span> <span class="token string">"abc"</span>
+    <span class="token function">println</span><span class="token punctuation">(</span><span class="token function">getValue</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">fun</span> <span class="token function">getValue</span><span class="token punctuation">(</span>s<span class="token operator">:</span> String<span class="token punctuation">)</span><span class="token operator">:</span> String <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token string">"1"</span> <span class="token operator">+</span> s<span class="token punctuation">.</span>length
+<span class="token punctuation">}</span></code></pre>
+<p>进行反编译，可以看到kotlin生成的class文件中直接进行了断言（断言对象不会为null）</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">import</span> kotlin<span class="token punctuation">.</span>Metadata<span class="token punctuation">;</span>
+<span class="token keyword">import</span> kotlin<span class="token punctuation">.</span>jvm<span class="token punctuation">.</span>internal<span class="token punctuation">.</span>Intrinsics<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>jetbrains<span class="token punctuation">.</span>annotations<span class="token punctuation">.</span>NotNull<span class="token punctuation">;</span>
+
+<span class="token annotation punctuation">@Metadata</span><span class="token punctuation">(</span>mv <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">,</span> bv <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">}</span><span class="token punctuation">,</span> k <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">,</span> d1 <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"\000\020\n\000\n\002\020\016\n\002\b\002\n\002\020\002\n\000\032\016\020\000\032\0020\0012\006\020\002\032\0020\001\032\006\020\003\032\0020\004\006\005"</span><span class="token punctuation">}</span><span class="token punctuation">,</span> d2 <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"getValue"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"s"</span><span class="token punctuation">,</span> <span class="token string">"main"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"my-kotlin"</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">HelloKt</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    String a <span class="token operator">=</span> <span class="token string">"abc"</span><span class="token punctuation">;</span>
+    String str1 <span class="token operator">=</span> <span class="token function">getValue</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>str1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token annotation punctuation">@NotNull</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> String <span class="token function">getValue</span><span class="token punctuation">(</span><span class="token annotation punctuation">@NotNull</span> String s<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    Intrinsics<span class="token punctuation">.</span><span class="token function">checkNotNullParameter</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> <span class="token string">"s"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token string">"1"</span> <span class="token operator">+</span> s<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用Docker安装YApi</title>
     <url>/posts/b5f9.html</url>
     <content><![CDATA[<h3 id="启动MongoDB"><a href="#启动MongoDB" class="headerlink" title="启动MongoDB"></a>启动MongoDB</h3><ol>
@@ -1850,193 +1823,6 @@ $ <span class="token function">git</span> config --list --system</code></pre>
       </categories>
       <tags>
         <tag>Spring</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>客户端连接Redis</title>
-    <url>/posts/11b.html</url>
-    <content><![CDATA[<h3 id="发送命令"><a href="#发送命令" class="headerlink" title="发送命令"></a>发送命令</h3><p>通过 redis-cli 向 Redis 发送命令有两种方式，第一种方式是将命令作为 redis-cli 的参数执行，如：</p>
-<pre class=" language-bash"><code class="language-bash">$ redis-cli SHUTDOWN</code></pre>
-<p>redis-cli 执行时会自动按照默认配置（服务器地址为 127.0.0.1，端口号为 6379）连接 Redis，通过 -h 和 -p 参数可以自定义地址和端口号：</p>
-<pre class=" language-bash"><code class="language-bash">$ redis-cli -h 127.0.0.1 -p 6379</code></pre>
-<p>第二种方式是不附带参数运行 redis-cli，这样会进入交互模式，可以自由输入命令，例如：</p>
-<pre class=" language-bash"><code class="language-bash">$ redis-cli
-127.0.0.1:6379<span class="token operator">></span> PING
-PONG</code></pre>
-<p>这种方式在输入多条命令时比较方便。</p>
-<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>Redis 支持通过配置文件来设置启动参数，如：</p>
-<pre class=" language-bash"><code class="language-bash">$ redis-server /path/to/redis.conf</code></pre>
-<p>通过启动参数传递同名的配置选项会覆盖配置文件中相应的参数，就像这样：</p>
-<pre class=" language-bash"><code class="language-bash">$ redis-server /path/to/redis.conf --loglevel warning</code></pre>
-<p>Redis 运行时通过 CONFIG SET 命令在不重新启动 Redis 的情况下动态修改部分 Redid配置：</p>
-<pre class=" language-bash"><code class="language-bash">$ CONFIG SET loglevel warning
-OK</code></pre>
-<p>并不是所有配置都可以使用Config SET 命令修改。同样在运行的时候也可以使用 CONFIG GET 命令获得 Redis 当前的配置情况：</p>
-<pre class=" language-bash"><code class="language-bash">$ CONFIG GET loglevel
-1<span class="token punctuation">)</span> <span class="token string">"loglevel"</span>
-2<span class="token punctuation">)</span> <span class="token string">"notice"</span></code></pre>
-<p>其中第一行字符串回复表示的是选项名，第二行既是选项值。</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>Redis</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Kotlin常用作用域函数</title>
-    <url>/posts/c396.html</url>
-    <content><![CDATA[<h3 id="let-和-run"><a href="#let-和-run" class="headerlink" title="let 和 run"></a>let 和 run</h3><p>let 和 run 都会返回闭包的执行结果，区别在于let有闭包参数，而run没有闭包参数。</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token keyword">var</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span>
-<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-
-    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
-
-    <span class="token keyword">val</span> letResult<span class="token operator">:</span> String <span class="token operator">=</span> user<span class="token punctuation">.</span><span class="token function">let</span> <span class="token punctuation">{</span> user<span class="token operator">:</span> User <span class="token operator">-></span>
-        <span class="token string">"let:: <span class="token interpolation"><span class="token delimiter variable">${</span>user<span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span>
-    <span class="token punctuation">}</span>
-  <span class="token comment" spellcheck="true">/** 
-         简化写法
-         val letResult: String = user.let {
-        "let:: ${it.javaClass.simpleName}"
-    } 
-   */</span>
-
-    <span class="token function">println</span><span class="token punctuation">(</span>letResult<span class="token punctuation">)</span>
-
-    <span class="token keyword">val</span> runResult <span class="token operator">=</span> user<span class="token punctuation">.</span><span class="token function">run</span> <span class="token punctuation">{</span>
-        <span class="token string">"run:: <span class="token interpolation"><span class="token delimiter variable">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span>
-    <span class="token punctuation">}</span>
-    <span class="token function">print</span><span class="token punctuation">(</span>runResult<span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-
-<span class="token comment" spellcheck="true">/** 输出结果：let:: User
-                         run:: User */</span></code></pre>
-<h3 id="also-和-apply"><a href="#also-和-apply" class="headerlink" title="also 和 apply"></a>also 和 apply</h3><p>also与apply都不返回闭包的执行结果，区别在于also有闭包参数，而apply没有闭包参数。</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token keyword">var</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span>
-
-<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-
-    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
-
-    user<span class="token punctuation">.</span><span class="token function">also</span> <span class="token punctuation">{</span>
-        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"also::<span class="token interpolation"><span class="token delimiter variable">${</span>it<span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-
-    user<span class="token punctuation">.</span><span class="token function">apply</span> <span class="token punctuation">{</span>
-        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"apply::<span class="token interpolation"><span class="token delimiter variable">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-<span class="token comment" spellcheck="true">// 在这个例子中，also 和 apply 会继续返回user这个对象，因为我们可以这么使用</span>
-        user<span class="token punctuation">.</span><span class="token function">also</span> <span class="token punctuation">{</span>
-        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"also::<span class="token interpolation"><span class="token delimiter variable">${</span>it<span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span><span class="token punctuation">.</span><span class="token function">apply</span> <span class="token punctuation">{</span>
-        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"apply::<span class="token interpolation"><span class="token delimiter variable">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span><span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">"Bob"</span>
-
-    <span class="token function">print</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span>
-<span class="token comment" spellcheck="true">/** 输出结果：User(name=Bob) */</span></code></pre>
-<h3 id="takeIf-和-takeUnless"><a href="#takeIf-和-takeUnless" class="headerlink" title="takeIf 和 takeUnless"></a>takeIf 和 takeUnless</h3><p>takeIf 的闭包返回一个判断结果，为false时，takeIf函数会返回空。</p>
-<p>takeUnless 与 takeIf 刚好相反，闭包的判断结果，为true时函数会返回空。</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-
-    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
-
-    user<span class="token punctuation">.</span><span class="token function">takeIf</span> <span class="token punctuation">{</span>
-        it<span class="token punctuation">.</span>name<span class="token punctuation">.</span><span class="token function">isNotEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span><span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">also</span> <span class="token punctuation">{</span>
-        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"姓名为: <span class="token interpolation"><span class="token delimiter variable">${</span>it<span class="token punctuation">.</span>name<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span><span class="token operator">?:</span> <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"姓名为空"</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">/** 输出结果：姓名为: AsiaMa */</span>
-
-<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-
-    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
-
-    user<span class="token punctuation">.</span><span class="token function">takeUnless</span> <span class="token punctuation">{</span>
-        it<span class="token punctuation">.</span>name<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span><span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">also</span> <span class="token punctuation">{</span>
-        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"姓名为: <span class="token interpolation"><span class="token delimiter variable">${</span>it<span class="token punctuation">.</span>name<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span><span class="token operator">?:</span> <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"姓名为空"</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">/** 输出结果：姓名为: AsiaMa */</span></code></pre>
-<h3 id="Repeat"><a href="#Repeat" class="headerlink" title="Repeat"></a>Repeat</h3><p>重复执行当前闭包</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token keyword">var</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span>
-
-<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
-
-    <span class="token function">repeat</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token function">print</span><span class="token punctuation">(</span>user<span class="token punctuation">.</span>name<span class="token punctuation">)</span>
-        <span class="token function">println</span><span class="token punctuation">(</span>it<span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">/**
-输出结果：
-    AsiaMa0
-    AsiaMa1
-    AsiaMa2
-    AsiaMa3
-    AsiaMa4
-*/</span></code></pre>
-<h3 id="With"><a href="#With" class="headerlink" title="With"></a>With</h3><p>with比较特殊，不是以扩展方法的形式存在，而是一个顶级函数。可用于对象的通用属性赋值。</p>
-<pre class=" language-java"><code class="language-java">fun <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    val user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
-
-    <span class="token function">with</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">"Tom"</span>
-    <span class="token punctuation">}</span>
-    <span class="token function">println</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span>
-
-  <span class="token comment" spellcheck="true">/** 与with相似    
-    user.apply {
-        this.name = "Rose"
-    }
-  */</span>
-<span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">/** 输出结果：User(name=Tom) */</span></code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <categories>
-        <category>函数式编程</category>
-      </categories>
-      <tags>
-        <tag>Kotlin</tag>
       </tags>
   </entry>
   <entry>
@@ -2352,6 +2138,193 @@ OK</code></pre>
       </categories>
       <tags>
         <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>客户端连接Redis</title>
+    <url>/posts/11b.html</url>
+    <content><![CDATA[<h3 id="发送命令"><a href="#发送命令" class="headerlink" title="发送命令"></a>发送命令</h3><p>通过 redis-cli 向 Redis 发送命令有两种方式，第一种方式是将命令作为 redis-cli 的参数执行，如：</p>
+<pre class=" language-bash"><code class="language-bash">$ redis-cli SHUTDOWN</code></pre>
+<p>redis-cli 执行时会自动按照默认配置（服务器地址为 127.0.0.1，端口号为 6379）连接 Redis，通过 -h 和 -p 参数可以自定义地址和端口号：</p>
+<pre class=" language-bash"><code class="language-bash">$ redis-cli -h 127.0.0.1 -p 6379</code></pre>
+<p>第二种方式是不附带参数运行 redis-cli，这样会进入交互模式，可以自由输入命令，例如：</p>
+<pre class=" language-bash"><code class="language-bash">$ redis-cli
+127.0.0.1:6379<span class="token operator">></span> PING
+PONG</code></pre>
+<p>这种方式在输入多条命令时比较方便。</p>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>Redis 支持通过配置文件来设置启动参数，如：</p>
+<pre class=" language-bash"><code class="language-bash">$ redis-server /path/to/redis.conf</code></pre>
+<p>通过启动参数传递同名的配置选项会覆盖配置文件中相应的参数，就像这样：</p>
+<pre class=" language-bash"><code class="language-bash">$ redis-server /path/to/redis.conf --loglevel warning</code></pre>
+<p>Redis 运行时通过 CONFIG SET 命令在不重新启动 Redis 的情况下动态修改部分 Redid配置：</p>
+<pre class=" language-bash"><code class="language-bash">$ CONFIG SET loglevel warning
+OK</code></pre>
+<p>并不是所有配置都可以使用Config SET 命令修改。同样在运行的时候也可以使用 CONFIG GET 命令获得 Redis 当前的配置情况：</p>
+<pre class=" language-bash"><code class="language-bash">$ CONFIG GET loglevel
+1<span class="token punctuation">)</span> <span class="token string">"loglevel"</span>
+2<span class="token punctuation">)</span> <span class="token string">"notice"</span></code></pre>
+<p>其中第一行字符串回复表示的是选项名，第二行既是选项值。</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Kotlin常用作用域函数</title>
+    <url>/posts/c396.html</url>
+    <content><![CDATA[<h3 id="let-和-run"><a href="#let-和-run" class="headerlink" title="let 和 run"></a>let 和 run</h3><p>let 和 run 都会返回闭包的执行结果，区别在于let有闭包参数，而run没有闭包参数。</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token keyword">var</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span>
+<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+
+    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">val</span> letResult<span class="token operator">:</span> String <span class="token operator">=</span> user<span class="token punctuation">.</span><span class="token function">let</span> <span class="token punctuation">{</span> user<span class="token operator">:</span> User <span class="token operator">-></span>
+        <span class="token string">"let:: <span class="token interpolation"><span class="token delimiter variable">${</span>user<span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span>
+    <span class="token punctuation">}</span>
+  <span class="token comment" spellcheck="true">/** 
+         简化写法
+         val letResult: String = user.let {
+        "let:: ${it.javaClass.simpleName}"
+    } 
+   */</span>
+
+    <span class="token function">println</span><span class="token punctuation">(</span>letResult<span class="token punctuation">)</span>
+
+    <span class="token keyword">val</span> runResult <span class="token operator">=</span> user<span class="token punctuation">.</span><span class="token function">run</span> <span class="token punctuation">{</span>
+        <span class="token string">"run:: <span class="token interpolation"><span class="token delimiter variable">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">print</span><span class="token punctuation">(</span>runResult<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">/** 输出结果：let:: User
+                         run:: User */</span></code></pre>
+<h3 id="also-和-apply"><a href="#also-和-apply" class="headerlink" title="also 和 apply"></a>also 和 apply</h3><p>also与apply都不返回闭包的执行结果，区别在于also有闭包参数，而apply没有闭包参数。</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token keyword">var</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span>
+
+<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
+
+    user<span class="token punctuation">.</span><span class="token function">also</span> <span class="token punctuation">{</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"also::<span class="token interpolation"><span class="token delimiter variable">${</span>it<span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    user<span class="token punctuation">.</span><span class="token function">apply</span> <span class="token punctuation">{</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"apply::<span class="token interpolation"><span class="token delimiter variable">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">// 在这个例子中，also 和 apply 会继续返回user这个对象，因为我们可以这么使用</span>
+        user<span class="token punctuation">.</span><span class="token function">also</span> <span class="token punctuation">{</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"also::<span class="token interpolation"><span class="token delimiter variable">${</span>it<span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">.</span><span class="token function">apply</span> <span class="token punctuation">{</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"apply::<span class="token interpolation"><span class="token delimiter variable">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">"Bob"</span>
+
+    <span class="token function">print</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">/** 输出结果：User(name=Bob) */</span></code></pre>
+<h3 id="takeIf-和-takeUnless"><a href="#takeIf-和-takeUnless" class="headerlink" title="takeIf 和 takeUnless"></a>takeIf 和 takeUnless</h3><p>takeIf 的闭包返回一个判断结果，为false时，takeIf函数会返回空。</p>
+<p>takeUnless 与 takeIf 刚好相反，闭包的判断结果，为true时函数会返回空。</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
+
+    user<span class="token punctuation">.</span><span class="token function">takeIf</span> <span class="token punctuation">{</span>
+        it<span class="token punctuation">.</span>name<span class="token punctuation">.</span><span class="token function">isNotEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">also</span> <span class="token punctuation">{</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"姓名为: <span class="token interpolation"><span class="token delimiter variable">${</span>it<span class="token punctuation">.</span>name<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token operator">?:</span> <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"姓名为空"</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/** 输出结果：姓名为: AsiaMa */</span>
+
+<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
+
+    user<span class="token punctuation">.</span><span class="token function">takeUnless</span> <span class="token punctuation">{</span>
+        it<span class="token punctuation">.</span>name<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">also</span> <span class="token punctuation">{</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"姓名为: <span class="token interpolation"><span class="token delimiter variable">${</span>it<span class="token punctuation">.</span>name<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token operator">?:</span> <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"姓名为空"</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/** 输出结果：姓名为: AsiaMa */</span></code></pre>
+<h3 id="Repeat"><a href="#Repeat" class="headerlink" title="Repeat"></a>Repeat</h3><p>重复执行当前闭包</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token keyword">var</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span>
+
+<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
+
+    <span class="token function">repeat</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token function">print</span><span class="token punctuation">(</span>user<span class="token punctuation">.</span>name<span class="token punctuation">)</span>
+        <span class="token function">println</span><span class="token punctuation">(</span>it<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/**
+输出结果：
+    AsiaMa0
+    AsiaMa1
+    AsiaMa2
+    AsiaMa3
+    AsiaMa4
+*/</span></code></pre>
+<h3 id="With"><a href="#With" class="headerlink" title="With"></a>With</h3><p>with比较特殊，不是以扩展方法的形式存在，而是一个顶级函数。可用于对象的通用属性赋值。</p>
+<pre class=" language-java"><code class="language-java">fun <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    val user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
+
+    <span class="token function">with</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">"Tom"</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">println</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span>
+
+  <span class="token comment" spellcheck="true">/** 与with相似    
+    user.apply {
+        this.name = "Rose"
+    }
+  */</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/** 输出结果：User(name=Tom) */</span></code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <categories>
+        <category>函数式编程</category>
+      </categories>
+      <tags>
+        <tag>Kotlin</tag>
       </tags>
   </entry>
   <entry>
@@ -2762,73 +2735,6 @@ map <span class="token operator">=</span> strategies<span class="token punctuati
       </tags>
   </entry>
   <entry>
-    <title>自定义中缀表达式</title>
-    <url>/posts/8a52.html</url>
-    <content><![CDATA[<p>一个函数只有用与两个角色类似的对象时才将其声明为中缀函数。</p>
-<p>推荐示例：and、to、zip        反例：add</p>
-<p>如果一个方法会改动其接受者，那么不要声明为中缀形式。</p>
-<p>定义自己的中缀表达式：</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">sealed</span> <span class="token keyword">class</span> CompareResult <span class="token punctuation">{</span>
-    <span class="token keyword">object</span> LESS <span class="token operator">:</span> <span class="token function">CompareResult</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">override</span> <span class="token keyword">fun</span> <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> String <span class="token punctuation">{</span>
-            <span class="token keyword">return</span> <span class="token string">"小于"</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">object</span> MORE <span class="token operator">:</span> <span class="token function">CompareResult</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">override</span> <span class="token keyword">fun</span> <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> String <span class="token punctuation">{</span>
-            <span class="token keyword">return</span> <span class="token string">"大于"</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">object</span> EQUAL <span class="token operator">:</span> <span class="token function">CompareResult</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">override</span> <span class="token keyword">fun</span> <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> String <span class="token punctuation">{</span>
-            <span class="token keyword">return</span> <span class="token string">"等于"</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-infix <span class="token keyword">fun</span> Int<span class="token punctuation">.</span><span class="token function">vs</span><span class="token punctuation">(</span>num<span class="token operator">:</span> Int<span class="token punctuation">)</span><span class="token operator">:</span> CompareResult <span class="token operator">=</span>
-    <span class="token keyword">when</span> <span class="token punctuation">{</span>
-        <span class="token keyword">this</span> <span class="token operator">-</span> num <span class="token operator">></span> <span class="token number">0</span> <span class="token operator">-></span> <span class="token punctuation">{</span>
-            CompareResult<span class="token punctuation">.</span>MORE
-        <span class="token punctuation">}</span>
-        <span class="token keyword">this</span> <span class="token operator">-</span> num <span class="token operator">&lt;</span> <span class="token number">0</span> <span class="token operator">-></span> <span class="token punctuation">{</span>
-            CompareResult<span class="token punctuation">.</span>LESS
-        <span class="token punctuation">}</span>
-        <span class="token keyword">else</span> <span class="token operator">-></span> <span class="token punctuation">{</span>
-            CompareResult<span class="token punctuation">.</span>EQUAL
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-
-<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token function">println</span><span class="token punctuation">(</span><span class="token number">5</span> vs <span class="token number">6</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">/** 输出结果：小于 */</span></code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>Kotlin</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Kotlin自定义操作符</title>
     <url>/posts/8051.html</url>
     <content><![CDATA[<h3 id="自定义Convert操作符"><a href="#自定义Convert操作符" class="headerlink" title="自定义Convert操作符"></a>自定义Convert操作符</h3><pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -2907,6 +2813,73 @@ infix <span class="token keyword">fun</span> Int<span class="token punctuation">
       <categories>
         <category>函数式编程</category>
       </categories>
+      <tags>
+        <tag>Kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>自定义中缀表达式</title>
+    <url>/posts/8a52.html</url>
+    <content><![CDATA[<p>一个函数只有用与两个角色类似的对象时才将其声明为中缀函数。</p>
+<p>推荐示例：and、to、zip        反例：add</p>
+<p>如果一个方法会改动其接受者，那么不要声明为中缀形式。</p>
+<p>定义自己的中缀表达式：</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">sealed</span> <span class="token keyword">class</span> CompareResult <span class="token punctuation">{</span>
+    <span class="token keyword">object</span> LESS <span class="token operator">:</span> <span class="token function">CompareResult</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">override</span> <span class="token keyword">fun</span> <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> String <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token string">"小于"</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">object</span> MORE <span class="token operator">:</span> <span class="token function">CompareResult</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">override</span> <span class="token keyword">fun</span> <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> String <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token string">"大于"</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">object</span> EQUAL <span class="token operator">:</span> <span class="token function">CompareResult</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">override</span> <span class="token keyword">fun</span> <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> String <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token string">"等于"</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+infix <span class="token keyword">fun</span> Int<span class="token punctuation">.</span><span class="token function">vs</span><span class="token punctuation">(</span>num<span class="token operator">:</span> Int<span class="token punctuation">)</span><span class="token operator">:</span> CompareResult <span class="token operator">=</span>
+    <span class="token keyword">when</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span> <span class="token operator">-</span> num <span class="token operator">></span> <span class="token number">0</span> <span class="token operator">-></span> <span class="token punctuation">{</span>
+            CompareResult<span class="token punctuation">.</span>MORE
+        <span class="token punctuation">}</span>
+        <span class="token keyword">this</span> <span class="token operator">-</span> num <span class="token operator">&lt;</span> <span class="token number">0</span> <span class="token operator">-></span> <span class="token punctuation">{</span>
+            CompareResult<span class="token punctuation">.</span>LESS
+        <span class="token punctuation">}</span>
+        <span class="token keyword">else</span> <span class="token operator">-></span> <span class="token punctuation">{</span>
+            CompareResult<span class="token punctuation">.</span>EQUAL
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">println</span><span class="token punctuation">(</span><span class="token number">5</span> vs <span class="token number">6</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/** 输出结果：小于 */</span></code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
       <tags>
         <tag>Kotlin</tag>
       </tags>
@@ -3009,6 +2982,51 @@ infix <span class="token keyword">fun</span> Int<span class="token punctuation">
 <li>She talk loudy.（方式状语）</li>
 <li>He walks in a funny way.</li>
 </ul>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>English</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>英语学习第三天</title>
+    <url>/posts/9968.html</url>
+    <content><![CDATA[<h3 id="动名词作主语"><a href="#动名词作主语" class="headerlink" title="动名词作主语"></a>动名词作主语</h3><ul>
+<li>Eating an apple a day keeps you healthy.</li>
+<li>Running five miles is the first thing he does in the morning.</li>
+</ul>
+<h3 id="不定式作主语"><a href="#不定式作主语" class="headerlink" title="不定式作主语"></a>不定式作主语</h3><ul>
+<li>To study abroad is my greatest desire.</li>
+<li>To travel around the world is my plan for this year.</li>
+</ul>
+<p>动名词作主语不讨论这件事做或没做。不定式做主语，这件事情还没有做。</p>
+<p>动词要做主语，不能用原词。可以用动名词，也可以用不定式。如果是不定式，这个动作要没做才可以。</p>
+<blockquote>
+<p>不定式和动名词作主语时，常出现主语过长的情况，可以用代词it代替，作形式主语放在句首，而把真正的主语，即不定式或动名词短语放在句尾。动名词移至句尾时，常改为不定式。</p>
+</blockquote>
+<p>Collecting stamps is one of his hobbies.</p>
+<p><code>It</code> is one of his hobbies <code>to collect stamps</code>.</p>
+<p>Eating an apple a day keeps you healthy.</p>
+<p><code>It</code> keeps you healthy <code>to eat an appale</code>.</p>
+<h3 id="单词"><a href="#单词" class="headerlink" title="单词"></a>单词</h3><p>hear from 收到….的信</p>
+<p>hear sb do sth 听见某人做某事 </p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -3145,51 +3163,6 @@ infix <span class="token keyword">fun</span> Int<span class="token punctuation">
 <p>the + 形容词 = 名词</p>
 <p>The rick should help the poor.</p>
 </blockquote>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>English</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>英语学习第三天</title>
-    <url>/posts/9968.html</url>
-    <content><![CDATA[<h3 id="动名词作主语"><a href="#动名词作主语" class="headerlink" title="动名词作主语"></a>动名词作主语</h3><ul>
-<li>Eating an apple a day keeps you healthy.</li>
-<li>Running five miles is the first thing he does in the morning.</li>
-</ul>
-<h3 id="不定式作主语"><a href="#不定式作主语" class="headerlink" title="不定式作主语"></a>不定式作主语</h3><ul>
-<li>To study abroad is my greatest desire.</li>
-<li>To travel around the world is my plan for this year.</li>
-</ul>
-<p>动名词作主语不讨论这件事做或没做。不定式做主语，这件事情还没有做。</p>
-<p>动词要做主语，不能用原词。可以用动名词，也可以用不定式。如果是不定式，这个动作要没做才可以。</p>
-<blockquote>
-<p>不定式和动名词作主语时，常出现主语过长的情况，可以用代词it代替，作形式主语放在句首，而把真正的主语，即不定式或动名词短语放在句尾。动名词移至句尾时，常改为不定式。</p>
-</blockquote>
-<p>Collecting stamps is one of his hobbies.</p>
-<p><code>It</code> is one of his hobbies <code>to collect stamps</code>.</p>
-<p>Eating an apple a day keeps you healthy.</p>
-<p><code>It</code> keeps you healthy <code>to eat an appale</code>.</p>
-<h3 id="单词"><a href="#单词" class="headerlink" title="单词"></a>单词</h3><p>hear from 收到….的信</p>
-<p>hear sb do sth 听见某人做某事 </p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -3629,6 +3602,626 @@ infix <span class="token keyword">fun</span> Int<span class="token punctuation">
       </categories>
       <tags>
         <tag>Kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis常用数据类型</title>
+    <url>/posts/f08d.html</url>
+    <content><![CDATA[<h3 id="String"><a href="#String" class="headerlink" title="String"></a>String</h3><p>字符串类型是 Redis 中最基本的数据类型，它能存储任何形式的字符串，包括二进制数据。你可以用其存储用户的邮箱、JSON化的对象甚至是一张图片。一个字符串类型键允许村塾的数据的最大容量是521MB。</p>
+<ol>
+<li>赋值与取值</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ SET key value
+$ GET key</code></pre>
+<ol start="2">
+<li>递增数字</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ INCR num</code></pre>
+<p>字符串类型可以存储任何形式的字符串，当存储的字符串是整数形式时，Redis 提供了一个实用的命令 INCR，其作用是让当前键值递增，并返回递增后的值。</p>
+<pre class=" language-bash"><code class="language-bash">$ INCR num
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1
+$ INCR num
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 2</code></pre>
+<p>当要操作的键不存在时，会默认值为 0 ，所以第一次递增后的结果是 1。当键值不是整数时 Redis 会提示错误。</p>
+<ol start="3">
+<li>增加指定的整数</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ INCRBY key increment</code></pre>
+<p>与 <code>INCR</code> 命令基本一样，只不过可以通过 <code>increment</code> 参数指定一次增加的数值。如：</p>
+<pre class=" language-bash"><code class="language-bash">$ INCRBY bar 2
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 2
+$ INCRBY bar 3
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 5</code></pre>
+<ol start="4">
+<li>减少指定的整数</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ DECR key
+$ DECRBY key increment</code></pre>
+<ol start="5">
+<li>增加指定的浮点数</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ INCRBYFLOAT key increment</code></pre>
+<p>类似 <code>INCRBY</code> 命令，差别是可以递增一个双精度浮点数。</p>
+<pre class=" language-bash"><code class="language-bash">$ INCRBYFLOAT foo 2.7
+<span class="token string">"2.7"</span>
+$ INCRBYFLOAT foo 5E+4
+<span class="token string">"50002.69999999999999929"</span></code></pre>
+<ol start="6">
+<li>向尾部追加值</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ APPEND key value</code></pre>
+<p><code>APPEND</code> 作用是向键值的末尾追加 value。如果键不存在则该键的值为 value，即相当于 SET key value。返回值是追加后字符串的长度。如：</p>
+<pre class=" language-bash"><code class="language-bash">$ SET key hello
+OK
+$ APPEND key <span class="token string">" world!"</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 12</code></pre>
+<p>此时 key 的值是“hello world!”。APPEND 命令的第二个参数加了双引号，原因是该参数包含空格，在 redis-cli 中需要输入双引号以示区别。</p>
+<ol start="7">
+<li>获取字符串长度</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ STRLEN key</code></pre>
+<ol start="8">
+<li>同时获得/设置多个键值</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ MGET key <span class="token punctuation">[</span>key <span class="token punctuation">..</span>.<span class="token punctuation">]</span>
+$ MSET key value <span class="token punctuation">[</span>key value <span class="token punctuation">..</span>.<span class="token punctuation">]</span></code></pre>
+<h3 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h3><p>散列类型（hash）的键值也是一种字典结构，其存储了字段（field）和字段值的映射，但字段值只能是字符串，不支持其它数据类型。换句话说，散列类型不能嵌套其它的数据类型。一个散列类型键可以包含至多<code>2的32次方-1</code>个字段。</p>
+<blockquote>
+<p>提示    除了散列类型，Redis 的其它数据类型同样不支持数据类型嵌套。比如集合类型的每个元素都只能是字符串，不能是另一个集合或散列表等。</p>
+</blockquote>
+<ol>
+<li>赋值与取值</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ HSET key field value
+$ HGET key field
+$ HMSET key field value <span class="token punctuation">[</span>field value <span class="token punctuation">..</span>.<span class="token punctuation">]</span>
+$ HMGET key field <span class="token punctuation">[</span>field <span class="token punctuation">..</span>.<span class="token punctuation">]</span>
+$ HGETALL key</code></pre>
+<p><code>HSET</code> 命令用来给字段赋值，而 <code>HGET</code> 命令用来获得字段的值。</p>
+<pre class=" language-bash"><code class="language-bash">$ HSET car price 500
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1
+$ HSET car name BMW
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1
+$ HGET car name
+<span class="token string">"BMW"</span></code></pre>
+<p><code>HSET</code>  命令的方便之处在于不区分插入和更新操作，这意味着修改数据时不用实现判断字段是否存在来决定要执行的是插入操作（update） 还是更新操作（insert）。当执行的是插入操作时（即之前字段不存在） <code>HSET</code>命令会返回 1 ，当执行的是更新操作时（即之前字段已经存在） <code>HSET</code> 命令会返回 0 。</p>
+<p>如果想获取键中所有字段和字段值却不知道键中有哪些字段时，应该使用 HGETALL 命令。</p>
+<pre class=" language-bash"><code class="language-bash">$ HGETALL car
+1<span class="token punctuation">)</span> <span class="token string">"price"</span>
+2<span class="token punctuation">)</span> <span class="token string">"500"</span>
+3<span class="token punctuation">)</span> <span class="token string">"name"</span>
+4<span class="token punctuation">)</span> <span class="token string">"BMW"</span></code></pre>
+<p>返回的结果是字段和字段值组成的列表，不是很直观。</p>
+<ol start="2">
+<li>判断字段是否存在</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ HEXISTS key field</code></pre>
+<p>存在返回 1 ，否则返回 0 。</p>
+<ol start="3">
+<li>当字段不存在时赋值</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ HSETNX key field value</code></pre>
+<p><code>HSETNX</code> 命令与  <code>HSET</code> 命令类似，区别在于如果字段已经存在，<code>HSETNX</code> 命令将不执行任何操作。<code>HSETNX</code> 命令是原子操作。</p>
+<ol start="4">
+<li>增加数字</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ HINCRBY key field increment</code></pre>
+<p>与字符串类型命令<code>INCRBY</code>, <code>HINCRBY</code> 命令与之类似，可以是字段值增加指定的整数。散列类型没有 <code>HINCR</code> 命令，但是可以通过 <code>HINCRBY key field 1</code> 来实现。</p>
+<pre class=" language-bash"><code class="language-bash">$ HINCRBY person score 60
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 60</code></pre>
+<p>之前 person 键不存在， <code>HINCRBY</code> 命令会自动建立该键并默认 score 字段在执行命令前的值为 “0”。命令的返回值是增值后的字段值。</p>
+<ol start="5">
+<li>删除字段</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ HDEL key field <span class="token punctuation">[</span>field <span class="token punctuation">..</span>.<span class="token punctuation">]</span></code></pre>
+<p><code>HDEL</code> 命令可以删除一个或多个字段。返回值是被删除的字段个数。</p>
+<pre class=" language-bash"><code class="language-bash">$ HDEL car price
+<span class="token punctuation">(</span>integer 1<span class="token punctuation">)</span></code></pre>
+<ol start="6">
+<li>只获取字段名或字段值</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ HKEYS key
+$ KVALS key</code></pre>
+<ol start="7">
+<li>获取字段数量</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ HLEN key</code></pre>
+<h3 id="List"><a href="#List" class="headerlink" title="List"></a>List</h3><p>列表类型（List）可以存储一个有序的字符串列表，常用的操作是向列表两端添加元素，或者获得列表的某一个片段。</p>
+<p>列表类型的内部是使用双向链表（double linked list）实现的，所以向列表两端添加元素的时间复杂度是 O(1)，获取越接近两端的元素速度就越快。这种特性使列表类型能非常快速地完成关系数据库难以应付的场景：如社交网站的新鲜事，我们关心的只是最新的内容，使用列表类型存储，即使新鲜事的总数达到几千万个，获取其中最新的100条数据也是极快的。</p>
+<p>与散列类型键最多能容纳的字段数量相同，一个列表类型键最多能容纳<code>2的32次方-1</code>个元素。</p>
+<ol>
+<li>向列表两端添加元素</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ LPUSH key value <span class="token punctuation">[</span>value <span class="token punctuation">..</span>.<span class="token punctuation">]</span>
+$ RPUSH key value <span class="token punctuation">[</span>value <span class="token punctuation">..</span>.<span class="token punctuation">]</span></code></pre>
+<p><code>LPUSH</code> 命令用来向列表左边增加元素，返回值表示增加元素后列表的长度。</p>
+<pre class=" language-bash"><code class="language-bash">$ LPUSH numbers 1
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1</code></pre>
+<p>这时 numbers 键中的数据：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/15121611018139_.pic_hd.jpg"></p>
+<p><code>LPUSH</code> 命令还支持同时增加多个元素：</p>
+<pre class=" language-bash"><code class="language-bash">$ LPUSH numbers 2 3
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 3</code></pre>
+<p><code>LPUSH</code> 会先向列表左边加入 “2”，然后再加入 “3”，所以此时 numbers 键中的数据：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/15131611018159_.pic_hd.jpg"></p>
+<p>向列表右边增加元素的话则使用 <code>RPUSH</code> 命令，其用法和 <code>LPUSH</code> 命令一样：</p>
+<pre class=" language-bash"><code class="language-bash">$ RPUSH numbers 0 -1
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 5</code></pre>
+<p>此时 numbers 键中的数据：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/15141611018309_.pic_hd.jpg"></p>
+<ol start="2">
+<li>从列表两端弹出元素</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ LPOP key
+$ RPOP key</code></pre>
+<p><code>LPOP</code> 命令可以从列表左边弹出一个元素。 <code>LPOP</code> 命令执行两步操作：第一步是将列表左边的元素从列表中移除，第二步是返回被移除元素的值。</p>
+<pre class=" language-bash"><code class="language-bash">$ LPOP numbers
+<span class="token string">"3"</span>
+$ RPOP numbers
+<span class="token string">"-1"</span></code></pre>
+<p>此时 number 键中的数据：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/15171611018928_.pic_hd.jpg"></p>
+<p>结合上面提到的 4 个命令可以使用列表类型来模拟栈和队列的操作：如果想把列表当成栈，则搭配使用 **<code>LPUSH</code> 和 <code>RPOP</code> **或 **<code>RPUSH</code> 和 <code>LPOP</code>**。</p>
+<ol start="3">
+<li>获取列表中元素的个数</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">LLEN key</code></pre>
+<p>当键不存在时 <code>LLEN</code> 会返回 0。</p>
+<pre class=" language-bash"><code class="language-bash">$ LLEN numbers
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 3</code></pre>
+<p><code>LLEN</code> 命令的功能类似 SQL 语句 <code>SELECT COUNT(*) FROM table_name</code>，但是 LLEN 的时间复杂度为 O(1)，使用时 Redis 会直接读取现成的值，而不像部分关系数据库（如使用 InnoDB 存储引擎的 MySQL 表）那样需要遍历一遍数据表来统计条目数量。</p>
+<ol start="4">
+<li>获得列表片段</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ LRANGE key start stop</code></pre>
+<p><code>LRANGE</code> 命令是列表类型最常用的命令之一，它能够获得列表中的某一片段。<code>LRANGE</code> 命令将返回索引从 start 到 top 之间的所有元素 （包含两端的元素）。Redis 的列表起始索引为 0：</p>
+<pre class=" language-bash"><code class="language-bash">$ LRANGE numbers 0 2
+1<span class="token punctuation">)</span> <span class="token string">"2"</span>
+2<span class="token punctuation">)</span> <span class="token string">"1"</span>
+3<span class="token punctuation">)</span> <span class="token string">"0"</span></code></pre>
+<p><code>LRANGE</code> 命令也支持负索引，表示从右边开始计算序数，如 “-1” 表示最右边第一个元素，“-2” 表示最右边第二个元素，依次类推：</p>
+<pre class=" language-bash"><code class="language-bash">$ LRANGE numbers -2 -1</code></pre>
+<p>显然，<code>LRANGE numbers 0 -1</code> 可以获取列表中的所有元素。另外一些特殊情况如下：</p>
+<ul>
+<li>如果 start 的索引位置比 stop 的索引位置靠后，则会返回空列表。</li>
+<li>如果 stop 大于实际的索引范围，则会返回到列表最右边的元素。</li>
+</ul>
+<ol start="5">
+<li>删除列表中指定的值</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ LREM key count value</code></pre>
+<p><code>LREM</code> 命令会删除列表中前 count 个值为 value 的元素，返回值是实际删除的元素个数。根据 count 值的不同，<code>LREM</code> 命令的执行方式会略有差异。</p>
+<ul>
+<li><p>当 count &gt; 0 时，<code>LREM</code> 命令会从列表左边开始删除前 count 个值为 value 的元素。</p>
+</li>
+<li><p>当 count &lt; 0 时，<code>LREM</code> 命令会从列表右边开始删除前 count 个值为 value 的元素。</p>
+</li>
+<li><p>当 count = 0 时，<code>LREM</code> 命令会删除所有值为 value 的元素。</p>
+</li>
+</ul>
+<pre class=" language-bash"><code class="language-bash">$ RPUSH numbers 2
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 4
+$ LRANGE numbers 0 -1
+1<span class="token punctuation">)</span> <span class="token string">"2,"</span>
+2<span class="token punctuation">)</span> <span class="token string">"1"</span>
+3<span class="token punctuation">)</span> <span class="token string">"0"</span>
+4<span class="token punctuation">)</span> <span class="token string">"2"</span>
+<span class="token comment" spellcheck="true"># 从右边开始删除第一个值为 “2” 的元素</span>
+$ LREM numbers -1 2
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1
+$ LRANGE numbers 0 -1
+1<span class="token punctuation">)</span> <span class="token string">"2"</span>
+2<span class="token punctuation">)</span> <span class="token string">"1"</span>
+3<span class="token punctuation">)</span> <span class="token string">"0"</span></code></pre>
+<ol start="6">
+<li>获得/设置指定索引的元素值</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ LINDEX key index
+$ LSET key index value</code></pre>
+<p>如果要将列表类型当作数组来用，<code>LINDEX</code> 命令是必不可少的。<code>LINDEX</code> 命令用来返回指定索引的元素，索引从 0 开始。如：</p>
+<pre class=" language-bash"><code class="language-bash">$ LINDEX numbers 2
+<span class="token string">"0"</span></code></pre>
+<p>如果 index 是负数则表示从右边开始计算的索引，最右边元素的索引是 -1。例如：</p>
+<pre class=" language-bash"><code class="language-bash">$ LINDEX numbers -1
+<span class="token string">"0"</span></code></pre>
+<p><code>LSET</code> 是一个通过索引操作列表的命令，它会将索引为 index 的元素赋值为 value。如：</p>
+<pre class=" language-bash"><code class="language-bash">$ LSET numbers 1 7
+OK
+$ LINDEX numbers 1
+<span class="token string">"7"</span></code></pre>
+<ol start="8">
+<li>只保留列表指定片段</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ LTRIM key start end</code></pre>
+<p><code>LTRIM</code> 命令可以删除指定索引范围之外的所有元素，其指定列表范围的方法和 <code>LRANGE</code> 命令相同。就像这样:</p>
+<pre class=" language-bash"><code class="language-bash">$ LRANGE numbers 0 -1
+1<span class="token punctuation">)</span> <span class="token string">"2,"</span>
+2<span class="token punctuation">)</span> <span class="token string">"7"</span>
+3<span class="token punctuation">)</span> <span class="token string">"0"</span>
+$ LTRIM numbers 0 1
+OK
+$ LRANGE numbers 0 -1
+1<span class="token punctuation">)</span> <span class="token string">"2"</span>
+2<span class="token punctuation">)</span> <span class="token string">"7"</span></code></pre>
+<p><code>LTRIM</code> 命令常和 <code>LPUSH</code> 命令一起使用来限制列表中元素的数量，比如记录日志时，我们希望只保留最近的 100 条日志，则每次接入新元素时调用一次 LTRIM 命令即可：</p>
+<pre class=" language-bash"><code class="language-bash">$ LPUSH logs <span class="token variable">$newLOg</span>
+$ LTRIM log 0 99</code></pre>
+<ol start="9">
+<li>向列表中插入元素</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ LINSET key BEFORE<span class="token operator">|</span>AFTER pivot value</code></pre>
+<p><code>LINSERT</code> 命令首先会在列表中从左到右查找值为 pivot 的元素，然后根据第二个参数是 BEFORE 还是 AFTER 来决定将 value 插入到该元素的前面还是后面。</p>
+<pre class=" language-bash"><code class="language-bash">$ LRANGE numbers 0 -1
+1<span class="token punctuation">)</span> <span class="token string">"2"</span>
+2<span class="token punctuation">)</span> <span class="token string">"7"</span>
+$ LINSERT numbers BEFORT 2 1
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 3
+$ LRANGE numbers 0 -1
+1<span class="token punctuation">)</span> <span class="token string">"1"</span>
+2<span class="token punctuation">)</span> <span class="token string">"2"</span>
+3<span class="token punctuation">)</span> <span class="token string">"7"</span></code></pre>
+<ol start="10">
+<li>将元素从一个列表转到另一个列表</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ RPOPLPUSH <span class="token function">source</span> destination</code></pre>
+<p><code>RPOPLPUSH</code> 是个很有意思的命令，从名字就可以看出它的功能：先执行 <code>RPOP</code> 命令再执行 <code>LPUSH</code> 命令。<code>RPOPLPUSH</code> 命令会先从 source 列表类型键的右边弹出一个元素，然后将其加入到 destination 列表类型键的左边，并返回这个元素的值，这个过程是原子的。</p>
+<blockquote>
+<p>当 source 和 destination 相同时， RPOPLPUSH 命令会不断地将对尾的元素移到队首。借助这个特性我们可以实现一个网站监控系统：使用一个队列存储需要监控的网址，然后监控程序不断地使用 RPOPLPUSH 命令循环取出一个网址来测试可用性。这里使用 RPOPLPUSH 命令的好处在于程序执行过程中仍然可以不断地向网址列表中加入新网址，而且整个系统容易扩展，允许多个客户端同时处理队列。</p>
+</blockquote>
+<h3 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h3><p>一个集合类型（set）键可以存储至多 <code>2的31次方-1</code> 个字符串。集合类型和列表类型有相似之处，但很容易将它们区分开来：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>集合类型</th>
+<th>列表类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>存储内容</td>
+<td>至多 <code>2的31次方-1</code> 个字符串</td>
+<td>至多 <code>2的31次方-1</code> 个字符串</td>
+</tr>
+<tr>
+<td>有序性</td>
+<td>否</td>
+<td>是</td>
+</tr>
+<tr>
+<td>唯一性</td>
+<td>是</td>
+<td>否</td>
+</tr>
+</tbody></table>
+<p>集合类型的常用操作是向集合中加入或删除元素、判断某个元素是否存在等，由于集合类型在 Redis 内部是使用值为空的散列表（hash table） 实现的，所以这些操作的时间复杂度都是 O(1)。最方便的是多个集合类型键之间还可以进行并集、交集和差集运算。</p>
+<ol>
+<li>增加/删除元素</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ SADD key member <span class="token punctuation">[</span>member <span class="token punctuation">..</span>.<span class="token punctuation">]</span>
+$ SREM key member <span class="token punctuation">[</span>member <span class="token punctuation">..</span>.<span class="token punctuation">]</span></code></pre>
+<p><code>SADD</code> 命令用来向集合中增加一个或多个元素，如果键不存在则会自动创建。因为在一个集合中不能有相同的元素，所以如果要加入的元素已经存在与集合中就会忽略这个元素。本命令的返回值是成功加入的元素数量（忽略的元素不计算在内）。</p>
+<pre class=" language-bash"><code class="language-bash">$ SADD letters a
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1
+$ SASS letters a b c
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 2</code></pre>
+<p><code>SREM</code> 命令用来从集合中删除一个或多个元素，并返回删除成功的个数：</p>
+<pre class=" language-bash"><code class="language-bash">$ SREM letters c d
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1</code></pre>
+<ol start="2">
+<li>获得集合中的所有元素</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ SMEMBERS key</code></pre>
+<ol start="3">
+<li>判断元素是否在集合中</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ SISMEMBER key member</code></pre>
+<p>当值存在时，<code>SISMEMBER</code> 命令返回 1，当值不存在或键不存在时返回 0。</p>
+<pre class=" language-bash"><code class="language-bash">$ SISMEMBER letters a
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1</code></pre>
+<ol start="4">
+<li>集合间运算</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ SDIEF key <span class="token punctuation">[</span>key <span class="token punctuation">..</span>.<span class="token punctuation">]</span>
+$ SINTER key <span class="token punctuation">[</span>key <span class="token punctuation">..</span>.<span class="token punctuation">]</span>
+$ SUNION key <span class="token punctuation">[</span>key <span class="token punctuation">..</span>.<span class="token punctuation">]</span></code></pre>
+<ul>
+<li><code>SDIFF</code> 命令用来对多个集合执行差集运算。代表所有属于A且不属于B的元素构成的集合。</li>
+</ul>
+<pre class=" language-bash"><code class="language-bash">$ SADD setA 1 2 3
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 3
+$ SADD setB 2 3 4
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 3
+$ SDIFF setA setB
+1<span class="token punctuation">)</span> <span class="token string">"1"</span>
+$ SDIFF setB setA
+1<span class="token punctuation">)</span> <span class="token string">"4"</span></code></pre>
+<p><code>SDIFF</code> 命令支持同时传入多个键：</p>
+<pre class=" language-bash"><code class="language-bash">$ SADD setC 2 3
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 2
+$ SDIFF setA setB setC
+1<span class="token punctuation">)</span> <span class="token string">"1"</span></code></pre>
+<p>计算顺序是先计算 <code>setA - setB</code> ，再计算与 <code>setC</code> 的差集。</p>
+<ul>
+<li><code>SINTER</code> 命令是用来对多个集合执行交集运算。 代表所有属于 A 且 属于 B 的元素构成的集合。</li>
+</ul>
+<pre class=" language-bash"><code class="language-bash">$ SINTER setA setB
+1<span class="token punctuation">)</span> <span class="token string">"2"</span>
+2<span class="token punctuation">)</span> <span class="token string">"3"</span></code></pre>
+<p><code>SINTER</code> 命令同样支持同时传入多个键：</p>
+<pre class=" language-bash"><code class="language-bash">$ SINTER setA setB setC
+1<span class="token punctuation">)</span> <span class="token string">"2"</span>
+2<span class="token punctuation">)</span> <span class="token string">"3"</span></code></pre>
+<ul>
+<li><code>SUNION</code> 命令用来对多个集合执行并集运算。代表所有属于 A 或 属于 B 的元素构成的集合。</li>
+</ul>
+<pre class=" language-bash"><code class="language-bash">$ SUNION setA setB
+1<span class="token punctuation">)</span> <span class="token string">"1"</span>
+2<span class="token punctuation">)</span> <span class="token string">"2"</span>
+3<span class="token punctuation">)</span> <span class="token string">"3"</span>
+4<span class="token punctuation">)</span> <span class="token string">"4"</span></code></pre>
+<p><code>SUNION</code> 命令同样支持同时传入多个键：</p>
+<pre class=" language-bash"><code class="language-bash">$ SUNION setA setB setC
+1<span class="token punctuation">)</span> <span class="token string">"1"</span>
+2<span class="token punctuation">)</span> <span class="token string">"2"</span>
+3<span class="token punctuation">)</span> <span class="token string">"3"</span>
+4<span class="token punctuation">)</span> <span class="token string">"4"</span></code></pre>
+<ol start="5">
+<li>获得集合中元素个数</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ SCARD key</code></pre>
+<ol start="6">
+<li>进行集合运算并将结果存储</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ SDIFFSTORE destination key <span class="token punctuation">[</span>key <span class="token punctuation">..</span>.<span class="token punctuation">]</span>
+$ SINTERSTORE destination key <span class="token punctuation">[</span>key <span class="token punctuation">..</span>.<span class="token punctuation">]</span>
+$ SUNIONSTORE destination key <span class="token punctuation">[</span>key <span class="token punctuation">..</span>.<span class="token punctuation">]</span></code></pre>
+<p><code>SDIFFSTORE</code> 命令和 <code>SDIFF</code> 命令功能一样，唯一的区别就是前者不会直接返回运算结果，而是将结果存储在 destination 键中。</p>
+<p><code>SDIFFSTORE</code> 命令通常用与需要进行多步集合运算的场景中，如需要先计算差集再将结果和其他键计算交集。</p>
+<p><code>SINTERSTORE</code> 和 <code>SUNIONSTORE </code> 命令与之类似。</p>
+<ol start="7">
+<li>随机获得集合中的元素</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ SRANDMEMBER key <span class="token punctuation">[</span>count<span class="token punctuation">]</span></code></pre>
+<p><code>SRANDMEMBER</code> 命令用来随机获取集合中的一个元素，还可以传递 count 参数来一次随机获得多个元素。根据 count 的正负不同，具体表现也不同。</p>
+<ul>
+<li>当 count 为整数时，<code>SRANDCOUNT</code> 会随机从集合里获得 count 个不重复元素。如果 count 的值大于集合中元素的个数，则 <code>SRANDCOUNT</code> 会返回集合中的全部元素。</li>
+<li>当 count 为负数时，<code>SRANDCOUNT</code> 会随机从集合里获得 count 个元素，这些元素可能相同。</li>
+</ul>
+<ol start="8">
+<li>从集合中弹出一个元素</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ SPOP key</code></pre>
+<p>由于集合是无序的，所以 <code>SPOP</code> 命令会从集合中随机选择一个元素弹出。</p>
+<h3 id="Sorted-Set"><a href="#Sorted-Set" class="headerlink" title="Sorted Set"></a>Sorted Set</h3><p>有序集合类型为集合中的每个元素都关联了一个分数，这使得我们不仅可以完成插入、删除和判断元素是否存在等集合类型支持的操作，还能够获得分数最高（或最低）的前 N 个元素、获得指定分数范围内的元素等与分数有关的操作。虽然集合中的每个元素都是不同的，但是它们的分数却可以相同。</p>
+<p>有序集合类型在某些方面和列表类型有些相似。</p>
+<ul>
+<li>二者都是有序的。</li>
+<li>二者都可以获得某一范围的元素。</li>
+</ul>
+<p>但是二者有着很大的区别，这使得他们的应用场景也是不同的。</p>
+<ul>
+<li>列表类型是通过链表实现的，获取靠近两端的数据速度极快，而当元素增多后，访问中间数据的速度会较慢，所以它更加适合实现如“新鲜事”或“日志”这样很少访问中间元素的应用。</li>
+<li>有序集合类型是使用散列表和跳表（Skip list）实现的，所以即使读取位于中间部分的数据，速度也很快。（时间复杂度是 O(log(N)) ）。</li>
+<li>列表中不能简单地调整某个元素的位置，但是有序集合可以（通过更改这个元素的分数）。</li>
+<li>有序集合类型要比列表类型更耗费内存。</li>
+</ul>
+<ol>
+<li>增加元素</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ ZADD key score member <span class="token punctuation">[</span>score member <span class="token punctuation">..</span>.<span class="token punctuation">]</span></code></pre>
+<p><code>ZADD</code> 命令用来向有序集合中加入一个元素和该元素的分数，如果该元素已经存在则会用新的分数替换原有的分数。<code>ZADD</code> 命令的返回值是新加入到集合中的元素的个数（不包含之前已经存在的元素）。</p>
+<p>假设我们用有序集合模拟计分板，现在要记录 Tom、Peter 和 David 三名运动员的分数（分别是 89 分、67分 和 100 分）：</p>
+<pre class=" language-bash"><code class="language-bash">$ ZADD scoreboard 89 Tom 67 Peter 100 David
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 3</code></pre>
+<p>这是我们发现 Peter 的分数录入有误，实际分数应该是 76 分，可以用 <code>ZADD</code> 命令修改 Peter 的分数：</p>
+<pre class=" language-bash"><code class="language-bash">$ ZADD scoreboard 76 Peter
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 0</code></pre>
+<p>分数不仅可以是整数，还支持双精度浮点数：</p>
+<pre class=" language-bash"><code class="language-bash">$ ZADD testboard 5E+3 a
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1
+$ ZADD testboard 1.6 b
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1
+$ ZADD testboard +inf c
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1
+$ ZADD testboard -inf d
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1</code></pre>
+<p>其中 <code>+inf</code> 和 <code>- inf</code> 分别表示正无穷和负无穷。</p>
+<ol start="2">
+<li>获得元素的分数</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ ZSCORE key member</code></pre>
+<ol start="3">
+<li>获得排名在某个范围的元素列表</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ ZRANGE key start stop <span class="token punctuation">[</span>WITHSCORES<span class="token punctuation">]</span>
+$ ZREVRANGE key start stop <span class="token punctuation">[</span>WITHSCORES<span class="token punctuation">]</span></code></pre>
+<p><code>ZRANGE</code> 命令会按照元素分数从小到大的顺序返回索引从 start 到 stop 之间的所有元素（包含两端的元素）。<code>ZRANGE</code> 命令与 <code>LRANGE</code> 命令十分相似，如果索引都是从 0 开始，负数代表从后向前查找（-1 表示最后一个元素）。</p>
+<pre class=" language-bash"><code class="language-bash">$ ZRANGE scoreboard 0 2
+1<span class="token punctuation">)</span> <span class="token string">"Peter"</span>
+2<span class="token punctuation">)</span> <span class="token string">"Tom"</span>
+3<span class="token punctuation">)</span> <span class="token string">"David"</span>
+$ ZRANGE scoreboard 1 -1
+1<span class="token punctuation">)</span> <span class="token string">"Tom"</span>
+2<span class="token punctuation">)</span> <span class="token string">"David"</span></code></pre>
+<p>如果需要同时获得元素的分数的话，可以在 <code>ZRANGE</code> 命令尾部加上  <code>WITHSCORES</code> 参数：</p>
+<pre class=" language-bash"><code class="language-bash">$ ZRANGE scoreboard 0 -1 WITHSCORES
+1<span class="token punctuation">)</span> <span class="token string">"Peter"</span>
+2<span class="token punctuation">)</span> <span class="token string">"76"</span>
+3<span class="token punctuation">)</span> <span class="token string">"Tom"</span>
+4<span class="token punctuation">)</span> <span class="token string">"89"</span>
+5<span class="token punctuation">)</span> <span class="token string">"David"</span>
+6<span class="token punctuation">)</span> <span class="token string">"100"</span></code></pre>
+<p><code>ZRANGE</code> 命令的时间复杂读为 O(log n+m)。其中 n 为有序集合的基数，m 为返回的元素个数。</p>
+<p>如果两个元素的分数相同，Redis 会按照字典顺序（即 “0” &lt; “9” &lt; “A” &lt; “Z” &lt; “a” &lt; ‘“z” 这样的顺序）来进行排列。</p>
+<p>如果元素的值是中文，则排序取决于中文的编码方式。如使用 UTF-8 编码：</p>
+<pre class=" language-bash"><code class="language-bash">$ ZADD chineseName 0 亚洲 0 非洲 0 欧洲 0 南美洲
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 4
+$ ZRANGE chineseName 0 -1
+1<span class="token punctuation">)</span> <span class="token string">"\xe4\xba\x9a\xe6\xb4\xb2"</span>
+2<span class="token punctuation">)</span> <span class="token string">"\xe5\x8d\x97\xe7\xbe\x8e\xe6\xb4\xb2"</span>
+3<span class="token punctuation">)</span> <span class="token string">"\xe6\xac\xa7\xe6\xb4\xb2"</span>
+4<span class="token punctuation">)</span> <span class="token string">"\xe9\x9d\x9e\xe6\xb4\xb2"</span></code></pre>
+<p>可见此时 Redis 依然按照字典顺序排列这些元素。</p>
+<p><code>ZREVRANGE</code> 命令和 <code>ZRANGE</code> 的唯一不同在于 <code>ZREVRANGE</code> 命令是按照元素分数从大到小的顺序给出结果的。</p>
+<ol start="4">
+<li>获得指定分数范围的元素</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ ZRANGEBYSCORE key min max <span class="token punctuation">[</span>WITHSCORES<span class="token punctuation">]</span> <span class="token punctuation">[</span>LIMIT offset count<span class="token punctuation">]</span></code></pre>
+<p>该命令按照元素分数从小到大的顺序返回分数在 min 和 max 之间（包含 min 和 max）的元素：</p>
+<pre class=" language-bash"><code class="language-bash">$ ZRANGEBYSCORE scoreboard 80 100
+1<span class="token punctuation">)</span> <span class="token string">"Tom"</span>
+2<span class="token punctuation">)</span> <span class="token string">"David"</span></code></pre>
+<p>如果希望的分数范围不包含端点值，可以在分数前加上<code>"("</code>符号。</p>
+<pre class=" language-bash"><code class="language-bash">$ ZRANGEBYSOCRE socreboard 80 <span class="token punctuation">(</span>100
+1<span class="token punctuation">)</span> <span class="token string">"Tom"</span></code></pre>
+<p>min 和 max 还支持无穷大，同 <code>ZADD</code> 命令一样，<code>-inf</code> 和 <code>+inf</code> 分别表示负无穷和正无穷。</p>
+<pre class=" language-bash"><code class="language-bash">$ ZRANGEBYSCORE scoreboard <span class="token punctuation">(</span>80 +inf
+1<span class="token punctuation">)</span> <span class="token string">"Tom"</span>
+2<span class="token punctuation">)</span> <span class="token string">"David"</span></code></pre>
+<p>WITHSCORES 参数的用户与 ZRANGE 命令一样。LIMIT offset count 与 SQL 中的用法基本相同。</p>
+<p>为了便于演示，我们先向 scoreboard 键中再增加些元素：</p>
+<pre class=" language-bash"><code class="language-bash">$ ZADD scoreboard 56 Jerry 92 Wendy 67 Yvonne
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 3
+<span class="token comment" spellcheck="true"># 现在 scoreboard 键中的所有元素</span>
+$ ZRANGE scoreboard 0 -1 WITHSCORES
+ 1<span class="token punctuation">)</span> <span class="token string">"Jerry"</span>
+ 2<span class="token punctuation">)</span> <span class="token string">"56"</span>
+ 3<span class="token punctuation">)</span> <span class="token string">"Yvonne"</span>
+ 4<span class="token punctuation">)</span> <span class="token string">"67"</span>
+ 5<span class="token punctuation">)</span> <span class="token string">"Peter"</span>
+ 6<span class="token punctuation">)</span> <span class="token string">"76"</span>
+ 7<span class="token punctuation">)</span> <span class="token string">"Tom"</span>
+ 8<span class="token punctuation">)</span> <span class="token string">"89"</span>
+ 9<span class="token punctuation">)</span> <span class="token string">"Wendy"</span>
+10<span class="token punctuation">)</span> <span class="token string">"92"</span>
+11<span class="token punctuation">)</span> <span class="token string">"David"</span>
+12<span class="token punctuation">)</span> <span class="token string">"100"</span></code></pre>
+<p>想获得分数高于 60 分的从第二个人开始的 3 个人：</p>
+<pre class=" language-bash"><code class="language-bash">$ ZRANGEBYSCORE scoreboard 60 +inf Limit 1 3
+1<span class="token punctuation">)</span> <span class="token string">"Peter"</span>
+2<span class="token punctuation">)</span> <span class="token string">"Tom"</span>
+3<span class="token punctuation">)</span> <span class="token string">"Wendy"</span></code></pre>
+<ol start="5">
+<li>增加某个元素的分数</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">ZINCRBY key increment member</code></pre>
+<p><code>ZINCRBY</code> 命令可以增加一个元素的分数，返回值是更改后的分数。</p>
+<pre class=" language-bash"><code class="language-bash">$ ZINCRBY scoreboard 4 Jerry
+<span class="token string">"60"</span></code></pre>
+<p>increment 也可以是个负数表示减分：</p>
+<pre class=" language-bash"><code class="language-bash">$ ZINCRBY scoreboard -4 Jerry
+<span class="token string">"56"</span></code></pre>
+<p>如果指定的元素不存在，Redis 再执行命令前会先建立它并将它的分数赋为 0 再执行操作。</p>
+<ol start="6">
+<li>获得集合中元素的数量</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ ZCARD key</code></pre>
+<ol start="7">
+<li>获得指定分数范围内的元素个数</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ ZCOUNT key min max</code></pre>
+<ol start="8">
+<li>删除一个或多个元素</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ ZREM key member <span class="token punctuation">[</span>member <span class="token punctuation">..</span>.<span class="token punctuation">]</span></code></pre>
+<p>ZREM 命令的返回值的成功删除的元素数量</p>
+<pre class=" language-bash"><code class="language-bash">$ ZREM scoreboard Wendy
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1</code></pre>
+<ol start="9">
+<li>按照排名范围删除元素</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ ZREMRANGEBYRANK key start stop</code></pre>
+<p>ZREMRANGEBYRANK 命令按照元素分数从小到大的顺序（即索引 0 表示最小的值），删除处在指定排名范围内的所有元素，并返回删除的元素数量。如：</p>
+<pre class=" language-bash"><code class="language-bash">$ ZADD testRem 1 a 2 b 3 c 4 d 5 e 6 f
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 6
+$ ZREMRANGEBYRANK testRem 0 2
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 3
+$ ZRANGE testRem 0 -1
+1<span class="token punctuation">)</span> <span class="token string">"d"</span>
+2<span class="token punctuation">)</span> <span class="token string">"e"</span>
+3<span class="token punctuation">)</span> <span class="token string">"f"</span></code></pre>
+<ol start="10">
+<li>按照分数范围删除元素</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ ZREMRANGEBYSCORE key min max</code></pre>
+<p><code>ZREMRANGEBYSCORE</code> 命令会删除指定分数范围内的所有元素，返回值的删除的元素数量。</p>
+<ol start="11">
+<li>获得元素的排名</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ ZRANK key member
+$ ZREVRANK key member</code></pre>
+<p><code>ZRANK</code> 命令会按照元素分数从小到大的顺序获得指定元素的排名（从 0 开始，即分数最小的元素排名为 0）。</p>
+<p><code>ZREVRANK</code> 命令则相反（分数最大的元素排名为 0 )。</p>
+<ol start="12">
+<li>计算有序集合的交集</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ ZINTERSTORE destination numkeys key <span class="token punctuation">[</span>key <span class="token punctuation">..</span>.<span class="token punctuation">]</span> <span class="token punctuation">[</span>WEIGHTS weight <span class="token punctuation">[</span>weight <span class="token punctuation">..</span>.<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token punctuation">[</span>AGGREGATE SUM<span class="token operator">|</span>MIN<span class="token operator">|</span>MAX<span class="token punctuation">]</span></code></pre>
+<p><code>ZINTERSTORE</code> 命令用来计算多个有序集合的交集并将结果存储在 destination 键中（同样以有序类型集合存储），返回值为 destination 键中的元素个数。<code>numkeys</code>必须 等于参与集合的个数。</p>
+<p>destination 键中元素的分数是由 <code>AGGREGATE</code> 参数决定的。</p>
+<ul>
+<li>当 <code>AGGREGATE</code> 是 <code>SUM</code> 时（也就是默认值），destination 键中元素的分数是每个参与计算的集合中改元素分数的和。例如：</li>
+</ul>
+<pre class=" language-bash"><code class="language-bash">$ ZADD sortedSets1 1 a 2 b
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 2
+$ ZADD sortedSets2 10 a 20 b
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 2
+$ ZINTERSTORE sortedSetsResult 2 sortedSets1 sortedSets2
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 2
+$ ZRANGE sortedSetsResult 0 -1 WITHSCORES
+1<span class="token punctuation">)</span> <span class="token string">"a"</span>
+2<span class="token punctuation">)</span> <span class="token string">"11"</span>
+3<span class="token punctuation">)</span> <span class="token string">"b"</span>
+4<span class="token punctuation">)</span> <span class="token string">"22"</span></code></pre>
+<ul>
+<li>当 <code>AGGREGATE</code> 是 <code>MIN</code> 时，destination 键中元素的分数是每个参与计算的集合中该元素分数的最小值。例如：</li>
+</ul>
+<pre class=" language-bash"><code class="language-bash">$ ZINTERSTORE sortedSetsResult 2 sortedSets1 sortedSets2 AGGREGATE MIN
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 2
+$  ZRANGE sortedSetsResult 0 -1 WITHSCORES
+1<span class="token punctuation">)</span> <span class="token string">"a"</span>
+2<span class="token punctuation">)</span> <span class="token string">"1"</span>
+3<span class="token punctuation">)</span> <span class="token string">"b"</span>
+4<span class="token punctuation">)</span> <span class="token string">"2"</span></code></pre>
+<ul>
+<li>当 <code>AGGREGATE</code> 是 <code>MAX</code> 是，destination 键中元素的分数是每个参与计算的集合中该元素分数的最大值。例如：</li>
+</ul>
+<pre class=" language-bash"><code class="language-bash">$ ZINTERSTORE sortedSetsResult 2 sortedSets1 sortedSets2 AGGREGATE MAX
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 2
+$ ZRANGE sortedSetsResult 0 -1 WITHSCORES
+1<span class="token punctuation">)</span> <span class="token string">"a"</span>
+2<span class="token punctuation">)</span> <span class="token string">"10"</span>
+3<span class="token punctuation">)</span> <span class="token string">"b"</span>
+4<span class="token punctuation">)</span> <span class="token string">"20"</span></code></pre>
+<p><code>ZINTERSTORE</code> 命令还能够通过 <code>WEIGHTS</code> 参数设置每个集合的权重，每个集合在参与计算时元素的分数会被乘上该集合的权重。例如：</p>
+<pre class=" language-bash"><code class="language-bash">$ ZINTERSTORE sortedSetsResult 2 sortedSets1 sortedSets2 WEIGHTS 1 0.1
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 2
+$ ZRANGE sortedSetsResult 0 -1 WITHSCORES
+1<span class="token punctuation">)</span> <span class="token string">"a"</span>
+2<span class="token punctuation">)</span> <span class="token string">"2"</span>
+3<span class="token punctuation">)</span> <span class="token string">"b"</span>
+4<span class="token punctuation">)</span> <span class="token string">"4"</span></code></pre>
+<p>另外还有一个命令与 <code>ZINTERSTORE </code>命令的用法一样，名为 <code>ZUNIONSTORE</code>，它的作用是计算集合间的并集，这里不再赘述。</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Redis</tag>
       </tags>
   </entry>
 </search>

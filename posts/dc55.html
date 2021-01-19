@@ -454,21 +454,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-01-18
+                    2021-01-19
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.1k
+                    1.3k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    4 分
+                    5 分
                 </div>
                 
 
@@ -547,12 +547,12 @@ $ <span class="token function">make</span></code></pre>
 # Description:          Redis data structure server. See https://redis.io
 ### END INIT INFO
 
-REDISPORT=6379
-EXEC=/usr/local/bin/redis-server
-CLIEXEC=/usr/local/bin/redis-cli
+REDISPORT=6379    # 端口号
+EXEC=/usr/local/bin/redis-server # redis-server 启动脚本的位置
+CLIEXEC=/usr/local/bin/redis-cli # redis-cli 客户端启动脚本的位置
 
 PIDFILE=/var/run/redis_${REDISPORT}.pid
-CONF="/etc/redis/${REDISPORT}.conf"
+CONF="/etc/redis/${REDISPORT}.conf"    # redis.conf 配置文件的位置
 
 case "$1" in
     start)
@@ -636,11 +636,24 @@ esac</code></pre>
 <td>/var/redis/端口号</td>
 <td>设置持久化文件存放位置</td>
 </tr>
+<tr>
+<td>bind</td>
+<td>0.0.0.0</td>
+<td>允许远程连接</td>
+</tr>
+<tr>
+<td>requirepass</td>
+<td>“123456”</td>
+<td>设置连接密码123456</td>
+</tr>
 </tbody></table>
 <p>现在就可以使用如下命令来启动 Redis 了：</p>
 <pre class=" language-bash"><code class="language-bash">$ /etc/init.d/redis_端口号 start</code></pre>
 <p>设置开机自启动：</p>
 <pre class=" language-bash"><code class="language-bash">$ <span class="token function">chkconfig</span> redis_6379 on</code></pre>
+<blockquote>
+<p>系统开机启动时会去加载/etc/init.d/下面的脚本，通常而言每个脚本文件会自定义实现程序的启动；若想将新的程序开机自启动，只需在该目录下添加一个自定义启动程序的脚本，然后设置相应规则即可。<br>如在这里我们在/etc/init.d/下新建一个 redis_端口号 的脚本，开机启动时会去加载执行该脚本。</p>
+</blockquote>
 <h3 id="停止Redis"><a href="#停止Redis" class="headerlink" title="停止Redis"></a>停止Redis</h3><p>考虑到 Redis 有可能正在将内存中的数据同步到硬盘中，强制终止 Redis 进行可能会导致数据丢失。正确停止 Redis 的方式应该是向 Redis 发送 SHUTDOWN 命令，方法为：</p>
 <pre class=" language-bash"><code class="language-bash">$ redis-cli SHUTDOWN</code></pre>
 <p>当 Redis 收到 <code>SHUTDOWN</code> 命令后，会先断开所有客户端连接，然后根据配置执行持久化，最后完成退出。</p>
@@ -1155,7 +1168,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">20.1k</span>&nbsp;字
+                class="white-color">26k</span>&nbsp;字
             
             
             
