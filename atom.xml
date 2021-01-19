@@ -6,7 +6,7 @@
   <link href="https://blog.asiama.top/atom.xml" rel="self"/>
   
   <link href="https://blog.asiama.top/"/>
-  <updated>2021-01-19T11:31:54.913Z</updated>
+  <updated>2021-01-19T11:45:40.418Z</updated>
   <id>https://blog.asiama.top/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://blog.asiama.top/posts/f08d.html"/>
     <id>https://blog.asiama.top/posts/f08d.html</id>
     <published>2021-01-19T11:25:13.000Z</published>
-    <updated>2021-01-19T11:31:54.913Z</updated>
+    <updated>2021-01-19T11:45:40.418Z</updated>
     
     
       
@@ -67,41 +67,14 @@
     <link href="https://blog.asiama.top/posts/4f87.html"/>
     <id>https://blog.asiama.top/posts/4f87.html</id>
     <published>2021-01-18T11:48:05.000Z</published>
-    <updated>2021-01-19T11:44:21.042Z</updated>
+    <updated>2021-01-19T12:21:11.404Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;ol&gt;
-&lt;li&gt;获得符合规则的键名列表&lt;/li&gt;
-&lt;/ol&gt;
-&lt;pre class=&quot; language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ KEYS pattern&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;pattern 支持 glob</summary>
-        
-      
-    
-    
-    
-    
-    <category term="Redis" scheme="https://blog.asiama.top/tags/Redis/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>客户端连接Redis</title>
-    <link href="https://blog.asiama.top/posts/11b.html"/>
-    <id>https://blog.asiama.top/posts/11b.html</id>
-    <published>2021-01-18T11:47:15.000Z</published>
-    <updated>2021-01-18T11:56:58.895Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;发送命令&quot;&gt;&lt;a href=&quot;#发送命令&quot; class=&quot;headerlink&quot; title=&quot;发送命令&quot;&gt;&lt;/a&gt;发送命令&lt;/h3&gt;&lt;p&gt;通过 redis-cli 向 Redis 发送命令有两种方式，第一种方式是将命令作为 redis-cli</summary>
+    <summary type="html">&lt;h3 id=&quot;redis-server-配置&quot;&gt;&lt;a href=&quot;#redis-server-配置&quot; class=&quot;headerlink&quot; title=&quot;redis-server 配置&quot;&gt;&lt;/a&gt;redis-server 配置&lt;/h3&gt;&lt;p&gt;Redis</summary>
         
       
     
@@ -512,6 +485,32 @@
       
     
     
+    
+    
+    <category term="Kotlin" scheme="https://blog.asiama.top/tags/Kotlin/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>kotlin集合常用操作符</title>
+    <link href="https://blog.asiama.top/posts/fb3b.html"/>
+    <id>https://blog.asiama.top/posts/fb3b.html</id>
+    <published>2020-12-29T06:47:37.000Z</published>
+    <updated>2020-12-29T07:18:18.122Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;元素操作类&quot;&gt;&lt;a href=&quot;#元素操作类&quot; class=&quot;headerlink&quot; title=&quot;元素操作类&quot;&gt;&lt;/a&gt;元素操作类&lt;/h3&gt;&lt;p&gt;contanis        ——     判断是否有指定元素&lt;/p&gt;
+&lt;p&gt;elementAt     —— </summary>
+        
+      
+    
+    
+    
+    <category term="函数式编程" scheme="https://blog.asiama.top/categories/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/"/>
     
     
     <category term="Kotlin" scheme="https://blog.asiama.top/tags/Kotlin/"/>
