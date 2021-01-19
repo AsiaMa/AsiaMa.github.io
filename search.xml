@@ -57,42 +57,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Java的不足</title>
-    <url>/posts/26f4.html</url>
-    <content><![CDATA[<h3 id="检查异常"><a href="#检查异常" class="headerlink" title="检查异常"></a>检查异常</h3><p>检查异常会在编译时强制执行try catch处理，同时还需要进行某种排序处理。检查异常是一个失败的实践，几乎所有的主要API提供者都返回可检查异常。Kotlin中摒弃了检查异常。</p>
-<h3 id="基本类型和数组"><a href="#基本类型和数组" class="headerlink" title="基本类型和数组"></a>基本类型和数组</h3><p>Java的这个设计保留了字节码的底层细节，违反了“凡事皆为对象”的原则，如泛型无法包容基本类型就是一个例子。这也使得Java的类型系统显得不是那么地简单统一。比较好的方案是，源代码不用直接使用基本类型和数组，由编译器（或者JVM）来决定是否可以帮你对其优化，而Kotlin正是这么做的。</p>
-<h3 id="静态变量"><a href="#静态变量" class="headerlink" title="静态变量"></a>静态变量</h3><p>静态方法经常会导致需要显式的定义接口，从而使得API更加复杂。一个更好的办法就是采用单例对象，单例对象在大多数情况下表现得与静态对象差不多，但是可以像一个对象被传递。Kotlin中提供了object单例对象。</p>
-<h3 id="空指针异常"><a href="#空指针异常" class="headerlink" title="空指针异常"></a>空指针异常</h3><p>在Java中我们不得不写一堆防御代码来避免令人头疼的NPE。Kotlin中引入可空类型与安全调用符、Elvis操作符等特性来实现空安全。</p>
-<h3 id="一堆getter-setter单调冗长的样板代码"><a href="#一堆getter-setter单调冗长的样板代码" class="headerlink" title="一堆getter/setter单调冗长的样板代码"></a>一堆getter/setter单调冗长的样板代码</h3><p>在Kotlin中，我们可以使用数据类：</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">Person</span><span class="token punctuation">(</span><span class="token keyword">val</span> id<span class="token operator">:</span> Int<span class="token punctuation">,</span> <span class="token keyword">val</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span></code></pre>
-<h3 id="不容易传递函数"><a href="#不容易传递函数" class="headerlink" title="不容易传递函数"></a>不容易传递函数</h3><p>Java中没有一等函数类型，函数式（FP）编程只能通过使用接口类型以及多态特性“曲线”来实现。Java会将每一个算法（方法）都放入类中，这种限制会出现这样的“荒唐事”：我们只想实现一个函数算法，而这个时候必须还要给出一个类来放置这个方法；同样，如果在其它地方调用这个方法，必须通过创建该类来实现调用。在Kotlin中直接提供了一等函数（First-Class Function Type）类型，其跟普通类型一样，函数类型可以作为值来传递，也可以作为返回值。</p>
-<blockquote>
-<p>不可否认的是，C、C++和Java语言都是非常优秀的编程语言。但是事物总是不断发展变化的。就像C++语言是对C语言的继承与发展，Java语言是对C++语言的继承与改造，而Kotlin语言也是对Java语言的继承与变革。</p>
-</blockquote>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>Kotlin</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Bean的初始化方式</title>
     <url>/posts/c3f8.html</url>
     <content><![CDATA[<h3 id="PostConstruct标注方法"><a href="#PostConstruct标注方法" class="headerlink" title="@PostConstruct标注方法"></a>@PostConstruct标注方法</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Employee</span> <span class="token punctuation">{</span>
@@ -267,6 +231,42 @@
       </categories>
       <tags>
         <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java的不足</title>
+    <url>/posts/26f4.html</url>
+    <content><![CDATA[<h3 id="检查异常"><a href="#检查异常" class="headerlink" title="检查异常"></a>检查异常</h3><p>检查异常会在编译时强制执行try catch处理，同时还需要进行某种排序处理。检查异常是一个失败的实践，几乎所有的主要API提供者都返回可检查异常。Kotlin中摒弃了检查异常。</p>
+<h3 id="基本类型和数组"><a href="#基本类型和数组" class="headerlink" title="基本类型和数组"></a>基本类型和数组</h3><p>Java的这个设计保留了字节码的底层细节，违反了“凡事皆为对象”的原则，如泛型无法包容基本类型就是一个例子。这也使得Java的类型系统显得不是那么地简单统一。比较好的方案是，源代码不用直接使用基本类型和数组，由编译器（或者JVM）来决定是否可以帮你对其优化，而Kotlin正是这么做的。</p>
+<h3 id="静态变量"><a href="#静态变量" class="headerlink" title="静态变量"></a>静态变量</h3><p>静态方法经常会导致需要显式的定义接口，从而使得API更加复杂。一个更好的办法就是采用单例对象，单例对象在大多数情况下表现得与静态对象差不多，但是可以像一个对象被传递。Kotlin中提供了object单例对象。</p>
+<h3 id="空指针异常"><a href="#空指针异常" class="headerlink" title="空指针异常"></a>空指针异常</h3><p>在Java中我们不得不写一堆防御代码来避免令人头疼的NPE。Kotlin中引入可空类型与安全调用符、Elvis操作符等特性来实现空安全。</p>
+<h3 id="一堆getter-setter单调冗长的样板代码"><a href="#一堆getter-setter单调冗长的样板代码" class="headerlink" title="一堆getter/setter单调冗长的样板代码"></a>一堆getter/setter单调冗长的样板代码</h3><p>在Kotlin中，我们可以使用数据类：</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">Person</span><span class="token punctuation">(</span><span class="token keyword">val</span> id<span class="token operator">:</span> Int<span class="token punctuation">,</span> <span class="token keyword">val</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span></code></pre>
+<h3 id="不容易传递函数"><a href="#不容易传递函数" class="headerlink" title="不容易传递函数"></a>不容易传递函数</h3><p>Java中没有一等函数类型，函数式（FP）编程只能通过使用接口类型以及多态特性“曲线”来实现。Java会将每一个算法（方法）都放入类中，这种限制会出现这样的“荒唐事”：我们只想实现一个函数算法，而这个时候必须还要给出一个类来放置这个方法；同样，如果在其它地方调用这个方法，必须通过创建该类来实现调用。在Kotlin中直接提供了一等函数（First-Class Function Type）类型，其跟普通类型一样，函数类型可以作为值来传递，也可以作为返回值。</p>
+<blockquote>
+<p>不可否认的是，C、C++和Java语言都是非常优秀的编程语言。但是事物总是不断发展变化的。就像C++语言是对C语言的继承与发展，Java语言是对C++语言的继承与改造，而Kotlin语言也是对Java语言的继承与变革。</p>
+</blockquote>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Kotlin</tag>
       </tags>
   </entry>
   <entry>
@@ -609,7 +609,7 @@ OK</code></pre>
 <p>其中第一行字符串回复表示的是选项名，第二行既是选项值。</p>
 <h3 id="redsic-cli-连接"><a href="#redsic-cli-连接" class="headerlink" title="redsic-cli 连接"></a>redsic-cli 连接</h3><p>通过 redis-cli 向 Redis 发送命令有两种方式，第一种方式是将命令作为 redis-cli 的参数执行，如：</p>
 <pre class=" language-bash"><code class="language-bash">$ redis-cli SHUTDOWN</code></pre>
-<p>redis-cli 执行时会自动按照默认配置（服务器地址为 127.0.0.1，端口号为 6379）连接 Redis，通过 -h 和 -p 参数可以自定义地址和端口号：</p>
+<p>redis-cli 执行时会自动按照默认配置（服务器地址为 127.0.0.1，端口号为 6379）连接 Redis，通过 -h 和 -p 参数可以自定义地址和端口号，-a 参数后跟 redis 连接密码：</p>
 <pre class=" language-bash"><code class="language-bash">$ redis-cli -h 127.0.0.1 -p 6379 -a password</code></pre>
 <p>第二种方式是不附带参数运行 redis-cli，这样会进入交互模式，可以自由输入命令，例如：</p>
 <pre class=" language-bash"><code class="language-bash">$ redis-cli
@@ -1715,6 +1715,51 @@ $ <span class="token function">git</span> config --list --system</code></pre>
       </tags>
   </entry>
   <entry>
+    <title>函数式编程</title>
+    <url>/posts/f609.html</url>
+    <content><![CDATA[<p>函数式编程的核心概念如下：</p>
+<ul>
+<li>头等函数：把函数（一小段行为）当作值使用，可以用变量保存它，把它当作参数传递，或者当作其它函数的返回值。</li>
+<li>不可变性：使用不可变对象，这保证了它们的状态在其创建之后不能再变化。</li>
+<li>无副作用：使用的是纯函数。此类函数在输入相同时会产生同样的结果，并且不会修改其它对象的状态，也不会和外面的世界交互。</li>
+</ul>
+<p>优点：</p>
+<ol>
+<li>简洁</li>
+</ol>
+<p>函数式风格的代码比相应的命令式风格的代码更优雅、更简练，因为把函数当作值可以让你获得更强大的抽象能力，从而避免重复代码。假设你有两段类似的代码，实现相似的任务（例如，在集合中寻找一个匹配的元素），但具体细节略有不同（如何判断元素式匹配的）。可以轻易地将这段逻辑公共部分提取到一个函数中，并将其它不同的部分作为参数传递给它。这些参数本身也是函数，但你可以使用一种简洁的语法来表示这些匿名函数，它被称作lambda表达式。</p>
+<ol start="2">
+<li>多线程安全</li>
+</ol>
+<p>多线程程序中最大的错误来源之一就是，在没有采取适当同步机制的情况下，在不同的线程上修改同一份数据。如果你使用的是不可变数据结构和纯函数，就能保证这样不安全的修改根本不会发生，也就不需要考虑为其设计股灾的同步方案。</p>
+<ol start="3">
+<li>易测试性</li>
+</ol>
+<p>没有副作用的函数可以独立地进行测试，因为不需要写大量的设置代码来构造它们所依赖的整个环境。</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>编程范式</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>垃圾回收 Spring Bean</title>
     <url>/posts/581e.html</url>
     <content><![CDATA[<p>Bean垃圾回收（GC）</p>
@@ -1796,51 +1841,6 @@ $ <span class="token function">git</span> config --list --system</code></pre>
       </categories>
       <tags>
         <tag>Spring</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>函数式编程</title>
-    <url>/posts/f609.html</url>
-    <content><![CDATA[<p>函数式编程的核心概念如下：</p>
-<ul>
-<li>头等函数：把函数（一小段行为）当作值使用，可以用变量保存它，把它当作参数传递，或者当作其它函数的返回值。</li>
-<li>不可变性：使用不可变对象，这保证了它们的状态在其创建之后不能再变化。</li>
-<li>无副作用：使用的是纯函数。此类函数在输入相同时会产生同样的结果，并且不会修改其它对象的状态，也不会和外面的世界交互。</li>
-</ul>
-<p>优点：</p>
-<ol>
-<li>简洁</li>
-</ol>
-<p>函数式风格的代码比相应的命令式风格的代码更优雅、更简练，因为把函数当作值可以让你获得更强大的抽象能力，从而避免重复代码。假设你有两段类似的代码，实现相似的任务（例如，在集合中寻找一个匹配的元素），但具体细节略有不同（如何判断元素式匹配的）。可以轻易地将这段逻辑公共部分提取到一个函数中，并将其它不同的部分作为参数传递给它。这些参数本身也是函数，但你可以使用一种简洁的语法来表示这些匿名函数，它被称作lambda表达式。</p>
-<ol start="2">
-<li>多线程安全</li>
-</ol>
-<p>多线程程序中最大的错误来源之一就是，在没有采取适当同步机制的情况下，在不同的线程上修改同一份数据。如果你使用的是不可变数据结构和纯函数，就能保证这样不安全的修改根本不会发生，也就不需要考虑为其设计股灾的同步方案。</p>
-<ol start="3">
-<li>易测试性</li>
-</ol>
-<p>没有副作用的函数可以独立地进行测试，因为不需要写大量的设置代码来构造它们所依赖的整个环境。</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>编程范式</tag>
       </tags>
   </entry>
   <entry>
@@ -2159,6 +2159,133 @@ $ <span class="token function">git</span> config --list --system</code></pre>
       </tags>
   </entry>
   <entry>
+    <title>层次性依赖查找</title>
+    <url>/posts/e798.html</url>
+    <content><![CDATA[<pre class=" language-xml"><code class="language-xml"> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>superUser<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.asia.domain.SuperUser<span class="token punctuation">"</span></span> <span class="token attr-name">parent</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>user<span class="token punctuation">"</span></span> <span class="token attr-name">primary</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>address<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>北京<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">></span></span>
+
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>user<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>com.asia.domain.User<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>id<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>100<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>name<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>金士顿快乐健康<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>objectFactory<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>org.springframework.beans.factory.config.ObjectFactoryCreatingFactoryBean<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>targetBeanName<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>user<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>beans</span><span class="token punctuation">></span></span></code></pre>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">User</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> Integer id<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> String name<span class="token punctuation">;</span>
+
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setId</span><span class="token punctuation">(</span>Integer id<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>id <span class="token operator">=</span> id<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setName</span><span class="token punctuation">(</span>String name<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SuperUser</span> <span class="token keyword">extends</span> <span class="token class-name">User</span><span class="token punctuation">{</span>
+    <span class="token keyword">private</span> String address<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setAddress</span><span class="token punctuation">(</span>String address<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>address <span class="token operator">=</span> address<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">HierarchicalDependencyLookupDemo</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 创建 BeanFactory 容器</span>
+    AnnotationConfigApplicationContext applicationContext <span class="token operator">=</span>
+        <span class="token keyword">new</span> <span class="token class-name">AnnotationConfigApplicationContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 注册配置类</span>
+    applicationContext<span class="token punctuation">.</span><span class="token function">register</span><span class="token punctuation">(</span>HierarchicalDependencyLookupDemo<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// ConfigurableListableBeanFactory -> ConfigurableBeanFactory -> HierarchicalBeanFactory</span>
+    ConfigurableListableBeanFactory beanFactory <span class="token operator">=</span> applicationContext<span class="token punctuation">.</span><span class="token function">getBeanFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 设置 Parent BeanFactory</span>
+    DefaultListableBeanFactory parentBeanFactory <span class="token operator">=</span> <span class="token function">createBeanFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    beanFactory<span class="token punctuation">.</span><span class="token function">setParentBeanFactory</span><span class="token punctuation">(</span>parentBeanFactory<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">displayLocalBean</span><span class="token punctuation">(</span>beanFactory<span class="token punctuation">,</span> <span class="token string">"user"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">displayLocalBean</span><span class="token punctuation">(</span>parentBeanFactory<span class="token punctuation">,</span> <span class="token string">"user"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">displayContainsBean</span><span class="token punctuation">(</span>beanFactory<span class="token punctuation">,</span> <span class="token string">"user"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">displayContainsBean</span><span class="token punctuation">(</span>parentBeanFactory<span class="token punctuation">,</span> <span class="token string">"user"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 启动应用上下文</span>
+    applicationContext<span class="token punctuation">.</span><span class="token function">refresh</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 关闭应用上下文</span>
+    applicationContext<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">displayContainsBean</span><span class="token punctuation">(</span>HierarchicalBeanFactory beanFactory<span class="token punctuation">,</span> String beanName<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">printf</span><span class="token punctuation">(</span>
+        <span class="token string">"当前 BeanFactory 是否包含 bean [name : %s] : %s \n"</span><span class="token punctuation">,</span>
+        beanName<span class="token punctuation">,</span> <span class="token function">containsBean</span><span class="token punctuation">(</span>beanFactory<span class="token punctuation">,</span> beanName<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">boolean</span> <span class="token function">containsBean</span><span class="token punctuation">(</span>HierarchicalBeanFactory beanFactory<span class="token punctuation">,</span> String beanName<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    BeanFactory parentBeanFactory <span class="token operator">=</span> beanFactory<span class="token punctuation">.</span><span class="token function">getParentBeanFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>parentBeanFactory <span class="token keyword">instanceof</span> <span class="token class-name">HierarchicalBeanFactory</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      HierarchicalBeanFactory parentHierarchicalBeanFactory <span class="token operator">=</span>
+          <span class="token punctuation">(</span>HierarchicalBeanFactory<span class="token punctuation">)</span> parentBeanFactory<span class="token punctuation">;</span>
+      <span class="token keyword">return</span> <span class="token function">containsBean</span><span class="token punctuation">(</span>parentHierarchicalBeanFactory<span class="token punctuation">,</span> beanName<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> beanFactory<span class="token punctuation">.</span><span class="token function">containsLocalBean</span><span class="token punctuation">(</span>beanName<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">displayLocalBean</span><span class="token punctuation">(</span>HierarchicalBeanFactory beanFactory<span class="token punctuation">,</span> String beanName<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">printf</span><span class="token punctuation">(</span>
+        <span class="token string">"当前 BeanFactory 是否包含 Local bean [name : %s] : %s \n"</span><span class="token punctuation">,</span>
+        beanName<span class="token punctuation">,</span> beanFactory<span class="token punctuation">.</span><span class="token function">containsLocalBean</span><span class="token punctuation">(</span>beanName<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">private</span> <span class="token keyword">static</span> DefaultListableBeanFactory <span class="token function">createBeanFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 创建 BeanFactory 容器</span>
+    DefaultListableBeanFactory beanFactory <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">DefaultListableBeanFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    XmlBeanDefinitionReader reader <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">XmlBeanDefinitionReader</span><span class="token punctuation">(</span>beanFactory<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// XML 配置文件 ClassPath 路径</span>
+    String location <span class="token operator">=</span> <span class="token string">"classpath:/META-INF/dependency-lookup-context.xml"</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 加载配置</span>
+    reader<span class="token punctuation">.</span><span class="token function">loadBeanDefinitions</span><span class="token punctuation">(</span>location<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> beanFactory<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/** 输出结果：
+    当前 BeanFactory 是否包含 Local bean [name : user] : false 
+    当前 BeanFactory 是否包含 Local bean [name : user] : true 
+    当前 BeanFactory 是否包含 bean [name : user] : true 
+    当前 BeanFactory 是否包含 bean [name : user] : true */</span></code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <categories>
+        <category>AsiaMa</category>
+      </categories>
+      <tags>
+        <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Kotlin常用作用域函数</title>
     <url>/posts/c396.html</url>
     <content><![CDATA[<h3 id="let-和-run"><a href="#let-和-run" class="headerlink" title="let 和 run"></a>let 和 run</h3><p>let 和 run 都会返回闭包的执行结果，区别在于let有闭包参数，而run没有闭包参数。</p>
@@ -2394,73 +2521,6 @@ $ <span class="token function">git</span> config --list --system</code></pre>
       </categories>
       <tags>
         <tag>Spring</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>自定义中缀表达式</title>
-    <url>/posts/8a52.html</url>
-    <content><![CDATA[<p>一个函数只有用与两个角色类似的对象时才将其声明为中缀函数。</p>
-<p>推荐示例：and、to、zip        反例：add</p>
-<p>如果一个方法会改动其接受者，那么不要声明为中缀形式。</p>
-<p>定义自己的中缀表达式：</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">sealed</span> <span class="token keyword">class</span> CompareResult <span class="token punctuation">{</span>
-    <span class="token keyword">object</span> LESS <span class="token operator">:</span> <span class="token function">CompareResult</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">override</span> <span class="token keyword">fun</span> <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> String <span class="token punctuation">{</span>
-            <span class="token keyword">return</span> <span class="token string">"小于"</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">object</span> MORE <span class="token operator">:</span> <span class="token function">CompareResult</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">override</span> <span class="token keyword">fun</span> <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> String <span class="token punctuation">{</span>
-            <span class="token keyword">return</span> <span class="token string">"大于"</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">object</span> EQUAL <span class="token operator">:</span> <span class="token function">CompareResult</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">override</span> <span class="token keyword">fun</span> <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> String <span class="token punctuation">{</span>
-            <span class="token keyword">return</span> <span class="token string">"等于"</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-infix <span class="token keyword">fun</span> Int<span class="token punctuation">.</span><span class="token function">vs</span><span class="token punctuation">(</span>num<span class="token operator">:</span> Int<span class="token punctuation">)</span><span class="token operator">:</span> CompareResult <span class="token operator">=</span>
-    <span class="token keyword">when</span> <span class="token punctuation">{</span>
-        <span class="token keyword">this</span> <span class="token operator">-</span> num <span class="token operator">></span> <span class="token number">0</span> <span class="token operator">-></span> <span class="token punctuation">{</span>
-            CompareResult<span class="token punctuation">.</span>MORE
-        <span class="token punctuation">}</span>
-        <span class="token keyword">this</span> <span class="token operator">-</span> num <span class="token operator">&lt;</span> <span class="token number">0</span> <span class="token operator">-></span> <span class="token punctuation">{</span>
-            CompareResult<span class="token punctuation">.</span>LESS
-        <span class="token punctuation">}</span>
-        <span class="token keyword">else</span> <span class="token operator">-></span> <span class="token punctuation">{</span>
-            CompareResult<span class="token punctuation">.</span>EQUAL
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-
-<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token function">println</span><span class="token punctuation">(</span><span class="token number">5</span> vs <span class="token number">6</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">/** 输出结果：小于 */</span></code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>Kotlin</tag>
       </tags>
   </entry>
   <entry>
@@ -2770,6 +2830,73 @@ map <span class="token operator">=</span> strategies<span class="token punctuati
       <tags>
         <tag>策略</tag>
         <tag>工厂</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>自定义中缀表达式</title>
+    <url>/posts/8a52.html</url>
+    <content><![CDATA[<p>一个函数只有用与两个角色类似的对象时才将其声明为中缀函数。</p>
+<p>推荐示例：and、to、zip        反例：add</p>
+<p>如果一个方法会改动其接受者，那么不要声明为中缀形式。</p>
+<p>定义自己的中缀表达式：</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">sealed</span> <span class="token keyword">class</span> CompareResult <span class="token punctuation">{</span>
+    <span class="token keyword">object</span> LESS <span class="token operator">:</span> <span class="token function">CompareResult</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">override</span> <span class="token keyword">fun</span> <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> String <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token string">"小于"</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">object</span> MORE <span class="token operator">:</span> <span class="token function">CompareResult</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">override</span> <span class="token keyword">fun</span> <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> String <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token string">"大于"</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">object</span> EQUAL <span class="token operator">:</span> <span class="token function">CompareResult</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">override</span> <span class="token keyword">fun</span> <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> String <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token string">"等于"</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+infix <span class="token keyword">fun</span> Int<span class="token punctuation">.</span><span class="token function">vs</span><span class="token punctuation">(</span>num<span class="token operator">:</span> Int<span class="token punctuation">)</span><span class="token operator">:</span> CompareResult <span class="token operator">=</span>
+    <span class="token keyword">when</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span> <span class="token operator">-</span> num <span class="token operator">></span> <span class="token number">0</span> <span class="token operator">-></span> <span class="token punctuation">{</span>
+            CompareResult<span class="token punctuation">.</span>MORE
+        <span class="token punctuation">}</span>
+        <span class="token keyword">this</span> <span class="token operator">-</span> num <span class="token operator">&lt;</span> <span class="token number">0</span> <span class="token operator">-></span> <span class="token punctuation">{</span>
+            CompareResult<span class="token punctuation">.</span>LESS
+        <span class="token punctuation">}</span>
+        <span class="token keyword">else</span> <span class="token operator">-></span> <span class="token punctuation">{</span>
+            CompareResult<span class="token punctuation">.</span>EQUAL
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">println</span><span class="token punctuation">(</span><span class="token number">5</span> vs <span class="token number">6</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/** 输出结果：小于 */</span></code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Kotlin</tag>
       </tags>
   </entry>
   <entry>
@@ -3089,6 +3216,75 @@ map <span class="token operator">=</span> strategies<span class="token punctuati
       </tags>
   </entry>
   <entry>
+    <title>英语学习第五天</title>
+    <url>/posts/3517.html</url>
+    <content><![CDATA[<h3 id="名词作宾语"><a href="#名词作宾语" class="headerlink" title="名词作宾语"></a>名词作宾语</h3><p>When you’re the bos s, you can make up your own rules.</p>
+<p>She loves her Snow White costume.</p>
+<p>她喜欢她的白雪公主戏服。</p>
+<h3 id="代词作宾语"><a href="#代词作宾语" class="headerlink" title="代词作宾语"></a>代词作宾语</h3><p>I didn’t notice him.</p>
+<p>Thomas brags about this every single day.</p>
+<p>I forgive you.</p>
+<h3 id="动名词作宾语"><a href="#动名词作宾语" class="headerlink" title="动名词作宾语"></a>动名词作宾语</h3><p>I hate riding bicycle.</p>
+<p>I can’t imagine going on a date with him.</p>
+<h3 id="不定式作宾语"><a href="#不定式作宾语" class="headerlink" title="不定式作宾语"></a>不定式作宾语</h3><p>I want to see him now.</p>
+<p>I like to go swimming on a hot day like this.</p>
+<h3 id="it-作形式宾语"><a href="#it-作形式宾语" class="headerlink" title="it 作形式宾语"></a>it 作形式宾语</h3><p>She found it difficult to convince him.</p>
+<p>He made it a rule to do an hour’s work in the garden every day.</p>
+<h3 id="宾语从句"><a href="#宾语从句" class="headerlink" title="宾语从句"></a>宾语从句</h3><ul>
+<li>that</li>
+</ul>
+<p>I think that we should cooperate.</p>
+<p>They feel that it’s impossible to win the game.</p>
+<ul>
+<li>whether</li>
+</ul>
+<p>I wonder whether he can do it.</p>
+<p>I don’t know whether the typhoon will come.</p>
+<ul>
+<li>特殊疑问词</li>
+</ul>
+<p>I don’t believe what he said.</p>
+<p>I forget where he lives.</p>
+<h3 id="单词"><a href="#单词" class="headerlink" title="单词"></a>单词</h3><p>forbid [fərˈbɪd]] 禁止</p>
+<p>ban [bæn] 禁止</p>
+<p>dessert [dɪˈzɜːrt] 餐后甜点</p>
+<p>costume [ˈkɑːstuːm] 服装</p>
+<p>cooperate [koʊˈɑːpəreɪt] 合作</p>
+<p>typhoon [aɪˈfuːn] 台风</p>
+<p>act [ækt] 行动</p>
+<p>argue [ˈɑːrɡjuː] 争论</p>
+<p>Competent [ˈkɑːmpɪtənt] 胜任</p>
+<p>brags about 吹牛</p>
+<p>going on date with sb 与某人约会</p>
+<p>take it for granted 理所当然的</p>
+<blockquote>
+<p>the + 形容词 = 名词</p>
+<p>The rick should help the poor.</p>
+</blockquote>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>English</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>英语学习第四天</title>
     <url>/posts/f7a9.html</url>
     <content><![CDATA[<h3 id="主语从句"><a href="#主语从句" class="headerlink" title="主语从句"></a>主语从句</h3><h4 id="that-陈述句"><a href="#that-陈述句" class="headerlink" title="that + 陈述句"></a>that + 陈述句</h4><ul>
@@ -3164,75 +3360,6 @@ map <span class="token operator">=</span> strategies<span class="token punctuati
 <p>president [ˈprezɪdənt] 总统</p>
 <p>debate [dɪˈbeɪt] 讨论</p>
 <p>car crash 车祸</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>English</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>英语学习第五天</title>
-    <url>/posts/3517.html</url>
-    <content><![CDATA[<h3 id="名词作宾语"><a href="#名词作宾语" class="headerlink" title="名词作宾语"></a>名词作宾语</h3><p>When you’re the bos s, you can make up your own rules.</p>
-<p>She loves her Snow White costume.</p>
-<p>她喜欢她的白雪公主戏服。</p>
-<h3 id="代词作宾语"><a href="#代词作宾语" class="headerlink" title="代词作宾语"></a>代词作宾语</h3><p>I didn’t notice him.</p>
-<p>Thomas brags about this every single day.</p>
-<p>I forgive you.</p>
-<h3 id="动名词作宾语"><a href="#动名词作宾语" class="headerlink" title="动名词作宾语"></a>动名词作宾语</h3><p>I hate riding bicycle.</p>
-<p>I can’t imagine going on a date with him.</p>
-<h3 id="不定式作宾语"><a href="#不定式作宾语" class="headerlink" title="不定式作宾语"></a>不定式作宾语</h3><p>I want to see him now.</p>
-<p>I like to go swimming on a hot day like this.</p>
-<h3 id="it-作形式宾语"><a href="#it-作形式宾语" class="headerlink" title="it 作形式宾语"></a>it 作形式宾语</h3><p>She found it difficult to convince him.</p>
-<p>He made it a rule to do an hour’s work in the garden every day.</p>
-<h3 id="宾语从句"><a href="#宾语从句" class="headerlink" title="宾语从句"></a>宾语从句</h3><ul>
-<li>that</li>
-</ul>
-<p>I think that we should cooperate.</p>
-<p>They feel that it’s impossible to win the game.</p>
-<ul>
-<li>whether</li>
-</ul>
-<p>I wonder whether he can do it.</p>
-<p>I don’t know whether the typhoon will come.</p>
-<ul>
-<li>特殊疑问词</li>
-</ul>
-<p>I don’t believe what he said.</p>
-<p>I forget where he lives.</p>
-<h3 id="单词"><a href="#单词" class="headerlink" title="单词"></a>单词</h3><p>forbid [fərˈbɪd]] 禁止</p>
-<p>ban [bæn] 禁止</p>
-<p>dessert [dɪˈzɜːrt] 餐后甜点</p>
-<p>costume [ˈkɑːstuːm] 服装</p>
-<p>cooperate [koʊˈɑːpəreɪt] 合作</p>
-<p>typhoon [aɪˈfuːn] 台风</p>
-<p>act [ækt] 行动</p>
-<p>argue [ˈɑːrɡjuː] 争论</p>
-<p>Competent [ˈkɑːmpɪtənt] 胜任</p>
-<p>brags about 吹牛</p>
-<p>going on date with sb 与某人约会</p>
-<p>take it for granted 理所当然的</p>
-<blockquote>
-<p>the + 形容词 = 名词</p>
-<p>The rick should help the poor.</p>
-</blockquote>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {

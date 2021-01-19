@@ -461,7 +461,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    889
+                    899
                 </div>
                 
 
@@ -497,7 +497,7 @@ OK</code></pre>
 <p>其中第一行字符串回复表示的是选项名，第二行既是选项值。</p>
 <h3 id="redsic-cli-连接"><a href="#redsic-cli-连接" class="headerlink" title="redsic-cli 连接"></a>redsic-cli 连接</h3><p>通过 redis-cli 向 Redis 发送命令有两种方式，第一种方式是将命令作为 redis-cli 的参数执行，如：</p>
 <pre class=" language-bash"><code class="language-bash">$ redis-cli SHUTDOWN</code></pre>
-<p>redis-cli 执行时会自动按照默认配置（服务器地址为 127.0.0.1，端口号为 6379）连接 Redis，通过 -h 和 -p 参数可以自定义地址和端口号：</p>
+<p>redis-cli 执行时会自动按照默认配置（服务器地址为 127.0.0.1，端口号为 6379）连接 Redis，通过 -h 和 -p 参数可以自定义地址和端口号，-a 参数后跟 redis 连接密码：</p>
 <pre class=" language-bash"><code class="language-bash">$ redis-cli -h 127.0.0.1 -p 6379 -a password</code></pre>
 <p>第二种方式是不附带参数运行 redis-cli，这样会进入交互模式，可以自由输入命令，例如：</p>
 <pre class=" language-bash"><code class="language-bash">$ redis-cli
@@ -1069,7 +1069,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">26k</span>&nbsp;字
+                class="white-color">26.4k</span>&nbsp;字
             
             
             
