@@ -14,22 +14,50 @@
     annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">refresh</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token comment" spellcheck="true">// 依赖查找集合对象</span>
     <span class="token function">lookupByObjectProvider</span><span class="token punctuation">(</span>annotationConfigApplicationContext<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">lookupIfAvailable</span><span class="token punctuation">(</span>annotationConfigApplicationContext<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">lookupByStreamOps</span><span class="token punctuation">(</span>annotationConfigApplicationContext<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token comment" spellcheck="true">// 关闭应用上下文</span>
     annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token punctuation">}</span>
 
+  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">lookupByObjectProvider</span><span class="token punctuation">(</span>
+      AnnotationConfigApplicationContext annotationConfigApplicationContext<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    ObjectProvider<span class="token operator">&lt;</span>String<span class="token operator">></span> objectProvider <span class="token operator">=</span>
+        annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">getBeanProvider</span><span class="token punctuation">(</span>String<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>objectProvider<span class="token punctuation">.</span><span class="token function">getObject</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">lookupIfAvailable</span><span class="token punctuation">(</span>
+      AnnotationConfigApplicationContext annotationConfigApplicationContext<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    ObjectProvider<span class="token operator">&lt;</span>User<span class="token operator">></span> userObjectProvider <span class="token operator">=</span>
+        annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">getBeanProvider</span><span class="token punctuation">(</span>User<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    User user <span class="token operator">=</span> userObjectProvider<span class="token punctuation">.</span><span class="token function">getIfAvailable</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">"hah"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"user: "</span> <span class="token operator">+</span> user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">lookupByStreamOps</span><span class="token punctuation">(</span>
+      AnnotationConfigApplicationContext annotationConfigApplicationContext<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    ObjectProvider<span class="token operator">&lt;</span>String<span class="token operator">></span> objectProvider <span class="token operator">=</span>
+        annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">getBeanProvider</span><span class="token punctuation">(</span>String<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    objectProvider<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>System<span class="token punctuation">.</span>out<span class="token operator">:</span><span class="token operator">:</span>println<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
   <span class="token annotation punctuation">@Bean</span>
-  <span class="token keyword">public</span> String <span class="token function">helloWorld</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">//方法名就是 Bean 名称 = "helloWorld</span>
+  <span class="token keyword">public</span> String <span class="token function">helloWorld</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">// 方法名就是 Bean 名称 = "helloWorld</span>
     <span class="token keyword">return</span> <span class="token string">"hello, world!"</span><span class="token punctuation">;</span>
   <span class="token punctuation">}</span>
 
-  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">lookupByObjectProvider</span><span class="token punctuation">(</span>
-      AnnotationConfigApplicationContext annotationConfigApplicationContext<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    ObjectProvider<span class="token operator">&lt;</span>String<span class="token operator">></span> objectProvider <span class="token operator">=</span> annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">getBeanProvider</span><span class="token punctuation">(</span>String<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>objectProvider<span class="token punctuation">.</span><span class="token function">getObject</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token annotation punctuation">@Bean</span>
+  <span class="token annotation punctuation">@Primary</span>
+  <span class="token keyword">public</span> String <span class="token function">message</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token string">"Message"</span><span class="token punctuation">;</span>
   <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">/** 输出结果：hello, world! */</span></code></pre>
+<span class="token comment" spellcheck="true">/** 输出结果：
+    Message
+    user: User{id=1, name='hah'}
+    hello, world!
+    Message */</span></code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -695,6 +723,192 @@ PONG</code></pre>
       </tags>
   </entry>
   <entry>
+    <title>Redis之发布-订阅模式</title>
+    <url>/posts/8649.html</url>
+    <content><![CDATA[<h3 id="发布-订阅-模式"><a href="#发布-订阅-模式" class="headerlink" title="发布/订阅 模式"></a>发布/订阅 模式</h3><p>Redis 提供了一组命令可以让开发者实现 “发布/订阅”（publish/subscribe）模式。“发布/订阅” 模式同样可以实现进程间的消息传递，其原理是这样的：</p>
+<p>“发布/订阅” 模式中包含两种角色，分别是发布者和订阅者。订阅者可以订阅一个或若干个频道（channel），而发布者可以向指定的频道发布消息，所有订阅此频道的订阅者都可以收到此消息。</p>
+<p>发布者发布消息的命令是 <code>PUBLISH</code>，用法是 <code>PUBLISH channel message</code>，如向 <code>channel.1</code> 说一声 “hi”：</p>
+<pre class=" language-bash"><code class="language-bash">$ PUBLISH channel.1 hi
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 0</code></pre>
+<p>这样消息就发出去了。<code>PUBLISH</code> 命令的返回值表示接收到这条消息的订阅者数量。因为此时没有客户端订阅 <code>channel.1</code>，所以返回 0。发出去的消息不会被持久化，也就是说当有客户端订阅  <code>channel.1</code> 后只能收到后续发布到该频道的消息，之前发送的就收不到了。</p>
+<p>订阅频道的命令是 <code>SUBSCRIBE</code>，可以同时订阅多个频道，用法是：</p>
+<pre class=" language-bash"><code class="language-bash">$ SUBSCRIBE channel <span class="token punctuation">[</span>channel <span class="token punctuation">..</span>.<span class="token punctuation">]</span></code></pre>
+<p>现在新开一个 redis-cli 实例 A，用来订阅 <code>channel.1</code> ：</p>
+<pre class=" language-bash"><code class="language-bash">$ SUBSCRIBE channel.1
+Reading messages<span class="token punctuation">..</span>. <span class="token punctuation">(</span>press Ctrl-C to quit<span class="token punctuation">)</span>
+1<span class="token punctuation">)</span> <span class="token string">"subscribe"</span>
+2<span class="token punctuation">)</span> <span class="token string">"channel.1"</span>
+3<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1</code></pre>
+<p>执行 <code>SUBSCRIBE</code> 命令后，客户端会进入订阅状态，处于此状态下客户端不能使用除<code>SUBSRCIBE</code> 、<code>UNSUBSRCIBE</code> 、<code>PSUBSCRIBE</code> 、<code>PUNSUBSCRIBE</code> 这4个属于“发布/订阅”模式的命令之外的命令，否则会报错。</p>
+<p>进入订阅状态后客户端可能收到三种类型的回复。每种类型的回复都包含3个值，第一个值是消息的类型，根据消息类型的不同，第二、第三个值的含义也不同。</p>
+<p>消息类型的取值可能有一下3个：</p>
+<ul>
+<li><code>subscribe</code>。表示订阅成功的反馈信息。第二个值是订阅成功的频道名称，第三个值是当前客户端订阅的频道数量。</li>
+<li><code>message</code>。这个类型的回复是我们最关心的，它表示接收到的消息。第二个值表示产生消息的频道名称，第三个值是消息的内容。</li>
+<li><code>unsubscribe</code>。表示成功取消订阅某个频道。第二个值是对应的频道名称，第三个值是当前客户端订阅的频道数量。当此值为 0 时，客户端会退出订阅状态，之后就可以执行其它非 “发布/订阅” 模式的命令了。</li>
+</ul>
+<p>上例中当实例 A 订阅了 <code>channel.1</code>，进入订阅状态后收到一条 <code>subscribe</code> 类型的回复，这是我们打开另一个 redis-cli 实例 B，并向 <code>channel.1</code> 发送一条消息：</p>
+<pre class=" language-bash"><code class="language-bash">$ PUBLISH channel.1 good
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1</code></pre>
+<p>返回值为 1 表示有一个客户端订阅了 <code>channel.1</code>，此时实例 A 收到了类型为 <code>message</code> 的回复：</p>
+<pre class=" language-bash"><code class="language-bash">1<span class="token punctuation">)</span> <span class="token string">"message"</span>
+2<span class="token punctuation">)</span> <span class="token string">"channel.1"</span>
+3<span class="token punctuation">)</span> <span class="token string">"good"</span></code></pre>
+<p>使用 UNSUBSCRIBE 命令可以取消订阅者指定的频道，用法为 </p>
+<pre class=" language-bash"><code class="language-bash">UNSUBSCRIBE channel <span class="token punctuation">[</span>channel <span class="token punctuation">..</span>.<span class="token punctuation">]</span></code></pre>
+<p>如果不指定频道，则会取消订阅所有频道。</p>
+<h3 id="按照规则订阅"><a href="#按照规则订阅" class="headerlink" title="按照规则订阅"></a>按照规则订阅</h3><p>除了可以使用 <code>SUBSCRIBE</code> 命令订阅指定的频道外，还可以使用 <code>PSUBSCRIBE</code> 命令订阅指定的规则。规则支持 <code>glob</code> 风格通配符格式。</p>
+<pre class=" language-bash"><code class="language-bash">$ PSUBSCRIBE channel.?*
+Reading messages<span class="token punctuation">..</span>. <span class="token punctuation">(</span>press Ctrl-C to quit<span class="token punctuation">)</span>
+1<span class="token punctuation">)</span> <span class="token string">"psubscribe"</span>
+2<span class="token punctuation">)</span> <span class="token string">"channel.?*"</span>
+3<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1</code></pre>
+<p>规则 <code>channel.1?*</code> 可以匹配 <code>channel.1</code> 和 <code>channel.10</code>。 但不会匹配 <code>channel.</code>。</p>
+<p>这时在实例 B 中发布消息：</p>
+<pre class=" language-bash"><code class="language-bash">$ PUBLISH channel.1 hi
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 2</code></pre>
+<p>返回结果为 2 是因为实例 A 和 实例 C 两个客户端都订阅了 <code>channel.1</code> 频道。实例 C 收到的回复是：</p>
+<pre class=" language-bash"><code class="language-bash">1<span class="token punctuation">)</span> <span class="token string">"pmessage"</span>
+2<span class="token punctuation">)</span> <span class="token string">"channel.?*"</span>
+3<span class="token punctuation">)</span> <span class="token string">"channel.1"</span>
+4<span class="token punctuation">)</span> <span class="token string">"hi"</span></code></pre>
+<p>第一个值表示这条消息是通过 <code>PSUBSCRIBE</code> 命令订阅频道收到的，第二个值表示订阅时使用的通配符，第三个值表示产生消息的频道命令，第四个值则是消息内容。</p>
+<blockquote>
+<p><strong>提示</strong>    使用 <code>PSUBSCRIBE</code> 命令可以重复订阅一个频道，如某客户端执行了 <code>PUBSCRIBE  channel.?  channel.?*</code> ，这是向 <code>channel.2</code> 发布消息后该客户端会收到两条消息，而同时 <code>PUBLISH</code> 命令的返回值也是 2 不是 1。同样的，如果有两一个客户端执行了 <code>SUBSCRIBE channel.10</code> 和 <code>PSUBSCRIBE channel.?*</code> 的话，向 <code>channel.10</code> 发送命令该客服端也会收到两条消息（但是是两种类型：<code>message</code> 和 <code>pmessage</code>），同时 <code>PUBLISH</code> 命令会返回 2。</p>
+</blockquote>
+<p><code>PUNSUBSCRIBE</code> 命令可以退订指定的规则，用法是 ：</p>
+<pre class=" language-bash"><code class="language-bash">$ PUNSUBSCRIBE pattern <span class="token punctuation">[</span>pattern <span class="token punctuation">..</span>.<span class="token punctuation">]</span></code></pre>
+<p>如果没有参数则会退订所有规则。</p>
+<blockquote>
+<p><strong>注意</strong>    使用 <code>PUNSUBSCRIBE</code> 命令只会退订通过 <code>PSUBSCIBE</code> 命令订阅的规则，不会影响直接通过 <code>SUBSCRIBE</code> 命令订阅的频道；同样 <code>UNSUBSCRIBE</code> 命令也不会影响通过 <code>PSUBSCRIBE</code> 命令订阅的规则。另外容易出错的一点是使用 <code>PUNSUBSCIBE</code> 命令退订某个规则时，不会将其中的通配符展开，而是进行严格的字符串匹配，所有 <code>PUNSUBSCRIBE *</code> 无法退订 <code>channel.*</code> 规则，而是必须使用 <code>PUNSUBSCRIBE channel.*</code> 才能退订。</p>
+</blockquote>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis事务</title>
+    <url>/posts/a455.html</url>
+    <content><![CDATA[<blockquote>
+<p>在微博中，用户之间是 “关注” 和 “被关注”的关系。如果要使用 Redis 存储这样的关系可以使用集合类型。思路是对每个用户使用两个集合类型键，分别名为 <code>user:用户ID:followers</code> 和 <code>user:用户ID:following</code> ，用来存储<strong>关注该用户的用户集合</strong> 和 <strong>该用户关注的集合</strong>。</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">follow</span><span class="token punctuation">(</span>$currentUser<span class="token punctuation">,</span> $targetUser<span class="token punctuation">)</span>
+SADD user<span class="token punctuation">:</span>$currentUser<span class="token punctuation">:</span>following<span class="token punctuation">,</span> $targetUser
+SADD user<span class="token punctuation">:</span>$taegetUser<span class="token punctuation">:</span>followers<span class="token punctuation">,</span> $currentUser</code></pre>
+<p>如 ID 为 1 的用户 A 想关注 ID 为 2 的用 B，只需要执行 follow(1, 2) 即可。然而在实现该功能的时候发现了一个问题：完成关注操作需要一次执行两条 Redis 命令，如果在第一条命令执行完后，因为某种原因导致第二条命令没有执行。就会出现一个奇怪的现象：A 查看自己关注的用户列表时会发现其中有 B，而 B 查看关注自己的用户列表时却没有 A 。换句话说就是，A 虽然关注了 B ，却不是 B 的粉丝。</p>
+</blockquote>
+<h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>Redis 中的事务（transaction） 是一组命令的集合。事务同命令一样都是 Redis 的最小执行单位，一个事务中的命令要么都执行，要么都不执行。</p>
+<p>事务的原理是先将属于一个事务的命令发送给 Redis，然后将 Redis 依次执行这些命令。如：</p>
+<pre class=" language-bash"><code class="language-bash">$ MULTI
+OK
+$ SADD <span class="token string">"user:1:following"</span> 2
+QUEUED
+$ SADD <span class="token string">"user:2:followers"</span> 1
+QUEUED
+$ EXEC
+1<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1
+2<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1
+</code></pre>
+<p>首先使用 MULTI 命令告诉 Redis：“下面我发给你的命令属于同一个事务，你先不要执行，而是把它们暂时存起来。” Redis 回答：“OK”。</p>
+<p>而后我们发送了两个 SADD 命令来实现关注和被关注操作，可以看到 Redis 遵守了承诺，没有执行这些命令，而是返回 QUEUED 表示这两条命令已经进入等待执行的事务队列中了。</p>
+<p>当把所有要在同一个事务中执行的命令都发给 Redis 后，我们使用 Exec 命令告诉 Redis 将等待执行的事务队列中的所有命令（即刚才所有返回 QUEUE 的命令）按照发送顺序依次执行。EXEC 命令的返回值就是这些命令的返回值组成的列表，返回值顺序和命令的顺序相同。</p>
+<p>Redis 保证一个事务中的所有命令要么都执行，要么都不执行。如果在发送 EXEC 命令前客户端断线了，则 Redis 会清空事务队列，事务中的所有命令都不会执行。而一旦客户端发送了 EXEC 命令，所有的命令都会被执行，即使此后客户端断线也没关系，因为 Redis 中已经记录了所有要执行的命令。</p>
+<p>除此之外，Redis 的事务还能保证一个事务内的命令一次执行而不被其它命令插入。试想客户端 A 需要执行几条命令，同时客户端 B 发送了一条命令，如果不使用事务，则客户端 B 的命令可能会插入到 客户端 A 的几条命令中执行。如果不希望发生这种情况，也可以使用事务。</p>
+<h3 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h3><p>一个事务中的某个命令出错，针对错误的不同，Redis 会有不同的不同。</p>
+<ul>
+<li>语法错误。语法错误指命令不存在或者命令参数的个数不对。</li>
+</ul>
+<pre class=" language-bash"><code class="language-bash">$ MULTI
+OK
+$ SET key value
+QUEUED
+$ SET key
+<span class="token punctuation">(</span>error<span class="token punctuation">)</span> ERR wrong number of arguments <span class="token keyword">for</span> <span class="token string">'set'</span> <span class="token function">command</span>
+$ ERRORCOMMAND key
+<span class="token punctuation">(</span>error<span class="token punctuation">)</span> ERR unknown <span class="token function">command</span> <span class="token variable"><span class="token variable">`</span>ERRORCOMMAND<span class="token variable">`</span></span>, with args beginning with: <span class="token variable"><span class="token variable">`</span>key<span class="token variable">`</span></span>,
+$ EXEC
+<span class="token punctuation">(</span>error<span class="token punctuation">)</span> EXECABORT Transaction discarded because of previous errors.</code></pre>
+<p>只要有一个命令语法错误，执行 EXEC 命令后 Redis 就会直接返回错误，连语法正确的命令也不会执行。</p>
+<ul>
+<li>运行错误。运行错误指在命令执行时出现的错误，比如使用散列类型的命令操作集合类型的键。</li>
+</ul>
+<pre class=" language-bash"><code class="language-bash">$ MULTI
+OK
+$ SET key 1
+QUEUED
+$ SADD key 2
+QUEUED
+$ <span class="token keyword">set</span> key 3
+QUEUED
+$ EXEC
+1<span class="token punctuation">)</span> OK
+2<span class="token punctuation">)</span> <span class="token punctuation">(</span>error<span class="token punctuation">)</span> WRONGTYPE Operation against a key holding the wrong kind of value
+3<span class="token punctuation">)</span> OK</code></pre>
+<p>可见，如果事务里的一条命名出现了运行错误，事务里其它的命令依然会继续执行。</p>
+<p>Redis 的事务没有回滚（rollback）功能。为此开发者必须在事务执行出错后自己收拾剩下的烂摊子（将数据库复原回事务执行前的状态等）。</p>
+<h3 id="WATCH-命令"><a href="#WATCH-命令" class="headerlink" title="WATCH 命令"></a>WATCH 命令</h3><p><code>WATCH</code> 命令可以监控一个或多个键，一旦其中有一个键被修改（或删除），之后的事务就不会执行。监控一直持续到 <code>EXEC</code> 命令。</p>
+<pre class=" language-bash"><code class="language-bash">$ SET key 1
+OK
+$ WATCH key
+OK
+$ SET key 2
+OK
+$ MULTI
+OK
+$ SET key 3
+QUEUED
+$ EXEC
+<span class="token punctuation">(</span>nil<span class="token punctuation">)</span>
+$ GET key
+<span class="token string">"2"</span></code></pre>
+<p>上例中在执行 <code>WATCH</code> 命令后、事务执行前修改了 key 的值（即 SET key 2) ，所以最后事务中的命令 <code>SET key 3</code> 没有执行， <code>EXEC</code> 返回空结果。</p>
+<blockquote>
+<p>由于 <code>WATCH</code> 命令的作用只是当被监控的键值被修改后，阻止之后一个事务的执行，而不能保证其它客户端不修改这以键值，所以我们需要在 <code>EXEC</code> 执行失败后，重新执行整个函数。</p>
+</blockquote>
+<p>执行 EXEC 命令会取消对所有键的监控。</p>
+<p>可以使用 UNWATCH 命令来保证下一个事务的执行不会收到影响。</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Redis位操作</title>
     <url>/posts/5969.html</url>
     <content><![CDATA[<h3 id="位操作命令"><a href="#位操作命令" class="headerlink" title="位操作命令"></a>位操作命令</h3><pre class=" language-bash"><code class="language-bash">$ GETBIT key offset
@@ -750,6 +964,215 @@ $ BITPOS foo 1
 <blockquote>
 <p>如果不设置结束字节且键值的所有二进制位都是 1 ，则当要查询值为 0 的二进制位偏移量时，返回结果会是键值长度的下一个字位的偏移量。这是因为 Redis 会认为键值长度之后的二进制位都是 0。</p>
 </blockquote>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis持久化</title>
+    <url>/posts/f2a0.html</url>
+    <content><![CDATA[<h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>Redis 支持两种方式的持久化，一种是 RDB 方式，另一种是 AOF 方式。前者会根据指定的规则 “定时” 将内存中的数据存储在硬盘上，而后者在每次执行命令后将命令本身记录下来。两种持久化方式可以单独使用其中一种，但更多情况下是将二者结合使用。</p>
+<h3 id="RDB方式"><a href="#RDB方式" class="headerlink" title="RDB方式"></a>RDB方式</h3><p>RDB 方式的持久化是通过快照（snapshotting）完成的，当符合一定条件时 Redis 会自动将内存中的所有数据生成一份副本并存储在硬盘上，这个过程即为“快照”。Redis 会在一下几种情况下对数据进行快照：</p>
+<ul>
+<li>根据配置规则进行自动快照</li>
+</ul>
+<p>Redis 允许用户自定义快照条件，当符合快照条件时，Redis 会自动执行快照条件。进行快照的条件可以由用户在配置文件中自定义，由两个参数构成：<strong>时间窗口 M 和 改动的键的个数 N。</strong>每当时间 M 内被更改键的个数大于 N 时，即符合自动快照条件。例如 Redis 安装目录中包含的样例配置文件中预置的3个条件：</p>
+<pre class=" language-shell"><code class="language-shell">save 900 1
+save 300 10
+save 60 10000</code></pre>
+<p>每条快照条件占一行，并且以 save 参数开头。同样可以存在多个条件，条件之间是 “或” 的关系。就这个例子而言，<code>save 900 1</code> 的意思是在 15 分钟（900秒）内由一个或一个以上的键被更改则进行快照。同理，<code>save 300 10</code> 表示在 300 秒内至少有10个键被修改则进行快照。</p>
+<ul>
+<li>用户执行 <code>SAVE</code> 或 <code>BGSAVE</code> 命令</li>
+</ul>
+<p>除了让 Redis 自动进行快照外，当进行服务重启、手动迁移以及备份时我们也会需要手动执行快照操作。Redis 提供了两个命令来完成这一任务。</p>
+<ol>
+<li><code>SAVE</code> 命令</li>
+</ol>
+<p>当执行 SAVE 命令时，Redis 同步地进行快照操作，在快照执行过程中会阻塞所有来自客户端地请求。当数据库中的数据比较多时，这一过程导致 Redis 较长时间不响应，所以要尽量避免在生产环境使用这一命令。</p>
+<ol start="2">
+<li><code>BGSAVE</code> 命令</li>
+</ol>
+<p>需要手动执行快照时推荐使用 <code>BGSAVE</code> 命令。<code>BGSAVE</code> 命令可以在后台异步地进行快照操作，快照的同时服务器还可以继续相应来自客户端的请求。执行 <code>BGSAVE</code> 后 Redis 会立即返回 OK 表示开始执行快照操作，如果想知道快照是否完成，可以通过 <code>LASTSAVE</code> 命令获取最近一次成功执行快照的时间，返回结果是一个 Unix 时间戳，如：</p>
+<pre class=" language-bash"><code class="language-bash">$ LASTSAVE
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1611125890</code></pre>
+<ul>
+<li>执行 <code>FLUSHALL</code> 命令</li>
+</ul>
+<p>当执行 FLUSHALL 命令时，Redis 会清除数据库中的所有数据。需要注意的是，不论清空数据的操作是否出发了自动快照条件，只要自动快照条件不为空，Redis 就会执行一次快照操作。</p>
+<p>当没有定义快照条件时，执行 <code>FLUSHALL</code> 则不会进行快照。</p>
+<ul>
+<li>执行复制（replication） 时</li>
+</ul>
+<p>当设置了主从模式时，Redis 会在复制初始化时自动进行自动快照。即使没有定义自动快照条件，并且手动没有执行过快照操作，也会生成 RDB 快照文件。</p>
+<h3 id="快照原理"><a href="#快照原理" class="headerlink" title="快照原理"></a>快照原理</h3><p>理清 Redis 实现快照的过程对我们了解快照文件的特性有很大的帮助。Redis 默认会将快照文件存储在 Redis 当前进程的工作目录中的 <code>dump.rdb</code> 文件中，可以通过配置 <code>dir</code> 和 <code>dbfilename</code> 两个参数分别指定快照文件的存储路径和文件名。快照的过程如下：</p>
+<ol>
+<li>Redis 使用 fork 函数复制一份当前进程（父进程）的副本（子进程）；</li>
+<li>父进程继续接受并处理客户端发来的命令，而子进程开始将内存中的数据写入硬盘中的临时文件；</li>
+<li>当子进程写入完所有数据后会用该临时文件替换旧的 RDB 文件，至此一次快照操作完成。</li>
+</ol>
+<blockquote>
+<p><strong>提示</strong>    在执行 fork 的时候，操作系统（类 Unix 操作系统）会使用写时复制（copy-on-write）策略，即 fork 函数发生的一刻，父子进程共享同一内存数据，当父进程要更改其中某片数据时（如执行一个写命令），操作系统会将该片数据复制一份以保子进程的数据不受影响，所以新的 RDB 文件存储的是执行 fork 一刻的内存数据。</p>
+<p>写时复制策略也保证了在 fork 的时刻，虽然看上去生成了两份内存副本，但实际上内存的占用量并不会增加一倍。这意味着当系统内存只有 2GB ，而 Redis 数据库的内存有 1.5GB，执行 fork 后内存使用量并不会增加到 3GB（超过物理内存）。为此需要确保 Linux 系统允许应用程序申请超过可用内存（物理内存和交换区）的空间，方法是在 <code>/etc/sysctl.conf</code> 文件加入 <code>vm.overcommit_memory = 1</code>，然后重启系统或者执行<code>sysctl vm.overcommit_memeoty = 1</code> 确保设置生效。</p>
+<p>另外需要注意的是，当进行快照的过程中，如果写入操作较多，造成 fork 前后数据差异较大，是会使得内存使用量显著超过实际数据大小的，因为内存中不仅保存了当前的数据库数据，而且还保存着 fork 时刻的内存数据。进行内存用量估算时很容易忽略这一问题，造成内存用量超限。</p>
+</blockquote>
+<p>通过上述过程可以发现 Redis 在进行快照的过程中不会修改 RDB 文件，只有快照结束后才会将旧的文件替换成新的，也就是说任何时候 RDB 文件都是完整的。这使得我们可以通过定时备份 RDB 文件来实现 Redis 数据库备份。 RDB 文件是讲过压缩的二进制格式（可以配置 <code>rdbcompression</code> 参数以禁用压缩节省 CPU 占用），所以占用的空间会小于内存中的数据大小，更加利于传输。</p>
+<p>Redis 启动后会读取 RDB 快照文件，将数据从硬盘载入到内存。根据数据量大小与结构和服务器性能不同，这个时间也不同。通常将一个记录 1000 万个字符串类型键、大小为 1GB 的快照文件载入到内存中需要花费 20~30 秒。</p>
+<p>通过 RDB 方式实现持久化，一旦 Redis 异常退出，就会丢失最后一次快照以后更改的所有数据。这就需要开发者根据具体的应用场合，通过组合设置自动快照条件的方式来将可能发生的数据损失控制在能够接受的范围。例如，使用 Redis 存储缓存数据时，丢失最近几秒的数据或者丢失最近更新的几十个键并不会有很大的影响。如果数据相对重要，希望将损失降到最小，则可以使用 AOF 的方式进行持久化。</p>
+<h3 id="AOF方式"><a href="#AOF方式" class="headerlink" title="AOF方式"></a>AOF方式</h3><p>当使用 Redis 存储非临时数据时，一般需要打开 AOF 持久化来降低进程终止导致的数据损失。AOF 可以将 Redis 执行的每一条写命令追加到硬盘文件中，这一过程显然会降低 Redis 的性能，但是大部分情况下这个影响是可以接受的，另外使用较快的硬盘可以提高 AOF 的性能。</p>
+<ul>
+<li>开启 AOF</li>
+</ul>
+<p>默认情况下，Redis 没有开启 AOF（append only file） 方式的持久化，可以通过 <code>appendonly</code>   参数启用：</p>
+<pre class=" language-shell"><code class="language-shell">appendonly yes</code></pre>
+<p>开启 AOF 持久化后没执行一条会更改 Redis 中的数据的命令，Redis 就会将命令写入硬盘中的 AOF 文件。AOF 文件的保存位置和 RDB 文件的位置相同，都是通过 dir 参数设置的，默认的文件名是 <code>appendonly.aof</code>，可以通过 <code>appendfilename</code> 参数修改：</p>
+<pre class=" language-sehll"><code class="language-sehll">appendonlyname appendonly.aof</code></pre>
+<h3 id="AOF实现"><a href="#AOF实现" class="headerlink" title="AOF实现"></a>AOF实现</h3><p>AOF 文件以纯文本的形式记录了 Redis 执行的写命令，例如在开启 AOF 持久化的情况下执行了如下 4 个命令：</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token keyword">set</span> foo 1
+OK
+$ <span class="token keyword">set</span> foo 2
+OK
+$ <span class="token keyword">set</span> foo 3
+OK
+$ get foo
+<span class="token string">"3"</span></code></pre>
+<p>此时 AOF 文件中的内容如下：</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">cat</span> appendonly.aof
+*2
+<span class="token variable">$6</span>
+SELECT
+<span class="token variable">$1</span>
+0
+*3
+<span class="token variable">$3</span>
+<span class="token keyword">set</span>
+<span class="token variable">$3</span>
+foo
+<span class="token variable">$1</span>
+1
+*3
+<span class="token variable">$3</span>
+<span class="token keyword">set</span>
+<span class="token variable">$3</span>
+foo
+<span class="token variable">$1</span>
+2
+*3
+<span class="token variable">$3</span>
+<span class="token keyword">set</span>
+<span class="token variable">$3</span>
+foo
+<span class="token variable">$1</span>
+3</code></pre>
+<p>可见 AOF 文件的内容正是 Redis 客户端 向 Redis 发送的原始通信协议的内容，从中可见 Redis 确实只记录了前 3 条命令。然后这时有一个问题是前 2 条命令其实都是冗余的，因为这两条的执行结果会被第三条命令覆盖。随着执行的命令越来越多，AOF 文件的大小也会越来越大，即使内存中实际的数据并没有多少。</p>
+<p>很自然地，我们希望 Redis 可以自动优化 AOF 文件，就上例而言，就是将前两条无用地记录删除，只保留第三条。实际上 Redis 也正是这样做的，每当达到一定条件时，Redis 就会自动重写AOF 文件, 这个条件可以在配置文件中设置：</p>
+<pre class=" language-shell"><code class="language-shell">auto-aof-rewrite-percentage 100
+auto-aof-rewrite-min-size 64mb</code></pre>
+<p>auto-aof-rewrite-percentage 参数的意义是当前的 AOF 文件大小超过上一次重写时的 AOF 文件大小的百分之多少时会再次进行重写，如果之前没有重写过，则以启动时的 AOF 文件大小为依据。</p>
+<p>auto-aof-rewrite-min-size 参数限制了允许重写的最小 AOF 文件大小，通常在 AOF 文件很小的情况下即使其中有很多冗余的命令我们也并不太关心。</p>
+<p>除了让 Redis 自动执行重写外，我们还可以主动使用 <code>BGREWRITEAOF</code> 命令手动执行 AOF 重写。</p>
+<h3 id="同步硬盘数据"><a href="#同步硬盘数据" class="headerlink" title="同步硬盘数据"></a>同步硬盘数据</h3><p>虽然每次执行更改数据库内容的操作时，AOF 都会将命令记录在 AOF 文件中，但是事实上，由于操作系统的缓存机制，数据没有真正地写入硬盘，而是进入了系统的硬盘缓存。在默认情况下系统每 30 秒会执行一次同步操作，以便将硬盘缓存中的内容真正地写入硬盘，在这30 秒的过程如果系统异常退出则会导致硬盘缓存中的数据丢失。一般来讲启用 AOF 持久化的应用都无法容忍这样的损失，这就需要 Redis 在写入 AOF 文件后主动要求系统将缓存内容同步到硬盘中。在 Redis 中我们可以通过 <code>appendfsync</code> 参数设置同步的时机：</p>
+<pre class=" language-shell"><code class="language-shell"># appendfsync always
+appendfsync everysec
+# appendfsync no</code></pre>
+<p>默认情况下 Redis 采用 <code>everysec</code> 规则，即每秒执行一次同步操作。<code>always</code> 表示每次执行写入都会执行同步，这是最安全也是最慢的方式。<code>no</code> 表示不主动进行同步操作，而是完全交由操作系统来做（即每 30 秒一次），这是最快但最不安全的方式。一般情况下使用 <code>everysec</code> 足够了，即兼顾了性能又保证了安全。</p>
+<blockquote>
+<p>Redis 允许同时开启 AOF 和 RDB，即保证了数据安全又使得进行备份等操作十分容易。此时重新启动 Redis 后， Redis会使用 AOF 文件来恢复数据，因为 AOF 方式的持久化可能丢失的数据更少。 </p>
+</blockquote>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis的SORT命令</title>
+    <url>/posts/7886.html</url>
+    <content><![CDATA[<p><code>SORT</code> 命令可以对列表类型、集合类型和有序集合类型键进行排序。</p>
+<pre class=" language-bash"><code class="language-bash">$ LPUSH myList 4 2 6 1 3 7
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 6
+$ LRANGE myList 0 -1
+1<span class="token punctuation">)</span> <span class="token string">"7"</span>
+2<span class="token punctuation">)</span> <span class="token string">"3"</span>
+3<span class="token punctuation">)</span> <span class="token string">"1"</span>
+4<span class="token punctuation">)</span> <span class="token string">"6"</span>
+5<span class="token punctuation">)</span> <span class="token string">"2"</span>
+6<span class="token punctuation">)</span> <span class="token string">"4"</span>
+$ SORT myList
+1<span class="token punctuation">)</span> <span class="token string">"1"</span>
+2<span class="token punctuation">)</span> <span class="token string">"2"</span>
+3<span class="token punctuation">)</span> <span class="token string">"3"</span>
+4<span class="token punctuation">)</span> <span class="token string">"4"</span>
+5<span class="token punctuation">)</span> <span class="token string">"6"</span>
+6<span class="token punctuation">)</span> <span class="token string">"7"</span></code></pre>
+<p>在对有序集合排序时会忽略元素的分数，只针对元素自身的值进行排序。比如：</p>
+<pre class=" language-bash"><code class="language-bash">$ ZADD myzset 50 2 40 3 20 1 60 5
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 4
+$ SORT myzset
+1<span class="token punctuation">)</span> <span class="token string">"1"</span>
+2<span class="token punctuation">)</span> <span class="token string">"2"</span>
+3<span class="token punctuation">)</span> <span class="token string">"3"</span>
+4<span class="token punctuation">)</span> <span class="token string">"5"</span></code></pre>
+<p>除了可以排列数字外，SORT 命令还可以通过 ALPHA 参数实现按照字典顺序排列非数字元素，就像这样：</p>
+<pre class=" language-bash"><code class="language-bash">$ LPUSH myList z c d a e h j b
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 8
+$ SORT myList
+<span class="token punctuation">(</span>error<span class="token punctuation">)</span> ERR One or <span class="token function">more</span> scores can<span class="token string">'t be converted into double
+$ SORT myList ALPHA
+1) "a"
+2) "b"
+3) "c"
+4) "d"
+5) "e"
+6) "h"
+7) "j"
+8) "z"
+$ ZADD myzset 77 asiaMa 90 xiu 68 min
+(integer) 3
+$ SORT myzset
+(error) ERR One or more scores can'</span>t be converted into double
+$ SORT myzset ALPHA
+1<span class="token punctuation">)</span> <span class="token string">"asiaMa"</span>
+2<span class="token punctuation">)</span> <span class="token string">"min"</span>
+3<span class="token punctuation">)</span> <span class="token string">"xiu"</span></code></pre>
+<p>从这段示例中可以看到如果没有加 <code>ALPHA</code> 参数的话，<code>SORT</code> 命令会尝试将所有元素转换成双精度数来比较，如果无法转换则会提示错误。</p>
+<p><code>SORT</code> 命令还支持 <code>LIMIT</code> 参数来返回指定范围的记过。用法同 SQL 语句一样，<code>LIMIE offset count</code>, 表示跳过前 offset 个元素并获取之后的 count 个元素。</p>
+<pre class=" language-bash"><code class="language-bash">$ SORT tag:ruby:posts DESC LIMIT 1 2</code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -1129,6 +1552,38 @@ System<span class="token punctuation">.</span>out<span class="token punctuation"
       </tags>
   </entry>
   <entry>
+    <title>Hello World</title>
+    <url>/posts/3eeb.html</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class=" language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span></code></pre>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class=" language-bash"><code class="language-bash">$ hexo server</code></pre>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bash"><code class="language-bash">$ hexo generate</code></pre>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-bash"><code class="language-bash">$ hexo deploy</code></pre>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+  </entry>
+  <entry>
     <title>Stream中reduce使用</title>
     <url>/posts/801f.html</url>
     <content><![CDATA[<p>reduce方法用于对stream中元素进行聚合求值，最常见的用法就是将stream中一连串的值合成为单个值，比如为一个包含一系列数值的数组求和。</p>
@@ -1205,38 +1660,6 @@ System<span class="token punctuation">.</span>out<span class="token punctuation"
       <tags>
         <tag>JAVA</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/posts/3eeb.html</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class=" language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span></code></pre>
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class=" language-bash"><code class="language-bash">$ hexo server</code></pre>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bash"><code class="language-bash">$ hexo generate</code></pre>
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-bash"><code class="language-bash">$ hexo deploy</code></pre>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
   </entry>
   <entry>
     <title>kotlin如何实现空安全</title>
@@ -1712,6 +2135,91 @@ $ <span class="token function">git</span> config --list --system</code></pre>
       </script>]]></content>
       <tags>
         <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用Redis实现任务队列</title>
+    <url>/posts/4c47.html</url>
+    <content><![CDATA[<h3 id="普通队列"><a href="#普通队列" class="headerlink" title="普通队列"></a>普通队列</h3><p>说到队列很自然就能想到 Redis 的列表类型。如果要实现任务队列，只需要让生产者将任务使用 LPUSH 命令加入到某个键中，另一边让消费者不断地使用 RPOP 命令从该键中取出任务即可。</p>
+<p>比如完成发邮件的任务，需要知道收件地址、邮件主题和邮件正文。所以生产者需要将这3个信息组成对象并序列化成字符串，然后将其加入到任务队列中。而消费者则循环从队列中拉取任务，就像如下伪代码：</p>
+<pre class=" language-shell"><code class="language-shell"># 无限循环读取任务队列中的内容
+loop
+ $task = RPOP queue
+ if $task
+     # 如果任务队列有任务则执行它
+     execute($task)
+ else 
+     # 如果没有则等待 1 秒 以免过于频繁的请求数据
+     wait 1 second</code></pre>
+<p>到此一个使用 Redis 实现的简单的任务队列就写好了。不过还有一点不完美的地方：当任务队列中没有任务时，消费者都会每秒调用一次 <code>RPOP</code> 命令来查看是否有新任务。如果可以实现一旦有新任务加入任务队列就通知消费者就好了。其实借助 <code>BPOP</code> 命令就可以实现这样的需求。</p>
+<p><code>BRPOP</code> 命令与 <code>RPOP</code> 命令相似，唯一的区别是当列表中没有元素时 BRPOP 命令会一直阻塞住连接，知道有新元素接入。如上代码可改写为：</p>
+<pre class=" language-shell"><code class="language-shell">loop
+    # 如果任务队列没有新任务，BRPOP 命令会一直阻塞，不会执行 execute()。
+    $task = BRPOP queue 0
+    # 返回值是一个数组，数组第二个元素是我们需要的任务。
+    execute($task[1])</code></pre>
+<p><code>BRPOP</code> 命令接受两个参数，第一个是键名，第二个是超时时间，单位是秒。当超过了此时间仍然没有获得新元素的话就会返回 nil。超时时间如果设置为 “0”，表示不限制等待的时间，即如果没有新元素加入列表就会永远阻塞下去。</p>
+<p>当获得一个元素后 <code>BRPOP</code> 命令返回两个值，分别是键名和元素值。为了测试 <code>BRPOP</code> 命令，我们可以打开两个 redis-cli 实例，在实例 A 中：</p>
+<pre class=" language-bash"><code class="language-bash">$ BRPOP queue 0</code></pre>
+<p>键入回车后实例 A 会处于阻塞状态，这时在实例 B 中向 queue 中加入一个元素：</p>
+<pre class=" language-bash"><code class="language-bash">$ LPUSH queue task
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1</code></pre>
+<p>在 <code>LPUSH</code> 命令执行后，实例 A 马上就返回了结果：</p>
+<pre class=" language-bash"><code class="language-bash">1<span class="token punctuation">)</span> <span class="token string">"queue"</span>
+2<span class="token punctuation">)</span> <span class="token string">"task"</span>
+<span class="token punctuation">(</span>27.33s<span class="token punctuation">)</span></code></pre>
+<p>同时会发现 queue 中的元素已经被取走：</p>
+<pre class=" language-bash"><code class="language-bash">$ LLEN queue
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 0</code></pre>
+<p>除了 <code>BRPOP</code> 命令外，Redis 还提供了 <code>BLPOP</code>，和 <code>BRPOP</code> 的区别在于从队列取元素时 <code>BLPOP</code> 会从队列左边取。</p>
+<h3 id="优先级队列"><a href="#优先级队列" class="headerlink" title="优先级队列"></a>优先级队列</h3><p><code>BLPOP</code> 命令可以同时接受多个键，其完整的命令格式为：</p>
+<pre class=" language-bash"><code class="language-bash">$ BLPOP key <span class="token punctuation">[</span>key <span class="token punctuation">..</span>.<span class="token punctuation">]</span> <span class="token function">timeout</span></code></pre>
+<p>如果没有键都没有元素则阻塞，如果其中一个键有元素则会从该键中弹出元素。例如打开两个 redis-cli 实例，在实例 A 中：</p>
+<pre class=" language-bash"><code class="language-bash">$ BLPOP queue:1 queue:2 queue:3 0</code></pre>
+<p>在实例 B 中：</p>
+<pre class=" language-bash"><code class="language-bash">$ LPUSH queue:2 task
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1</code></pre>
+<p>则在实例 A 中会返回：</p>
+<pre class=" language-bash"><code class="language-bash">1<span class="token punctuation">)</span> <span class="token string">"queue:2"</span>
+2<span class="token punctuation">)</span> <span class="token string">"task"</span>
+<span class="token punctuation">(</span>38.74s<span class="token punctuation">)</span></code></pre>
+<p>如果多个键都有元素，则按照从左到右的顺序取第一键的一个元素。我们现在 queue:2  和 queue:3 中各加入一个元素：</p>
+<pre class=" language-bash"><code class="language-bash">$ RPUSH queue:2 task1
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1
+$ RPUSH queue:3 task2
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1</code></pre>
+<p>然后执行 BLPOP 命令</p>
+<pre class=" language-bash"><code class="language-bash">$ BLPOP queue:1 queue:2 queue:3 0
+1<span class="token punctuation">)</span> <span class="token string">"queue:2"</span>
+2<span class="token punctuation">)</span> <span class="token string">"task1"</span></code></pre>
+<p>借此特性可以实现区分优先级的任务队列。我们分别使用 <code>queue:confirmation.email</code> 和 <code>queue:notification.email</code> 两个键存储发送确认邮件和发送通知邮件两种任务，然后将消费者的代码改为：</p>
+<pre class=" language-shell"><code class="language-shell">loop
+    $task =
+        BLPOP queue:confirmation.email
+              queue:notification.email
+              0
+    execute($task[1])</code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -2278,9 +2786,6 @@ $ <span class="token function">git</span> config --list --system</code></pre>
             document.body.appendChild(img);
           });
       </script>]]></content>
-      <categories>
-        <category>AsiaMa</category>
-      </categories>
       <tags>
         <tag>Spring</tag>
       </tags>
@@ -2983,6 +3488,118 @@ infix <span class="token keyword">fun</span> Int<span class="token punctuation">
       </tags>
   </entry>
   <entry>
+    <title>英语学习第三天</title>
+    <url>/posts/9968.html</url>
+    <content><![CDATA[<h3 id="动名词作主语"><a href="#动名词作主语" class="headerlink" title="动名词作主语"></a>动名词作主语</h3><ul>
+<li>Eating an apple a day keeps you healthy.</li>
+<li>Running five miles is the first thing he does in the morning.</li>
+</ul>
+<h3 id="不定式作主语"><a href="#不定式作主语" class="headerlink" title="不定式作主语"></a>不定式作主语</h3><ul>
+<li>To study abroad is my greatest desire.</li>
+<li>To travel around the world is my plan for this year.</li>
+</ul>
+<p>动名词作主语不讨论这件事做或没做。不定式做主语，这件事情还没有做。</p>
+<p>动词要做主语，不能用原词。可以用动名词，也可以用不定式。如果是不定式，这个动作要没做才可以。</p>
+<blockquote>
+<p>不定式和动名词作主语时，常出现主语过长的情况，可以用代词it代替，作形式主语放在句首，而把真正的主语，即不定式或动名词短语放在句尾。动名词移至句尾时，常改为不定式。</p>
+</blockquote>
+<p>Collecting stamps is one of his hobbies.</p>
+<p><code>It</code> is one of his hobbies <code>to collect stamps</code>.</p>
+<p>Eating an apple a day keeps you healthy.</p>
+<p><code>It</code> keeps you healthy <code>to eat an appale</code>.</p>
+<h3 id="单词"><a href="#单词" class="headerlink" title="单词"></a>单词</h3><p>hear from 收到….的信</p>
+<p>hear sb do sth 听见某人做某事 </p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>English</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>英语学习第二天</title>
+    <url>/posts/9511.html</url>
+    <content><![CDATA[<h3 id="为什么会有五种句型"><a href="#为什么会有五种句型" class="headerlink" title="为什么会有五种句型"></a>为什么会有五种句型</h3><p>这个句子有没有动词，没有动作就一般是主系表。如果有一个动作，我们把这个动作视为核心动词「谓语动词」。根据这个动词的种类不一样，这个动作涉及到别的对象呢，还是自己就能完成。涉及到别人是涉及到一个对象还是两个对象呢？这样子会划分为四种不同的类型。</p>
+<p>定状语：状语增加动作的细节。定语增加名词的细节。动作是什么，怎么做出来的，在哪里做的，目的是什么。</p>
+<h3 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h3><p>She bought a new bag.        <code>she</code> 主语    <code>bought</code> 谓语     <code>a new bag</code> 宾语；名词词组，冠词+形容词+名词=名词。</p>
+<p>I am happy.         <code>i</code> 主语     <code>am</code> 连系动词     <code>happy</code> 表语</p>
+<p>We love music.        <code>we</code> 主语     <code>love</code>谓语     <code>music</code> 宾语</p>
+<p>We love swimming.         <code>we</code>主语     <code>love</code>谓语     <code>swimming</code>宾语</p>
+<p>We love eating hotpot.         <code>we</code> 主语     <code>love</code>谓语     <code> eating hotpot</code>宾语（吃火锅视为一件事情）</p>
+<p>He made me sad.         <code>He</code>主语     <code>made</code>谓语     <code>me</code>宾语    <code>sad</code>宾补</p>
+<p>They invited me to dance.        <code>they</code>主语    <code>invited</code>谓语    <code>me</code>宾语    <code>to dance</code>宾补</p>
+<p>My brother passed me the salt.    <code>my brother</code>主语    <code>passed</code>谓语    <code>me</code>宾语     <code>the salt</code>宾语</p>
+<p>He sighed deeply.    <code>He</code> 主语    <code>sighed</code>谓语     <code>deeply</code>状语  叹气是不及物动词，涉及不到别人的动作。</p>
+<p>He asked me to help him.    <code>He</code>主语    <code>asked</code>谓语    <code>me</code>宾语    <code>to help him</code>宾补</p>
+<p>I worry about him.    <code>i</code>主语    <code>worry about</code>谓语    <code>him</code>宾语</p>
+<p>He is looking at you.    <code>he</code>主语    <code>is looking at</code>谓语    <code>you</code>宾语</p>
+<p>Playing basketball is my biggest time.    <code>playing basketball</code>主语    <code>is</code>系动词    <code>my biggest time</code>表语</p>
+<p>He told me a joke.    <code>he</code>主语    <code>told</code>谓语    <code>me</code>宾语    <code>a joke</code>宾语</p>
+<h3 id="主语"><a href="#主语" class="headerlink" title="主语"></a>主语</h3><p>动作的发出者，或者描述的对象。一般在开头。</p>
+<ol>
+<li>名词<ul>
+<li>Pineapple is a kind of tropical fruit. <code>a kind of tropica</code>定语，意群。</li>
+<li>Success requires persistence.</li>
+<li>Monday is a workday.</li>
+<li>A good night’s sleep is the best rest.</li>
+</ul>
+</li>
+<li>代词</li>
+<li>动名词</li>
+<li>不定式</li>
+<li>主语从句</li>
+</ol>
+<h3 id="单词"><a href="#单词" class="headerlink" title="单词"></a>单词</h3><ol>
+<li>Hotpot  [ˈhɒtpɒt]    火锅</li>
+<li>Invited  [ɪnˈvaɪtɪd]  邀请</li>
+<li>Pepper [ˈpepər]  胡椒粉</li>
+<li>Shaker  [ˈʃeɪkər] 振动器；混和器；调酒器</li>
+<li>sighed  叹息</li>
+<li>Pastime  [ˈpæstaɪm]  娱乐，消遣</li>
+<li>Persistence   [pərˈsɪstəns]  坚持不懈；毅力 </li>
+<li>Pineapple  [ˈpaɪnæpl]  菠萝</li>
+<li>tropical  [ˈtrɑːpɪkl]  热带的</li>
+</ol>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>English</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>英语学习第一天</title>
     <url>/posts/56b.html</url>
     <content><![CDATA[<h2 id="五种基本句型"><a href="#五种基本句型" class="headerlink" title="五种基本句型"></a>五种基本句型</h2><p>主语：动作的发起者，位于句首。</p>
@@ -3080,118 +3697,6 @@ infix <span class="token keyword">fun</span> Int<span class="token punctuation">
 <li>She talk loudy.（方式状语）</li>
 <li>He walks in a funny way.</li>
 </ul>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>English</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>英语学习第三天</title>
-    <url>/posts/9968.html</url>
-    <content><![CDATA[<h3 id="动名词作主语"><a href="#动名词作主语" class="headerlink" title="动名词作主语"></a>动名词作主语</h3><ul>
-<li>Eating an apple a day keeps you healthy.</li>
-<li>Running five miles is the first thing he does in the morning.</li>
-</ul>
-<h3 id="不定式作主语"><a href="#不定式作主语" class="headerlink" title="不定式作主语"></a>不定式作主语</h3><ul>
-<li>To study abroad is my greatest desire.</li>
-<li>To travel around the world is my plan for this year.</li>
-</ul>
-<p>动名词作主语不讨论这件事做或没做。不定式做主语，这件事情还没有做。</p>
-<p>动词要做主语，不能用原词。可以用动名词，也可以用不定式。如果是不定式，这个动作要没做才可以。</p>
-<blockquote>
-<p>不定式和动名词作主语时，常出现主语过长的情况，可以用代词it代替，作形式主语放在句首，而把真正的主语，即不定式或动名词短语放在句尾。动名词移至句尾时，常改为不定式。</p>
-</blockquote>
-<p>Collecting stamps is one of his hobbies.</p>
-<p><code>It</code> is one of his hobbies <code>to collect stamps</code>.</p>
-<p>Eating an apple a day keeps you healthy.</p>
-<p><code>It</code> keeps you healthy <code>to eat an appale</code>.</p>
-<h3 id="单词"><a href="#单词" class="headerlink" title="单词"></a>单词</h3><p>hear from 收到….的信</p>
-<p>hear sb do sth 听见某人做某事 </p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>English</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>英语学习第二天</title>
-    <url>/posts/9511.html</url>
-    <content><![CDATA[<h3 id="为什么会有五种句型"><a href="#为什么会有五种句型" class="headerlink" title="为什么会有五种句型"></a>为什么会有五种句型</h3><p>这个句子有没有动词，没有动作就一般是主系表。如果有一个动作，我们把这个动作视为核心动词「谓语动词」。根据这个动词的种类不一样，这个动作涉及到别的对象呢，还是自己就能完成。涉及到别人是涉及到一个对象还是两个对象呢？这样子会划分为四种不同的类型。</p>
-<p>定状语：状语增加动作的细节。定语增加名词的细节。动作是什么，怎么做出来的，在哪里做的，目的是什么。</p>
-<h3 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h3><p>She bought a new bag.        <code>she</code> 主语    <code>bought</code> 谓语     <code>a new bag</code> 宾语；名词词组，冠词+形容词+名词=名词。</p>
-<p>I am happy.         <code>i</code> 主语     <code>am</code> 连系动词     <code>happy</code> 表语</p>
-<p>We love music.        <code>we</code> 主语     <code>love</code>谓语     <code>music</code> 宾语</p>
-<p>We love swimming.         <code>we</code>主语     <code>love</code>谓语     <code>swimming</code>宾语</p>
-<p>We love eating hotpot.         <code>we</code> 主语     <code>love</code>谓语     <code> eating hotpot</code>宾语（吃火锅视为一件事情）</p>
-<p>He made me sad.         <code>He</code>主语     <code>made</code>谓语     <code>me</code>宾语    <code>sad</code>宾补</p>
-<p>They invited me to dance.        <code>they</code>主语    <code>invited</code>谓语    <code>me</code>宾语    <code>to dance</code>宾补</p>
-<p>My brother passed me the salt.    <code>my brother</code>主语    <code>passed</code>谓语    <code>me</code>宾语     <code>the salt</code>宾语</p>
-<p>He sighed deeply.    <code>He</code> 主语    <code>sighed</code>谓语     <code>deeply</code>状语  叹气是不及物动词，涉及不到别人的动作。</p>
-<p>He asked me to help him.    <code>He</code>主语    <code>asked</code>谓语    <code>me</code>宾语    <code>to help him</code>宾补</p>
-<p>I worry about him.    <code>i</code>主语    <code>worry about</code>谓语    <code>him</code>宾语</p>
-<p>He is looking at you.    <code>he</code>主语    <code>is looking at</code>谓语    <code>you</code>宾语</p>
-<p>Playing basketball is my biggest time.    <code>playing basketball</code>主语    <code>is</code>系动词    <code>my biggest time</code>表语</p>
-<p>He told me a joke.    <code>he</code>主语    <code>told</code>谓语    <code>me</code>宾语    <code>a joke</code>宾语</p>
-<h3 id="主语"><a href="#主语" class="headerlink" title="主语"></a>主语</h3><p>动作的发出者，或者描述的对象。一般在开头。</p>
-<ol>
-<li>名词<ul>
-<li>Pineapple is a kind of tropical fruit. <code>a kind of tropica</code>定语，意群。</li>
-<li>Success requires persistence.</li>
-<li>Monday is a workday.</li>
-<li>A good night’s sleep is the best rest.</li>
-</ul>
-</li>
-<li>代词</li>
-<li>动名词</li>
-<li>不定式</li>
-<li>主语从句</li>
-</ol>
-<h3 id="单词"><a href="#单词" class="headerlink" title="单词"></a>单词</h3><ol>
-<li>Hotpot  [ˈhɒtpɒt]    火锅</li>
-<li>Invited  [ɪnˈvaɪtɪd]  邀请</li>
-<li>Pepper [ˈpepər]  胡椒粉</li>
-<li>Shaker  [ˈʃeɪkər] 振动器；混和器；调酒器</li>
-<li>sighed  叹息</li>
-<li>Pastime  [ˈpæstaɪm]  娱乐，消遣</li>
-<li>Persistence   [pərˈsɪstəns]  坚持不懈；毅力 </li>
-<li>Pineapple  [ˈpaɪnæpl]  菠萝</li>
-<li>tropical  [ˈtrɑːpɪkl]  热带的</li>
-</ol>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -3381,6 +3886,113 @@ infix <span class="token keyword">fun</span> Int<span class="token punctuation">
       </script>]]></content>
       <tags>
         <tag>English</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>设置Redis中的key过期时间</title>
+    <url>/posts/ae5.html</url>
+    <content><![CDATA[<h3 id="命令介绍"><a href="#命令介绍" class="headerlink" title="命令介绍"></a>命令介绍</h3><p>在实际的开发中经常会遇到一些有时效的数据，比如现实优惠活动、缓存或验证码等，过了一定的时间就需要删除这些数据。在关系数据库中一般需要额外一个字段来记录到期时间，然后定期检测删除过期数据。而在 Redis 中可以使用 <code>EXPIRE</code> 命令来设置一个键的过期时间，到时间后，Redis 会自动删除它。</p>
+<p><code>EXPIRE</code> 命令的使用方法为 <code>EXPIRE key seconds</code>，其中 seconds 参数表示键的过期时间，单位是秒。</p>
+<p>如果想让 session:29e3d 键在 15 分钟后删除：</p>
+<pre class=" language-bash"><code class="language-bash">$ SET session:29e3d uid1314
+OK
+$ EXPIRE session:29e3d 900
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1</code></pre>
+<p>EXPIRE 命令返回 1 表示设置成功，返回0 则表示键不存在或设置失败。</p>
+<p>如果想知道一个键还有多久的时间会被删除，可以使用 TTL 命令。返回值是键的剩余时间（单位是秒）:</p>
+<pre class=" language-bash"><code class="language-bash">$ SET foo bar
+OK
+$ EXPIRE foo 20
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1
+$ TTL foo
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 15
+$ TTL foo
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 6
+$ TTL foo
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> -2</code></pre>
+<p>可见随着时间的不同，<code>foo</code> 键的过期时间逐渐减少，20秒后 <code>foo</code> 键会被删除。当键不存在时，<code>TTL</code> 命令会返回 -2。</p>
+<p>没有为键设置过期时间（即永久存在，这是建立一个键后的默认情况），<code>TTL</code> 命令会返回 -1。</p>
+<p>如果想取消键的过期时间设置（即将键恢复成永久的），则可以使用 <code>PRESIST</code> 命令。如果过期时间被成功清除则返回 1；否则返回 0（因为键不存在或键本来就是永久的）。</p>
+<pre class=" language-bash"><code class="language-bash">$ SET foo bar
+OK
+$ EXPIRE foo 20
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1
+$ PERSIST foo
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1
+$ TTL foo
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> -1</code></pre>
+<p>除了 PERSIST 命令外，使用 SET 或 GETSET 命令为键值赋值也会同时清除键的过期时间。其它只对键值进行操作的命令（如 INCR、LPUSH、HSET、ZERM）均不会影响键的过期时间。</p>
+<p><code>EXPIRE</code> 命令的 <code>seconds</code> 参数必须是整数，所以最小单位是 1 秒。如果想要更精确的控制键的过期时间应该使用 <code>PEXPIRE</code> 命令，<code>PEXPIRE</code> 命令与 <code>EXPIRE</code> 的唯一区别是前者的时间单位是毫秒，即 <code>PEXPIRE key 1000</code> 与 <code>EXPIRE key 1</code> 等价。对应地可以使用 PTTL 命令以毫秒为单位返回键的剩余时间。</p>
+<blockquote>
+<p>如果使用 <code>WATCH</code> 命令监测了一个拥有过期时间的键，该键到期自动删除并不会被 <code>WATCH</code> 命令认为该键被改变。</p>
+</blockquote>
+<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><ol>
+<li>实现访问频率限制</li>
+</ol>
+<p>为了减轻服务器的压力，需要限制每个用户（以IP计）一段时间的最大访问量。与时间有关的操作很容易想到 <code>EXPIRE</code> 命令。</p>
+<p>例如要限制每分钟每个用户最多只能访问100个页面，思路是对每个用户使用一个名为 <code>rate.limiting:用户IP</code> 字符串类型键，每次用户访问则使用 <code>INCR</code> 命令来递增该键的键值，如果递增后的值是 1（第一次访问页面）,则同时还要设置该键的过期时间为 1 分钟。这样每次用户访问页面时都能读取该键的键值，如果超过 100 就表明该用户的访问频率超过了限制，需要提示用户稍后访问。该键每分钟会被自动删除，所以下一分钟用户的访问次数又会重新计算，也就达到了限制访问频率的目的。</p>
+<ol start="2">
+<li>实现缓存</li>
+</ol>
+<p>为了提高网站的负载能力，常常需要将一些访问频率较高但是对 CPU 或 IO 资源消耗较大的操作的结果缓存起来，并希望让这些缓存过一段时间自动过期。</p>
+<blockquote>
+<p>当服务器内存有限时，如果大量地使用缓存键且过期时间设置得过长就会导致 Redis 占满内存；另一方面如果为了防止 Redis 占用内存过大而将缓存键得过期时间设置得太短，就可能导致缓存命中率过低并且大量内存白白地闲置。</p>
+<p>实际开发中会发现很难为缓存键设置合理的过期时间，为此可以限制 Redis 能够使用的最大内存，并让 Redis 按照一定的规则淘汰不需要的缓存键，这种方式只在 Redis 用作缓存系统时非常实用。</p>
+<p>具体的设置方法为：修改配置文件的 <code>maxmemory</code> 参数，限制 Redis 最大可用内存大小（单位是字节）,当超出了这个限制时，Redis会依据 <code>maxmemory-policy</code> 参数指定的策略来删除不需要的键，直到 Redis 占用的内存小于指定内存。</p>
+<table>
+<thead>
+<tr>
+<th>规则</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>volatile-lru</td>
+<td>使用 LRU 算法删除一个键（只对设置了过期时间的键）</td>
+</tr>
+<tr>
+<td>allkeys-lru</td>
+<td>使用 LRU 算法删除一个键</td>
+</tr>
+<tr>
+<td>volatile-random</td>
+<td>随机删除一个键（只对设置了过期时间的键）</td>
+</tr>
+<tr>
+<td>allkeys-random</td>
+<td>随机删除一个键</td>
+</tr>
+<tr>
+<td>volatile-ttl</td>
+<td>删除过期时间最近的一个键</td>
+</tr>
+<tr>
+<td>noeviction</td>
+<td>不删除键，只返回错误</td>
+</tr>
+</tbody></table>
+</blockquote>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -3700,6 +4312,337 @@ infix <span class="token keyword">fun</span> Int<span class="token punctuation">
       </categories>
       <tags>
         <tag>Kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis主从复制</title>
+    <url>/posts/d0dd.html</url>
+    <content><![CDATA[<h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>如果是一个小型项目，使用一台 Redis 服务器就已经足够了，然而现实中的项目通常需要若干台Redis 服务器的支持。</p>
+<ul>
+<li>从结构上，单个 Redis 服务器会发生单点故障，同时一台服务器需要承受所有的请求负载。这就需要为数据生成多个副本并分配在不同的服务器上；</li>
+<li>从容量上，单个 Redis 服务器的内存非常容易成为存储瓶颈，所以需要进行数据分片。</li>
+</ul>
+<h3 id="复制"><a href="#复制" class="headerlink" title="复制"></a>复制</h3><p>通过持久化功能，Redis 保证了即使在服务器重启的情况下也不会损失数据（或少量损失）数据。但是由于数据是存储在一台服务器上的，如果这台服务器出现硬盘故障等问题，也会导致数据丢失。为了避免单点故障，通常的做法是将数据库复制多个副本以部署不同的服务器上，这样即使有一台服务器出现故障，其它服务器依然可以继续提供服务。为此，Redis 提供了复制（replication）功能，可以实现当一台数据库中的数据更新后，自动将更新的数据同步到其他数据库上。</p>
+<h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><p>在复制的概念中，数据库分为两类，一类是主数据库（master），另一类是从数据库（slave）。<strong>主数据库可以进行读写操作，当写操作导致数据变化时会自动将数据同步给从数据库。而从数据库一般是只读的，并接受主数据库同步过来的数据</strong>。一个主数据库可以拥有多个从数据库，而一个从数据库只能拥有一个主数据库。如图所示：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/15911611190540_.pic_hd.jpg"></p>
+<p>在 Redis 中使用复制功能非常容易，只需要在从数据库的文件中加入：</p>
+<pre class=" language-shell"><code class="language-shell">slaveof 主数据地址 主数据库端口</code></pre>
+<p>主数据库无需任何配置。</p>
+<p>为了能够更直观地展示复制的流程，下面将实现一个最简化的复制系统。我们要在一台服务器上启动两个 Redis 实例，监听不同端口，其中一个作为主数据库，另一个作为从数据库。首先我们不加任何参数来启动一个 Redis 实例作为主数据库：</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 该实例默认监听 6379 端口</span>
+$ redis-server</code></pre>
+<p>然后加上 <code>slaveof</code> 参数启动另一个 Redis 实例作为从数据库，并让其监听 6380 端口：</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># masterauth是连接 redis-server 所需要的密码</span>
+redis-server --port 6380 --slaveof 127.0.0.1 6379 --masterauth 123456 --daemonize <span class="token function">yes</span></code></pre>
+<p> 此时在主数据库中的任何数据变化都会自动同步到从数据库中。</p>
+<p>我们打开 redis-cli 实例 A 并连接到主数据库：</p>
+<pre class=" language-bash"><code class="language-bash">$ redis-cli -p 6379</code></pre>
+<p>再打开 redis-cli 实例 B 并连接到从数据库：</p>
+<pre class=" language-bash"><code class="language-bash">$ redis-cli -p 6380</code></pre>
+<p>这时我们使用 INFO 命令来分别在实例 A 和实例 B 中获取 Replication 节的相关信息：</p>
+<pre class=" language-bash"><code class="language-bash">127.0.0.1:6379<span class="token operator">></span> INFO replication
+<span class="token comment" spellcheck="true"># Replication</span>
+role:master
+connected_slaves:1
+slave0:ip<span class="token operator">=</span>127.0.0.1,port<span class="token operator">=</span>6380,state<span class="token operator">=</span>online,offset<span class="token operator">=</span>504,lag<span class="token operator">=</span>0</code></pre>
+<p>可以看到实例 A 的角色是 master，即主数据库，同时已连接的从数据库（上面输出中的 connected_slaves）的个数为 1。</p>
+<p>同样在实例 B 中获取相应的信息为：</p>
+<pre class=" language-bash"><code class="language-bash">127.0.0.1:6380<span class="token operator">></span> info replication
+<span class="token comment" spellcheck="true"># Replication</span>
+role:slave
+master_host:127.0.0.1
+master_port:6379</code></pre>
+<p>这里可以看到，实例 B 的 role 是 slave，即从数据库，同时主数据库的地址为 127.0.0.1，端口 6379。</p>
+<p>在实例 A 中使用 SET 命令设置一个键的值：</p>
+<pre class=" language-bash"><code class="language-bash">master redis A <span class="token operator">></span> SET foo bar
+OK</code></pre>
+<p>此时在实例 B 中就可以获得该值了：</p>
+<pre class=" language-bash"><code class="language-bash">slave redis B <span class="token operator">></span> GET foo
+<span class="token string">"bar"</span></code></pre>
+<p>默认情况下，从数据库是只读的，如果直接修改从数据库的数据会出现错误：</p>
+<pre class=" language-bash"><code class="language-bash">slave redis B <span class="token operator">></span> <span class="token keyword">set</span> foo hi
+<span class="token punctuation">(</span>error<span class="token punctuation">)</span> READONLY You can't <span class="token function">write</span> against a <span class="token function">read</span> only replica.</code></pre>
+<p>可以通过<strong>设置从数据库的配置文件中的 <code>slave-read-only</code> 为 <code>no</code> 以使从数据库可写</strong>，但是因为对<strong>从数据库的任何更改都不会同步给任何其它数据库</strong>，并且一旦主数据库中更新了对应的数据就会覆盖从数据库中的改动，所以通常的场景下设置从数据库可写，以免导致易被忽略的潜在应用逻辑错误。</p>
+<p>配置多台从数据库的方法也一样，在所有的从数据库配置文件中加上 <code>slaveof</code> 参数指向同一个主数据库即可。</p>
+<p> 除了通过配置文件或命令行参数设置 <code>slaveof</code> 参数，还可以在运行时使用 <code>SLAVEOF</code> 命令修改：</p>
+<pre class=" language-bash"><code class="language-bash">$ SLAVEOF 127.0.0.1 6379</code></pre>
+<p>如果该数据库已经是其它主数据库的从数据库了，<code>SLAVEOF</code> 命令会停止和原来数据库的同步转而和新数据库同步。此外对于从数据库来说，还可以使用 <code>SLAVEOF NO ONE</code> 命令来使当前数据库通知接受其它数据库的同步并转换为主数据库。</p>
+<h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p>当一个从数据库启动后，会向主数据库发送 <code>SYNC</code> 命令。同时主数据库接收到 <code>SYNC</code> 命令后会开始在后台保存快照（即 RDB 持久化的过程），并将保存快照期间接收到的命令缓存起来。当快照完成后，Redis 会将快照文件和所有缓存的命令发送给从数据库。从数据库收到后，会载入快照文件并执行收到的缓存命令。以上过程称为复制初始化。复制初始化结束后，主数据库每当收到写命令时就会将命令同步给从数据库，从而保证主从数据库数据一致。</p>
+<p> 当主从数据库之间的连接断开重连后，Redis 2.6 以及之前的版本会重新进行复制初始化（即主数据库重新保存快照并传送给从数据库），即使从数据库仅有几条命令没有收到，主数据库也必须要将数据库里的所有数据重新传送给从数据库。这使得主从数据库断开重连后的数据恢复过程效率很低下，在网络环境不好的时候这一问题尤其明显。Redis 2.8 版的一个重要改进就是断线重连能够支持有条件的增量数据传输，当从数据库重新连接上从数据库后，主数据库只需要将断线期间执行的命令传送给从数据库，从而大大提高 Redis 复制的实用性。</p>
+<p>下面将从具体协议角度详细介绍复制初始化的过程。由于 Redis 服务器使用 TCP 协议通信，所以我们可以使用 telnet 工具伪装成一个从数据库来与主数据库通信。首先在命令行中连接主数据库（默认端口 6379， 假设目前没有任何从数据库连接）：</p>
+<pre class=" language-bash"><code class="language-bash">$ telnet 127.0.0.1 6379
+Trying 127.0.0.1<span class="token punctuation">..</span>.
+Connected to 127.0.0.1.
+Escape character is <span class="token string">'^]'</span><span class="token keyword">.</span></code></pre>
+<p>然后作为从数据库，我们先要发送 PING 命令确定主数据库是否可以连接：</p>
+<pre class=" language-bash"><code class="language-bash">PING
++PONG</code></pre>
+<p>主数据库会回复 +PONG。如果没有收到主数据的回复，则向用户提示错误。如果主数据库需要密码才能连接，我们还有发送 AUTH 命令验证：</p>
+<pre class=" language-bash"><code class="language-bash">AUTH 123456
++OK</code></pre>
+<p>而后向主数据库发送 <code>REPLCONF</code> 命令说明自己的端口号（这里随便选择了一个）：</p>
+<pre class=" language-bash"><code class="language-bash">REPLCONF listening-port 6381
++OK</code></pre>
+<p>这时就可以开始同步的过程了：向主数据库发送 SYNC 命令开始同步，此时主数据库发送回快照文件和缓存的命令。目前主数据库中只有一个 foo 键，所以收到的内容如下（快照文件是二进制格式）：</p>
+<p><img src="C:\Users\a9763\AppData\Roaming\Typora\typora-user-images\image-20210121102845781.png" alt="image-20210121102845781"></p>
+<p>从数据库会将收到的内容写入到硬盘上的临时文件中，当写入完成后从数据库会用该临时文件替换 RDB 快照文件（RDB 快照文件的位置就是持久化时配置的位置，由 <code>dir</code> 和 <code>dbfilename</code> 两个参数确定），之后的操作就和 RDB 持久化时启动回复的过程一样了。需要注意的是在同步的过程中，从数据库并不会阻塞，而是继续可以处理客户端发来的命令。默认情况下，从数据库会用同步前的数据对命令进行响应。可以配置参数：</p>
+<pre class=" language-shell"><code class="language-shell">replica-serve-stale-data no</code></pre>
+<p>来使从数据库在同步完成前对所有命令（除了 INFO 和 SLAVEOF） 都返回错误：“SYNC with master in progress”。</p>
+<p>复制初始化阶段结束后，主数据库执行的任何会导致数据变化的命令都会异步地传送给从数据库，这一过程为复制同步阶段。同步地内容和 Redis 通信协议一样，比如我们在主数据中执行 ：</p>
+<pre class=" language-bash"><code class="language-bash">$ SET foo hi</code></pre>
+<p>通过 telnet 我们收到了</p>
+<pre class=" language-bash"><code class="language-bash">SELECT
+<span class="token variable">$1</span>
+0
+*3
+<span class="token variable">$3</span>
+<span class="token keyword">set</span>
+<span class="token variable">$3</span>
+foo
+<span class="token variable">$2</span>
+hi
+*1</code></pre>
+<p>复制同步阶段会贯穿整个主从同步过程地始终，直到主从关系终止为止。</p>
+<p>在复制的过程中，快照无论在主数据库还是从数据库中都起了很大的作用，只要执行复制就会进行快照，即使我们关闭了 RDB 方式的持久化（通过删除所有 save 参数。）Redis 2.8.18 之后支持了无硬盘复制。</p>
+<blockquote>
+<p><strong>乐观复制</strong>    Redis 采用了乐观复制（optimistic replication） 的复制策略，容忍在一定时间内主从数据库的内容是不同的，但是两者的数据会最终同步。具体来说，Redis 在主从数据库之间复制数据的过程本身是异步的，这意味着，主数据库执行完客户端请求的命令后会立即将命令在主数据库的执行结果返回给客户端，并异步地将命令同步给从数据库库，而不会等待从数据库接收到该命令后在返回给客户端。这一特性保证了启用复制后主数据库地性能不会受到影响，但另一方面也会产生一个主从数据库数据不一致地时间窗口，当主数据执行了一条写命令后，主数据地数据已经发生了变动，然而在主数据库将命令传送给从数据库之前，如果两个数据库之间的网络连接断开了，此时二者之间的数据就会是不一致的。从这个角度来看，主数据库是无法得知某个命令最终同步给了多少个从数据库的，不过 Redis 提供了两个配置选项来限制只有当数据至少同步给指定数量的从数据库时，主数据库才是可写的：</p>
+<pre class=" language-bash"><code class="language-bash">min-replicas-to-write 3
+min-replicas-max-lag 10</code></pre>
+<p>上面的配置中，<code>min-replicas-to-write</code> 表示只有当 3 个 或 3 个以上的从数据库连接到主数据库时，主数据库才是可写的，否则返回错误，例如：</p>
+<pre class=" language-bash"><code class="language-bash">$ SET foo bar
+<span class="token punctuation">(</span>error<span class="token punctuation">)</span> NOREPLICAS Not enough good slaves to write.</code></pre>
+<p><code>min-replicas-max-lag</code> 表示允许从数据库最长失去连接的时间（单位秒），如果从数据库最后与主数据库联系（即发送 <code>REPLCONF ACK</code> 命令）的时间小于这个值，则认为从数据库还在保持与主数据库的连接。举个例子，按上面的配置，主数据库假设与3个从数据库相连，其中一个从数据库上一次与主数据库联系是 9 秒前，这是主数据库可以正常接受写入，一旦 1 秒过后这台从数据库依旧没有活动，则主数据则认为目前连接的从数据库只有两个，从而拒绝写入。这一特性默认是关闭的，在分布式系统中，打开并合理配置该选项后可以降低主从架构中因为网络分区导致的数据不一致问题。</p>
+</blockquote>
+<h4 id="图结构"><a href="#图结构" class="headerlink" title="图结构"></a>图结构</h4><p>从数据库库不仅可以接受主数据库的同步数据，自己也可以同时作为主数据库存在，形成类似图的结构，如图所示：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/15931611198795_.pic_hd.jpg"></p>
+<p>数据库 A 的数据会同步到 B 和 C 中，而 B 中的数据会同步到 D 和 E 中。向 B 中写入数据不会同步到 A 或 C 中，只会同步到 D 和 E 中。</p>
+<h4 id="读写分离一致性"><a href="#读写分离一致性" class="headerlink" title="读写分离一致性"></a>读写分离一致性</h4><p>通过复制可以实现读写分离，以提高服务器的负载能力。在常见的场景中（如电子商务网站），读的频率大于写，当单机的 Redis 无法应付大量的读请求时（尤其是较耗资源的请求，如 SORT 命令等）可以通过复制功能建立多个从数据库节点，主数据库只进行写操作，而从数据库负责读操作。这种一主多从的结构很适合读多写少的场景，而当单个的主数据库不能满足需求时，就需要使用 Redis 3.0 推出的集群功能。</p>
+<h4 id="从数据库持久化"><a href="#从数据库持久化" class="headerlink" title="从数据库持久化"></a>从数据库持久化</h4><p>另一个相对耗时的操作是持久化，为了提高性能，可以通过复制功能建立一个（或若干个）从数据库，并在从数据库中启用持久化，同时在主数据库禁用持久化。当从数据库崩溃重启后，主数据库会自动将数据同步过来，所以无需担心数据丢失。</p>
+<p>然而当主数据库崩溃时，情况就稍显复杂了。手动通过从数据库数据回复主数据库数据时，需要严格按照一下两步进行。</p>
+<ul>
+<li>在从数据库中使用 <code>SLAVEOF NO ONE</code> 命令将从数据提升成主数据库继续服务。</li>
+<li>启动之前崩溃的主数据库，然后使用 <code>SLAVEOF</code> 命令将其设置成新的主数据库的从数据库，即可将数据同步回来。</li>
+</ul>
+<blockquote>
+<p><strong>注意</strong>    当开启复制且主数据库关闭持久化功能时，一定不要使用 <code>Supervisor</code> 以及类似的进程管理工具令主数据库崩溃后自动重启。同样当主数据库所在的服务器因故关闭时，也要避免直接重新启动。这是因为当主数据库重新启动后，因为没有开启持久化功能，所以数据库中所有数据都被清空，这时从数据库依然会从主数据库中接受数据，使得所有从数据库也被清空，导致从数据库的持久化失去意义。</p>
+</blockquote>
+<p>无论哪种情况，手工维护从数据库或主数据库的重启以及数据恢复都相对麻烦，好在 Redis 提供了一种自动化哨兵来实现这一过程，避免了手动维护的麻烦和容易出错的问题。</p>
+<h4 id="无硬盘复制"><a href="#无硬盘复制" class="headerlink" title="无硬盘复制"></a>无硬盘复制</h4><p>Redis 复制的工作原理是基于 RDB 方式的持久化实现的，即主数据库端在后台保存 RDB 快照，从数据库端则接收并载入快照文件。这样的实现优点是可以显著地简化逻辑，复用已有的代码，但是缺点也很明显。</p>
+<ul>
+<li>当主数据库禁用 RDB 快照时（即删除了所有地配置文件中地 save 语句），如果执行了复制初始化操作，Redis 依然会生成 RDB 快照，所以下次启动后主数据库会以快照恢复数据。因为复制发生的时间不能确定，这使得恢复的数据可能是任何时间点的。</li>
+<li>因为复制初始化时需要在硬盘中创建 RDB 快照文件，所以如果硬盘性能很慢（如网络硬盘）时这一过程会对性能产生影响。举例来说，当使用 Redis 做缓存系统时，因为不需要持久化，所以服务器的硬盘读写速度可能较差。但是当该缓存系统使用一主多从的集权架构时，每次和从数据库同步，Redis 都会执行一次快照，同时对硬盘进行读写，导致性能降低。</li>
+</ul>
+<p>因此从 2.8.28 版本开始，Redis 引入了无硬盘复制选项，开启该选项时，Redis 在与从数据库进行复制初始化时，将不会将快照内容存储到硬盘上，而是直接通过网络发送给数据库，避免了硬盘的性能瓶颈。可以在配置文件中使用如下配置来开启该功能：</p>
+<pre class=" language-bash"><code class="language-bash">repl-diskless-sync <span class="token boolean">true</span></code></pre>
+<h4 id="增量复制"><a href="#增量复制" class="headerlink" title="增量复制"></a>增量复制</h4><p>在介绍复制的原理时提到当主从数据库连接断开后，从数据库会发送 SYNC 命令来重新进行一次完整复制操作。这样即使断开期间数据库的变化很小（甚至没有），也需要将数据库中的所有数据重新快照并传送一次。在正常的网络应用环境中，这种实现方式显然不太理想。Redis 2.8 版相对 2.6 版的最重要更新至一就是实现了主从断线重连的情况下的增量复制。</p>
+<p>增量复制时基于如下 3 点实现的。</p>
+<ul>
+<li>从数据库会存储主数据库的运行 ID（run id）。每个 Redis 运行实例均会拥有一个唯一的运行 ID，每当实例重启后，就会自动生成一个新的运行 ID。</li>
+<li>在复制同步阶段，主数据库每将一个命令 传送给从数据库时，都会同时把该命令存放到一个积压队列（backlog）中，并记录下当前积压队列中存放的命令的偏移量范围。</li>
+<li>同时，从数据库接收到主数据库传来的命令时，会记录下该命令的偏移量。</li>
+</ul>
+<p>这 3 点是实现增量复制的基础。当主从连接准备就绪后，从数据库会发送一条 SYNC 命令来告诉主数据库可以把所有数据同步过来了。而 2.8 版本之后，不在发送 SYNC 命令，取而代之的是发送 PSYNC 命令，格式为：</p>
+<pre class=" language-bash"><code class="language-bash">$ PSYNC 主数据的运行id 断开前最新的命令偏移量</code></pre>
+<p>主数据库收到 PSYNC 命令后，会执行以下判断来决定此次重连是否可以执行增量复制。</p>
+<ul>
+<li>首先主数据库会判断从数据库传送来的运行 ID 是否和自己的运行 ID 相同。这一步骤的意义在于确保从数据库库之前确实是和自己同步的，以免从数据库拿到错误的数据（比如主数据库在短线期间重启过，会造成数据的不一致）。</li>
+<li>然后判断从数据库库最后同步成功的命令偏移量是否在积压队列中，如果在则可以执行增量复制，并将积压队列中相应的命令发送给从数据库。<ul>
+<li>如果此次重连不满足增量复制的条件，主数据库会进行一次全部同步。</li>
+<li>大部分情况下，增量复制的过程对开发者来说是完全透明的，开发者不需要关心增量复制的具体细节。</li>
+</ul>
+</li>
+</ul>
+<p>积压队列在本质上是一个固定长度的循环队列，默认情况下积压队列的大小为 1MB，可以通过配置文件的 <code>repl-backlog-size</code>参数来调整：</p>
+<pre class=" language-bash"><code class="language-bash">$ repl-backlog-size 1mb</code></pre>
+<p>很容易理解的是，积压队列越大，其允许的主从数据库断线的时间就越长。根据主从数据库之间的网络状态，设置一个合理的积压队列很重要。因为积压队列存储的内容是命令本身，如 <code>SET foo bar</code>，所以估算计算队列的大小只需要估计主从数据库断线的时间中主数据库可能执行的命令大小即可。</p>
+<p>与积压队列相关的另一个配置选项是 <code>repl-backlog-ttl</code>，即当所有从数据库与主数据库断开连接后，经过多久时间可以释放挤压队列的内存空间。默认时间是 1 小时。</p>
+<pre class=" language-bash"><code class="language-bash">$ repl-backlog-ttl 3600</code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis哨兵</title>
+    <url>/posts/c807.html</url>
+    <content><![CDATA[<h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>在一个典型的一主多从的Redis系统中，从数据库在整个系统中起到了数据冗余备份和读写分离的作用。当主数据库遇到异常中断服务后，开发者可以通过手动的方式选择一个从数据库来升级为主数据库，以使得系统能够继续提供服务。然而整个过程相对麻烦且需要人工介入，难以实现自动化。</p>
+<p>为此，Redis 2.8 中提供了哨兵工具来实现自动化的系统监控和故障恢复功能。</p>
+<h4 id="什么是哨兵"><a href="#什么是哨兵" class="headerlink" title="什么是哨兵"></a>什么是哨兵</h4><p>顾名思义，哨兵的作用就是监控 Redis 系统的运行状况。它的功能包括以下两个。</p>
+<ul>
+<li>监控主数据库和从数据库是否正常运行。</li>
+<li>主数据库出现故障时自动将从数据库转换为主数据库。</li>
+</ul>
+<p>哨兵是一个独立的进程，使用哨兵的一个典型架构如下所示：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/15971611207217_.pic_hd.jpg"></p>
+<p>在一个一主多从的 Redis 系统中，可以使用多个哨兵进行监控任务以保证系统足够稳健。注意，此时不仅哨兵会同时监控主数据库和从数据库，哨兵之间也会互相监控。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/15981611207382_.pic_hd.jpg"></p>
+<h3 id="马上上手"><a href="#马上上手" class="headerlink" title="马上上手"></a>马上上手</h3><p>在理解哨兵的原理前，我们首先实际使用一下哨兵，来了解哨兵是如何工作的。首先建立起 3 个 Redis 实例，其中包括一个主数据库和两个从数据库。主数据库的端口为 6379，两个从数据库的端口分别为 6380 和 6381。我们使用 Redis 命令行客户端来获取复制状态，以保证复制配置正确。</p>
+<p>首先是主数据库：</p>
+<pre class=" language-bash"><code class="language-bash">redis 6379<span class="token operator">></span> info replication
+<span class="token comment" spellcheck="true"># Replication</span>
+role:master
+connected_slaves:2
+slave0:ip<span class="token operator">=</span>127.0.0.1,port<span class="token operator">=</span>6380,state<span class="token operator">=</span>online,offset<span class="token operator">=</span>56,lag<span class="token operator">=</span>0
+slave1:ip<span class="token operator">=</span>127.0.0.1,port<span class="token operator">=</span>6381,state<span class="token operator">=</span>online,offset<span class="token operator">=</span>56,lag<span class="token operator">=</span>0</code></pre>
+<p>可见其连接了两个从数据库，配置正确。然后用同样的方法查看两个从数据库的配置：</p>
+<pre class=" language-bash"><code class="language-bash">redis 6380<span class="token operator">></span> INFO replication
+<span class="token comment" spellcheck="true"># Replication</span>
+role:slave
+master_host:127.0.0.1
+
+redis 6381<span class="token operator">></span> info replication
+<span class="token comment" spellcheck="true"># Replication</span>
+role:slave
+master_host:127.0.0.1
+master_port:6379</code></pre>
+<p>当出现的信息如上时，即证明一主而从配置已经成功了。</p>
+<p>接下来开始配置哨兵。建立一个配置文件，如 <code>sentinel.conf</code>，内容为：</p>
+<pre class=" language-shell"><code class="language-shell">sentinel monitor mymaster 127.0.0.1 6379 1</code></pre>
+<p>其中 <code>mymaster</code> 表示要监视的主数据库名字，可以自己定义一个。这个名字必须仅由大小写字母、数字 和 “.-_”这3个字符组成。后两个参数表示主数据库的地址和端口号，这里我们要监控的主数据库 6379。最后的 1 表示最低通过票数，后面会介绍。接下来启动 sentinel 进程，并将上述配置文件的路径传递给哨兵：</p>
+<pre class=" language-bash"><code class="language-bash">$ redis-sentinel /path/to/sentinel.conf</code></pre>
+<p> 需要注意的是，配置哨兵监控一个系统时，只需要配置其监控主数据库即可，哨兵会自动发现所有复制该主数据库的从数据库。</p>
+<p>启动哨兵后，哨兵输出一下内容：</p>
+<pre class=" language-bash"><code class="language-bash">3839:X 21 Jan 2021 01:02:39.668 <span class="token comment" spellcheck="true"># Sentinel ID is 34e43f99b8460c86a0061c0e3325c5a5d94602b2</span>
+3839:X 21 Jan 2021 01:02:39.668 <span class="token comment" spellcheck="true"># +monitor master mymaster 127.0.0.1 6379 quorum 1</span>
+3839:X 21 Jan 2021 01:02:39.669 * +slave slave 127.0.0.1:6380 127.0.0.1 6380 @ mymaster 127.0.0.1 6379
+3839:X 21 Jan 2021 01:02:39.670 * +slave slave 127.0.0.1:6381 127.0.0.1 6381 @ mymaster 127.0.0.1 6379</code></pre>
+<p>其中 +slave 表示新发现了从数据库，可见哨兵成功地发现了两个从数据库。现在哨兵已经在监控 3 个 Redis 实例了，这时我们将主数据库关闭（即运行在 639 端口上的 Redis 实例，杀死进程或使用 SHUTDOWN 命令）,等待指定时间后（可以配置，默认为 30 秒），哨兵会输出一下内容：</p>
+<pre class=" language-shell"><code class="language-shell">3839:X 21 Jan 2021 01:10:29.111 # +sdown master mymaster 127.0.0.1 6379
+3839:X 21 Jan 2021 01:10:29.111 # +odown master mymaster 127.0.0.1 6379 #quorum 1/1</code></pre>
+<p>其中 <code>+sdown</code> 表示哨兵主观认为主数据库停止服务了，而 <code>+odown</code> 则表示哨兵客观认为主数据库停止服务了，关于客观和主管的区别后文会详细介绍。此时哨兵开始执行故障恢复，即挑选一个从数据库，将其升格为主数据库。同时输出以下内容：</p>
+<pre class=" language-shell"><code class="language-shell">3839:X 21 Jan 2021 01:10:29.111 # +try-failover master mymaster 127.0.0.1 6379
+...
+3839:X 21 Jan 2021 01:10:30.561 # +failover-end master mymaster 127.0.0.1 6379
+3839:X 21 Jan 2021 01:10:30.561 # +switch-master mymaster 127.0.0.1 6379 127.0.0.1 6380</code></pre>
+<p><code>+try-failover</code> 表示哨兵开始进行故障恢复，<code>+failover-end</code> 表示哨兵完成故障恢复，期间设计的内容比较复杂，包括领头哨兵的选举、备选从数据库的选择等。<code>+switch-master</code> 表示主数据库从 6379 端口迁移到 6380 端口，即 6380 端口的从数据库被升格为主数据库，同时两个 <code>+slave</code> 则列出了2个新的从数据库，端口分别为 6381 和 6379。</p>
+<pre class=" language-shell"><code class="language-shell">3839:X 21 Jan 2021 01:10:30.561 * +slave slave 127.0.0.1:6381 127.0.0.1 6381 @ mymaster 127.0.0.1 6380
+3839:X 21 Jan 2021 01:10:30.561 * +slave slave 127.0.0.1:6379 127.0.0.1 6379 @ mymaster 127.0.0.1 6380
+3839:X 21 Jan 2021 01:11:00.587 # +sdown slave 127.0.0.1:6379 127.0.0.1 6379 @ mymaster 127.0.0.1 6380</code></pre>
+<p>其中 6379 就是之前停止服务的主数据库，可见哨兵并没有彻底清除停止服务的实例的信息，这时因为停止服务的实例有可能会在之后的某个时间恢复服务，这时哨兵会让其重新加入进来，所以当实例停止服务后，哨兵会更新该实例的信息，使得当其重新重新加入后可以按照当时信息继续对外提供服务。此例中 6379 端口的主数据库实例停止服务了，而 6380 端口的从数据已经升格为主数据库，当 6379 端口的实例恢复服务后，会转变成 6380 端口实例的从数据库来运行，所以哨兵将 6379 端口实例的信息改成了 6380 端口实例的从数据库。</p>
+<p>故障恢复完成后，可以使用 Redis 命令行客户端重新检查 6380 和 6381 两个端口上的实例的复制信息：</p>
+<pre class=" language-bash"><code class="language-bash">redis 6380<span class="token operator">></span> INFO replication
+<span class="token comment" spellcheck="true"># Replication</span>
+role:master
+connected_slaves:1
+slave0:ip<span class="token operator">=</span>127.0.0.1,port<span class="token operator">=</span>6381,state<span class="token operator">=</span>online,offset<span class="token operator">=</span>59364,lag<span class="token operator">=</span>1
+
+redis 6381<span class="token operator">></span> INFO replication
+<span class="token comment" spellcheck="true"># Replication</span>
+role:slave
+master_host:127.0.0.1
+master_port:6380</code></pre>
+<p>可以看到 6380 端口上的实例已经确实升格为主数据库了，同时 6381 端口上的实例是其从数据库。整个故障恢复过程就此完成。</p>
+<p>那么此时我们将 6379 端口上的实例重新启动，会发生什么情况呢？首先哨兵会监控到这一变化，并输出：</p>
+<pre class=" language-bash"><code class="language-bash">3839:X 21 Jan 2021 01:37:10.815 <span class="token comment" spellcheck="true"># -sdown slave 127.0.0.1:6379 127.0.0.1 6379 @ mymaster 127.0.0.1 6380</span>
+3839:X 21 Jan 2021 01:37:20.745 * +convert-to-slave slave 127.0.0.1:6379 127.0.0.1 6379 @ mymaster 127.0.0.1 6380</code></pre>
+<p><code>sdown</code> 表示实例 6379 已经恢复服务了（与 <code>+sdown</code> 相反），同时 <code>+convert-to-slave</code> 表示将 6379 端口的实例设置为 6380 端口实例的从数据库。这时使用 Redis 命令行客户端查看 6379 端口实例的复制信息为：</p>
+<pre class=" language-bash"><code class="language-bash">redis 6379<span class="token operator">></span> INFO replication
+<span class="token comment" spellcheck="true"># Replication</span>
+role:slave
+master_host:127.0.0.1
+master_port:6380</code></pre>
+<p>同时 6380 端口实例的复制信息为：</p>
+<pre class=" language-bash"><code class="language-bash">127.0.0.1:6380<span class="token operator">></span> INFO replication
+<span class="token comment" spellcheck="true"># Replication</span>
+role:master
+connected_slaves:2
+slave0:ip<span class="token operator">=</span>127.0.0.1,port<span class="token operator">=</span>6381,state<span class="token operator">=</span>online,offset<span class="token operator">=</span>153516,lag<span class="token operator">=</span>1
+slave1:ip<span class="token operator">=</span>127.0.0.1,port<span class="token operator">=</span>6379,state<span class="token operator">=</span>online,offset<span class="token operator">=</span>153516,lag<span class="token operator">=</span>0</code></pre>
+<p>正如预期一样，6380 端口实例的从数据库变味了两个，6379 成功恢复服务。</p>
+<h3 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h3><p>一个哨兵进程启动时会读取配置文件的内容，通过如下的配置找出需要监控的主数据库：</p>
+<pre class=" language-bash"><code class="language-bash">sentinel monitor master-name ip redis-port quorum</code></pre>
+<p>其中 master-name 是一个由大小写字母、数字和 “.-_” 组成的主数据库的名字，因为考虑到故障恢复后当前监控的系统的主数据库的地址和端口会产生变化，所以哨兵提供了命令可以通过主数据库的名字获取当前系统的主数据库地址和端口号。</p>
+<p><code>ip</code> 表示当前系统中主数据库的地址，而 <code>redis-port</code> 则表示端口号。</p>
+<p><code>quorum</code> 用来表示执行故障恢复操作前至少需要几个哨兵节点同意。一个哨兵节点可以同时监控多个 Redis 主从系统，只需要提供多个 <code>sentinel monitor</code> 配置即可，例如：</p>
+<pre class=" language-bash"><code class="language-bash">sentinel monitor mymaster 127.0.0.0.1 6379 2
+sentinel monitor othermaster 192.168.1.1 6380 4</code></pre>
+<p>同时多个哨兵节点也可以同时监控一个 Redis 主从系统，从而形成网状结构。</p>
+<p>配置文件中还可以定义其它监控相关的参数，每个配置选项都包含主数据库的名字使得监控不同主数据库时可以使用不同的配置参数。例如：</p>
+<pre class=" language-bash"><code class="language-bash">sentinel down-after-milliseconds mymaster 60000
+sentinel down-after-milliseconds othermaster 10000</code></pre>
+<p>上面的两行配置分别配置了 <code>mymaster</code> 和 <code>othermaster</code> 的 down-after-milliseconds 选项分别为 60000 和 10000。</p>
+<p>哨兵启动后，会与要监控的主数据库建立两条连接，这两个连接的建立方式与普通的 Redis 客户端无异。其中一条连接用来订阅该主数据库的 <code>_sentinel_:hello</code> 频道以获取其它同样监控该数据库的哨兵节点信息，另外哨兵也需要定期向主数据发送 INO 等命令来获取主数据库本身的信息。因为当客户端进入订阅模式时就不能再执行其它命令了，所以这时哨兵会使用另外一条连接来发送这些命令。</p>
+<p>和主数据库的连接建立完成后，哨兵会定时执行下面 3 个操作：</p>
+<ol>
+<li>每 10 秒哨兵会向主数据库和从数据库发送 INFO 命令。</li>
+<li>每 2 秒哨兵会向主数据库和从数据库的 <code>_sentinel_:hello</code> 频道发送自己的信息。</li>
+<li>每 1 秒会向主数据库、从数据库和其它哨兵节点发送 PING 命令。</li>
+</ol>
+<p>这 3 个操作贯穿哨兵进程的整个生命周期中，非常重要，可以说了解了这 3 个操作的意义就能够了解哨兵工作原理的一般内容了。下面分别详细介绍。</p>
+<p>首先，发送 INFO 命令使得哨兵可以获得当前数据库的相关信息（包括运行 ID 、复制信息等）从而实现新节点的自动发现。前面说配置哨兵监控 Redis 主从系统时只需要指定主数据库的信息即可，因为哨兵正是借助 INFO 命令来获取所有复制该主数据库的从数据库信息的。启动后，哨兵向主数据库发送 INFO 命令，通过解析返回结果来得知从数据库列表，而后对每个从数据库同样建立两个连接，两个连接的作用和刚刚介绍的与主数据库建立的两个连接完全一致。在此之后，哨兵会每 10 秒定时向已知的所有主从数据库发送 INFO 命令来获取信息并进行相应的更新操作，比如对新增的从数据库建立连接并加入监控列表，对主从数据库的角色变化（由故障恢复操作引起）进行信息更新等。</p>
+<p>接下来哨兵向主从数据库的<code>_sentinel_:hello</code> 频道发送消息来与同样监控该数据库的哨兵分享自己的信息。发送的消息内容为：</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token operator">&lt;</span>哨兵的地址<span class="token operator">></span>，<span class="token operator">&lt;</span>哨兵的端口<span class="token operator">></span>，<span class="token operator">&lt;</span>哨兵的运行ID<span class="token operator">></span>，<span class="token operator">&lt;</span>哨兵的配置版本<span class="token operator">></span>，<span class="token operator">&lt;</span>主数据库的名字<span class="token operator">></span>，<span class="token operator">&lt;</span>主数据库的地址<span class="token operator">></span>，<span class="token operator">&lt;</span>主数据库的端口<span class="token operator">></span>，<span class="token operator">&lt;</span>主数据库的配置版本<span class="token operator">></span></code></pre>
+<p>可以看到消息包括哨兵的基本信息，以及其监控的主数据库的信息。刚刚介绍过，哨兵会订阅每个监控的数据库<code>_sentinel_:hello</code> 频道，所以当其它哨兵收到消息后，会判断发消息的哨兵是不是新发现的哨兵。如果是则将其加入已发现的哨兵列表中并创建一个到其的连接（与数据库不同，哨兵与哨兵之间只会创建一条连接用来发送 PING 命令，而不需要创建另外一条连接来订阅频道，因为哨兵只需要订阅数据库的频道即可实现自动发现其它哨兵）。同时哨兵会判断信息中主数据库的配置版本，如果该版本比当前记录的主数据库的版本高，则更新主数据库中的数据。</p>
+<p>实现了自动发现从数据库和其它哨兵节点后，哨兵要做的就是定时监控这些数据库和节点有没有停止服务。这是通过每隔一定时间向这些节点发送 PING 命令实现的。时间间隔与 <code>down-after-milliseconds</code> 选项有关，当  <code>down-after-milliseconds</code>  的值小于 1 秒时，哨兵会每隔  <code>down-after-milliseconds</code>  指定的时间发送一次 PING 命令，当  <code>down-after-milliseconds</code> 的值大于 1 秒时，哨兵会每隔 1 秒发送一次 PING 命令。例如：</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 每隔 1 秒发送一次 PING 命令</span>
+sentinel down-after-milliseconds mymaster 60000
+<span class="token comment" spellcheck="true"># 每隔 600 毫秒发送一次 PING 命令</span>
+sentinel down-after-milliseconds othermaster 500</code></pre>
+<p>当超过 <code>down-after-milliseconds</code> 选项指定时间后，如果被 PING 的数据库或节点仍然未进行回复，则哨兵认为其<strong>主观下线（subjectively down）</strong>。主观下线表示从当前的哨兵进程看来，该节点已经下线。如果该节点是主数据库，则哨兵会进一步判断是否需要对其进行故障恢复：哨兵发送 <code>SENTINEL is-master-down-by-addr</code> 命令询问其它哨兵节点以了解它们是否也认为该主数据库主观下线，如果达到指定数量时，哨兵会认为其<strong>客观下线（objectively down）</strong>，并选举领头的哨兵节点对主从系统发起故障恢复。这个指定数量即为前文介绍的 quorum 参数。例如，下面的配置：</p>
+<pre class=" language-bash"><code class="language-bash">sentinel monitor mymaster 127.0.0.1 6379 2</code></pre>
+<p>该配置表示只有当至少两个 Sentinel 节点（包括当前节点）认为该主数据库主观下线时，当前哨兵节点才会认为该主数据库客观下线。进行接下来的选举领头哨兵步骤。</p>
+<p>虽然当前哨兵节点发现了主数据库客观下线，需要故障恢复，但是故障恢复需要由领头的哨兵来完成，这样可以保证同一时间只有一个哨兵节点来执行故障恢复。选举领头哨兵的过程使用了 Raft 算法，具体过程如下：</p>
+<ol>
+<li>发现主数据库客观下线的哨兵节点（下面称作 A）向每个哨兵节点发送命令，要求对方选自己为领头哨兵。</li>
+<li>如果目标哨兵节点没有选过其它人，则会同意将 A 设置成领头哨兵。</li>
+<li>如果 A 发现有超过半数且超过 quorum 参数值的哨兵节点同意选自己成为领头哨兵，则 A 成功成为领头哨兵。</li>
+<li>当有多个哨兵节点同时参选领头哨兵，则会出现没有任何节点当选的可能。此时每个参选节点将等待一个随机时间重新发起参数请求，进行下一轮选举，直到选举成功。</li>
+</ol>
+<p>因为要成为领头哨兵必须有超过半数的哨兵节点支持，所以每次选举最多只会选出一个领头哨兵。选出领头哨兵后，领头哨兵将会开始对主数据库进行故障恢复。故障恢复的过程相对简单，具体如下：</p>
+<p>首先领头哨兵将从停止服务的主数据库的从数据库中挑选一个来充当新的主数据库。挑选的依据如下：</p>
+<ol>
+<li>所有在线的从数据库中，选择优先级别最高的从数据库。优先级可以通过 <code>slave-priority</code> 选项来设置。</li>
+<li>如果有多个最高优先级的从数据库，则复制的命令偏移量越大（即复制越完成）越优先，</li>
+<li>如果以上条件都一样，则选择运行 ID 较小的从数据库。</li>
+</ol>
+<p>选出一个从数据库后，领头哨兵将向从数据库发送 <code>SLAVE NO ONE</code> 命令使其升格为主数据库。而后领头哨兵向其它从数据库发送 <code>SLAVEOF</code> 命令来使其成为新主数据库的从数据库。最后一步则是更新内部的记录，将已经停止服务的旧的主数据库更新为新的主数据库的从数据库，使得当其恢复服务时自动以从数据库的身份继续服务。</p>
+<h3 id="哨兵的部署"><a href="#哨兵的部署" class="headerlink" title="哨兵的部署"></a>哨兵的部署</h3><p>哨兵以独立进程的方式对一个主从系统进行监控，监控效果的好坏与否取决于哨兵的视角是否有代表性。如果一个主从系统中配置的哨兵较少，哨兵对整个系统的判断的可靠性就会降低。极端情况下，当只有一个哨兵时，哨兵本身就很有可能发生单点故障。整体来讲，相对稳妥的哨兵部署方案是使得哨兵的视角尽可能地与每个节点的视角一致，即：</p>
+<ul>
+<li>为每个节点（无论是主数据库还是从数据库）部署一个哨兵</li>
+<li>使每个哨兵与其对应的节点的网络环境相同或相近</li>
+</ul>
+<p>这样的部署方案可以保证哨兵的视角拥有较高的代表性和可靠性。举一个例子：当网络分区后，如果哨兵认为某个分区是主要分区，即意味着从每个节点观察，该分区均为主分区。</p>
+<p>同时设置 quorum 的值为 <code>N / 2 + 1</code> (其中 N 为哨兵节点数量)，这样使得只有大部分哨兵节点同意后才会进行故障恢复。</p>
+<p>当系统中的节点较多时，考虑到每个哨兵都会和系统中的所有节点建立连接，为每个节点分配一个哨兵会产生较多连接，尤其当进行客户端分片时使用多个哨兵节点监控多个主数据库会因为 Redis 不支持连接复用而产生大量冗余连接，同时如果 Redis  节点负载较高，会在一定程度上影响其对哨兵的回复和同机的哨兵与其它节点的通信。所以配置哨兵时还需根据实际的生产环境进行选择。</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>

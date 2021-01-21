@@ -1,0 +1,1305 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Redis主从复制, Java,Git,SpringBoot,SpringCloud,SpringCloud Alibaba等">
+    <meta name="description" content="专注WJava后端,大数据,分享知识,分享生活">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>Redis主从复制 | 三十二道街</title>
+    <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/css/my.css">
+
+    <script src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="三十二道街" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">三十二道街</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">三十二道街</div>
+        <div class="logo-desc">
+            
+            专注WJava后端,大数据,分享知识,分享生活
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/AsiaMa" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/AsiaMa" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/23.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">Redis主从复制</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Redis/">
+                                <span class="chip bg-color">Redis</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2021-01-21
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2021-01-21
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    5.2k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    18 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>如果是一个小型项目，使用一台 Redis 服务器就已经足够了，然而现实中的项目通常需要若干台Redis 服务器的支持。</p>
+<ul>
+<li>从结构上，单个 Redis 服务器会发生单点故障，同时一台服务器需要承受所有的请求负载。这就需要为数据生成多个副本并分配在不同的服务器上；</li>
+<li>从容量上，单个 Redis 服务器的内存非常容易成为存储瓶颈，所以需要进行数据分片。</li>
+</ul>
+<h3 id="复制"><a href="#复制" class="headerlink" title="复制"></a>复制</h3><p>通过持久化功能，Redis 保证了即使在服务器重启的情况下也不会损失数据（或少量损失）数据。但是由于数据是存储在一台服务器上的，如果这台服务器出现硬盘故障等问题，也会导致数据丢失。为了避免单点故障，通常的做法是将数据库复制多个副本以部署不同的服务器上，这样即使有一台服务器出现故障，其它服务器依然可以继续提供服务。为此，Redis 提供了复制（replication）功能，可以实现当一台数据库中的数据更新后，自动将更新的数据同步到其他数据库上。</p>
+<h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><p>在复制的概念中，数据库分为两类，一类是主数据库（master），另一类是从数据库（slave）。<strong>主数据库可以进行读写操作，当写操作导致数据变化时会自动将数据同步给从数据库。而从数据库一般是只读的，并接受主数据库同步过来的数据</strong>。一个主数据库可以拥有多个从数据库，而一个从数据库只能拥有一个主数据库。如图所示：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/15911611190540_.pic_hd.jpg"></p>
+<p>在 Redis 中使用复制功能非常容易，只需要在从数据库的文件中加入：</p>
+<pre class=" language-shell"><code class="language-shell">slaveof 主数据地址 主数据库端口</code></pre>
+<p>主数据库无需任何配置。</p>
+<p>为了能够更直观地展示复制的流程，下面将实现一个最简化的复制系统。我们要在一台服务器上启动两个 Redis 实例，监听不同端口，其中一个作为主数据库，另一个作为从数据库。首先我们不加任何参数来启动一个 Redis 实例作为主数据库：</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 该实例默认监听 6379 端口</span>
+$ redis-server</code></pre>
+<p>然后加上 <code>slaveof</code> 参数启动另一个 Redis 实例作为从数据库，并让其监听 6380 端口：</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># masterauth是连接 redis-server 所需要的密码</span>
+redis-server --port 6380 --slaveof 127.0.0.1 6379 --masterauth 123456 --daemonize <span class="token function">yes</span></code></pre>
+<p> 此时在主数据库中的任何数据变化都会自动同步到从数据库中。</p>
+<p>我们打开 redis-cli 实例 A 并连接到主数据库：</p>
+<pre class=" language-bash"><code class="language-bash">$ redis-cli -p 6379</code></pre>
+<p>再打开 redis-cli 实例 B 并连接到从数据库：</p>
+<pre class=" language-bash"><code class="language-bash">$ redis-cli -p 6380</code></pre>
+<p>这时我们使用 INFO 命令来分别在实例 A 和实例 B 中获取 Replication 节的相关信息：</p>
+<pre class=" language-bash"><code class="language-bash">127.0.0.1:6379<span class="token operator">></span> INFO replication
+<span class="token comment" spellcheck="true"># Replication</span>
+role:master
+connected_slaves:1
+slave0:ip<span class="token operator">=</span>127.0.0.1,port<span class="token operator">=</span>6380,state<span class="token operator">=</span>online,offset<span class="token operator">=</span>504,lag<span class="token operator">=</span>0</code></pre>
+<p>可以看到实例 A 的角色是 master，即主数据库，同时已连接的从数据库（上面输出中的 connected_slaves）的个数为 1。</p>
+<p>同样在实例 B 中获取相应的信息为：</p>
+<pre class=" language-bash"><code class="language-bash">127.0.0.1:6380<span class="token operator">></span> info replication
+<span class="token comment" spellcheck="true"># Replication</span>
+role:slave
+master_host:127.0.0.1
+master_port:6379</code></pre>
+<p>这里可以看到，实例 B 的 role 是 slave，即从数据库，同时主数据库的地址为 127.0.0.1，端口 6379。</p>
+<p>在实例 A 中使用 SET 命令设置一个键的值：</p>
+<pre class=" language-bash"><code class="language-bash">master redis A <span class="token operator">></span> SET foo bar
+OK</code></pre>
+<p>此时在实例 B 中就可以获得该值了：</p>
+<pre class=" language-bash"><code class="language-bash">slave redis B <span class="token operator">></span> GET foo
+<span class="token string">"bar"</span></code></pre>
+<p>默认情况下，从数据库是只读的，如果直接修改从数据库的数据会出现错误：</p>
+<pre class=" language-bash"><code class="language-bash">slave redis B <span class="token operator">></span> <span class="token keyword">set</span> foo hi
+<span class="token punctuation">(</span>error<span class="token punctuation">)</span> READONLY You can't <span class="token function">write</span> against a <span class="token function">read</span> only replica.</code></pre>
+<p>可以通过<strong>设置从数据库的配置文件中的 <code>slave-read-only</code> 为 <code>no</code> 以使从数据库可写</strong>，但是因为对<strong>从数据库的任何更改都不会同步给任何其它数据库</strong>，并且一旦主数据库中更新了对应的数据就会覆盖从数据库中的改动，所以通常的场景下设置从数据库可写，以免导致易被忽略的潜在应用逻辑错误。</p>
+<p>配置多台从数据库的方法也一样，在所有的从数据库配置文件中加上 <code>slaveof</code> 参数指向同一个主数据库即可。</p>
+<p> 除了通过配置文件或命令行参数设置 <code>slaveof</code> 参数，还可以在运行时使用 <code>SLAVEOF</code> 命令修改：</p>
+<pre class=" language-bash"><code class="language-bash">$ SLAVEOF 127.0.0.1 6379</code></pre>
+<p>如果该数据库已经是其它主数据库的从数据库了，<code>SLAVEOF</code> 命令会停止和原来数据库的同步转而和新数据库同步。此外对于从数据库来说，还可以使用 <code>SLAVEOF NO ONE</code> 命令来使当前数据库通知接受其它数据库的同步并转换为主数据库。</p>
+<h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p>当一个从数据库启动后，会向主数据库发送 <code>SYNC</code> 命令。同时主数据库接收到 <code>SYNC</code> 命令后会开始在后台保存快照（即 RDB 持久化的过程），并将保存快照期间接收到的命令缓存起来。当快照完成后，Redis 会将快照文件和所有缓存的命令发送给从数据库。从数据库收到后，会载入快照文件并执行收到的缓存命令。以上过程称为复制初始化。复制初始化结束后，主数据库每当收到写命令时就会将命令同步给从数据库，从而保证主从数据库数据一致。</p>
+<p> 当主从数据库之间的连接断开重连后，Redis 2.6 以及之前的版本会重新进行复制初始化（即主数据库重新保存快照并传送给从数据库），即使从数据库仅有几条命令没有收到，主数据库也必须要将数据库里的所有数据重新传送给从数据库。这使得主从数据库断开重连后的数据恢复过程效率很低下，在网络环境不好的时候这一问题尤其明显。Redis 2.8 版的一个重要改进就是断线重连能够支持有条件的增量数据传输，当从数据库重新连接上从数据库后，主数据库只需要将断线期间执行的命令传送给从数据库，从而大大提高 Redis 复制的实用性。</p>
+<p>下面将从具体协议角度详细介绍复制初始化的过程。由于 Redis 服务器使用 TCP 协议通信，所以我们可以使用 telnet 工具伪装成一个从数据库来与主数据库通信。首先在命令行中连接主数据库（默认端口 6379， 假设目前没有任何从数据库连接）：</p>
+<pre class=" language-bash"><code class="language-bash">$ telnet 127.0.0.1 6379
+Trying 127.0.0.1<span class="token punctuation">..</span>.
+Connected to 127.0.0.1.
+Escape character is <span class="token string">'^]'</span><span class="token keyword">.</span></code></pre>
+<p>然后作为从数据库，我们先要发送 PING 命令确定主数据库是否可以连接：</p>
+<pre class=" language-bash"><code class="language-bash">PING
++PONG</code></pre>
+<p>主数据库会回复 +PONG。如果没有收到主数据的回复，则向用户提示错误。如果主数据库需要密码才能连接，我们还有发送 AUTH 命令验证：</p>
+<pre class=" language-bash"><code class="language-bash">AUTH 123456
++OK</code></pre>
+<p>而后向主数据库发送 <code>REPLCONF</code> 命令说明自己的端口号（这里随便选择了一个）：</p>
+<pre class=" language-bash"><code class="language-bash">REPLCONF listening-port 6381
++OK</code></pre>
+<p>这时就可以开始同步的过程了：向主数据库发送 SYNC 命令开始同步，此时主数据库发送回快照文件和缓存的命令。目前主数据库中只有一个 foo 键，所以收到的内容如下（快照文件是二进制格式）：</p>
+<p><img src="C:\Users\a9763\AppData\Roaming\Typora\typora-user-images\image-20210121102845781.png" alt="image-20210121102845781"></p>
+<p>从数据库会将收到的内容写入到硬盘上的临时文件中，当写入完成后从数据库会用该临时文件替换 RDB 快照文件（RDB 快照文件的位置就是持久化时配置的位置，由 <code>dir</code> 和 <code>dbfilename</code> 两个参数确定），之后的操作就和 RDB 持久化时启动回复的过程一样了。需要注意的是在同步的过程中，从数据库并不会阻塞，而是继续可以处理客户端发来的命令。默认情况下，从数据库会用同步前的数据对命令进行响应。可以配置参数：</p>
+<pre class=" language-shell"><code class="language-shell">replica-serve-stale-data no</code></pre>
+<p>来使从数据库在同步完成前对所有命令（除了 INFO 和 SLAVEOF） 都返回错误：“SYNC with master in progress”。</p>
+<p>复制初始化阶段结束后，主数据库执行的任何会导致数据变化的命令都会异步地传送给从数据库，这一过程为复制同步阶段。同步地内容和 Redis 通信协议一样，比如我们在主数据中执行 ：</p>
+<pre class=" language-bash"><code class="language-bash">$ SET foo hi</code></pre>
+<p>通过 telnet 我们收到了</p>
+<pre class=" language-bash"><code class="language-bash">SELECT
+<span class="token variable">$1</span>
+0
+*3
+<span class="token variable">$3</span>
+<span class="token keyword">set</span>
+<span class="token variable">$3</span>
+foo
+<span class="token variable">$2</span>
+hi
+*1</code></pre>
+<p>复制同步阶段会贯穿整个主从同步过程地始终，直到主从关系终止为止。</p>
+<p>在复制的过程中，快照无论在主数据库还是从数据库中都起了很大的作用，只要执行复制就会进行快照，即使我们关闭了 RDB 方式的持久化（通过删除所有 save 参数。）Redis 2.8.18 之后支持了无硬盘复制。</p>
+<blockquote>
+<p><strong>乐观复制</strong>    Redis 采用了乐观复制（optimistic replication） 的复制策略，容忍在一定时间内主从数据库的内容是不同的，但是两者的数据会最终同步。具体来说，Redis 在主从数据库之间复制数据的过程本身是异步的，这意味着，主数据库执行完客户端请求的命令后会立即将命令在主数据库的执行结果返回给客户端，并异步地将命令同步给从数据库库，而不会等待从数据库接收到该命令后在返回给客户端。这一特性保证了启用复制后主数据库地性能不会受到影响，但另一方面也会产生一个主从数据库数据不一致地时间窗口，当主数据执行了一条写命令后，主数据地数据已经发生了变动，然而在主数据库将命令传送给从数据库之前，如果两个数据库之间的网络连接断开了，此时二者之间的数据就会是不一致的。从这个角度来看，主数据库是无法得知某个命令最终同步给了多少个从数据库的，不过 Redis 提供了两个配置选项来限制只有当数据至少同步给指定数量的从数据库时，主数据库才是可写的：</p>
+<pre class=" language-bash"><code class="language-bash">min-replicas-to-write 3
+min-replicas-max-lag 10</code></pre>
+<p>上面的配置中，<code>min-replicas-to-write</code> 表示只有当 3 个 或 3 个以上的从数据库连接到主数据库时，主数据库才是可写的，否则返回错误，例如：</p>
+<pre class=" language-bash"><code class="language-bash">$ SET foo bar
+<span class="token punctuation">(</span>error<span class="token punctuation">)</span> NOREPLICAS Not enough good slaves to write.</code></pre>
+<p><code>min-replicas-max-lag</code> 表示允许从数据库最长失去连接的时间（单位秒），如果从数据库最后与主数据库联系（即发送 <code>REPLCONF ACK</code> 命令）的时间小于这个值，则认为从数据库还在保持与主数据库的连接。举个例子，按上面的配置，主数据库假设与3个从数据库相连，其中一个从数据库上一次与主数据库联系是 9 秒前，这是主数据库可以正常接受写入，一旦 1 秒过后这台从数据库依旧没有活动，则主数据则认为目前连接的从数据库只有两个，从而拒绝写入。这一特性默认是关闭的，在分布式系统中，打开并合理配置该选项后可以降低主从架构中因为网络分区导致的数据不一致问题。</p>
+</blockquote>
+<h4 id="图结构"><a href="#图结构" class="headerlink" title="图结构"></a>图结构</h4><p>从数据库库不仅可以接受主数据库的同步数据，自己也可以同时作为主数据库存在，形成类似图的结构，如图所示：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/15931611198795_.pic_hd.jpg"></p>
+<p>数据库 A 的数据会同步到 B 和 C 中，而 B 中的数据会同步到 D 和 E 中。向 B 中写入数据不会同步到 A 或 C 中，只会同步到 D 和 E 中。</p>
+<h4 id="读写分离一致性"><a href="#读写分离一致性" class="headerlink" title="读写分离一致性"></a>读写分离一致性</h4><p>通过复制可以实现读写分离，以提高服务器的负载能力。在常见的场景中（如电子商务网站），读的频率大于写，当单机的 Redis 无法应付大量的读请求时（尤其是较耗资源的请求，如 SORT 命令等）可以通过复制功能建立多个从数据库节点，主数据库只进行写操作，而从数据库负责读操作。这种一主多从的结构很适合读多写少的场景，而当单个的主数据库不能满足需求时，就需要使用 Redis 3.0 推出的集群功能。</p>
+<h4 id="从数据库持久化"><a href="#从数据库持久化" class="headerlink" title="从数据库持久化"></a>从数据库持久化</h4><p>另一个相对耗时的操作是持久化，为了提高性能，可以通过复制功能建立一个（或若干个）从数据库，并在从数据库中启用持久化，同时在主数据库禁用持久化。当从数据库崩溃重启后，主数据库会自动将数据同步过来，所以无需担心数据丢失。</p>
+<p>然而当主数据库崩溃时，情况就稍显复杂了。手动通过从数据库数据回复主数据库数据时，需要严格按照一下两步进行。</p>
+<ul>
+<li>在从数据库中使用 <code>SLAVEOF NO ONE</code> 命令将从数据提升成主数据库继续服务。</li>
+<li>启动之前崩溃的主数据库，然后使用 <code>SLAVEOF</code> 命令将其设置成新的主数据库的从数据库，即可将数据同步回来。</li>
+</ul>
+<blockquote>
+<p><strong>注意</strong>    当开启复制且主数据库关闭持久化功能时，一定不要使用 <code>Supervisor</code> 以及类似的进程管理工具令主数据库崩溃后自动重启。同样当主数据库所在的服务器因故关闭时，也要避免直接重新启动。这是因为当主数据库重新启动后，因为没有开启持久化功能，所以数据库中所有数据都被清空，这时从数据库依然会从主数据库中接受数据，使得所有从数据库也被清空，导致从数据库的持久化失去意义。</p>
+</blockquote>
+<p>无论哪种情况，手工维护从数据库或主数据库的重启以及数据恢复都相对麻烦，好在 Redis 提供了一种自动化哨兵来实现这一过程，避免了手动维护的麻烦和容易出错的问题。</p>
+<h4 id="无硬盘复制"><a href="#无硬盘复制" class="headerlink" title="无硬盘复制"></a>无硬盘复制</h4><p>Redis 复制的工作原理是基于 RDB 方式的持久化实现的，即主数据库端在后台保存 RDB 快照，从数据库端则接收并载入快照文件。这样的实现优点是可以显著地简化逻辑，复用已有的代码，但是缺点也很明显。</p>
+<ul>
+<li>当主数据库禁用 RDB 快照时（即删除了所有地配置文件中地 save 语句），如果执行了复制初始化操作，Redis 依然会生成 RDB 快照，所以下次启动后主数据库会以快照恢复数据。因为复制发生的时间不能确定，这使得恢复的数据可能是任何时间点的。</li>
+<li>因为复制初始化时需要在硬盘中创建 RDB 快照文件，所以如果硬盘性能很慢（如网络硬盘）时这一过程会对性能产生影响。举例来说，当使用 Redis 做缓存系统时，因为不需要持久化，所以服务器的硬盘读写速度可能较差。但是当该缓存系统使用一主多从的集权架构时，每次和从数据库同步，Redis 都会执行一次快照，同时对硬盘进行读写，导致性能降低。</li>
+</ul>
+<p>因此从 2.8.28 版本开始，Redis 引入了无硬盘复制选项，开启该选项时，Redis 在与从数据库进行复制初始化时，将不会将快照内容存储到硬盘上，而是直接通过网络发送给数据库，避免了硬盘的性能瓶颈。可以在配置文件中使用如下配置来开启该功能：</p>
+<pre class=" language-bash"><code class="language-bash">repl-diskless-sync <span class="token boolean">true</span></code></pre>
+<h4 id="增量复制"><a href="#增量复制" class="headerlink" title="增量复制"></a>增量复制</h4><p>在介绍复制的原理时提到当主从数据库连接断开后，从数据库会发送 SYNC 命令来重新进行一次完整复制操作。这样即使断开期间数据库的变化很小（甚至没有），也需要将数据库中的所有数据重新快照并传送一次。在正常的网络应用环境中，这种实现方式显然不太理想。Redis 2.8 版相对 2.6 版的最重要更新至一就是实现了主从断线重连的情况下的增量复制。</p>
+<p>增量复制时基于如下 3 点实现的。</p>
+<ul>
+<li>从数据库会存储主数据库的运行 ID（run id）。每个 Redis 运行实例均会拥有一个唯一的运行 ID，每当实例重启后，就会自动生成一个新的运行 ID。</li>
+<li>在复制同步阶段，主数据库每将一个命令 传送给从数据库时，都会同时把该命令存放到一个积压队列（backlog）中，并记录下当前积压队列中存放的命令的偏移量范围。</li>
+<li>同时，从数据库接收到主数据库传来的命令时，会记录下该命令的偏移量。</li>
+</ul>
+<p>这 3 点是实现增量复制的基础。当主从连接准备就绪后，从数据库会发送一条 SYNC 命令来告诉主数据库可以把所有数据同步过来了。而 2.8 版本之后，不在发送 SYNC 命令，取而代之的是发送 PSYNC 命令，格式为：</p>
+<pre class=" language-bash"><code class="language-bash">$ PSYNC 主数据的运行id 断开前最新的命令偏移量</code></pre>
+<p>主数据库收到 PSYNC 命令后，会执行以下判断来决定此次重连是否可以执行增量复制。</p>
+<ul>
+<li>首先主数据库会判断从数据库传送来的运行 ID 是否和自己的运行 ID 相同。这一步骤的意义在于确保从数据库库之前确实是和自己同步的，以免从数据库拿到错误的数据（比如主数据库在短线期间重启过，会造成数据的不一致）。</li>
+<li>然后判断从数据库库最后同步成功的命令偏移量是否在积压队列中，如果在则可以执行增量复制，并将积压队列中相应的命令发送给从数据库。<ul>
+<li>如果此次重连不满足增量复制的条件，主数据库会进行一次全部同步。</li>
+<li>大部分情况下，增量复制的过程对开发者来说是完全透明的，开发者不需要关心增量复制的具体细节。</li>
+</ul>
+</li>
+</ul>
+<p>积压队列在本质上是一个固定长度的循环队列，默认情况下积压队列的大小为 1MB，可以通过配置文件的 <code>repl-backlog-size</code>参数来调整：</p>
+<pre class=" language-bash"><code class="language-bash">$ repl-backlog-size 1mb</code></pre>
+<p>很容易理解的是，积压队列越大，其允许的主从数据库断线的时间就越长。根据主从数据库之间的网络状态，设置一个合理的积压队列很重要。因为积压队列存储的内容是命令本身，如 <code>SET foo bar</code>，所以估算计算队列的大小只需要估计主从数据库断线的时间中主数据库可能执行的命令大小即可。</p>
+<p>与积压队列相关的另一个配置选项是 <code>repl-backlog-ttl</code>，即当所有从数据库与主数据库断开连接后，经过多久时间可以释放挤压队列的内存空间。默认时间是 1 小时。</p>
+<pre class=" language-bash"><code class="language-bash">$ repl-backlog-ttl 3600</code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">AsiaMa</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://blog.asiama.top/posts/d0dd.html">https://blog.asiama.top/posts/d0dd.html</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">AsiaMa</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/Redis/">
+                                    <span class="chip bg-color">Redis</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="qq,qzone,wechat,weibo,douban" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; padding-left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: '59bf142f2e1e32208f0f',
+        clientSecret: '8fd8a8462225cf93ec37c4dbd0362c71ba21ddac',
+        repo: 'asiama.github.io',
+        owner: 'asiama',
+        admin: "asiama",
+        id: '2021-01-21T21-29-14',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/posts/d0dd.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/23.jpg" class="responsive-img" alt="Redis主从复制">
+                        
+                        <span class="card-title">Redis主从复制</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-21
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            AsiaMa
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Redis/">
+                        <span class="chip bg-color">Redis</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/posts/8649.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/12.jpg" class="responsive-img" alt="Redis之发布-订阅模式">
+                        
+                        <span class="card-title">Redis之发布-订阅模式</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-21
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            AsiaMa
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Redis/">
+                        <span class="chip bg-color">Redis</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2020</span>
+            <a href="/about" target="_blank">AsiaMa</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">45k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2020";
+                    var startMonth = "09";
+                    var startDate = "20";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/AsiaMa" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:a976304624@outlook.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+    <a href="https://www.facebook.com/asia.ma.94/" class="tooltipped" target="_blank" data-tooltip="关注我的Facebook: https://www.facebook.com/asia.ma.94/" data-position="top" data-delay="50">
+        <i class="fab fa-facebook-f"></i>
+    </a>
+
+
+
+    <a href="https://twitter.com/asiama61378227" class="tooltipped" target="_blank" data-tooltip="关注我的Twitter: https://twitter.com/asiama61378227" data-position="top" data-delay="50">
+        <i class="fab fa-twitter"></i>
+    </a>
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1031588508" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1031588508" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/search.xml", 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/materialize/materialize.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/aos/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+    <!--动态线条背景-->
+    <script type="text/javascript"
+    color="233 229 224" opacity='0.4' zIndex="-2" count="80" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+    </script>
+  
+</body>
+
+</html>

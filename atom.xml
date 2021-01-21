@@ -6,7 +6,7 @@
   <link href="https://blog.asiama.top/atom.xml" rel="self"/>
   
   <link href="https://blog.asiama.top/"/>
-  <updated>2021-01-19T14:33:28.268Z</updated>
+  <updated>2021-01-21T13:33:25.958Z</updated>
   <id>https://blog.asiama.top/</id>
   
   <author>
@@ -17,11 +17,197 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Redis主从复制</title>
+    <link href="https://blog.asiama.top/posts/d0dd.html"/>
+    <id>https://blog.asiama.top/posts/d0dd.html</id>
+    <published>2021-01-21T13:29:14.000Z</published>
+    <updated>2021-01-21T13:33:25.958Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;headerlink&quot; title=&quot;介绍&quot;&gt;&lt;/a&gt;介绍&lt;/h3&gt;&lt;p&gt;如果是一个小型项目，使用一台 Redis 服务器就已经足够了，然而现实中的项目通常需要若干台Redis</summary>
+        
+      
+    
+    
+    
+    
+    <category term="Redis" scheme="https://blog.asiama.top/tags/Redis/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Redis之发布-订阅模式</title>
+    <link href="https://blog.asiama.top/posts/8649.html"/>
+    <id>https://blog.asiama.top/posts/8649.html</id>
+    <published>2021-01-21T13:28:00.000Z</published>
+    <updated>2021-01-21T13:28:35.409Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;发布-订阅-模式&quot;&gt;&lt;a href=&quot;#发布-订阅-模式&quot; class=&quot;headerlink&quot; title=&quot;发布/订阅 模式&quot;&gt;&lt;/a&gt;发布/订阅 模式&lt;/h3&gt;&lt;p&gt;Redis 提供了一组命令可以让开发者实现</summary>
+        
+      
+    
+    
+    
+    
+    <category term="Redis" scheme="https://blog.asiama.top/tags/Redis/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Redis事务</title>
+    <link href="https://blog.asiama.top/posts/a455.html"/>
+    <id>https://blog.asiama.top/posts/a455.html</id>
+    <published>2021-01-21T13:25:59.000Z</published>
+    <updated>2021-01-21T13:26:38.822Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;在微博中，用户之间是 “关注” 和 “被关注”的关系。如果要使用 Redis 存储这样的关系可以使用集合类型。思路是对每个用户使用两个集合类型键，分别名为 &lt;code&gt;user:用户ID:followers&lt;/code&gt; 和</summary>
+        
+      
+    
+    
+    
+    
+    <category term="Redis" scheme="https://blog.asiama.top/tags/Redis/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Redis哨兵</title>
+    <link href="https://blog.asiama.top/posts/c807.html"/>
+    <id>https://blog.asiama.top/posts/c807.html</id>
+    <published>2021-01-21T13:19:49.000Z</published>
+    <updated>2021-01-21T13:25:12.939Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    
+    <category term="Redis" scheme="https://blog.asiama.top/tags/Redis/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Redis的SORT命令</title>
+    <link href="https://blog.asiama.top/posts/7886.html"/>
+    <id>https://blog.asiama.top/posts/7886.html</id>
+    <published>2021-01-21T13:17:41.000Z</published>
+    <updated>2021-01-21T13:18:18.260Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;&lt;code&gt;SORT&lt;/code&gt; 命令可以对列表类型、集合类型和有序集合类型键进行排序。&lt;/p&gt;
+&lt;pre class=&quot; language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ LPUSH myList 4 2 6 1 3</summary>
+        
+      
+    
+    
+    
+    
+    <category term="Redis" scheme="https://blog.asiama.top/tags/Redis/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Redis持久化</title>
+    <link href="https://blog.asiama.top/posts/f2a0.html"/>
+    <id>https://blog.asiama.top/posts/f2a0.html</id>
+    <published>2021-01-21T13:15:36.000Z</published>
+    <updated>2021-01-21T13:16:10.579Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;headerlink&quot; title=&quot;介绍&quot;&gt;&lt;/a&gt;介绍&lt;/h3&gt;&lt;p&gt;Redis 支持两种方式的持久化，一种是 RDB 方式，另一种是 AOF 方式。前者会根据指定的规则 “定时”</summary>
+        
+      
+    
+    
+    
+    
+    <category term="Redis" scheme="https://blog.asiama.top/tags/Redis/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用Redis实现任务队列</title>
+    <link href="https://blog.asiama.top/posts/4c47.html"/>
+    <id>https://blog.asiama.top/posts/4c47.html</id>
+    <published>2021-01-21T13:13:04.000Z</published>
+    <updated>2021-01-21T13:14:44.241Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;普通队列&quot;&gt;&lt;a href=&quot;#普通队列&quot; class=&quot;headerlink&quot; title=&quot;普通队列&quot;&gt;&lt;/a&gt;普通队列&lt;/h3&gt;&lt;p&gt;说到队列很自然就能想到 Redis 的列表类型。如果要实现任务队列，只需要让生产者将任务使用 LPUSH</summary>
+        
+      
+    
+    
+    
+    
+    <category term="Redis" scheme="https://blog.asiama.top/tags/Redis/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>设置Redis中的key过期时间</title>
+    <link href="https://blog.asiama.top/posts/ae5.html"/>
+    <id>https://blog.asiama.top/posts/ae5.html</id>
+    <published>2021-01-21T13:10:45.000Z</published>
+    <updated>2021-01-21T13:12:16.781Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;命令介绍&quot;&gt;&lt;a href=&quot;#命令介绍&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    
+    <category term="Redis" scheme="https://blog.asiama.top/tags/Redis/"/>
+    
+  </entry>
+  
+  <entry>
     <title>层次性依赖查找</title>
     <link href="https://blog.asiama.top/posts/e798.html"/>
     <id>https://blog.asiama.top/posts/e798.html</id>
     <published>2021-01-19T14:28:59.000Z</published>
-    <updated>2021-01-19T14:33:28.268Z</updated>
+    <updated>2021-01-20T12:46:49.116Z</updated>
     
     
       
@@ -33,8 +219,6 @@
       
     
     
-    
-    <category term="AsiaMa" scheme="https://blog.asiama.top/categories/AsiaMa/"/>
     
     
     <category term="Spring" scheme="https://blog.asiama.top/tags/Spring/"/>
@@ -184,7 +368,7 @@
     <link href="https://blog.asiama.top/posts/cdfc.html"/>
     <id>https://blog.asiama.top/posts/cdfc.html</id>
     <published>2021-01-16T08:16:53.000Z</published>
-    <updated>2021-01-16T11:08:46.725Z</updated>
+    <updated>2021-01-20T13:38:40.172Z</updated>
     
     
       
@@ -307,212 +491,6 @@
     
     
     <category term="Spring" scheme="https://blog.asiama.top/tags/Spring/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Bean的初始化方式</title>
-    <link href="https://blog.asiama.top/posts/c3f8.html"/>
-    <id>https://blog.asiama.top/posts/c3f8.html</id>
-    <published>2021-01-16T02:37:46.000Z</published>
-    <updated>2021-01-16T06:23:55.435Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;PostConstruct标注方法&quot;&gt;&lt;a href=&quot;#PostConstruct标注方法&quot; class=&quot;headerlink&quot; title=&quot;@PostConstruct标注方法&quot;&gt;&lt;/a&gt;@PostConstruct标注方法&lt;/h3&gt;&lt;pre</summary>
-        
-      
-    
-    
-    
-    <category term="JAVA" scheme="https://blog.asiama.top/categories/JAVA/"/>
-    
-    
-    <category term="Spring" scheme="https://blog.asiama.top/tags/Spring/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>实例化Spring Bean</title>
-    <link href="https://blog.asiama.top/posts/b731.html"/>
-    <id>https://blog.asiama.top/posts/b731.html</id>
-    <published>2021-01-12T13:06:48.000Z</published>
-    <updated>2021-01-16T03:42:42.337Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;常规的四种方式&quot;&gt;&lt;a href=&quot;#常规的四种方式&quot; class=&quot;headerlink&quot; title=&quot;常规的四种方式&quot;&gt;&lt;/a&gt;常规的四种方式&lt;/h3&gt;&lt;h4 id=&quot;通过构造器&quot;&gt;&lt;a href=&quot;#通过构造器&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="JAVA" scheme="https://blog.asiama.top/categories/JAVA/"/>
-    
-    
-    <category term="Spring" scheme="https://blog.asiama.top/tags/Spring/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>kotlin泛型</title>
-    <link href="https://blog.asiama.top/posts/3e59.html"/>
-    <id>https://blog.asiama.top/posts/3e59.html</id>
-    <published>2021-01-10T14:02:01.000Z</published>
-    <updated>2021-01-10T14:14:31.152Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;通过&lt;code&gt;where&lt;/code&gt;关键字，对泛型参数限定满足所有条件&lt;/p&gt;
-&lt;pre class=&quot; language-kotlin&quot;&gt;&lt;code class=&quot;language-kotlin&quot;&gt;&lt;span class=&quot;token</summary>
-        
-      
-    
-    
-    
-    
-    <category term="Kotlin" scheme="https://blog.asiama.top/tags/Kotlin/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Kotlin内联:noinline与crossinline</title>
-    <link href="https://blog.asiama.top/posts/11c5.html"/>
-    <id>https://blog.asiama.top/posts/11c5.html</id>
-    <published>2021-01-10T13:06:46.000Z</published>
-    <updated>2021-01-10T13:56:34.195Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;在Kotlin中，内部Lambda是不允许中断外部函数执行的。&lt;/p&gt;
-&lt;pre class=&quot; language-kotlin&quot;&gt;&lt;code class=&quot;language-kotlin&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;fun&lt;/span&gt;</summary>
-        
-      
-    
-    
-    
-    
-    <category term="Kotlin" scheme="https://blog.asiama.top/tags/Kotlin/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>探讨复杂的 if-else 语句“优雅处理”的思路</title>
-    <link href="https://blog.asiama.top/posts/afc9.html"/>
-    <id>https://blog.asiama.top/posts/afc9.html</id>
-    <published>2021-01-05T03:15:09.000Z</published>
-    <updated>2021-01-05T04:55:43.636Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;在实际开发中，往往不是简单 if-else 结构，我们通常会不经意间写下如下代码：&lt;/p&gt;
-&lt;pre class=&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="设计模式" scheme="https://blog.asiama.top/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-    
-    <category term="策略" scheme="https://blog.asiama.top/tags/%E7%AD%96%E7%95%A5/"/>
-    
-    <category term="工厂" scheme="https://blog.asiama.top/tags/%E5%B7%A5%E5%8E%82/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>kotlin如何实现空安全</title>
-    <link href="https://blog.asiama.top/posts/b698.html"/>
-    <id>https://blog.asiama.top/posts/b698.html</id>
-    <published>2020-12-31T09:01:43.000Z</published>
-    <updated>2020-12-31T09:42:41.853Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;通过静态代码检查，编译插件检查，在编译器避免空指针异常&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;每次引用对象的时候，都去进行对象判空，在运行期间避免对象空指针&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;blockquote&gt;
-&lt;p&gt;将一个对象的两种类型（可以为空的类型与</summary>
-        
-      
-    
-    
-    
-    
-    <category term="Kotlin" scheme="https://blog.asiama.top/tags/Kotlin/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>var与val</title>
-    <link href="https://blog.asiama.top/posts/318f.html"/>
-    <id>https://blog.asiama.top/posts/318f.html</id>
-    <published>2020-12-31T07:44:11.000Z</published>
-    <updated>2020-12-31T09:40:50.257Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;声明一个变量的完整语法&quot;&gt;&lt;a href=&quot;#声明一个变量的完整语法&quot; class=&quot;headerlink&quot; title=&quot;声明一个变量的完整语法&quot;&gt;&lt;/a&gt;声明一个变量的完整语法&lt;/h3&gt;&lt;p&gt;var</summary>
-        
-      
-    
-    
-    
-    
-    <category term="Kotlin" scheme="https://blog.asiama.top/tags/Kotlin/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>自定义中缀表达式</title>
-    <link href="https://blog.asiama.top/posts/8a52.html"/>
-    <id>https://blog.asiama.top/posts/8a52.html</id>
-    <published>2020-12-29T14:38:27.000Z</published>
-    <updated>2020-12-29T14:54:03.526Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;一个函数只有用与两个角色类似的对象时才将其声明为中缀函数。&lt;/p&gt;
-&lt;p&gt;推荐示例：and、to、zip        反例：add&lt;/p&gt;
-&lt;p&gt;如果一个方法会改动其接受者，那么不要声明为中缀形式。&lt;/p&gt;
-&lt;p&gt;定义自己的中缀表达式：&lt;/p&gt;
-&lt;pre class=&quot;</summary>
-        
-      
-    
-    
-    
-    
-    <category term="Kotlin" scheme="https://blog.asiama.top/tags/Kotlin/"/>
     
   </entry>
   

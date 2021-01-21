@@ -116,17 +116,6 @@
     
   </li>
   
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/friends" class="waves-effect waves-light">
-      
-      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
-      
-      <span>友情链接</span>
-    </a>
-    
-  </li>
-  
   <li>
     <a href="#searchModal" class="modal-trigger waves-effect waves-light">
       <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
@@ -215,17 +204,6 @@
 			    <i class="fa-fw fas fa-comments"></i>
 			
 			留言板
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/friends" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-address-book"></i>
-			
-			友情链接
 		</a>
           
         </li>
@@ -463,14 +441,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-01-16
+                    2021-01-20
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    155
+                    221
                 </div>
                 
 
@@ -503,22 +481,50 @@
     annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">refresh</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token comment" spellcheck="true">// 依赖查找集合对象</span>
     <span class="token function">lookupByObjectProvider</span><span class="token punctuation">(</span>annotationConfigApplicationContext<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">lookupIfAvailable</span><span class="token punctuation">(</span>annotationConfigApplicationContext<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">lookupByStreamOps</span><span class="token punctuation">(</span>annotationConfigApplicationContext<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token comment" spellcheck="true">// 关闭应用上下文</span>
     annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token punctuation">}</span>
 
+  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">lookupByObjectProvider</span><span class="token punctuation">(</span>
+      AnnotationConfigApplicationContext annotationConfigApplicationContext<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    ObjectProvider<span class="token operator">&lt;</span>String<span class="token operator">></span> objectProvider <span class="token operator">=</span>
+        annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">getBeanProvider</span><span class="token punctuation">(</span>String<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>objectProvider<span class="token punctuation">.</span><span class="token function">getObject</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">lookupIfAvailable</span><span class="token punctuation">(</span>
+      AnnotationConfigApplicationContext annotationConfigApplicationContext<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    ObjectProvider<span class="token operator">&lt;</span>User<span class="token operator">></span> userObjectProvider <span class="token operator">=</span>
+        annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">getBeanProvider</span><span class="token punctuation">(</span>User<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    User user <span class="token operator">=</span> userObjectProvider<span class="token punctuation">.</span><span class="token function">getIfAvailable</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">"hah"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"user: "</span> <span class="token operator">+</span> user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">lookupByStreamOps</span><span class="token punctuation">(</span>
+      AnnotationConfigApplicationContext annotationConfigApplicationContext<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    ObjectProvider<span class="token operator">&lt;</span>String<span class="token operator">></span> objectProvider <span class="token operator">=</span>
+        annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">getBeanProvider</span><span class="token punctuation">(</span>String<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    objectProvider<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>System<span class="token punctuation">.</span>out<span class="token operator">:</span><span class="token operator">:</span>println<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
   <span class="token annotation punctuation">@Bean</span>
-  <span class="token keyword">public</span> String <span class="token function">helloWorld</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">//方法名就是 Bean 名称 = "helloWorld</span>
+  <span class="token keyword">public</span> String <span class="token function">helloWorld</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">// 方法名就是 Bean 名称 = "helloWorld</span>
     <span class="token keyword">return</span> <span class="token string">"hello, world!"</span><span class="token punctuation">;</span>
   <span class="token punctuation">}</span>
 
-  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">lookupByObjectProvider</span><span class="token punctuation">(</span>
-      AnnotationConfigApplicationContext annotationConfigApplicationContext<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    ObjectProvider<span class="token operator">&lt;</span>String<span class="token operator">></span> objectProvider <span class="token operator">=</span> annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">getBeanProvider</span><span class="token punctuation">(</span>String<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>objectProvider<span class="token punctuation">.</span><span class="token function">getObject</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token annotation punctuation">@Bean</span>
+  <span class="token annotation punctuation">@Primary</span>
+  <span class="token keyword">public</span> String <span class="token function">message</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token string">"Message"</span><span class="token punctuation">;</span>
   <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">/** 输出结果：hello, world! */</span></code></pre>
+<span class="token comment" spellcheck="true">/** 输出结果：
+    Message
+    user: User{id=1, name='hah'}
+    hello, world!
+    Message */</span></code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -1033,7 +1039,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">26.4k</span>&nbsp;字
+                class="white-color">45k</span>&nbsp;字
             
             
             
