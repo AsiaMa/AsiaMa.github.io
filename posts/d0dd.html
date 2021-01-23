@@ -432,7 +432,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-01-21
+                    2021-01-23
                 </div>
                 
 
@@ -528,7 +528,7 @@ Escape character is <span class="token string">'^]'</span><span class="token key
 <pre class=" language-bash"><code class="language-bash">REPLCONF listening-port 6381
 +OK</code></pre>
 <p>这时就可以开始同步的过程了：向主数据库发送 SYNC 命令开始同步，此时主数据库发送回快照文件和缓存的命令。目前主数据库中只有一个 foo 键，所以收到的内容如下（快照文件是二进制格式）：</p>
-<p><img src="C:\Users\a9763\AppData\Roaming\Typora\typora-user-images\image-20210121102845781.png" alt="image-20210121102845781"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/15921611196132_.pic_hd.jpg"></p>
 <p>从数据库会将收到的内容写入到硬盘上的临时文件中，当写入完成后从数据库会用该临时文件替换 RDB 快照文件（RDB 快照文件的位置就是持久化时配置的位置，由 <code>dir</code> 和 <code>dbfilename</code> 两个参数确定），之后的操作就和 RDB 持久化时启动回复的过程一样了。需要注意的是在同步的过程中，从数据库并不会阻塞，而是继续可以处理客户端发来的命令。默认情况下，从数据库会用同步前的数据对命令进行响应。可以配置参数：</p>
 <pre class=" language-shell"><code class="language-shell">replica-serve-stale-data no</code></pre>
 <p>来使从数据库在同步完成前对所有命令（除了 INFO 和 SLAVEOF） 都返回错误：“SYNC with master in progress”。</p>
