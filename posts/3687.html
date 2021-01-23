@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Kotlin常用作用域函数, Java,Git,SpringBoot,SpringCloud,SpringCloud Alibaba等">
+    <meta name="keywords" content="Redis管理, Java,Git,SpringBoot,SpringCloud,SpringCloud Alibaba等">
     <meta name="description" content="专注WJava后端,大数据,分享知识,分享生活">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Kotlin常用作用域函数 | 三十二道街</title>
+    <title>Redis管理 | 三十二道街</title>
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/awesome/css/all.css">
@@ -287,12 +287,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/3.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/0.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Kotlin常用作用域函数</h1>
+                    <h1 class="description center-align post-title">Redis管理</h1>
                 </div>
             </div>
         </div>
@@ -409,23 +409,14 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Kotlin/">
-                                <span class="chip bg-color">Kotlin</span>
+                            <a href="/tags/Redis/">
+                                <span class="chip bg-color">Redis</span>
                             </a>
                         
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
-                    
-                    <div class="post-cate">
-                        <i class="fas fa-bookmark fa-fw icon-category"></i>
-                        
-                            <a href="/categories/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="post-category">
-                                函数式编程
-                            </a>
-                        
-                    </div>
                     
                 </div>
             </div>
@@ -434,28 +425,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-12-29
+                    2021-01-23
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-12-29
+                    2021-01-23
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    466
+                    1.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    5 分
                 </div>
                 
 
@@ -470,117 +461,104 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="let-和-run"><a href="#let-和-run" class="headerlink" title="let 和 run"></a>let 和 run</h3><p>let 和 run 都会返回闭包的执行结果，区别在于let有闭包参数，而run没有闭包参数。</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token keyword">var</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span>
-<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-
-    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
-
-    <span class="token keyword">val</span> letResult<span class="token operator">:</span> String <span class="token operator">=</span> user<span class="token punctuation">.</span><span class="token function">let</span> <span class="token punctuation">{</span> user<span class="token operator">:</span> User <span class="token operator">-></span>
-        <span class="token string">"let:: <span class="token interpolation"><span class="token delimiter variable">${</span>user<span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span>
-    <span class="token punctuation">}</span>
-  <span class="token comment" spellcheck="true">/** 
-         简化写法
-         val letResult: String = user.let {
-        "let:: ${it.javaClass.simpleName}"
-    } 
-   */</span>
-
-    <span class="token function">println</span><span class="token punctuation">(</span>letResult<span class="token punctuation">)</span>
-
-    <span class="token keyword">val</span> runResult <span class="token operator">=</span> user<span class="token punctuation">.</span><span class="token function">run</span> <span class="token punctuation">{</span>
-        <span class="token string">"run:: <span class="token interpolation"><span class="token delimiter variable">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span>
-    <span class="token punctuation">}</span>
-    <span class="token function">print</span><span class="token punctuation">(</span>runResult<span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-
-<span class="token comment" spellcheck="true">/** 输出结果：let:: User
-                         run:: User */</span></code></pre>
-<h3 id="also-和-apply"><a href="#also-和-apply" class="headerlink" title="also 和 apply"></a>also 和 apply</h3><p>also与apply都不返回闭包的执行结果，区别在于also有闭包参数，而apply没有闭包参数。</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token keyword">var</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span>
-
-<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-
-    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
-
-    user<span class="token punctuation">.</span><span class="token function">also</span> <span class="token punctuation">{</span>
-        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"also::<span class="token interpolation"><span class="token delimiter variable">${</span>it<span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-
-    user<span class="token punctuation">.</span><span class="token function">apply</span> <span class="token punctuation">{</span>
-        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"apply::<span class="token interpolation"><span class="token delimiter variable">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-<span class="token comment" spellcheck="true">// 在这个例子中，also 和 apply 会继续返回user这个对象，因为我们可以这么使用</span>
-        user<span class="token punctuation">.</span><span class="token function">also</span> <span class="token punctuation">{</span>
-        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"also::<span class="token interpolation"><span class="token delimiter variable">${</span>it<span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span><span class="token punctuation">.</span><span class="token function">apply</span> <span class="token punctuation">{</span>
-        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"apply::<span class="token interpolation"><span class="token delimiter variable">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span><span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">"Bob"</span>
-
-    <span class="token function">print</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span>
-<span class="token comment" spellcheck="true">/** 输出结果：User(name=Bob) */</span></code></pre>
-<h3 id="takeIf-和-takeUnless"><a href="#takeIf-和-takeUnless" class="headerlink" title="takeIf 和 takeUnless"></a>takeIf 和 takeUnless</h3><p>takeIf 的闭包返回一个判断结果，为false时，takeIf函数会返回空。</p>
-<p>takeUnless 与 takeIf 刚好相反，闭包的判断结果，为true时函数会返回空。</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-
-    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
-
-    user<span class="token punctuation">.</span><span class="token function">takeIf</span> <span class="token punctuation">{</span>
-        it<span class="token punctuation">.</span>name<span class="token punctuation">.</span><span class="token function">isNotEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span><span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">also</span> <span class="token punctuation">{</span>
-        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"姓名为: <span class="token interpolation"><span class="token delimiter variable">${</span>it<span class="token punctuation">.</span>name<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span><span class="token operator">?:</span> <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"姓名为空"</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">/** 输出结果：姓名为: AsiaMa */</span>
-
-<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-
-    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
-
-    user<span class="token punctuation">.</span><span class="token function">takeUnless</span> <span class="token punctuation">{</span>
-        it<span class="token punctuation">.</span>name<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span><span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">also</span> <span class="token punctuation">{</span>
-        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"姓名为: <span class="token interpolation"><span class="token delimiter variable">${</span>it<span class="token punctuation">.</span>name<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span><span class="token operator">?:</span> <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"姓名为空"</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">/** 输出结果：姓名为: AsiaMa */</span></code></pre>
-<h3 id="Repeat"><a href="#Repeat" class="headerlink" title="Repeat"></a>Repeat</h3><p>重复执行当前闭包</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token keyword">var</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span>
-
-<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
-
-    <span class="token function">repeat</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token function">print</span><span class="token punctuation">(</span>user<span class="token punctuation">.</span>name<span class="token punctuation">)</span>
-        <span class="token function">println</span><span class="token punctuation">(</span>it<span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">/**
-输出结果：
-    AsiaMa0
-    AsiaMa1
-    AsiaMa2
-    AsiaMa3
-    AsiaMa4
-*/</span></code></pre>
-<h3 id="With"><a href="#With" class="headerlink" title="With"></a>With</h3><p>with比较特殊，不是以扩展方法的形式存在，而是一个顶级函数。可用于对象的通用属性赋值。</p>
-<pre class=" language-java"><code class="language-java">fun <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    val user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
-
-    <span class="token function">with</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">"Tom"</span>
-    <span class="token punctuation">}</span>
-    <span class="token function">println</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span>
-
-  <span class="token comment" spellcheck="true">/** 与with相似    
-    user.apply {
-        this.name = "Rose"
-    }
-  */</span>
-<span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">/** 输出结果：User(name=Tom) */</span></code></pre>
+                <h3 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h3><p>Redis 的作者 <code>Salvatore Sanfilippo</code> 曾经发表过 Redis 宣言，其中提到 Redis 以简洁为美。同样在安全层面 Redis 也没有做太多的工作。 </p>
+<h3 id="可信的环境"><a href="#可信的环境" class="headerlink" title="可信的环境"></a>可信的环境</h3><p>Redis 的安全设计是在 “ Redis 运行在可信环境” 这个前提下做出的。在生产环境运行时不能允许外界直接连接到 Redis 服务器上，而应该通过应用程序中转，运行在可信的环境中是保证 Redis 安全的最重要方法。</p>
+<p>如只允许本机应用连接 Redis ，可以将 bind 参数改成：</p>
+<pre class=" language-bash"><code class="language-bash">bind 127.0.0.1</code></pre>
+<p>bind 参数只能绑定一个地址，如果想更自由的设置绑定规则需要通过防火墙来完成。</p>
+<h3 id="数据库密码"><a href="#数据库密码" class="headerlink" title="数据库密码"></a>数据库密码</h3><p>可以通过配置文件中的 <code>requirepass</code> 参数为 Redis 设置一个密码。例如：</p>
+<pre class=" language-shell"><code class="language-shell">requirepass 123456</code></pre>
+<p>客户端每次连接到 Redis 时都需要发送密码，否则 Redis 会拒绝执行客户端发来的命令。</p>
+<p>例如：</p>
+<pre class=" language-bash"><code class="language-bash">$ GET foo
+<span class="token punctuation">(</span>error<span class="token punctuation">)</span> ERR operation not permitted.</code></pre>
+<p>发送密码需要使用 AUTH 命令，就像这样：</p>
+<pre class=" language-bash"><code class="language-bash">$ AUTH 123456
+OK</code></pre>
+<p>之后就可以执行任何命令了。</p>
+<p>由于 Redis 的性能极高，并且输入错误密码后 Redis 并不会进行主动延迟（考虑到 Redis 的单线程模型），所以攻击者可以通过穷举法破解 Redis 的密码（ 1 秒内能够尝试十几万个密码 ），因此在设置时一定要选择负责的密码。</p>
+<blockquote>
+<p><strong>提示</strong>    配置 Redis 复制的时候如果主数据库设置了密码，需要在从数据库的配置文件中通过 <code>masterauth</code> 参数设置主数据库的密码，以使从数据库连接主数据库时自动使用 AUTH 命令认证。</p>
+</blockquote>
+<h3 id="命名命令"><a href="#命名命令" class="headerlink" title="命名命令"></a>命名命令</h3><p>Redis 支持在配置文件中将命令重命名，比如将 <code>FLUASHALL</code> 命令重命名成一个比较复杂的名字，以保证自己的应用可以使用该命令。就像这样：</p>
+<pre><code>rename-command FLUSHALL oyfekmjumwar5a8c0it2k</code></pre>
+<p>如果希望直接禁用某个命令可以将命令重命名成空字符串：</p>
+<pre class=" language-bash"><code class="language-bash">rename-command FLUSHALL <span class="token string">""</span></code></pre>
+<blockquote>
+<p><strong>注意</strong>    无论设置密码还是重命名命令，都需要保证配置文件的安全性，否则就没有任何意义了。</p>
+</blockquote>
+<h3 id="Redis-cli"><a href="#Redis-cli" class="headerlink" title="Redis-cli"></a>Redis-cli</h3><h4 id="耗时命令日志"><a href="#耗时命令日志" class="headerlink" title="耗时命令日志"></a>耗时命令日志</h4><p>当一条命令执行时间超过限制时，Redis 会将该命令的执行时间等信息加入耗时命令日志（show log）以供开发者查看。可以通过配置文件的 <code>slowlog-log-slower-than</code> 参数设置这一限制，要注意单位是微秒（1000000微妙相当于 1 秒），默认值是 10 000。耗时命令日志存储在内存中，可以通过配置文件的 <code>slowlog-max-len</code>参数来限制记录的条数。</p>
+<p>使用 SLOWLOG GET 命令来获得当前的耗时命令日志，如：</p>
+<pre class=" language-bash"><code class="language-bash">redis<span class="token operator">></span> SLOWLOG GET
+   1<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 2
+   2<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1611295121
+   3<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 5
+   4<span class="token punctuation">)</span> 1<span class="token punctuation">)</span> <span class="token string">"set"</span>
+      2<span class="token punctuation">)</span> <span class="token string">"foo"</span>
+      3<span class="token punctuation">)</span> <span class="token string">"bar"</span></code></pre>
+<p>每条日志都由以下 4  个部分组成：</p>
+<ul>
+<li>该日志唯一 ID</li>
+<li>该命令执行的 Unix 时间</li>
+<li>该命令的耗时时间，单位是微秒</li>
+<li>命令及其参数。</li>
+</ul>
+<blockquote>
+<p><strong>提示</strong>    为了产生一些耗时命令日志作为演示，这里将 <code>slowlog-log-slower-than</code> 参数设置为 0，即记录所有命令。如果设置为负数则会关闭耗时命令日志。</p>
+</blockquote>
+<h4 id="命令监控"><a href="#命令监控" class="headerlink" title="命令监控"></a>命令监控</h4><p>Redis 提供了 MONITOR 命令来监控 Redis 执行的所有命令，redis-cli 同样支持这个命令，如在 redis-cli 中执行 MONITOR：</p>
+<pre class=" language-bash"><code class="language-bash">$ MONITOR
+OK</code></pre>
+<p>这时 Redis 执行的任何命令都会在 redis-cli 中打印出来，如我们打开另一个 redis-cli 执行 <code>SET foo bar</code> 命令，在之前的 redis-cli 中会输出以下内容：</p>
+<pre class=" language-bash"><code class="language-bash">1611295421.146357 <span class="token punctuation">[</span>0 127.0.0.1:37122<span class="token punctuation">]</span> <span class="token string">"keys"</span> <span class="token string">"*"</span></code></pre>
+<p>MONITOR 命令非常影响 Redis 的性能，一个客户端使用 MONITOR 命令会降低 Redis 将近一半的负载能力。所以 MONITOR 命令只适合用来调试和纠错。</p>
+<h3 id="Rdbtools"><a href="#Rdbtools" class="headerlink" title="Rdbtools"></a>Rdbtools</h3><p>Rdbtools 是一个 Redis 的快照文件解析器，它可以根据快照文件导出 JSON 数据文件、分析 Redis 中每个键的占用空间情况等。</p>
+<h4 id="安装-Rdbtools"><a href="#安装-Rdbtools" class="headerlink" title="安装 Rdbtools"></a>安装 Rdbtools</h4><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> clone https://github.com/sripathikrishnan/redis-rdb-tools
+<span class="token function">cd</span> redis-rdb-tools
+<span class="token function">sudo</span> python3 setup.py <span class="token function">install</span></code></pre>
+<h4 id="生成快照文件"><a href="#生成快照文件" class="headerlink" title="生成快照文件"></a>生成快照文件</h4><p>如果没有启用 RDB 持久化，可以使用 SAVE 命令手动使 Redis 生成快照文件。</p>
+<h4 id="将快照导出为-JSON-格式"><a href="#将快照导出为-JSON-格式" class="headerlink" title="将快照导出为 JSON 格式"></a>将快照导出为 JSON 格式</h4><p>快照文件时二进制格式，不利于查看，可以使用 Rdbtools 来将其导出为 JSON 格式，命令如下：</p>
+<pre class=" language-bash"><code class="language-bash">$ rdb --command json /path/to/dump.rdb <span class="token operator">></span> output_filename.json</code></pre>
+<p>其中 <code>/path/to/dump.rdb</code> 是快照文件的路径，<code>output_filename.json</code> 为要导出的文件路径。</p>
+<h4 id="生成空间使用情况报告"><a href="#生成空间使用情况报告" class="headerlink" title="生成空间使用情况报告"></a>生成空间使用情况报告</h4><p>Rdbtools 能够将快照文件中记录的每个键的存储情况导出为 CSV 文件，可以将该 CSV 文件导入到 Excel 等数据分析工具中分析来了解 Redis 的使用情况。命令如下：</p>
+<pre class=" language-bash"><code class="language-bash">$ rdb -c memory /path/to/dump.rdb --bytes 128 -f memory.csv</code></pre>
+<p>导出的 CSV 文件的字段如下所示：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>database</td>
+<td>存储该键的数据库索引</td>
+</tr>
+<tr>
+<td>type</td>
+<td>键类型（使用 TYPE 命令获得）</td>
+</tr>
+<tr>
+<td>key</td>
+<td>键名</td>
+</tr>
+<tr>
+<td>size_in_bytes</td>
+<td>键大小（字节）</td>
+</tr>
+<tr>
+<td>encoding</td>
+<td>内部编码（使用 OBJECTENCODING 命令获得）</td>
+</tr>
+<tr>
+<td>num_elements</td>
+<td>键的元素数</td>
+</tr>
+<tr>
+<td>len_largest_element</td>
+<td>最大元素的长度</td>
+</tr>
+</tbody></table>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -624,7 +602,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://blog.asiama.top/posts/c396.html">https://blog.asiama.top/posts/c396.html</a>
+                    <a href="https://blog.asiama.top/posts/3687.html">https://blog.asiama.top/posts/3687.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -662,8 +640,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Kotlin/">
-                                    <span class="chip bg-color">Kotlin</span>
+                                <a href="/tags/Redis/">
+                                    <span class="chip bg-color">Redis</span>
                                 </a>
                             
                         </div>
@@ -834,7 +812,7 @@
         repo: 'asiama.github.io',
         owner: 'asiama',
         admin: "asiama",
-        id: '2020-12-29T12-38-09',
+        id: '2021-01-23T09-28-42',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -858,17 +836,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/posts/fb3b.html">
+                <a href="/posts/3687.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/20.jpg" class="responsive-img" alt="kotlin集合常用操作符">
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/0.jpg" class="responsive-img" alt="Redis管理">
                         
-                        <span class="card-title">kotlin集合常用操作符</span>
+                        <span class="card-title">Redis管理</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -878,26 +857,23 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-12-29
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-23
+                            </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="post-category">
-                                    函数式编程
-                                </a>
-                            
+                            <i class="fas fa-user fa-fw"></i>
+                            AsiaMa
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Kotlin/">
-                        <span class="chip bg-color">Kotlin</span>
+                    <a href="/tags/Redis/">
+                        <span class="chip bg-color">Redis</span>
                     </a>
                     
                 </div>
@@ -911,13 +887,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/posts/8051.html">
+                <a href="/posts/119d.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/15.jpg" class="responsive-img" alt="Kotlin自定义操作符">
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/7.jpg" class="responsive-img" alt="Redis集群">
                         
-                        <span class="card-title">Kotlin自定义操作符</span>
+                        <span class="card-title">Redis集群</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -928,16 +904,12 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-12-28
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-23
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="post-category">
-                                    函数式编程
-                                </a>
-                            
+                            <i class="fas fa-user fa-fw"></i>
+                            AsiaMa
                             
                         </span>
                     </div>
@@ -945,8 +917,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Kotlin/">
-                        <span class="chip bg-color">Kotlin</span>
+                    <a href="/tags/Redis/">
+                        <span class="chip bg-color">Redis</span>
                     </a>
                     
                 </div>

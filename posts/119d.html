@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Kotlin常用作用域函数, Java,Git,SpringBoot,SpringCloud,SpringCloud Alibaba等">
+    <meta name="keywords" content="Redis集群, Java,Git,SpringBoot,SpringCloud,SpringCloud Alibaba等">
     <meta name="description" content="专注WJava后端,大数据,分享知识,分享生活">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Kotlin常用作用域函数 | 三十二道街</title>
+    <title>Redis集群 | 三十二道街</title>
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/awesome/css/all.css">
@@ -287,12 +287,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/3.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/7.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Kotlin常用作用域函数</h1>
+                    <h1 class="description center-align post-title">Redis集群</h1>
                 </div>
             </div>
         </div>
@@ -409,23 +409,14 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Kotlin/">
-                                <span class="chip bg-color">Kotlin</span>
+                            <a href="/tags/Redis/">
+                                <span class="chip bg-color">Redis</span>
                             </a>
                         
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
-                    
-                    <div class="post-cate">
-                        <i class="fas fa-bookmark fa-fw icon-category"></i>
-                        
-                            <a href="/categories/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="post-category">
-                                函数式编程
-                            </a>
-                        
-                    </div>
                     
                 </div>
             </div>
@@ -434,28 +425,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-12-29
+                    2021-01-23
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-12-29
+                    2021-01-23
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    466
+                    6k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    22 分
                 </div>
                 
 
@@ -470,117 +461,205 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="let-和-run"><a href="#let-和-run" class="headerlink" title="let 和 run"></a>let 和 run</h3><p>let 和 run 都会返回闭包的执行结果，区别在于let有闭包参数，而run没有闭包参数。</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token keyword">var</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span>
-<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>即使使用哨兵，此时的 Redis 集群的每个数据库依然存有集群中的所有数据，从而导致集群的总数据存储量受限于可用存储内存最小的数据库节点，形成木桶效应。由于 Redis 中的所有数据都是基于内存存储，这一问题尤为突出了，尤其是当使用 Redis 做持久化存储服务使用时。</p>
+<p>对 Redis 进行水平扩容，在旧版 Redis 中通常使用客户端分片来解决这个问题，即启动多个 Redis 数据库节点，由客户端决定每个键交由哪个数据库节点存储，下次客户端读取改键时直接到该节点读取。这样可以实现将整个数据库分布存储在 N 个数据库节点中，每个节点只存放总数据量的 1/N。但对于需要扩容的场景来说，在客户端分片后，如果想增加更多的节点，就需要对数据进行手工迁移，同时在迁移的过程中为了保证数据的一致性，还需要将集群暂时下线，相对比较复杂。</p>
+<p>考虑到 Redis 实例非常轻量的特点，可以采用预分片技术（<code>presharding</code>）来一定程度上避免此问题，具体来说是在节点部署初期，就提前考虑日后的存储规模，建立足够多的实例（如 128 个节点），初期时数据很少，所以每个节点存储的数据也非常少，但由于节点轻量的特性，数据之外的内存开销并不大，这使得只需要很少的服务器即可运行这些实例。日后存储规模扩大后，所要做的不过是将某些实例迁移到其它服务器上去，而不需要对所有数据进行重新分片并进行集权下线和数据迁移了。</p>
+<p>无论如何，客户端分片终归是有非常多的缺点，比如维护成本高，增加、移除节点较繁琐等。Redis 3.0 版的一大特性就是支持集群（Cluster）功能。集群的特点在于拥有和单机实例同样的性能，同时在网络分区后能够提供一定的可访问性以及对主数据库故障恢复的支持。另外集群支持几乎所有的单机实例支持的命令，对于涉及多键的命令（如 MGET），如果每个键都位于同一个节点中，则可以正常支持，否则会提示错误。除此之外集群还有一个限制是只能使用默认的 0 号数据库，如果执行 SELECT 切换数据库则会提示错误。</p>
+<p>哨兵与集群是两个独立的功能，但从特性来看哨兵可以视为集群的子集，当不需要数据分片或者已经在客户端进行分片的场景下哨兵就足够使用了，但如果需要进行水平扩容，则集权是一个非常好的选择。</p>
+<h3 id="配置集群"><a href="#配置集群" class="headerlink" title="配置集群"></a>配置集群</h3><p>使用集群，只需要将每个数据库节点的 <code>cluster-enabled</code> 配置选项打开即可。每个集群中至少需要三个主数据库才能正常运行。</p>
+<p>为了演示集群的应用场景以及故障恢复等操作，这里以配置一个 3 主 3 从的集群系统为例。首先建立启动 6 个 Redis 实例，需要注意的是配置文件中应该打开 <code>cluster-enabled</code>。 一个示例配置为：</p>
+<pre class=" language-shell"><code class="language-shell">port 6380
+cluster-enabled yes</code></pre>
+<p>其中 port 参数修改成实际的端口即可。这里假设 6 个实例的端口分别是 6380、6381、6382、6383、6384 和 6385。集群会将当前节点记录的集群状态持久化地存储在指定地文件中，这个文件默认为当前工作目录下的 <code>nodes.conf</code> 文件。每个节点对应的文件必须不同，否则会造成启动失败：</p>
+<pre class=" language-bash"><code class="language-bash">Sorry, the cluster configuration <span class="token function">file</span> nodes.conf is already used by a different Redis Cluster node. Please <span class="token function">make</span> sure that different nodes use different cluster configuration files.</code></pre>
+<p>所以启动节点时要注意最后为每个节点使用不同的工作目录，或者通过 <code>cluster-config-file</code> 选项修改持久化文件的名称：</p>
+<pre class=" language-bash"><code class="language-bash">cluster-config-file nodes.conf</code></pre>
+<p>每个节点启动后都会输出类似下面的内容：</p>
+<pre class=" language-bash"><code class="language-bash">No cluster configuration found, I'm ef81cf4da7040c9d93bc85cfd358ed3886080fb4</code></pre>
+<p>其中 <code>ef81cf4da7040c9d93bc85cfd358ed3886080fb4</code> 表示该节点的运行 ID，运行 ID 是节点在集群中的唯一标识；同一个运行 ID ，可能地址和端口是不同的。</p>
+<p>启动后，可以使用 Redis 命令行客户端连接任意一个节点使用 INFO 命令来判断集群是否正常启用了：</p>
+<pre class=" language-bash"><code class="language-bash">$ INFO cluster
+<span class="token comment" spellcheck="true"># Cluster</span>
+cluster_enabled:1</code></pre>
+<p>其中 cluster_enabled 为 1 表示集群正常启用了。现在每个节点都是完全独立的，要将它们加入同一个集群里还需要几个步骤。</p>
+<ul>
+<li>初始化集群</li>
+</ul>
+<pre class=" language-bash"><code class="language-bash">$ redis-cli --cluster create --cluster-replicas 1 127.0.0.1:6380 127.0.0.1:6381 127.0.0.1:6382 127.0.0.1:6383 127.0.0.1:6384 127.0.0.1:6385</code></pre>
+<p>其中 <code>create</code> 参数表示要初始化集群， <code>--cluster-replicas 1</code> 表示每个主数据库拥有的从数据库个数为 1，所有整个集群共有3（6/2）个主数据库以及 3 个从数据库。</p>
+<p>执行完后会输出如下内容：</p>
+<pre class=" language-bash"><code class="language-bash">$ redis-cli --cluster create --cluster-replicas 1 127.0.0.1:6380 127.0.0.1:6381 127.0.0.1:6382 127.0.0.1:6383 127.0.0.1:6384 127.0.0.1:6385
 
-    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
+<span class="token operator">>></span><span class="token operator">></span> Performing <span class="token function">hash</span> slots allocation on 6 nodes<span class="token punctuation">..</span>.
+Master<span class="token punctuation">[</span>0<span class="token punctuation">]</span> -<span class="token operator">></span> Slots 0 - 5460
+Master<span class="token punctuation">[</span>1<span class="token punctuation">]</span> -<span class="token operator">></span> Slots 5461 - 10922
+Master<span class="token punctuation">[</span>2<span class="token punctuation">]</span> -<span class="token operator">></span> Slots 10923 - 16383
+Adding replica 127.0.0.1:6384 to 127.0.0.1:6380
+Adding replica 127.0.0.1:6385 to 127.0.0.1:6381
+Adding replica 127.0.0.1:6383 to 127.0.0.1:6382
+<span class="token operator">>></span><span class="token operator">></span> Trying to optimize slaves allocation <span class="token keyword">for</span> anti-affinity
+<span class="token punctuation">[</span>WARNING<span class="token punctuation">]</span> Some slaves are <span class="token keyword">in</span> the same host as their master
+M: 70448213e6665fcaea8ed94d7f77b31db0ef3a43 127.0.0.1:6380
+   slots:<span class="token punctuation">[</span>0-5460<span class="token punctuation">]</span> <span class="token punctuation">(</span>5461 slots<span class="token punctuation">)</span> master
+M: ef81cf4da7040c9d93bc85cfd358ed3886080fb4 127.0.0.1:6381
+   slots:<span class="token punctuation">[</span>5461-10922<span class="token punctuation">]</span> <span class="token punctuation">(</span>5462 slots<span class="token punctuation">)</span> master
+M: f4ae8d7e88aacb0bf60cf926f143474d7dc4950c 127.0.0.1:6382
+   slots:<span class="token punctuation">[</span>10923-16383<span class="token punctuation">]</span> <span class="token punctuation">(</span>5461 slots<span class="token punctuation">)</span> master
+S: 4ab18f8ac3f516f48922df4319154f3cd5361310 127.0.0.1:6383
+   replicates 70448213e6665fcaea8ed94d7f77b31db0ef3a43
+S: a1a19b41fb7736ac610a46c448ebd000cb4a342e 127.0.0.1:6384
+   replicates ef81cf4da7040c9d93bc85cfd358ed3886080fb4
+S: bddfa2c27943030592fe138cdc37697ff33d1f28 127.0.0.1:6385
+   replicates f4ae8d7e88aacb0bf60cf926f143474d7dc4950c
+Can I <span class="token keyword">set</span> the above configuration? <span class="token punctuation">(</span>type <span class="token string">'yes'</span> to accept<span class="token punctuation">)</span>:</code></pre>
+<p>内容包括集群具体的分配方案，如果觉得没问题则输入 yes 来开始创建。首先客户端会尝试连接所有的节点，并发送 PING 命令以确定节点能够正常服务。如果有任何节点无法连接，则创建失败。同时发送 <code>INFO</code> 命令获取每个节点的运行 ID 以及开启了集群的功能（即 cluster_enabled 为 1）。</p>
+<p>准备就绪后集群会向每个节点发送 <code>CLUSTER MEET</code> 命令，格式为：</p>
+<pre class=" language-bash"><code class="language-bash">$ CLUSTER MEET ip port</code></pre>
+<p>这个命令用来告诉当前节点指定 <code>ip</code> 和 <code>port</code> 上在运行的节点也是集群的一部分，从而使得 6 个节点最终可以归为一个集群。在分配主从数据库节点，分配的原则是尽量保证每个主数据库运行在不同的 IP 低智商，同时每个从数据库和主数据库均不运行在同一 IP 地址上，以保证系统的容灾能力。分配结果如下：</p>
+<pre class=" language-bash"><code class="language-bash">Master<span class="token punctuation">[</span>0<span class="token punctuation">]</span> -<span class="token operator">></span> Slots 0 - 5460
+Master<span class="token punctuation">[</span>1<span class="token punctuation">]</span> -<span class="token operator">></span> Slots 5461 - 10922
+Master<span class="token punctuation">[</span>2<span class="token punctuation">]</span> -<span class="token operator">></span> Slots 10923 - 16383
+Adding replica 127.0.0.1:6384 to 127.0.0.1:6380
+Adding replica 127.0.0.1:6385 to 127.0.0.1:6381
+Adding replica 127.0.0.1:6383 to 127.0.0.1:6382</code></pre>
+<p>其中主数据库是 6380、6381 和 6382 端口上的节点（以下使用端口号来指代节点），6384 是 6380 的从数据库，6385 是 6381 的从数据库，6383 是 6382 的从数据库。</p>
+<p>分配完成后，会为每个主数据库分配插槽，分配插槽的过程其实就是分配哪些键归哪些节点负责。之后对每个要成为子数据库的节点发送 ：</p>
+<pre class=" language-bash"><code class="language-bash">$ CLUSTER REPLICATE 主数据库的运行ID</code></pre>
+<p>来将当前当前节点转换成从数据库并复制指定运行 ID 的节点（主数据库）。</p>
+<p>此时整个集群的过程即创建完成，使用 Redis 命令行客户端连接任意一个节点执行 :</p>
+<pre class=" language-bash"><code class="language-bash">$ CLUSTER NODES</code></pre>
+<p>可以获得集群中的所有节点信息：</p>
+<pre class=" language-bash"><code class="language-bash">$ CLUSTER nodes
+fc0bb101cb9fb83cc7387c5436cea4e31f37933a 127.0.0.1:6380@16380 myself,master - 0 1611279056000 1 connected 0-5460
+4092663430bae1fc3b2cfc6a622e56e0bd6cdd42 127.0.0.1:6383@16383 slave 789ff268a004e79d27298b08ac14b6e7927ed8a7 0 1611279058000 3 connected
+a1a19b41fb7736ac610a46c448ebd000cb4a342e 127.0.0.1:6384@16384 slave fc0bb101cb9fb83cc7387c5436cea4e31f37933a 0 1611279058000 1 connected
+789ff268a004e79d27298b08ac14b6e7927ed8a7 127.0.0.1:6382@16382 master - 0 1611279059797 3 connected 10923-16383
+bddfa2c27943030592fe138cdc37697ff33d1f28 127.0.0.1:6385@16385 slave ba332a22254bd3dbaa8c2900f97b882ee245cf77 0 1611279058000 2 connected
+ba332a22254bd3dbaa8c2900f97b882ee245cf77 127.0.0.1:6381@16381 master - 0 1611279058786 2 connected 5461-10922</code></pre>
+<p>从上面的输出中可以看到所有节点的运行 ID、地址和端口、角色、状态以及负载的插槽等信息。</p>
+<h3 id="节点的增加"><a href="#节点的增加" class="headerlink" title="节点的增加"></a>节点的增加</h3><p>加入新节点非常简单，只需要向新节点（一下记作 A） 发送如下命令即可：</p>
+<pre class=" language-bash"><code class="language-bash">$ CLUSTER MEET ip port</code></pre>
+<p>IP 和 PORT 是集群中任意一个节点的地址和端口号，A 接收到客户端发来的命令后，会与 该地址和端口号 的节点 B 进行握手，使 B 将 A 认作当前集群中的一员。当 B 与 A 握手成功后，B 会使用 <code>Grossip</code> 协议将节点A的信息通知给集群中的每一个节点。通过这一方式，即使集群中有多个节点，也只需要选择 MEET 其中任意一个节点，即可使新节点最终加入整个集群中。</p>
+<h3 id="插槽的分配"><a href="#插槽的分配" class="headerlink" title="插槽的分配"></a>插槽的分配</h3><p>新的节点加入集群中有两个选择，要么使用 <code>CLUSTER REPLICATE</code> 命令复制每个主数据库来以从数据库的形式运行，要么向集群申请分配插槽（slot） 来以主数据库的形式运行。</p>
+<p>在一个集群中，所有的键会被分配成 16384 个插槽，而每个主数据库会负责处理其中的一部分插槽。现在再回头来看创建集群时的输出：</p>
+<pre class=" language-bash"><code class="language-bash">fc0bb101cb9fb83cc7387c5436cea4e31f37933a 127.0.0.1:6380@16380 myself,master - 0 1611279056000 1 connected 0-5460
+789ff268a004e79d27298b08ac14b6e7927ed8a7 127.0.0.1:6382@16382 master - 0 1611279059797 3 connected 10923-16383
+ba332a22254bd3dbaa8c2900f97b882ee245cf77 127.0.0.1:6381@16381 master - 0 1611279058786 2 connected 5461-10922</code></pre>
+<p>上面的每一行表示一个主数据库的信息，其中可以看到 6380 负责处理 0<del>5460 这 5461 个插槽，6381 负责处理 5461 ~ 10922 这 5462 个插槽，6382 则负责处理 10923</del>16383 这 5461 个插槽。虽然初始化集群时分配给每个节点的插槽都是连续的，但是实际上 Redis 并没有此限制，可以将任意的几个插槽分配给任意的节点负责。</p>
+<p>在介绍如何将插槽分配给指定的节点前，先来介绍键与插槽的对应关系。Redis 将每个键的键名的有效部分使用 CRC16 算法计算出散列值，然后去对 16384 的余数。这样使得每个键都可以分配到 16384 个插槽中，进而分配给执行的一个节点中处理。 这里键名的有效部分是指：</p>
+<ul>
+<li>如果键名包含 { 符号，且在符号的后面存在 } 符号，并且 { 和 } 之间有至少一个字符，则有效部分是指 { 和 } 之间的内容；</li>
+<li>如果不满足上一条规则，那么整个键名为有效部分。</li>
+</ul>
+<p>例如，键 <code>hello.world</code> 的有效部分为 <code>“hello.world”</code>，键 <code>{user102}:last.name</code> 的有效部分为 <code>user102</code>。如果命令设计多个键（如 MGET），只有当所有键都位于同一个节点时 Redis 才能正常支持。利用键的分配规则，可以将所有相关键的有效部分设置成同样的值使得相关键都能分配到同一个节点以支持多键操作。比如，<code>{user102}:first.name</code> 和 <code>{user102}:last:name</code> 会被分配到同一个节点，所以可以使用：</p>
+<pre class=" language-bash"><code class="language-bash">$ MGET <span class="token punctuation">{</span>user102<span class="token punctuation">}</span>:first.name <span class="token punctuation">{</span>user102<span class="token punctuation">}</span>:last.name </code></pre>
+<p>来同时获取这两个键的值。</p>
+<p>介绍完键与插槽的对应关系后，接下来再来介绍如何将插槽分配给执行节点。插槽的分配分为如下情况：</p>
+<ul>
+<li>插槽之前没有被分配过，现在向分配给指定节点。</li>
+<li>插槽之前被分配过，现在想移动到指定节点。</li>
+</ul>
+<p>其中第一种情况使用 <code>CLUSTER ADDSLOTS</code> 来实现。 <code>CLUSTER ADDSLOTS</code> 命令的用法为：</p>
+<pre class=" language-bash"><code class="language-bash">$ CLUSTER ADDSLOTS slot1 <span class="token punctuation">[</span>slot2<span class="token punctuation">]</span> <span class="token punctuation">..</span>. <span class="token punctuation">[</span>slotN<span class="token punctuation">]</span></code></pre>
+<p>如想将 100 和 101 两个插槽分配给某个节点，只需要在该节点执行：</p>
+<pre class=" language-bash"><code class="language-bash">$ CLUSTER ADDSLOTS 100 101</code></pre>
+<p>如果执行插槽已经分配过了，则会提示：</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token punctuation">(</span>error<span class="token punctuation">)</span> ERR Slot 100 is already busy</code></pre>
+<p>可以通过命令 <code>CLUSTER SLOTS</code> 来查看插槽的分配情况，如：</p>
+<pre class=" language-bash"><code class="language-bash">$ CLUSTER SLOTS
+1<span class="token punctuation">)</span> 1<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 0
+   2<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 5460
+   3<span class="token punctuation">)</span> 1<span class="token punctuation">)</span> <span class="token string">"127.0.0.1"</span>
+      2<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 6380
+      3<span class="token punctuation">)</span> <span class="token string">"fc0bb101cb9fb83cc7387c5436cea4e31f37933a"</span>
+   4<span class="token punctuation">)</span> 1<span class="token punctuation">)</span> <span class="token string">"127.0.0.1"</span>
+      2<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 6384
+      3<span class="token punctuation">)</span> <span class="token string">"a1a19b41fb7736ac610a46c448ebd000cb4a342e"</span>
+2<span class="token punctuation">)</span> 1<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 10923
+   2<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 16383
+   3<span class="token punctuation">)</span> 1<span class="token punctuation">)</span> <span class="token string">"127.0.0.1"</span>
+      2<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 6382
+      3<span class="token punctuation">)</span> <span class="token string">"789ff268a004e79d27298b08ac14b6e7927ed8a7"</span>
+   4<span class="token punctuation">)</span> 1<span class="token punctuation">)</span> <span class="token string">"127.0.0.1"</span>
+      2<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 6383
+      3<span class="token punctuation">)</span> <span class="token string">"4092663430bae1fc3b2cfc6a622e56e0bd6cdd42"</span>
+3<span class="token punctuation">)</span> 1<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 5461
+   2<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 10922
+   3<span class="token punctuation">)</span> 1<span class="token punctuation">)</span> <span class="token string">"127.0.0.1"</span>
+      2<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 6381
+      3<span class="token punctuation">)</span> <span class="token string">"ba332a22254bd3dbaa8c2900f97b882ee245cf77"</span>
+   4<span class="token punctuation">)</span> 1<span class="token punctuation">)</span> <span class="token string">"127.0.0.1"</span>
+      2<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 6385
+      3<span class="token punctuation">)</span> <span class="token string">"bddfa2c27943030592fe138cdc37697ff33d1f28"</span></code></pre>
+<p>其中返回结果的格式很容易理解，一共 3 条记录，每条记录的前两个值表示插槽的开始号码和结束号码，后面的值则为负责该插槽的节点，包括主数据库和所有的从数据库，主数据库始终在第一位。</p>
+<p>对于情况2，处理起来相对复杂一些，我们首先将一个插槽从 6380 迁移到 6381，执行如下命令：</p>
+<pre class=" language-bash"><code class="language-bash">$ CLUSTER SETSLOT 插槽号 NODE 新节点运行的ID</code></pre>
+<p>如想要把 0 号插槽迁移到 6381：</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># ba332a22254bd3dbaa8c2900f97b882ee245cf77 是 6381 的运行 id</span>
+redis 6380<span class="token operator">></span> CLUSTER SETSLOT 0 NODE ba332a22254bd3dbaa8c2900f97b882ee245cf77
+OK</code></pre>
+<p>此时重新使用 <code>CLUSTER SLOTS</code> 查看插槽的分配情况：</p>
+<pre class=" language-bash"><code class="language-bash">fc0bb101cb9fb83cc7387c5436cea4e31f37933a 127.0.0.1:6380@16380 myself,master - 0 1611283004000 1 connected 1-5460
 
-    <span class="token keyword">val</span> letResult<span class="token operator">:</span> String <span class="token operator">=</span> user<span class="token punctuation">.</span><span class="token function">let</span> <span class="token punctuation">{</span> user<span class="token operator">:</span> User <span class="token operator">-></span>
-        <span class="token string">"let:: <span class="token interpolation"><span class="token delimiter variable">${</span>user<span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span>
-    <span class="token punctuation">}</span>
-  <span class="token comment" spellcheck="true">/** 
-         简化写法
-         val letResult: String = user.let {
-        "let:: ${it.javaClass.simpleName}"
-    } 
-   */</span>
+ba332a22254bd3dbaa8c2900f97b882ee245cf77 127.0.0.1:6381@16381 master - 0 1611283005000 2 connected 0 5461-10922</code></pre>
+<p>然而这样迁移插槽的前提是插槽中并没有任何键，因为使用 <code>CLUSTER SETSLOT</code> 命令迁移插槽时并不会连同相应的键一起迁移，这就造成了客户端在指定节点无法找到未迁移的键，造成这些键对客户端来说“丢失了”，为此需要手工获取插槽中存在哪些键，然后将每个键迁移到新的节点中才能运行。</p>
+<p>手工获取某个插槽中存在哪些键的方法时：</p>
+<pre class=" language-bash"><code class="language-bash">$ CLUSTER GETKEYSINSLOT 插槽号 要返回的键的数量</code></pre>
+<p>之后对每个键，使用 MIGRATE 命令将其迁移到目标节点：</p>
+<pre class=" language-bash"><code class="language-bash">$ MIGRATE 目标节点地址 目标节点端口 键名 数据库号码 超时时间 <span class="token punctuation">[</span>COPY<span class="token punctuation">]</span> <span class="token punctuation">[</span>REPLACE<span class="token punctuation">]</span></code></pre>
+<p>其中 <code>COPY</code> 选项表示不将键从当前数据库中删除，而是复制一份副本。<code>REPLACE</code> 表示如果目标节点存在同名键，则覆盖。因为集群模式只能使用 0 号数据库，所以数据库号码始终为 0。如要把键 <code>abc</code> 从当前节点（如 6381）迁移到 6380：</p>
+<pre class=" language-bash"><code class="language-bash">redis 6381<span class="token operator">></span> MIGRATE 127.0.0.1 6380 abc 0 16000 REPLACE</code></pre>
+<p>至此，我们已经知道如果将插槽委派给其它节点，并同时将当前节点中插槽下所有的键迁移到目标节点中。然而还有最后一个问题是如果要迁移的数据量比较大，整个过程会发费较长时间，那么究竟什么时候执行 <code>CLUSTER SETSLOT</code> 命令来完成插槽的交接呢？如果在键迁移未完成时执行，那么客户端就会尝试在新的节点读取键值，此时还没有迁移完成，自然有可能读不到键值，从而造成相关键的“临时丢失”。相反，如果在键迁移完成后再执行，那么在迁移时客户端会在旧的节点读取键值，然后有些键已经迁移到新的节点上了，同时也会造成键的临时“丢失”。Redis 提供了如下两个命令用来实现再集群不下线的情况下迁移数据：</p>
+<pre class=" language-bash"><code class="language-bash">$ CLUSTER SETSLOT 插槽号 MIGRATING 新节点的运行ID
+$ CLUSTER SETSLOT 插槽号 IMPORTING 原节点的运行ID</code></pre>
+<p>进行迁移时，假设要把 0 号插槽从 A 迁移到 B，此时会执行如下操作：</p>
+<ol>
+<li>在 B 执行 <code>CLUSTER SETSLOT 0 IMPORTING A 。</code></li>
+<li>在 A 执行 CLUSTER SETSLOT 0 MIGRATING B。</li>
+<li>执行 <code>CLUSTER GETKEYSINSLOT 0</code> 获取 0 号插槽的键列表。</li>
+<li>对第 3 步获取的每个键执行 MIGRATE  命令，将其从 A 迁移到 B。</li>
+<li>执行 <code>CLUSTER SETSLOT 0 NODE B</code> 来完成迁移。</li>
+</ol>
+<p>上面的 1 和 2 步骤就是为了解决迁移过程中键的临时 “丢失” 问题。首先执行完前两步后，当客户端 A 请求插槽 0 中的键时，如果键存在（即尚未被迁移），则正常处理，如果不存在，则返回一个 ASK 跳转请求，告诉客户端这个键在 B 里，如图所示：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/16251611285456_.pic_hd.jpg"></p>
+<p>客户端收到 ASK 跳转请求后，首先向 B 发送 ASKING 命令，然后再重新发送之前的命令。相反，当客户端向 B 请求插槽 0 中的键时，如果前面执行了 ASKING 命令，则返回键值内容，否则返回 MOVE 跳转请求。如图所示：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/16241611285104_.pic_hd.jpg"></p>
+<p>这样一来客户端只有能够处理 ASK 跳转，则可以在数据库迁移时自动从正确的节点获取到相应的键值，避免了键在迁移过程中临时 “丢失” 的问题。</p>
+<h3 id="获取与插槽对应的节点"><a href="#获取与插槽对应的节点" class="headerlink" title="获取与插槽对应的节点"></a>获取与插槽对应的节点</h3><p>介绍了插槽的分配方式，对于指定的键，可以根据前面所说的算法来计算其属于哪个插槽，但是如何获取某一个键由哪个节点负责呢？</p>
+<p>实际上，当客户端向集群中的任意一个节点发送命令后，该节点会判断相应的键是否在当前节点中，如果键在该节点中，就会像单机实例一样正确处理该命令：如果键不在该节点中，就会返回一个 MOVE 重定向请求，告诉客户端这个键目前由哪个节点负责，然后客户端再将同样的请求向目标节点重新发送一次以获得结果。</p>
+<p>一些语言的 Redis 库支持代理 MOVE 请求，所以对于开发者而言命令重定向的过程是透明的，使用集权与使用单机实例并没有什么不同。然而也有些语言的 Redis 库并不支持集群，这时就需要在客户端编码处理了。</p>
+<p>还是以上面的集群配置为例，键 foo 实际应该由 6382 节点负责，如果尝试在 6380 节点执行与键 foo 相关的命令，就会有如下输出：</p>
+<pre class=" language-bash"><code class="language-bash">redis 6380<span class="token operator">></span> <span class="token keyword">set</span> foo bar
+<span class="token punctuation">(</span>error<span class="token punctuation">)</span> MOVED 12182 127.0.0.1:6382</code></pre>
+<p>返回的是一个 MOVE 重定向请求，12182 表示 foo 所属的插槽号，127.0.0.1:6382 则是负责该插槽的节点地址和端口，客户端收到重定向请求后，应该将命令重新向 6382 节点发送一次：</p>
+<pre class=" language-bash"><code class="language-bash">redis 6382<span class="token operator">></span> <span class="token keyword">set</span> foo bar
+OK</code></pre>
+<p>Redis 命令行客户端提供了集群模式来支持自动重定向，使用 -c 参数来启用：</p>
+<pre class=" language-bash"><code class="language-bash">$ redis-cli -c -p 6380
 
-    <span class="token function">println</span><span class="token punctuation">(</span>letResult<span class="token punctuation">)</span>
-
-    <span class="token keyword">val</span> runResult <span class="token operator">=</span> user<span class="token punctuation">.</span><span class="token function">run</span> <span class="token punctuation">{</span>
-        <span class="token string">"run:: <span class="token interpolation"><span class="token delimiter variable">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span>
-    <span class="token punctuation">}</span>
-    <span class="token function">print</span><span class="token punctuation">(</span>runResult<span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-
-<span class="token comment" spellcheck="true">/** 输出结果：let:: User
-                         run:: User */</span></code></pre>
-<h3 id="also-和-apply"><a href="#also-和-apply" class="headerlink" title="also 和 apply"></a>also 和 apply</h3><p>also与apply都不返回闭包的执行结果，区别在于also有闭包参数，而apply没有闭包参数。</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token keyword">var</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span>
-
-<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-
-    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
-
-    user<span class="token punctuation">.</span><span class="token function">also</span> <span class="token punctuation">{</span>
-        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"also::<span class="token interpolation"><span class="token delimiter variable">${</span>it<span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-
-    user<span class="token punctuation">.</span><span class="token function">apply</span> <span class="token punctuation">{</span>
-        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"apply::<span class="token interpolation"><span class="token delimiter variable">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-<span class="token comment" spellcheck="true">// 在这个例子中，also 和 apply 会继续返回user这个对象，因为我们可以这么使用</span>
-        user<span class="token punctuation">.</span><span class="token function">also</span> <span class="token punctuation">{</span>
-        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"also::<span class="token interpolation"><span class="token delimiter variable">${</span>it<span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span><span class="token punctuation">.</span><span class="token function">apply</span> <span class="token punctuation">{</span>
-        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"apply::<span class="token interpolation"><span class="token delimiter variable">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>javaClass<span class="token punctuation">.</span>simpleName<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span><span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">"Bob"</span>
-
-    <span class="token function">print</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span>
-<span class="token comment" spellcheck="true">/** 输出结果：User(name=Bob) */</span></code></pre>
-<h3 id="takeIf-和-takeUnless"><a href="#takeIf-和-takeUnless" class="headerlink" title="takeIf 和 takeUnless"></a>takeIf 和 takeUnless</h3><p>takeIf 的闭包返回一个判断结果，为false时，takeIf函数会返回空。</p>
-<p>takeUnless 与 takeIf 刚好相反，闭包的判断结果，为true时函数会返回空。</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-
-    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
-
-    user<span class="token punctuation">.</span><span class="token function">takeIf</span> <span class="token punctuation">{</span>
-        it<span class="token punctuation">.</span>name<span class="token punctuation">.</span><span class="token function">isNotEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span><span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">also</span> <span class="token punctuation">{</span>
-        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"姓名为: <span class="token interpolation"><span class="token delimiter variable">${</span>it<span class="token punctuation">.</span>name<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span><span class="token operator">?:</span> <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"姓名为空"</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">/** 输出结果：姓名为: AsiaMa */</span>
-
-<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-
-    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
-
-    user<span class="token punctuation">.</span><span class="token function">takeUnless</span> <span class="token punctuation">{</span>
-        it<span class="token punctuation">.</span>name<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span><span class="token operator">?</span><span class="token punctuation">.</span><span class="token function">also</span> <span class="token punctuation">{</span>
-        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"姓名为: <span class="token interpolation"><span class="token delimiter variable">${</span>it<span class="token punctuation">.</span>name<span class="token delimiter variable">}</span></span>"</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span><span class="token operator">?:</span> <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"姓名为空"</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">/** 输出结果：姓名为: AsiaMa */</span></code></pre>
-<h3 id="Repeat"><a href="#Repeat" class="headerlink" title="Repeat"></a>Repeat</h3><p>重复执行当前闭包</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token keyword">var</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span>
-
-<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">val</span> user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
-
-    <span class="token function">repeat</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token function">print</span><span class="token punctuation">(</span>user<span class="token punctuation">.</span>name<span class="token punctuation">)</span>
-        <span class="token function">println</span><span class="token punctuation">(</span>it<span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">/**
-输出结果：
-    AsiaMa0
-    AsiaMa1
-    AsiaMa2
-    AsiaMa3
-    AsiaMa4
-*/</span></code></pre>
-<h3 id="With"><a href="#With" class="headerlink" title="With"></a>With</h3><p>with比较特殊，不是以扩展方法的形式存在，而是一个顶级函数。可用于对象的通用属性赋值。</p>
-<pre class=" language-java"><code class="language-java">fun <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    val user <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"AsiaMa"</span><span class="token punctuation">)</span>
-
-    <span class="token function">with</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">"Tom"</span>
-    <span class="token punctuation">}</span>
-    <span class="token function">println</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span>
-
-  <span class="token comment" spellcheck="true">/** 与with相似    
-    user.apply {
-        this.name = "Rose"
-    }
-  */</span>
-<span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">/** 输出结果：User(name=Tom) */</span></code></pre>
+redis 6380<span class="token operator">></span> <span class="token keyword">set</span> foo bar
+-<span class="token operator">></span> Redirected to slot <span class="token punctuation">[</span>12182<span class="token punctuation">]</span> located at 127.0.0.1:6382
+OK</code></pre>
+<p>可见加入了 -c 参数后，如果当前节点并不负责要处理的键，Redis 命令行客户端会进行自动命令重定向。而这一过程正是负责集群的客户端应该实现的。</p>
+<p>然而相比单机实例，集群的命令重定向也增加了命令的请求次数，原先只需要执行一次的命令，现在有可能一次发向两个节点，算上往返时延，可以说请求重定向对性能还是有些影响的。</p>
+<p>为了解决这一问题，当发现新的重定向请求时，客户端应该在重新向正确节点发送命令的同时，缓存插槽的路由信息，即记录下当前插槽是由哪个节点负责的。这样每次发起命令时，客户端首先计算相关键是属于哪个插槽的，然后根据缓存的路由判断插槽由哪个节点负责。考虑到插槽总数相对较少（16384个），缓存所有插槽的路由信息后，每次命令将均只发向正确的节点，从而达到和单机实例同样的性能。</p>
+<h3 id="故障恢复"><a href="#故障恢复" class="headerlink" title="故障恢复"></a>故障恢复</h3><p>在一个集群中，每个节点都会定期向其它节点发送 PING 命令，并通过有没有收到回复来判断目标节点是否已经下线了。具体来说，集群中的每个节点每个 1 秒就会随机选择 5 个节点，然后选择其中最久没有相应的节点发送 PING 命令。</p>
+<p>如果一定时间内目标节点没有相应回复，则发起 PING 命令的节点会认为目标节点疑似下线（PFALL）。疑似下线可以与哨兵的主观下线类比，两者都表示某一节点从<strong>自身的角度认为</strong>目标节点是下线的状态。与哨兵的模式类似，如果要使在整个集群中的所有节点都认为某一节点已经下线，需要一定数量的节点都认为该节点疑似下线才可以，这一过程具体为：</p>
+<ul>
+<li>一旦节点 A 认为节点 B 是疑似下线状态，就会在集群中传播该消息，所有其它节点收到消息后都会记录下这一信息；</li>
+<li>当集群中的某一节点 C 收集到半数以上的节点认为 B 是疑似下线的状态时，就会将 B 标记为下线（FALL），并且向集群中的其它节点传播该消息，从而使得 B 在整个集群中下线。</li>
+</ul>
+<p>在集群中，当一个主数据库下线时，就会出现一部分插槽无法写入的问题。这时如果该主数据库拥有至少一个从数据库，集群就进行故障恢复操作来将其中一个从数据库转变成主数据库来保证集群的完成。选择哪个从数据库来作为主数据库的过程与在哨兵中选择领头哨兵的过程一样，都是基于Raft 算法，过程如下：</p>
+<ol>
+<li>发现其复制的主数据库下线的从数据库库（下面称作 A）向每个集群中的节点发送请求，要求对方选自己成为主数据库。</li>
+<li>如果请求的节点没有选过其他人，则会同意 A 设置成主数据库。</li>
+<li>如果 A 发现有超过集群中节点总数一半的节点同意选自己成为主数据库，则 A 成功成为主数据库。</li>
+<li>当有多个从数据库节点同时参选主数据库，则会出现没有任何节点当选的可能。此时每个参选点将等待一个随机时间重新发起参选请求，进行下一轮选举，直到选举成功。</li>
+</ol>
+<p>当某个从数据库当选为主数据库后，会通过命令 <code>SLAVEOF NO ONE</code> 将自己转换成主数据库，并将旧的数据库插槽转换给自己负责。</p>
+<p>如果至少负责一个插槽的主数据库下线且没有相应的从数据库可以进行故障恢复，则整个集群默认会进入下线状态无法继续工作。如果想在这种情况下使集群仍能正常工作，可以修改配置：</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 默认为 yes</span>
+cluster-require-full-coverge no</code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -624,7 +703,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://blog.asiama.top/posts/c396.html">https://blog.asiama.top/posts/c396.html</a>
+                    <a href="https://blog.asiama.top/posts/119d.html">https://blog.asiama.top/posts/119d.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -662,8 +741,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Kotlin/">
-                                    <span class="chip bg-color">Kotlin</span>
+                                <a href="/tags/Redis/">
+                                    <span class="chip bg-color">Redis</span>
                                 </a>
                             
                         </div>
@@ -834,7 +913,7 @@
         repo: 'asiama.github.io',
         owner: 'asiama',
         admin: "asiama",
-        id: '2020-12-29T12-38-09',
+        id: '2021-01-23T09-20-21',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -862,13 +941,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/posts/fb3b.html">
+                <a href="/posts/3687.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/20.jpg" class="responsive-img" alt="kotlin集合常用操作符">
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/0.jpg" class="responsive-img" alt="Redis管理">
                         
-                        <span class="card-title">kotlin集合常用操作符</span>
+                        <span class="card-title">Redis管理</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -879,16 +958,12 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-12-29
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-01-23
                         </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="post-category">
-                                    函数式编程
-                                </a>
-                            
+                            <i class="fas fa-user fa-fw"></i>
+                            AsiaMa
                             
                         </span>
                     </div>
@@ -896,8 +971,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Kotlin/">
-                        <span class="chip bg-color">Kotlin</span>
+                    <a href="/tags/Redis/">
+                        <span class="chip bg-color">Redis</span>
                     </a>
                     
                 </div>
@@ -911,13 +986,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/posts/8051.html">
+                <a href="/posts/d0dd.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/15.jpg" class="responsive-img" alt="Kotlin自定义操作符">
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/23.jpg" class="responsive-img" alt="Redis主从复制">
                         
-                        <span class="card-title">Kotlin自定义操作符</span>
+                        <span class="card-title">Redis主从复制</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -928,16 +1003,12 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-12-28
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-21
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" class="post-category">
-                                    函数式编程
-                                </a>
-                            
+                            <i class="fas fa-user fa-fw"></i>
+                            AsiaMa
                             
                         </span>
                     </div>
@@ -945,8 +1016,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Kotlin/">
-                        <span class="chip bg-color">Kotlin</span>
+                    <a href="/tags/Redis/">
+                        <span class="chip bg-color">Redis</span>
                     </a>
                     
                 </div>

@@ -85,6 +85,42 @@
       </tags>
   </entry>
   <entry>
+    <title>Java的不足</title>
+    <url>/posts/26f4.html</url>
+    <content><![CDATA[<h3 id="检查异常"><a href="#检查异常" class="headerlink" title="检查异常"></a>检查异常</h3><p>检查异常会在编译时强制执行try catch处理，同时还需要进行某种排序处理。检查异常是一个失败的实践，几乎所有的主要API提供者都返回可检查异常。Kotlin中摒弃了检查异常。</p>
+<h3 id="基本类型和数组"><a href="#基本类型和数组" class="headerlink" title="基本类型和数组"></a>基本类型和数组</h3><p>Java的这个设计保留了字节码的底层细节，违反了“凡事皆为对象”的原则，如泛型无法包容基本类型就是一个例子。这也使得Java的类型系统显得不是那么地简单统一。比较好的方案是，源代码不用直接使用基本类型和数组，由编译器（或者JVM）来决定是否可以帮你对其优化，而Kotlin正是这么做的。</p>
+<h3 id="静态变量"><a href="#静态变量" class="headerlink" title="静态变量"></a>静态变量</h3><p>静态方法经常会导致需要显式的定义接口，从而使得API更加复杂。一个更好的办法就是采用单例对象，单例对象在大多数情况下表现得与静态对象差不多，但是可以像一个对象被传递。Kotlin中提供了object单例对象。</p>
+<h3 id="空指针异常"><a href="#空指针异常" class="headerlink" title="空指针异常"></a>空指针异常</h3><p>在Java中我们不得不写一堆防御代码来避免令人头疼的NPE。Kotlin中引入可空类型与安全调用符、Elvis操作符等特性来实现空安全。</p>
+<h3 id="一堆getter-setter单调冗长的样板代码"><a href="#一堆getter-setter单调冗长的样板代码" class="headerlink" title="一堆getter/setter单调冗长的样板代码"></a>一堆getter/setter单调冗长的样板代码</h3><p>在Kotlin中，我们可以使用数据类：</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">Person</span><span class="token punctuation">(</span><span class="token keyword">val</span> id<span class="token operator">:</span> Int<span class="token punctuation">,</span> <span class="token keyword">val</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span></code></pre>
+<h3 id="不容易传递函数"><a href="#不容易传递函数" class="headerlink" title="不容易传递函数"></a>不容易传递函数</h3><p>Java中没有一等函数类型，函数式（FP）编程只能通过使用接口类型以及多态特性“曲线”来实现。Java会将每一个算法（方法）都放入类中，这种限制会出现这样的“荒唐事”：我们只想实现一个函数算法，而这个时候必须还要给出一个类来放置这个方法；同样，如果在其它地方调用这个方法，必须通过创建该类来实现调用。在Kotlin中直接提供了一等函数（First-Class Function Type）类型，其跟普通类型一样，函数类型可以作为值来传递，也可以作为返回值。</p>
+<blockquote>
+<p>不可否认的是，C、C++和Java语言都是非常优秀的编程语言。但是事物总是不断发展变化的。就像C++语言是对C语言的继承与发展，Java语言是对C++语言的继承与改造，而Kotlin语言也是对Java语言的继承与变革。</p>
+</blockquote>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Bean的初始化方式</title>
     <url>/posts/c3f8.html</url>
     <content><![CDATA[<h3 id="PostConstruct标注方法"><a href="#PostConstruct标注方法" class="headerlink" title="@PostConstruct标注方法"></a>@PostConstruct标注方法</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Employee</span> <span class="token punctuation">{</span>
@@ -262,42 +298,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Java的不足</title>
-    <url>/posts/26f4.html</url>
-    <content><![CDATA[<h3 id="检查异常"><a href="#检查异常" class="headerlink" title="检查异常"></a>检查异常</h3><p>检查异常会在编译时强制执行try catch处理，同时还需要进行某种排序处理。检查异常是一个失败的实践，几乎所有的主要API提供者都返回可检查异常。Kotlin中摒弃了检查异常。</p>
-<h3 id="基本类型和数组"><a href="#基本类型和数组" class="headerlink" title="基本类型和数组"></a>基本类型和数组</h3><p>Java的这个设计保留了字节码的底层细节，违反了“凡事皆为对象”的原则，如泛型无法包容基本类型就是一个例子。这也使得Java的类型系统显得不是那么地简单统一。比较好的方案是，源代码不用直接使用基本类型和数组，由编译器（或者JVM）来决定是否可以帮你对其优化，而Kotlin正是这么做的。</p>
-<h3 id="静态变量"><a href="#静态变量" class="headerlink" title="静态变量"></a>静态变量</h3><p>静态方法经常会导致需要显式的定义接口，从而使得API更加复杂。一个更好的办法就是采用单例对象，单例对象在大多数情况下表现得与静态对象差不多，但是可以像一个对象被传递。Kotlin中提供了object单例对象。</p>
-<h3 id="空指针异常"><a href="#空指针异常" class="headerlink" title="空指针异常"></a>空指针异常</h3><p>在Java中我们不得不写一堆防御代码来避免令人头疼的NPE。Kotlin中引入可空类型与安全调用符、Elvis操作符等特性来实现空安全。</p>
-<h3 id="一堆getter-setter单调冗长的样板代码"><a href="#一堆getter-setter单调冗长的样板代码" class="headerlink" title="一堆getter/setter单调冗长的样板代码"></a>一堆getter/setter单调冗长的样板代码</h3><p>在Kotlin中，我们可以使用数据类：</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">Person</span><span class="token punctuation">(</span><span class="token keyword">val</span> id<span class="token operator">:</span> Int<span class="token punctuation">,</span> <span class="token keyword">val</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span></code></pre>
-<h3 id="不容易传递函数"><a href="#不容易传递函数" class="headerlink" title="不容易传递函数"></a>不容易传递函数</h3><p>Java中没有一等函数类型，函数式（FP）编程只能通过使用接口类型以及多态特性“曲线”来实现。Java会将每一个算法（方法）都放入类中，这种限制会出现这样的“荒唐事”：我们只想实现一个函数算法，而这个时候必须还要给出一个类来放置这个方法；同样，如果在其它地方调用这个方法，必须通过创建该类来实现调用。在Kotlin中直接提供了一等函数（First-Class Function Type）类型，其跟普通类型一样，函数类型可以作为值来传递，也可以作为返回值。</p>
-<blockquote>
-<p>不可否认的是，C、C++和Java语言都是非常优秀的编程语言。但是事物总是不断发展变化的。就像C++语言是对C语言的继承与发展，Java语言是对C++语言的继承与改造，而Kotlin语言也是对Java语言的继承与变革。</p>
-</blockquote>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>Kotlin</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Kotin介绍</title>
     <url>/posts/5487.html</url>
     <content><![CDATA[<h3 id="Kotlin的主要特征"><a href="#Kotlin的主要特征" class="headerlink" title="Kotlin的主要特征"></a>Kotlin的主要特征</h3><h4 id="静态类型"><a href="#静态类型" class="headerlink" title="静态类型"></a>静态类型</h4><p>Kotlin和Java一样是一种静态类型的编程语言。这意味着<code>所有表达式的类型在编译器已经确定了，而编译器就能验证对象是否包含了你想访问的方法或者字段</code>。</p>
@@ -340,6 +340,44 @@ b<span class="token operator">?</span><span class="token punctuation">.</span>le
 <span class="token punctuation">}</span></code></pre>
 <h4 id="互操作性"><a href="#互操作性" class="headerlink" title="互操作性"></a>互操作性</h4><p>Kotlin的优势是既有Java的完整生态（Kotlin完全无缝使用各类Java API框架库）,又有现代语言的高级特性（语法糖）。</p>
 <h3 id="编程哲学"><a href="#编程哲学" class="headerlink" title="编程哲学"></a>编程哲学</h3><p>编程的真正问题在于，如何把人类脑子里对问题的解决方案“具化”到机器世界，而这个“具化”过程正是编程语言所要表达的东西。如何富有表现力并且安全简洁的表达，这是所有编程语言所要解决的问题。</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Kotlin单例</title>
+    <url>/posts/9fbb.html</url>
+    <content><![CDATA[<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">class</span> Singleton <span class="token keyword">private</span> <span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">companion</span> <span class="token keyword">object</span> <span class="token punctuation">{</span>
+        <span class="token keyword">fun</span> <span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> Singleton <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> Holder<span class="token punctuation">.</span>instance
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">object</span> Holder <span class="token punctuation">{</span>
+        <span class="token keyword">val</span> instance <span class="token operator">=</span> <span class="token function">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -438,44 +476,6 @@ b<span class="token operator">?</span><span class="token punctuation">.</span>le
     l1<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
     <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"test2"</span><span class="token punctuation">)</span>
     <span class="token keyword">return</span> l1
-<span class="token punctuation">}</span></code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>Kotlin</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Kotlin单例</title>
-    <url>/posts/9fbb.html</url>
-    <content><![CDATA[<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">class</span> Singleton <span class="token keyword">private</span> <span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-
-    <span class="token keyword">companion</span> <span class="token keyword">object</span> <span class="token punctuation">{</span>
-        <span class="token keyword">fun</span> <span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> Singleton <span class="token punctuation">{</span>
-            <span class="token keyword">return</span> Holder<span class="token punctuation">.</span>instance
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">private</span> <span class="token keyword">object</span> Holder <span class="token punctuation">{</span>
-        <span class="token keyword">val</span> instance <span class="token operator">=</span> <span class="token function">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
@@ -1398,6 +1398,130 @@ esac</code></pre>
       </tags>
   </entry>
   <entry>
+    <title>Redis管理</title>
+    <url>/posts/3687.html</url>
+    <content><![CDATA[<h3 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h3><p>Redis 的作者 <code>Salvatore Sanfilippo</code> 曾经发表过 Redis 宣言，其中提到 Redis 以简洁为美。同样在安全层面 Redis 也没有做太多的工作。 </p>
+<h3 id="可信的环境"><a href="#可信的环境" class="headerlink" title="可信的环境"></a>可信的环境</h3><p>Redis 的安全设计是在 “ Redis 运行在可信环境” 这个前提下做出的。在生产环境运行时不能允许外界直接连接到 Redis 服务器上，而应该通过应用程序中转，运行在可信的环境中是保证 Redis 安全的最重要方法。</p>
+<p>如只允许本机应用连接 Redis ，可以将 bind 参数改成：</p>
+<pre class=" language-bash"><code class="language-bash">bind 127.0.0.1</code></pre>
+<p>bind 参数只能绑定一个地址，如果想更自由的设置绑定规则需要通过防火墙来完成。</p>
+<h3 id="数据库密码"><a href="#数据库密码" class="headerlink" title="数据库密码"></a>数据库密码</h3><p>可以通过配置文件中的 <code>requirepass</code> 参数为 Redis 设置一个密码。例如：</p>
+<pre class=" language-shell"><code class="language-shell">requirepass 123456</code></pre>
+<p>客户端每次连接到 Redis 时都需要发送密码，否则 Redis 会拒绝执行客户端发来的命令。</p>
+<p>例如：</p>
+<pre class=" language-bash"><code class="language-bash">$ GET foo
+<span class="token punctuation">(</span>error<span class="token punctuation">)</span> ERR operation not permitted.</code></pre>
+<p>发送密码需要使用 AUTH 命令，就像这样：</p>
+<pre class=" language-bash"><code class="language-bash">$ AUTH 123456
+OK</code></pre>
+<p>之后就可以执行任何命令了。</p>
+<p>由于 Redis 的性能极高，并且输入错误密码后 Redis 并不会进行主动延迟（考虑到 Redis 的单线程模型），所以攻击者可以通过穷举法破解 Redis 的密码（ 1 秒内能够尝试十几万个密码 ），因此在设置时一定要选择负责的密码。</p>
+<blockquote>
+<p><strong>提示</strong>    配置 Redis 复制的时候如果主数据库设置了密码，需要在从数据库的配置文件中通过 <code>masterauth</code> 参数设置主数据库的密码，以使从数据库连接主数据库时自动使用 AUTH 命令认证。</p>
+</blockquote>
+<h3 id="命名命令"><a href="#命名命令" class="headerlink" title="命名命令"></a>命名命令</h3><p>Redis 支持在配置文件中将命令重命名，比如将 <code>FLUASHALL</code> 命令重命名成一个比较复杂的名字，以保证自己的应用可以使用该命令。就像这样：</p>
+<pre><code>rename-command FLUSHALL oyfekmjumwar5a8c0it2k</code></pre>
+<p>如果希望直接禁用某个命令可以将命令重命名成空字符串：</p>
+<pre class=" language-bash"><code class="language-bash">rename-command FLUSHALL <span class="token string">""</span></code></pre>
+<blockquote>
+<p><strong>注意</strong>    无论设置密码还是重命名命令，都需要保证配置文件的安全性，否则就没有任何意义了。</p>
+</blockquote>
+<h3 id="Redis-cli"><a href="#Redis-cli" class="headerlink" title="Redis-cli"></a>Redis-cli</h3><h4 id="耗时命令日志"><a href="#耗时命令日志" class="headerlink" title="耗时命令日志"></a>耗时命令日志</h4><p>当一条命令执行时间超过限制时，Redis 会将该命令的执行时间等信息加入耗时命令日志（show log）以供开发者查看。可以通过配置文件的 <code>slowlog-log-slower-than</code> 参数设置这一限制，要注意单位是微秒（1000000微妙相当于 1 秒），默认值是 10 000。耗时命令日志存储在内存中，可以通过配置文件的 <code>slowlog-max-len</code>参数来限制记录的条数。</p>
+<p>使用 SLOWLOG GET 命令来获得当前的耗时命令日志，如：</p>
+<pre class=" language-bash"><code class="language-bash">redis<span class="token operator">></span> SLOWLOG GET
+   1<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 2
+   2<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1611295121
+   3<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 5
+   4<span class="token punctuation">)</span> 1<span class="token punctuation">)</span> <span class="token string">"set"</span>
+      2<span class="token punctuation">)</span> <span class="token string">"foo"</span>
+      3<span class="token punctuation">)</span> <span class="token string">"bar"</span></code></pre>
+<p>每条日志都由以下 4  个部分组成：</p>
+<ul>
+<li>该日志唯一 ID</li>
+<li>该命令执行的 Unix 时间</li>
+<li>该命令的耗时时间，单位是微秒</li>
+<li>命令及其参数。</li>
+</ul>
+<blockquote>
+<p><strong>提示</strong>    为了产生一些耗时命令日志作为演示，这里将 <code>slowlog-log-slower-than</code> 参数设置为 0，即记录所有命令。如果设置为负数则会关闭耗时命令日志。</p>
+</blockquote>
+<h4 id="命令监控"><a href="#命令监控" class="headerlink" title="命令监控"></a>命令监控</h4><p>Redis 提供了 MONITOR 命令来监控 Redis 执行的所有命令，redis-cli 同样支持这个命令，如在 redis-cli 中执行 MONITOR：</p>
+<pre class=" language-bash"><code class="language-bash">$ MONITOR
+OK</code></pre>
+<p>这时 Redis 执行的任何命令都会在 redis-cli 中打印出来，如我们打开另一个 redis-cli 执行 <code>SET foo bar</code> 命令，在之前的 redis-cli 中会输出以下内容：</p>
+<pre class=" language-bash"><code class="language-bash">1611295421.146357 <span class="token punctuation">[</span>0 127.0.0.1:37122<span class="token punctuation">]</span> <span class="token string">"keys"</span> <span class="token string">"*"</span></code></pre>
+<p>MONITOR 命令非常影响 Redis 的性能，一个客户端使用 MONITOR 命令会降低 Redis 将近一半的负载能力。所以 MONITOR 命令只适合用来调试和纠错。</p>
+<h3 id="Rdbtools"><a href="#Rdbtools" class="headerlink" title="Rdbtools"></a>Rdbtools</h3><p>Rdbtools 是一个 Redis 的快照文件解析器，它可以根据快照文件导出 JSON 数据文件、分析 Redis 中每个键的占用空间情况等。</p>
+<h4 id="安装-Rdbtools"><a href="#安装-Rdbtools" class="headerlink" title="安装 Rdbtools"></a>安装 Rdbtools</h4><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> clone https://github.com/sripathikrishnan/redis-rdb-tools
+<span class="token function">cd</span> redis-rdb-tools
+<span class="token function">sudo</span> python3 setup.py <span class="token function">install</span></code></pre>
+<h4 id="生成快照文件"><a href="#生成快照文件" class="headerlink" title="生成快照文件"></a>生成快照文件</h4><p>如果没有启用 RDB 持久化，可以使用 SAVE 命令手动使 Redis 生成快照文件。</p>
+<h4 id="将快照导出为-JSON-格式"><a href="#将快照导出为-JSON-格式" class="headerlink" title="将快照导出为 JSON 格式"></a>将快照导出为 JSON 格式</h4><p>快照文件时二进制格式，不利于查看，可以使用 Rdbtools 来将其导出为 JSON 格式，命令如下：</p>
+<pre class=" language-bash"><code class="language-bash">$ rdb --command json /path/to/dump.rdb <span class="token operator">></span> output_filename.json</code></pre>
+<p>其中 <code>/path/to/dump.rdb</code> 是快照文件的路径，<code>output_filename.json</code> 为要导出的文件路径。</p>
+<h4 id="生成空间使用情况报告"><a href="#生成空间使用情况报告" class="headerlink" title="生成空间使用情况报告"></a>生成空间使用情况报告</h4><p>Rdbtools 能够将快照文件中记录的每个键的存储情况导出为 CSV 文件，可以将该 CSV 文件导入到 Excel 等数据分析工具中分析来了解 Redis 的使用情况。命令如下：</p>
+<pre class=" language-bash"><code class="language-bash">$ rdb -c memory /path/to/dump.rdb --bytes 128 -f memory.csv</code></pre>
+<p>导出的 CSV 文件的字段如下所示：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>database</td>
+<td>存储该键的数据库索引</td>
+</tr>
+<tr>
+<td>type</td>
+<td>键类型（使用 TYPE 命令获得）</td>
+</tr>
+<tr>
+<td>key</td>
+<td>键名</td>
+</tr>
+<tr>
+<td>size_in_bytes</td>
+<td>键大小（字节）</td>
+</tr>
+<tr>
+<td>encoding</td>
+<td>内部编码（使用 OBJECTENCODING 命令获得）</td>
+</tr>
+<tr>
+<td>num_elements</td>
+<td>键的元素数</td>
+</tr>
+<tr>
+<td>len_largest_element</td>
+<td>最大元素的长度</td>
+</tr>
+</tbody></table>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Stream中flatmap使用</title>
     <url>/posts/9fb2.html</url>
     <content><![CDATA[<h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><h4 id="我的理解"><a href="#我的理解" class="headerlink" title="我的理解"></a>我的理解</h4><p>map：map方法返回的是一个object，map将流中的当前元素替换为此返回值；</p>
@@ -1552,38 +1676,6 @@ System<span class="token punctuation">.</span>out<span class="token punctuation"
       </tags>
   </entry>
   <entry>
-    <title>Hello World</title>
-    <url>/posts/3eeb.html</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class=" language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span></code></pre>
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class=" language-bash"><code class="language-bash">$ hexo server</code></pre>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bash"><code class="language-bash">$ hexo generate</code></pre>
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-bash"><code class="language-bash">$ hexo deploy</code></pre>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-  </entry>
-  <entry>
     <title>Stream中reduce使用</title>
     <url>/posts/801f.html</url>
     <content><![CDATA[<p>reduce方法用于对stream中元素进行聚合求值，最常见的用法就是将stream中一连串的值合成为单个值，比如为一个包含一系列数值的数组求和。</p>
@@ -1660,6 +1752,38 @@ System<span class="token punctuation">.</span>out<span class="token punctuation"
       <tags>
         <tag>JAVA</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/posts/3eeb.html</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class=" language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span></code></pre>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class=" language-bash"><code class="language-bash">$ hexo server</code></pre>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bash"><code class="language-bash">$ hexo generate</code></pre>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-bash"><code class="language-bash">$ hexo deploy</code></pre>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
   </entry>
   <entry>
     <title>kotlin如何实现空安全</title>
@@ -3405,6 +3529,127 @@ infix <span class="token keyword">fun</span> Int<span class="token punctuation">
       </tags>
   </entry>
   <entry>
+    <title>英语学习第一天</title>
+    <url>/posts/56b.html</url>
+    <content><![CDATA[<h2 id="五种基本句型"><a href="#五种基本句型" class="headerlink" title="五种基本句型"></a>五种基本句型</h2><p>主语：动作的发起者，位于句首。</p>
+<p>谓语：核心部分，一定是动词，紧跟在主语之后。</p>
+<p>宾语：动作的承受者。</p>
+<p>连续动词：不能组成一个完整的意思，没有实际意义，一般是be动词。</p>
+<p>表语：对主语的修饰、描述。</p>
+<p>宾语补语：对宾语的修饰、描述。</p>
+<h3 id="主-连系动词-表语"><a href="#主-连系动词-表语" class="headerlink" title="主+连系动词+表语"></a>主+连系动词+表语</h3><ul>
+<li>I am cold.</li>
+<li>The food is delicious.</li>
+<li>We are friends.</li>
+<li>Make is a nice person.</li>
+</ul>
+<h3 id="主-谓"><a href="#主-谓" class="headerlink" title="主+谓"></a>主+谓</h3><ul>
+<li>He died.</li>
+<li>He smiled.</li>
+<li>He cried.</li>
+</ul>
+<h3 id="主-谓-宾"><a href="#主-谓-宾" class="headerlink" title="主+谓+宾"></a>主+谓+宾</h3><ul>
+<li>I visited him.</li>
+<li>He killed a bear.</li>
+<li>We love her.</li>
+</ul>
+<h3 id="主-谓-双宾"><a href="#主-谓-双宾" class="headerlink" title="主+谓+双宾"></a>主+谓+双宾</h3><ul>
+<li>My father bought me a car.</li>
+<li>Mary give me an apple.</li>
+<li>He wrote her a letter.</li>
+</ul>
+<h3 id="主-谓-宾-宾语补语"><a href="#主-谓-宾-宾语补语" class="headerlink" title="主+谓+宾+宾语补语"></a>主+谓+宾+宾语补语</h3><ul>
+<li>They named him Jamie.</li>
+<li>She makes me laugh.</li>
+<li>I painted the wall white.</li>
+<li>She pushed the door open.</li>
+<li>He asked me to call Tom.</li>
+<li>I wish you to be happy.</li>
+</ul>
+<h2 id="人称代词"><a href="#人称代词" class="headerlink" title="人称代词"></a>人称代词</h2><h3 id="主格"><a href="#主格" class="headerlink" title="主格"></a>主格</h3><table>
+<thead>
+<tr>
+<th></th>
+<th>单数</th>
+<th>复数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>第一人称</td>
+<td>i</td>
+<td>we</td>
+</tr>
+<tr>
+<td>第二人称</td>
+<td>you</td>
+<td>you</td>
+</tr>
+<tr>
+<td>第三人称</td>
+<td>he/she/it</td>
+<td>they</td>
+</tr>
+</tbody></table>
+<h3 id="宾格"><a href="#宾格" class="headerlink" title="宾格"></a>宾格</h3><table>
+<thead>
+<tr>
+<th></th>
+<th>单数</th>
+<th>复数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>第一人称</td>
+<td>me</td>
+<td>us</td>
+</tr>
+<tr>
+<td>第二人称</td>
+<td>you</td>
+<td>you</td>
+</tr>
+<tr>
+<td>第三人称</td>
+<td>him/her/it</td>
+<td>them</td>
+</tr>
+</tbody></table>
+<h2 id="定语和状语"><a href="#定语和状语" class="headerlink" title="定语和状语"></a>定语和状语</h2><p>定语：主要增加修饰名词的细节。对名词起修饰限定作用，主要是形容词。</p>
+<ul>
+<li>She is a beautiful girl.</li>
+<li>She is a tall and thin server-year-old girl.</li>
+</ul>
+<p>状语：主要增加动词的细节。表示方式，程度，时间，地点，原因，目的…可以修饰动词，形容词和副词。</p>
+<ul>
+<li>He woke up at midnight.（时间状语）</li>
+<li>Tim studied at home.（地点状语）</li>
+<li>She talk loudy.（方式状语）</li>
+<li>He walks in a funny way.</li>
+</ul>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>English</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Kotlin自定义操作符</title>
     <url>/posts/8051.html</url>
     <content><![CDATA[<h3 id="自定义Convert操作符"><a href="#自定义Convert操作符" class="headerlink" title="自定义Convert操作符"></a>自定义Convert操作符</h3><pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -3600,127 +3845,6 @@ infix <span class="token keyword">fun</span> Int<span class="token punctuation">
       </tags>
   </entry>
   <entry>
-    <title>英语学习第一天</title>
-    <url>/posts/56b.html</url>
-    <content><![CDATA[<h2 id="五种基本句型"><a href="#五种基本句型" class="headerlink" title="五种基本句型"></a>五种基本句型</h2><p>主语：动作的发起者，位于句首。</p>
-<p>谓语：核心部分，一定是动词，紧跟在主语之后。</p>
-<p>宾语：动作的承受者。</p>
-<p>连续动词：不能组成一个完整的意思，没有实际意义，一般是be动词。</p>
-<p>表语：对主语的修饰、描述。</p>
-<p>宾语补语：对宾语的修饰、描述。</p>
-<h3 id="主-连系动词-表语"><a href="#主-连系动词-表语" class="headerlink" title="主+连系动词+表语"></a>主+连系动词+表语</h3><ul>
-<li>I am cold.</li>
-<li>The food is delicious.</li>
-<li>We are friends.</li>
-<li>Make is a nice person.</li>
-</ul>
-<h3 id="主-谓"><a href="#主-谓" class="headerlink" title="主+谓"></a>主+谓</h3><ul>
-<li>He died.</li>
-<li>He smiled.</li>
-<li>He cried.</li>
-</ul>
-<h3 id="主-谓-宾"><a href="#主-谓-宾" class="headerlink" title="主+谓+宾"></a>主+谓+宾</h3><ul>
-<li>I visited him.</li>
-<li>He killed a bear.</li>
-<li>We love her.</li>
-</ul>
-<h3 id="主-谓-双宾"><a href="#主-谓-双宾" class="headerlink" title="主+谓+双宾"></a>主+谓+双宾</h3><ul>
-<li>My father bought me a car.</li>
-<li>Mary give me an apple.</li>
-<li>He wrote her a letter.</li>
-</ul>
-<h3 id="主-谓-宾-宾语补语"><a href="#主-谓-宾-宾语补语" class="headerlink" title="主+谓+宾+宾语补语"></a>主+谓+宾+宾语补语</h3><ul>
-<li>They named him Jamie.</li>
-<li>She makes me laugh.</li>
-<li>I painted the wall white.</li>
-<li>She pushed the door open.</li>
-<li>He asked me to call Tom.</li>
-<li>I wish you to be happy.</li>
-</ul>
-<h2 id="人称代词"><a href="#人称代词" class="headerlink" title="人称代词"></a>人称代词</h2><h3 id="主格"><a href="#主格" class="headerlink" title="主格"></a>主格</h3><table>
-<thead>
-<tr>
-<th></th>
-<th>单数</th>
-<th>复数</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>第一人称</td>
-<td>i</td>
-<td>we</td>
-</tr>
-<tr>
-<td>第二人称</td>
-<td>you</td>
-<td>you</td>
-</tr>
-<tr>
-<td>第三人称</td>
-<td>he/she/it</td>
-<td>they</td>
-</tr>
-</tbody></table>
-<h3 id="宾格"><a href="#宾格" class="headerlink" title="宾格"></a>宾格</h3><table>
-<thead>
-<tr>
-<th></th>
-<th>单数</th>
-<th>复数</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>第一人称</td>
-<td>me</td>
-<td>us</td>
-</tr>
-<tr>
-<td>第二人称</td>
-<td>you</td>
-<td>you</td>
-</tr>
-<tr>
-<td>第三人称</td>
-<td>him/her/it</td>
-<td>them</td>
-</tr>
-</tbody></table>
-<h2 id="定语和状语"><a href="#定语和状语" class="headerlink" title="定语和状语"></a>定语和状语</h2><p>定语：主要增加修饰名词的细节。对名词起修饰限定作用，主要是形容词。</p>
-<ul>
-<li>She is a beautiful girl.</li>
-<li>She is a tall and thin server-year-old girl.</li>
-</ul>
-<p>状语：主要增加动词的细节。表示方式，程度，时间，地点，原因，目的…可以修饰动词，形容词和副词。</p>
-<ul>
-<li>He woke up at midnight.（时间状语）</li>
-<li>Tim studied at home.（地点状语）</li>
-<li>She talk loudy.（方式状语）</li>
-<li>He walks in a funny way.</li>
-</ul>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>English</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>英语学习第五天</title>
     <url>/posts/3517.html</url>
     <content><![CDATA[<h3 id="名词作宾语"><a href="#名词作宾语" class="headerlink" title="名词作宾语"></a>名词作宾语</h3><p>When you’re the bos s, you can make up your own rules.</p>
@@ -3889,6 +4013,59 @@ infix <span class="token keyword">fun</span> Int<span class="token punctuation">
       </tags>
   </entry>
   <entry>
+    <title>通过外部单体对象来注册 Spring Bean</title>
+    <url>/posts/de54.html</url>
+    <content><![CDATA[<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Employee</span> <span class="token keyword">implements</span> <span class="token class-name">InitializingBean</span><span class="token punctuation">,</span> DisposableBean <span class="token punctuation">{</span>
+  <span class="token keyword">private</span> String name<span class="token punctuation">;</span>
+  <span class="token keyword">private</span> Integer age<span class="token punctuation">;</span>
+
+  <span class="token comment" spellcheck="true">// 省略setter getter</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SingletonBeanRegistrationDemo</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 创建 BeanFactory 容器</span>
+    AnnotationConfigApplicationContext applicationContext <span class="token operator">=</span>
+        <span class="token keyword">new</span> <span class="token class-name">AnnotationConfigApplicationContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 创建一个外部 Employee 对象</span>
+    Employee employee <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Employee</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ConfigurableListableBeanFactory beanFactory <span class="token operator">=</span> applicationContext<span class="token punctuation">.</span><span class="token function">getBeanFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 注册外部的单例对象</span>
+    beanFactory<span class="token punctuation">.</span><span class="token function">registerSingleton</span><span class="token punctuation">(</span><span class="token string">"employee"</span><span class="token punctuation">,</span> employee<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 启动 Spring 应用上下文</span>
+    applicationContext<span class="token punctuation">.</span><span class="token function">refresh</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// 通过依赖查找的方式来获取 Employee</span>
+    Employee employeeByLookup <span class="token operator">=</span> beanFactory<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token string">"employee"</span><span class="token punctuation">,</span> Employee<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"employee == employeeLookup : "</span> <span class="token operator">+</span> <span class="token punctuation">(</span>employee <span class="token operator">==</span> employeeByLookup<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <categories>
+        <category>JAVA</category>
+      </categories>
+      <tags>
+        <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>设置Redis中的key过期时间</title>
     <url>/posts/ae5.html</url>
     <content><![CDATA[<h3 id="命令介绍"><a href="#命令介绍" class="headerlink" title="命令介绍"></a>命令介绍</h3><p>在实际的开发中经常会遇到一些有时效的数据，比如现实优惠活动、缓存或验证码等，过了一定的时间就需要删除这些数据。在关系数据库中一般需要额外一个字段来记录到期时间，然后定期检测删除过期数据。而在 Redis 中可以使用 <code>EXPIRE</code> 命令来设置一个键的过期时间，到时间后，Redis 会自动删除它。</p>
@@ -3993,59 +4170,6 @@ $ TTL foo
       </script>]]></content>
       <tags>
         <tag>Redis</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>通过外部单体对象来注册 Spring Bean</title>
-    <url>/posts/de54.html</url>
-    <content><![CDATA[<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Employee</span> <span class="token keyword">implements</span> <span class="token class-name">InitializingBean</span><span class="token punctuation">,</span> DisposableBean <span class="token punctuation">{</span>
-  <span class="token keyword">private</span> String name<span class="token punctuation">;</span>
-  <span class="token keyword">private</span> Integer age<span class="token punctuation">;</span>
-
-  <span class="token comment" spellcheck="true">// 省略setter getter</span>
-<span class="token punctuation">}</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SingletonBeanRegistrationDemo</span> <span class="token punctuation">{</span>
-  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token comment" spellcheck="true">// 创建 BeanFactory 容器</span>
-    AnnotationConfigApplicationContext applicationContext <span class="token operator">=</span>
-        <span class="token keyword">new</span> <span class="token class-name">AnnotationConfigApplicationContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">// 创建一个外部 Employee 对象</span>
-    Employee employee <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Employee</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ConfigurableListableBeanFactory beanFactory <span class="token operator">=</span> applicationContext<span class="token punctuation">.</span><span class="token function">getBeanFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">// 注册外部的单例对象</span>
-    beanFactory<span class="token punctuation">.</span><span class="token function">registerSingleton</span><span class="token punctuation">(</span><span class="token string">"employee"</span><span class="token punctuation">,</span> employee<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">// 启动 Spring 应用上下文</span>
-    applicationContext<span class="token punctuation">.</span><span class="token function">refresh</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token comment" spellcheck="true">// 通过依赖查找的方式来获取 Employee</span>
-    Employee employeeByLookup <span class="token operator">=</span> beanFactory<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token string">"employee"</span><span class="token punctuation">,</span> Employee<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"employee == employeeLookup : "</span> <span class="token operator">+</span> <span class="token punctuation">(</span>employee <span class="token operator">==</span> employeeByLookup<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <categories>
-        <category>JAVA</category>
-      </categories>
-      <tags>
-        <tag>Spring</tag>
       </tags>
   </entry>
   <entry>
@@ -5242,6 +5366,231 @@ $ ZRANGE sortedSetsResult 0 -1 WITHSCORES
 3<span class="token punctuation">)</span> <span class="token string">"b"</span>
 4<span class="token punctuation">)</span> <span class="token string">"4"</span></code></pre>
 <p>另外还有一个命令与 <code>ZINTERSTORE </code>命令的用法一样，名为 <code>ZUNIONSTORE</code>，它的作用是计算集合间的并集，这里不再赘述。</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis集群</title>
+    <url>/posts/119d.html</url>
+    <content><![CDATA[<h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>即使使用哨兵，此时的 Redis 集群的每个数据库依然存有集群中的所有数据，从而导致集群的总数据存储量受限于可用存储内存最小的数据库节点，形成木桶效应。由于 Redis 中的所有数据都是基于内存存储，这一问题尤为突出了，尤其是当使用 Redis 做持久化存储服务使用时。</p>
+<p>对 Redis 进行水平扩容，在旧版 Redis 中通常使用客户端分片来解决这个问题，即启动多个 Redis 数据库节点，由客户端决定每个键交由哪个数据库节点存储，下次客户端读取改键时直接到该节点读取。这样可以实现将整个数据库分布存储在 N 个数据库节点中，每个节点只存放总数据量的 1/N。但对于需要扩容的场景来说，在客户端分片后，如果想增加更多的节点，就需要对数据进行手工迁移，同时在迁移的过程中为了保证数据的一致性，还需要将集群暂时下线，相对比较复杂。</p>
+<p>考虑到 Redis 实例非常轻量的特点，可以采用预分片技术（<code>presharding</code>）来一定程度上避免此问题，具体来说是在节点部署初期，就提前考虑日后的存储规模，建立足够多的实例（如 128 个节点），初期时数据很少，所以每个节点存储的数据也非常少，但由于节点轻量的特性，数据之外的内存开销并不大，这使得只需要很少的服务器即可运行这些实例。日后存储规模扩大后，所要做的不过是将某些实例迁移到其它服务器上去，而不需要对所有数据进行重新分片并进行集权下线和数据迁移了。</p>
+<p>无论如何，客户端分片终归是有非常多的缺点，比如维护成本高，增加、移除节点较繁琐等。Redis 3.0 版的一大特性就是支持集群（Cluster）功能。集群的特点在于拥有和单机实例同样的性能，同时在网络分区后能够提供一定的可访问性以及对主数据库故障恢复的支持。另外集群支持几乎所有的单机实例支持的命令，对于涉及多键的命令（如 MGET），如果每个键都位于同一个节点中，则可以正常支持，否则会提示错误。除此之外集群还有一个限制是只能使用默认的 0 号数据库，如果执行 SELECT 切换数据库则会提示错误。</p>
+<p>哨兵与集群是两个独立的功能，但从特性来看哨兵可以视为集群的子集，当不需要数据分片或者已经在客户端进行分片的场景下哨兵就足够使用了，但如果需要进行水平扩容，则集权是一个非常好的选择。</p>
+<h3 id="配置集群"><a href="#配置集群" class="headerlink" title="配置集群"></a>配置集群</h3><p>使用集群，只需要将每个数据库节点的 <code>cluster-enabled</code> 配置选项打开即可。每个集群中至少需要三个主数据库才能正常运行。</p>
+<p>为了演示集群的应用场景以及故障恢复等操作，这里以配置一个 3 主 3 从的集群系统为例。首先建立启动 6 个 Redis 实例，需要注意的是配置文件中应该打开 <code>cluster-enabled</code>。 一个示例配置为：</p>
+<pre class=" language-shell"><code class="language-shell">port 6380
+cluster-enabled yes</code></pre>
+<p>其中 port 参数修改成实际的端口即可。这里假设 6 个实例的端口分别是 6380、6381、6382、6383、6384 和 6385。集群会将当前节点记录的集群状态持久化地存储在指定地文件中，这个文件默认为当前工作目录下的 <code>nodes.conf</code> 文件。每个节点对应的文件必须不同，否则会造成启动失败：</p>
+<pre class=" language-bash"><code class="language-bash">Sorry, the cluster configuration <span class="token function">file</span> nodes.conf is already used by a different Redis Cluster node. Please <span class="token function">make</span> sure that different nodes use different cluster configuration files.</code></pre>
+<p>所以启动节点时要注意最后为每个节点使用不同的工作目录，或者通过 <code>cluster-config-file</code> 选项修改持久化文件的名称：</p>
+<pre class=" language-bash"><code class="language-bash">cluster-config-file nodes.conf</code></pre>
+<p>每个节点启动后都会输出类似下面的内容：</p>
+<pre class=" language-bash"><code class="language-bash">No cluster configuration found, I'm ef81cf4da7040c9d93bc85cfd358ed3886080fb4</code></pre>
+<p>其中 <code>ef81cf4da7040c9d93bc85cfd358ed3886080fb4</code> 表示该节点的运行 ID，运行 ID 是节点在集群中的唯一标识；同一个运行 ID ，可能地址和端口是不同的。</p>
+<p>启动后，可以使用 Redis 命令行客户端连接任意一个节点使用 INFO 命令来判断集群是否正常启用了：</p>
+<pre class=" language-bash"><code class="language-bash">$ INFO cluster
+<span class="token comment" spellcheck="true"># Cluster</span>
+cluster_enabled:1</code></pre>
+<p>其中 cluster_enabled 为 1 表示集群正常启用了。现在每个节点都是完全独立的，要将它们加入同一个集群里还需要几个步骤。</p>
+<ul>
+<li>初始化集群</li>
+</ul>
+<pre class=" language-bash"><code class="language-bash">$ redis-cli --cluster create --cluster-replicas 1 127.0.0.1:6380 127.0.0.1:6381 127.0.0.1:6382 127.0.0.1:6383 127.0.0.1:6384 127.0.0.1:6385</code></pre>
+<p>其中 <code>create</code> 参数表示要初始化集群， <code>--cluster-replicas 1</code> 表示每个主数据库拥有的从数据库个数为 1，所有整个集群共有3（6/2）个主数据库以及 3 个从数据库。</p>
+<p>执行完后会输出如下内容：</p>
+<pre class=" language-bash"><code class="language-bash">$ redis-cli --cluster create --cluster-replicas 1 127.0.0.1:6380 127.0.0.1:6381 127.0.0.1:6382 127.0.0.1:6383 127.0.0.1:6384 127.0.0.1:6385
+
+<span class="token operator">>></span><span class="token operator">></span> Performing <span class="token function">hash</span> slots allocation on 6 nodes<span class="token punctuation">..</span>.
+Master<span class="token punctuation">[</span>0<span class="token punctuation">]</span> -<span class="token operator">></span> Slots 0 - 5460
+Master<span class="token punctuation">[</span>1<span class="token punctuation">]</span> -<span class="token operator">></span> Slots 5461 - 10922
+Master<span class="token punctuation">[</span>2<span class="token punctuation">]</span> -<span class="token operator">></span> Slots 10923 - 16383
+Adding replica 127.0.0.1:6384 to 127.0.0.1:6380
+Adding replica 127.0.0.1:6385 to 127.0.0.1:6381
+Adding replica 127.0.0.1:6383 to 127.0.0.1:6382
+<span class="token operator">>></span><span class="token operator">></span> Trying to optimize slaves allocation <span class="token keyword">for</span> anti-affinity
+<span class="token punctuation">[</span>WARNING<span class="token punctuation">]</span> Some slaves are <span class="token keyword">in</span> the same host as their master
+M: 70448213e6665fcaea8ed94d7f77b31db0ef3a43 127.0.0.1:6380
+   slots:<span class="token punctuation">[</span>0-5460<span class="token punctuation">]</span> <span class="token punctuation">(</span>5461 slots<span class="token punctuation">)</span> master
+M: ef81cf4da7040c9d93bc85cfd358ed3886080fb4 127.0.0.1:6381
+   slots:<span class="token punctuation">[</span>5461-10922<span class="token punctuation">]</span> <span class="token punctuation">(</span>5462 slots<span class="token punctuation">)</span> master
+M: f4ae8d7e88aacb0bf60cf926f143474d7dc4950c 127.0.0.1:6382
+   slots:<span class="token punctuation">[</span>10923-16383<span class="token punctuation">]</span> <span class="token punctuation">(</span>5461 slots<span class="token punctuation">)</span> master
+S: 4ab18f8ac3f516f48922df4319154f3cd5361310 127.0.0.1:6383
+   replicates 70448213e6665fcaea8ed94d7f77b31db0ef3a43
+S: a1a19b41fb7736ac610a46c448ebd000cb4a342e 127.0.0.1:6384
+   replicates ef81cf4da7040c9d93bc85cfd358ed3886080fb4
+S: bddfa2c27943030592fe138cdc37697ff33d1f28 127.0.0.1:6385
+   replicates f4ae8d7e88aacb0bf60cf926f143474d7dc4950c
+Can I <span class="token keyword">set</span> the above configuration? <span class="token punctuation">(</span>type <span class="token string">'yes'</span> to accept<span class="token punctuation">)</span>:</code></pre>
+<p>内容包括集群具体的分配方案，如果觉得没问题则输入 yes 来开始创建。首先客户端会尝试连接所有的节点，并发送 PING 命令以确定节点能够正常服务。如果有任何节点无法连接，则创建失败。同时发送 <code>INFO</code> 命令获取每个节点的运行 ID 以及开启了集群的功能（即 cluster_enabled 为 1）。</p>
+<p>准备就绪后集群会向每个节点发送 <code>CLUSTER MEET</code> 命令，格式为：</p>
+<pre class=" language-bash"><code class="language-bash">$ CLUSTER MEET ip port</code></pre>
+<p>这个命令用来告诉当前节点指定 <code>ip</code> 和 <code>port</code> 上在运行的节点也是集群的一部分，从而使得 6 个节点最终可以归为一个集群。在分配主从数据库节点，分配的原则是尽量保证每个主数据库运行在不同的 IP 低智商，同时每个从数据库和主数据库均不运行在同一 IP 地址上，以保证系统的容灾能力。分配结果如下：</p>
+<pre class=" language-bash"><code class="language-bash">Master<span class="token punctuation">[</span>0<span class="token punctuation">]</span> -<span class="token operator">></span> Slots 0 - 5460
+Master<span class="token punctuation">[</span>1<span class="token punctuation">]</span> -<span class="token operator">></span> Slots 5461 - 10922
+Master<span class="token punctuation">[</span>2<span class="token punctuation">]</span> -<span class="token operator">></span> Slots 10923 - 16383
+Adding replica 127.0.0.1:6384 to 127.0.0.1:6380
+Adding replica 127.0.0.1:6385 to 127.0.0.1:6381
+Adding replica 127.0.0.1:6383 to 127.0.0.1:6382</code></pre>
+<p>其中主数据库是 6380、6381 和 6382 端口上的节点（以下使用端口号来指代节点），6384 是 6380 的从数据库，6385 是 6381 的从数据库，6383 是 6382 的从数据库。</p>
+<p>分配完成后，会为每个主数据库分配插槽，分配插槽的过程其实就是分配哪些键归哪些节点负责。之后对每个要成为子数据库的节点发送 ：</p>
+<pre class=" language-bash"><code class="language-bash">$ CLUSTER REPLICATE 主数据库的运行ID</code></pre>
+<p>来将当前当前节点转换成从数据库并复制指定运行 ID 的节点（主数据库）。</p>
+<p>此时整个集群的过程即创建完成，使用 Redis 命令行客户端连接任意一个节点执行 :</p>
+<pre class=" language-bash"><code class="language-bash">$ CLUSTER NODES</code></pre>
+<p>可以获得集群中的所有节点信息：</p>
+<pre class=" language-bash"><code class="language-bash">$ CLUSTER nodes
+fc0bb101cb9fb83cc7387c5436cea4e31f37933a 127.0.0.1:6380@16380 myself,master - 0 1611279056000 1 connected 0-5460
+4092663430bae1fc3b2cfc6a622e56e0bd6cdd42 127.0.0.1:6383@16383 slave 789ff268a004e79d27298b08ac14b6e7927ed8a7 0 1611279058000 3 connected
+a1a19b41fb7736ac610a46c448ebd000cb4a342e 127.0.0.1:6384@16384 slave fc0bb101cb9fb83cc7387c5436cea4e31f37933a 0 1611279058000 1 connected
+789ff268a004e79d27298b08ac14b6e7927ed8a7 127.0.0.1:6382@16382 master - 0 1611279059797 3 connected 10923-16383
+bddfa2c27943030592fe138cdc37697ff33d1f28 127.0.0.1:6385@16385 slave ba332a22254bd3dbaa8c2900f97b882ee245cf77 0 1611279058000 2 connected
+ba332a22254bd3dbaa8c2900f97b882ee245cf77 127.0.0.1:6381@16381 master - 0 1611279058786 2 connected 5461-10922</code></pre>
+<p>从上面的输出中可以看到所有节点的运行 ID、地址和端口、角色、状态以及负载的插槽等信息。</p>
+<h3 id="节点的增加"><a href="#节点的增加" class="headerlink" title="节点的增加"></a>节点的增加</h3><p>加入新节点非常简单，只需要向新节点（一下记作 A） 发送如下命令即可：</p>
+<pre class=" language-bash"><code class="language-bash">$ CLUSTER MEET ip port</code></pre>
+<p>IP 和 PORT 是集群中任意一个节点的地址和端口号，A 接收到客户端发来的命令后，会与 该地址和端口号 的节点 B 进行握手，使 B 将 A 认作当前集群中的一员。当 B 与 A 握手成功后，B 会使用 <code>Grossip</code> 协议将节点A的信息通知给集群中的每一个节点。通过这一方式，即使集群中有多个节点，也只需要选择 MEET 其中任意一个节点，即可使新节点最终加入整个集群中。</p>
+<h3 id="插槽的分配"><a href="#插槽的分配" class="headerlink" title="插槽的分配"></a>插槽的分配</h3><p>新的节点加入集群中有两个选择，要么使用 <code>CLUSTER REPLICATE</code> 命令复制每个主数据库来以从数据库的形式运行，要么向集群申请分配插槽（slot） 来以主数据库的形式运行。</p>
+<p>在一个集群中，所有的键会被分配成 16384 个插槽，而每个主数据库会负责处理其中的一部分插槽。现在再回头来看创建集群时的输出：</p>
+<pre class=" language-bash"><code class="language-bash">fc0bb101cb9fb83cc7387c5436cea4e31f37933a 127.0.0.1:6380@16380 myself,master - 0 1611279056000 1 connected 0-5460
+789ff268a004e79d27298b08ac14b6e7927ed8a7 127.0.0.1:6382@16382 master - 0 1611279059797 3 connected 10923-16383
+ba332a22254bd3dbaa8c2900f97b882ee245cf77 127.0.0.1:6381@16381 master - 0 1611279058786 2 connected 5461-10922</code></pre>
+<p>上面的每一行表示一个主数据库的信息，其中可以看到 6380 负责处理 0<del>5460 这 5461 个插槽，6381 负责处理 5461 ~ 10922 这 5462 个插槽，6382 则负责处理 10923</del>16383 这 5461 个插槽。虽然初始化集群时分配给每个节点的插槽都是连续的，但是实际上 Redis 并没有此限制，可以将任意的几个插槽分配给任意的节点负责。</p>
+<p>在介绍如何将插槽分配给指定的节点前，先来介绍键与插槽的对应关系。Redis 将每个键的键名的有效部分使用 CRC16 算法计算出散列值，然后去对 16384 的余数。这样使得每个键都可以分配到 16384 个插槽中，进而分配给执行的一个节点中处理。 这里键名的有效部分是指：</p>
+<ul>
+<li>如果键名包含 { 符号，且在符号的后面存在 } 符号，并且 { 和 } 之间有至少一个字符，则有效部分是指 { 和 } 之间的内容；</li>
+<li>如果不满足上一条规则，那么整个键名为有效部分。</li>
+</ul>
+<p>例如，键 <code>hello.world</code> 的有效部分为 <code>“hello.world”</code>，键 <code>{user102}:last.name</code> 的有效部分为 <code>user102</code>。如果命令设计多个键（如 MGET），只有当所有键都位于同一个节点时 Redis 才能正常支持。利用键的分配规则，可以将所有相关键的有效部分设置成同样的值使得相关键都能分配到同一个节点以支持多键操作。比如，<code>{user102}:first.name</code> 和 <code>{user102}:last:name</code> 会被分配到同一个节点，所以可以使用：</p>
+<pre class=" language-bash"><code class="language-bash">$ MGET <span class="token punctuation">{</span>user102<span class="token punctuation">}</span>:first.name <span class="token punctuation">{</span>user102<span class="token punctuation">}</span>:last.name </code></pre>
+<p>来同时获取这两个键的值。</p>
+<p>介绍完键与插槽的对应关系后，接下来再来介绍如何将插槽分配给执行节点。插槽的分配分为如下情况：</p>
+<ul>
+<li>插槽之前没有被分配过，现在向分配给指定节点。</li>
+<li>插槽之前被分配过，现在想移动到指定节点。</li>
+</ul>
+<p>其中第一种情况使用 <code>CLUSTER ADDSLOTS</code> 来实现。 <code>CLUSTER ADDSLOTS</code> 命令的用法为：</p>
+<pre class=" language-bash"><code class="language-bash">$ CLUSTER ADDSLOTS slot1 <span class="token punctuation">[</span>slot2<span class="token punctuation">]</span> <span class="token punctuation">..</span>. <span class="token punctuation">[</span>slotN<span class="token punctuation">]</span></code></pre>
+<p>如想将 100 和 101 两个插槽分配给某个节点，只需要在该节点执行：</p>
+<pre class=" language-bash"><code class="language-bash">$ CLUSTER ADDSLOTS 100 101</code></pre>
+<p>如果执行插槽已经分配过了，则会提示：</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token punctuation">(</span>error<span class="token punctuation">)</span> ERR Slot 100 is already busy</code></pre>
+<p>可以通过命令 <code>CLUSTER SLOTS</code> 来查看插槽的分配情况，如：</p>
+<pre class=" language-bash"><code class="language-bash">$ CLUSTER SLOTS
+1<span class="token punctuation">)</span> 1<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 0
+   2<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 5460
+   3<span class="token punctuation">)</span> 1<span class="token punctuation">)</span> <span class="token string">"127.0.0.1"</span>
+      2<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 6380
+      3<span class="token punctuation">)</span> <span class="token string">"fc0bb101cb9fb83cc7387c5436cea4e31f37933a"</span>
+   4<span class="token punctuation">)</span> 1<span class="token punctuation">)</span> <span class="token string">"127.0.0.1"</span>
+      2<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 6384
+      3<span class="token punctuation">)</span> <span class="token string">"a1a19b41fb7736ac610a46c448ebd000cb4a342e"</span>
+2<span class="token punctuation">)</span> 1<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 10923
+   2<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 16383
+   3<span class="token punctuation">)</span> 1<span class="token punctuation">)</span> <span class="token string">"127.0.0.1"</span>
+      2<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 6382
+      3<span class="token punctuation">)</span> <span class="token string">"789ff268a004e79d27298b08ac14b6e7927ed8a7"</span>
+   4<span class="token punctuation">)</span> 1<span class="token punctuation">)</span> <span class="token string">"127.0.0.1"</span>
+      2<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 6383
+      3<span class="token punctuation">)</span> <span class="token string">"4092663430bae1fc3b2cfc6a622e56e0bd6cdd42"</span>
+3<span class="token punctuation">)</span> 1<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 5461
+   2<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 10922
+   3<span class="token punctuation">)</span> 1<span class="token punctuation">)</span> <span class="token string">"127.0.0.1"</span>
+      2<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 6381
+      3<span class="token punctuation">)</span> <span class="token string">"ba332a22254bd3dbaa8c2900f97b882ee245cf77"</span>
+   4<span class="token punctuation">)</span> 1<span class="token punctuation">)</span> <span class="token string">"127.0.0.1"</span>
+      2<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 6385
+      3<span class="token punctuation">)</span> <span class="token string">"bddfa2c27943030592fe138cdc37697ff33d1f28"</span></code></pre>
+<p>其中返回结果的格式很容易理解，一共 3 条记录，每条记录的前两个值表示插槽的开始号码和结束号码，后面的值则为负责该插槽的节点，包括主数据库和所有的从数据库，主数据库始终在第一位。</p>
+<p>对于情况2，处理起来相对复杂一些，我们首先将一个插槽从 6380 迁移到 6381，执行如下命令：</p>
+<pre class=" language-bash"><code class="language-bash">$ CLUSTER SETSLOT 插槽号 NODE 新节点运行的ID</code></pre>
+<p>如想要把 0 号插槽迁移到 6381：</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># ba332a22254bd3dbaa8c2900f97b882ee245cf77 是 6381 的运行 id</span>
+redis 6380<span class="token operator">></span> CLUSTER SETSLOT 0 NODE ba332a22254bd3dbaa8c2900f97b882ee245cf77
+OK</code></pre>
+<p>此时重新使用 <code>CLUSTER SLOTS</code> 查看插槽的分配情况：</p>
+<pre class=" language-bash"><code class="language-bash">fc0bb101cb9fb83cc7387c5436cea4e31f37933a 127.0.0.1:6380@16380 myself,master - 0 1611283004000 1 connected 1-5460
+
+ba332a22254bd3dbaa8c2900f97b882ee245cf77 127.0.0.1:6381@16381 master - 0 1611283005000 2 connected 0 5461-10922</code></pre>
+<p>然而这样迁移插槽的前提是插槽中并没有任何键，因为使用 <code>CLUSTER SETSLOT</code> 命令迁移插槽时并不会连同相应的键一起迁移，这就造成了客户端在指定节点无法找到未迁移的键，造成这些键对客户端来说“丢失了”，为此需要手工获取插槽中存在哪些键，然后将每个键迁移到新的节点中才能运行。</p>
+<p>手工获取某个插槽中存在哪些键的方法时：</p>
+<pre class=" language-bash"><code class="language-bash">$ CLUSTER GETKEYSINSLOT 插槽号 要返回的键的数量</code></pre>
+<p>之后对每个键，使用 MIGRATE 命令将其迁移到目标节点：</p>
+<pre class=" language-bash"><code class="language-bash">$ MIGRATE 目标节点地址 目标节点端口 键名 数据库号码 超时时间 <span class="token punctuation">[</span>COPY<span class="token punctuation">]</span> <span class="token punctuation">[</span>REPLACE<span class="token punctuation">]</span></code></pre>
+<p>其中 <code>COPY</code> 选项表示不将键从当前数据库中删除，而是复制一份副本。<code>REPLACE</code> 表示如果目标节点存在同名键，则覆盖。因为集群模式只能使用 0 号数据库，所以数据库号码始终为 0。如要把键 <code>abc</code> 从当前节点（如 6381）迁移到 6380：</p>
+<pre class=" language-bash"><code class="language-bash">redis 6381<span class="token operator">></span> MIGRATE 127.0.0.1 6380 abc 0 16000 REPLACE</code></pre>
+<p>至此，我们已经知道如果将插槽委派给其它节点，并同时将当前节点中插槽下所有的键迁移到目标节点中。然而还有最后一个问题是如果要迁移的数据量比较大，整个过程会发费较长时间，那么究竟什么时候执行 <code>CLUSTER SETSLOT</code> 命令来完成插槽的交接呢？如果在键迁移未完成时执行，那么客户端就会尝试在新的节点读取键值，此时还没有迁移完成，自然有可能读不到键值，从而造成相关键的“临时丢失”。相反，如果在键迁移完成后再执行，那么在迁移时客户端会在旧的节点读取键值，然后有些键已经迁移到新的节点上了，同时也会造成键的临时“丢失”。Redis 提供了如下两个命令用来实现再集群不下线的情况下迁移数据：</p>
+<pre class=" language-bash"><code class="language-bash">$ CLUSTER SETSLOT 插槽号 MIGRATING 新节点的运行ID
+$ CLUSTER SETSLOT 插槽号 IMPORTING 原节点的运行ID</code></pre>
+<p>进行迁移时，假设要把 0 号插槽从 A 迁移到 B，此时会执行如下操作：</p>
+<ol>
+<li>在 B 执行 <code>CLUSTER SETSLOT 0 IMPORTING A 。</code></li>
+<li>在 A 执行 CLUSTER SETSLOT 0 MIGRATING B。</li>
+<li>执行 <code>CLUSTER GETKEYSINSLOT 0</code> 获取 0 号插槽的键列表。</li>
+<li>对第 3 步获取的每个键执行 MIGRATE  命令，将其从 A 迁移到 B。</li>
+<li>执行 <code>CLUSTER SETSLOT 0 NODE B</code> 来完成迁移。</li>
+</ol>
+<p>上面的 1 和 2 步骤就是为了解决迁移过程中键的临时 “丢失” 问题。首先执行完前两步后，当客户端 A 请求插槽 0 中的键时，如果键存在（即尚未被迁移），则正常处理，如果不存在，则返回一个 ASK 跳转请求，告诉客户端这个键在 B 里，如图所示：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/16251611285456_.pic_hd.jpg"></p>
+<p>客户端收到 ASK 跳转请求后，首先向 B 发送 ASKING 命令，然后再重新发送之前的命令。相反，当客户端向 B 请求插槽 0 中的键时，如果前面执行了 ASKING 命令，则返回键值内容，否则返回 MOVE 跳转请求。如图所示：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/16241611285104_.pic_hd.jpg"></p>
+<p>这样一来客户端只有能够处理 ASK 跳转，则可以在数据库迁移时自动从正确的节点获取到相应的键值，避免了键在迁移过程中临时 “丢失” 的问题。</p>
+<h3 id="获取与插槽对应的节点"><a href="#获取与插槽对应的节点" class="headerlink" title="获取与插槽对应的节点"></a>获取与插槽对应的节点</h3><p>介绍了插槽的分配方式，对于指定的键，可以根据前面所说的算法来计算其属于哪个插槽，但是如何获取某一个键由哪个节点负责呢？</p>
+<p>实际上，当客户端向集群中的任意一个节点发送命令后，该节点会判断相应的键是否在当前节点中，如果键在该节点中，就会像单机实例一样正确处理该命令：如果键不在该节点中，就会返回一个 MOVE 重定向请求，告诉客户端这个键目前由哪个节点负责，然后客户端再将同样的请求向目标节点重新发送一次以获得结果。</p>
+<p>一些语言的 Redis 库支持代理 MOVE 请求，所以对于开发者而言命令重定向的过程是透明的，使用集权与使用单机实例并没有什么不同。然而也有些语言的 Redis 库并不支持集群，这时就需要在客户端编码处理了。</p>
+<p>还是以上面的集群配置为例，键 foo 实际应该由 6382 节点负责，如果尝试在 6380 节点执行与键 foo 相关的命令，就会有如下输出：</p>
+<pre class=" language-bash"><code class="language-bash">redis 6380<span class="token operator">></span> <span class="token keyword">set</span> foo bar
+<span class="token punctuation">(</span>error<span class="token punctuation">)</span> MOVED 12182 127.0.0.1:6382</code></pre>
+<p>返回的是一个 MOVE 重定向请求，12182 表示 foo 所属的插槽号，127.0.0.1:6382 则是负责该插槽的节点地址和端口，客户端收到重定向请求后，应该将命令重新向 6382 节点发送一次：</p>
+<pre class=" language-bash"><code class="language-bash">redis 6382<span class="token operator">></span> <span class="token keyword">set</span> foo bar
+OK</code></pre>
+<p>Redis 命令行客户端提供了集群模式来支持自动重定向，使用 -c 参数来启用：</p>
+<pre class=" language-bash"><code class="language-bash">$ redis-cli -c -p 6380
+
+redis 6380<span class="token operator">></span> <span class="token keyword">set</span> foo bar
+-<span class="token operator">></span> Redirected to slot <span class="token punctuation">[</span>12182<span class="token punctuation">]</span> located at 127.0.0.1:6382
+OK</code></pre>
+<p>可见加入了 -c 参数后，如果当前节点并不负责要处理的键，Redis 命令行客户端会进行自动命令重定向。而这一过程正是负责集群的客户端应该实现的。</p>
+<p>然而相比单机实例，集群的命令重定向也增加了命令的请求次数，原先只需要执行一次的命令，现在有可能一次发向两个节点，算上往返时延，可以说请求重定向对性能还是有些影响的。</p>
+<p>为了解决这一问题，当发现新的重定向请求时，客户端应该在重新向正确节点发送命令的同时，缓存插槽的路由信息，即记录下当前插槽是由哪个节点负责的。这样每次发起命令时，客户端首先计算相关键是属于哪个插槽的，然后根据缓存的路由判断插槽由哪个节点负责。考虑到插槽总数相对较少（16384个），缓存所有插槽的路由信息后，每次命令将均只发向正确的节点，从而达到和单机实例同样的性能。</p>
+<h3 id="故障恢复"><a href="#故障恢复" class="headerlink" title="故障恢复"></a>故障恢复</h3><p>在一个集群中，每个节点都会定期向其它节点发送 PING 命令，并通过有没有收到回复来判断目标节点是否已经下线了。具体来说，集群中的每个节点每个 1 秒就会随机选择 5 个节点，然后选择其中最久没有相应的节点发送 PING 命令。</p>
+<p>如果一定时间内目标节点没有相应回复，则发起 PING 命令的节点会认为目标节点疑似下线（PFALL）。疑似下线可以与哨兵的主观下线类比，两者都表示某一节点从<strong>自身的角度认为</strong>目标节点是下线的状态。与哨兵的模式类似，如果要使在整个集群中的所有节点都认为某一节点已经下线，需要一定数量的节点都认为该节点疑似下线才可以，这一过程具体为：</p>
+<ul>
+<li>一旦节点 A 认为节点 B 是疑似下线状态，就会在集群中传播该消息，所有其它节点收到消息后都会记录下这一信息；</li>
+<li>当集群中的某一节点 C 收集到半数以上的节点认为 B 是疑似下线的状态时，就会将 B 标记为下线（FALL），并且向集群中的其它节点传播该消息，从而使得 B 在整个集群中下线。</li>
+</ul>
+<p>在集群中，当一个主数据库下线时，就会出现一部分插槽无法写入的问题。这时如果该主数据库拥有至少一个从数据库，集群就进行故障恢复操作来将其中一个从数据库转变成主数据库来保证集群的完成。选择哪个从数据库来作为主数据库的过程与在哨兵中选择领头哨兵的过程一样，都是基于Raft 算法，过程如下：</p>
+<ol>
+<li>发现其复制的主数据库下线的从数据库库（下面称作 A）向每个集群中的节点发送请求，要求对方选自己成为主数据库。</li>
+<li>如果请求的节点没有选过其他人，则会同意 A 设置成主数据库。</li>
+<li>如果 A 发现有超过集群中节点总数一半的节点同意选自己成为主数据库，则 A 成功成为主数据库。</li>
+<li>当有多个从数据库节点同时参选主数据库，则会出现没有任何节点当选的可能。此时每个参选点将等待一个随机时间重新发起参选请求，进行下一轮选举，直到选举成功。</li>
+</ol>
+<p>当某个从数据库当选为主数据库后，会通过命令 <code>SLAVEOF NO ONE</code> 将自己转换成主数据库，并将旧的数据库插槽转换给自己负责。</p>
+<p>如果至少负责一个插槽的主数据库下线且没有相应的从数据库可以进行故障恢复，则整个集群默认会进入下线状态无法继续工作。如果想在这种情况下使集群仍能正常工作，可以修改配置：</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 默认为 yes</span>
+cluster-require-full-coverge no</code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
