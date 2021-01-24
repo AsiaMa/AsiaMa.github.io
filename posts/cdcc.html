@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Hello World, Java,Git,SpringBoot,SpringCloud,SpringCloud Alibaba等">
+    <meta name="keywords" content="复制、删除表和记录, Java,Git,SpringBoot,SpringCloud,SpringCloud Alibaba等">
     <meta name="description" content="专注WJava后端,大数据,分享知识,分享生活">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Hello World | 三十二道街</title>
+    <title>复制、删除表和记录 | 三十二道街</title>
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/awesome/css/all.css">
@@ -287,12 +287,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/21.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Hello World</h1>
+                    <h1 class="description center-align post-title">复制、删除表和记录</h1>
                 </div>
             </div>
         </div>
@@ -407,9 +407,13 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/MySQL/">
+                                <span class="chip bg-color">MySQL</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -421,28 +425,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-09-18
+                    2021-01-24
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-09-20
+                    2021-01-24
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    125
+                    841
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    3 分
                 </div>
                 
 
@@ -457,15 +461,42 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class=" language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span></code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class=" language-bash"><code class="language-bash">$ hexo server</code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bash"><code class="language-bash">$ hexo generate</code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-bash"><code class="language-bash">$ hexo deploy</code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+                <h3 id="复制表的列结构和记录"><a href="#复制表的列结构和记录" class="headerlink" title="复制表的列结构和记录"></a>复制表的列结构和记录</h3><pre class=" language-mysql"><code class="language-mysql">$ CREATE TABLE 新表名 SELECT * FROM 元表名</code></pre>
+<p>使用 “SELECT * FROM …” 的结果执行 CREATE TABLE。这样在创建表的同时也复制了记录。可以使用 WHERE 或者 LIMIT 来限定要提取的记录，还可以只对需要的记录进行复制。</p>
+<p>但是这种方法不能复制 AUTO_INCREMENT 等属性。 AUTO_INCREMENT 等属性需要在复制后再进行设置。还可能存在不复制元表的索引等情况。所以在执行完复制操作后，请用 DESC 确认表的结构，然后再使用该表。</p>
+<h3 id="仅复制表的列结构"><a href="#仅复制表的列结构" class="headerlink" title="仅复制表的列结构"></a>仅复制表的列结构</h3><p>在 CREATE TABLE 命令的表名后面加上 <strong>LIKE</strong> 指定复制的元表。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ CREATE TABLE 新表名 LIKE 元表名</code></pre>
+<p>该方法也会复制 AUTO_INCREMENT 和 PRIMARY KEY 等列的属性。这是一种不复制记录，只复制列结构的方法。</p>
+<h3 id="复制其它表的记录"><a href="#复制其它表的记录" class="headerlink" title="复制其它表的记录"></a>复制其它表的记录</h3><pre class=" language-mysql"><code class="language-mysql">$ INSERT INTO 表名 SELECT * FROM 元表名</code></pre>
+<h3 id="选择某一列进行复制"><a href="#选择某一列进行复制" class="headerlink" title="选择某一列进行复制"></a>选择某一列进行复制</h3><p>我们可以从元表中选择某一列的记录进行复制。例如下面的示例中就展示了如何向表 tb1_bkc 的姓名列 name 中插入表 tb1 的列 empid 的记录。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ INSERT INTO tb1_bkc(name) SELECT empid FROM tb1;</code></pre>
+<p>在这种情况下，因为列 empid 和 列name 的数据类型都是 VARCHAR(10)，所以命令的执行没有任何问题。但是，如果数据类型不一致，复制操作就可能会失败，这一点需要大家注意。</p>
+<h3 id="删除表"><a href="#删除表" class="headerlink" title="删除表"></a>删除表</h3><pre class=" language-mysql"><code class="language-mysql">$ DROP TABLE 表名;</code></pre>
+<p>删除后，再也不能回到原来的状态了。在执行 DROP 的命令时一定要谨慎。</p>
+<h3 id="当目标表存在时将其删除"><a href="#当目标表存在时将其删除" class="headerlink" title="当目标表存在时将其删除"></a>当目标表存在时将其删除</h3><pre class=" language-mysql"><code class="language-mysql">$ DROP TABLE IF EXISTS tb1;</code></pre>
+<p>一般来说，在目标表不存在的情况下执行 DROP 命令会发生错误，但如果加上了 IF EXISTS，就能够抑制错误的发生。</p>
+<h3 id="删除数据库"><a href="#删除数据库" class="headerlink" title="删除数据库"></a>删除数据库</h3><pre class=" language-mysql"><code class="language-mysql">$ DROP DATABASE 数据库名;</code></pre>
+<p>执行上面的命令后，数据库就无法恢复到原来的状态了。包括表在内的所有信息都将消失，这一点需要特别注意。</p>
+<h3 id="删除所有记录"><a href="#删除所有记录" class="headerlink" title="删除所有记录"></a>删除所有记录</h3><pre class=" language-mysql"><code class="language-mysql">$ DELETE FROM 表名;</code></pre>
+<blockquote>
+<p><strong>不使用 MySQL 监视器操作 MySQL</strong></p>
+<p>我们可以直接从命令提示符或终端来操作 MySQL。</p>
+<ul>
+<li>使用 mysqladmin 命令创建和删除数据库</li>
+</ul>
+<p>MySQL 里提供了一个名为 mysqladmin 的强大命令来创建数据库。我们可以执行 mysqladmin 命令创建数据库。这个命令不是 MySQL 监视器的命令，所以直接从命令提示符或终端输入。</p>
+<pre class=" language-mysql"><code class="language-mysql"># 创建数据库
+$ mysqladmin -u 用户名 -p密码 CREATE 数据库名
+# 删除数据库
+$ mysqladmin -u 用户名 -p密码 DROP 数据库名</code></pre>
+<ul>
+<li>使用 mysql 命令执行查询</li>
+</ul>
+<p>虽然只要使用 mysql 就能启动 MySQL 监视器，但是也可以不启动 MySQL 的情况下直接执行 SQL 语句。在这种情况下，需要加上 -e 选项，并且中 “” 将后面的命令括起来。注意不是用单引号（’’）。而使用双引号（””）把命令括起来。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ mysql 数据库名 -u 用户名 -p密码 -e "命令"
+# 例子
+$mysql db1 -u root -p123456 -e "SELECT * FROM tb1"</code></pre>
+</blockquote>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -509,7 +540,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://blog.asiama.top/posts/3eeb.html">https://blog.asiama.top/posts/3eeb.html</a>
+                    <a href="https://blog.asiama.top/posts/cdcc.html">https://blog.asiama.top/posts/cdcc.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -546,7 +577,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/MySQL/">
+                                    <span class="chip bg-color">MySQL</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -715,7 +750,7 @@
         repo: 'asiama.github.io',
         owner: 'asiama',
         admin: "asiama",
-        id: '2020-09-18T21-22-19',
+        id: '2021-01-24T19-50-26',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -739,17 +774,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/posts/5174.html">
+                <a href="/posts/cdcc.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/10.jpg" class="responsive-img" alt="使用Git之前需要做的最小配置">
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/21.jpg" class="responsive-img" alt="复制、删除表和记录">
                         
-                        <span class="card-title">使用Git之前需要做的最小配置</span>
+                        <span class="card-title">复制、删除表和记录</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -759,9 +795,55 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-09-20
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-24
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            AsiaMa
+                            
                         </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/MySQL/">
+                        <span class="chip bg-color">MySQL</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/posts/1e9.html">
+                    <div class="card-image">
+                        
+                        
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/5.jpg" class="responsive-img" alt="MySQL修改表">
+                        
+                        <span class="card-title">MySQL修改表</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-24
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -773,49 +855,11 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Git/">
-                        <span class="chip bg-color">Git</span>
+                    <a href="/tags/MySQL/">
+                        <span class="chip bg-color">MySQL</span>
                     </a>
                     
                 </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
-            </div>
-            <div class="card">
-                <a href="/posts/3eeb.html">
-                    <div class="card-image">
-                        
-                        
-                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
-                        
-                        <span class="card-title">Hello World</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-09-18
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            AsiaMa
-                            
-                        </span>
-                    </div>
-                </div>
-
                 
             </div>
         </div>
@@ -965,7 +1009,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">59.2k</span>&nbsp;字
+                class="white-color">60k</span>&nbsp;字
             
             
             

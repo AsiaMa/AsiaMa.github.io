@@ -6,7 +6,7 @@
   <link href="https://blog.asiama.top/atom.xml" rel="self"/>
   
   <link href="https://blog.asiama.top/"/>
-  <updated>2021-01-24T11:24:08.940Z</updated>
+  <updated>2021-01-24T12:25:06.208Z</updated>
   <id>https://blog.asiama.top/</id>
   
   <author>
@@ -17,11 +17,34 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>复制、删除表和记录</title>
+    <link href="https://blog.asiama.top/posts/cdcc.html"/>
+    <id>https://blog.asiama.top/posts/cdcc.html</id>
+    <published>2021-01-24T11:50:26.000Z</published>
+    <updated>2021-01-24T12:25:06.208Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;复制表的列结构和记录&quot;&gt;&lt;a href=&quot;#复制表的列结构和记录&quot; class=&quot;headerlink&quot; title=&quot;复制表的列结构和记录&quot;&gt;&lt;/a&gt;复制表的列结构和记录&lt;/h3&gt;&lt;pre class=&quot; language-mysql&quot;&gt;&lt;code</summary>
+        
+      
+    
+    
+    
+    
+    <category term="MySQL" scheme="https://blog.asiama.top/tags/MySQL/"/>
+    
+  </entry>
+  
+  <entry>
     <title>MySQL修改表</title>
     <link href="https://blog.asiama.top/posts/1e9.html"/>
     <id>https://blog.asiama.top/posts/1e9.html</id>
     <published>2021-01-24T02:09:33.000Z</published>
-    <updated>2021-01-24T11:24:08.940Z</updated>
+    <updated>2021-01-24T11:28:49.905Z</updated>
     
     
       
@@ -36,7 +59,7 @@
     
     
     
-    <category term="Redis" scheme="https://blog.asiama.top/tags/Redis/"/>
+    <category term="MySQL" scheme="https://blog.asiama.top/tags/MySQL/"/>
     
   </entry>
   
@@ -68,7 +91,7 @@
     <link href="https://blog.asiama.top/posts/cd0e.html"/>
     <id>https://blog.asiama.top/posts/cd0e.html</id>
     <published>2021-01-23T08:14:25.000Z</published>
-    <updated>2021-01-24T02:41:56.003Z</updated>
+    <updated>2021-01-24T11:29:03.975Z</updated>
     
     
       
@@ -82,7 +105,7 @@
     
     
     
-    <category term="Redis" scheme="https://blog.asiama.top/tags/Redis/"/>
+    <category term="MySQL" scheme="https://blog.asiama.top/tags/MySQL/"/>
     
   </entry>
   
@@ -446,29 +469,6 @@
         
         
     <summary type="html">&lt;h3 id=&quot;redis-server-配置&quot;&gt;&lt;a href=&quot;#redis-server-配置&quot; class=&quot;headerlink&quot; title=&quot;redis-server 配置&quot;&gt;&lt;/a&gt;redis-server 配置&lt;/h3&gt;&lt;p&gt;Redis</summary>
-        
-      
-    
-    
-    
-    
-    <category term="Redis" scheme="https://blog.asiama.top/tags/Redis/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Redis的安装与启动</title>
-    <link href="https://blog.asiama.top/posts/dc55.html"/>
-    <id>https://blog.asiama.top/posts/dc55.html</id>
-    <published>2021-01-18T11:44:40.000Z</published>
-    <updated>2021-01-19T11:41:48.003Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;Redis-安装&quot;&gt;&lt;a href=&quot;#Redis-安装&quot; class=&quot;headerlink&quot; title=&quot;Redis 安装&quot;&gt;&lt;/a&gt;Redis 安装&lt;/h3&gt;&lt;pre class=&quot; language-bash&quot;&gt;&lt;code</summary>
         
       
     
