@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="MySQL基本介绍, Java,Git,SpringBoot,SpringCloud,SpringCloud Alibaba等">
+    <meta name="keywords" content="MySQL的概要, Java,Git,SpringBoot,SpringCloud,SpringCloud Alibaba等">
     <meta name="description" content="专注WJava后端,大数据,分享知识,分享生活">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>MySQL基本介绍 | 三十二道街</title>
+    <title>MySQL的概要 | 三十二道街</title>
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/awesome/css/all.css">
@@ -287,12 +287,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/18.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/23.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">MySQL基本介绍</h1>
+                    <h1 class="description center-align post-title">MySQL的概要</h1>
                 </div>
             </div>
         </div>
@@ -425,28 +425,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-12-05
+                    2021-01-23
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-12-29
+                    2021-01-23
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    610
+                    1.8k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    6 分
                 </div>
                 
 
@@ -461,11 +461,22 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="数据库是什么"><a href="#数据库是什么" class="headerlink" title="数据库是什么"></a>数据库是什么</h3><p>据说，第二次世界大战后，美军为了有效管理大量的资料，便把所有的信息都集中在一个基地里，这个集中了所有信息的基地就称为数据库。“数据库”一词便由此诞生。</p>
-<p>现在，<code>数据库表示“具有某种数据规则的集合”</code>。但提到数据库时，我们一般都默认它具备对数据进行<code>添加、查询和提取</code>等用于管理数据的功能。所以只是随便收集起来的数据的集合不能称为数据库。只有具备了<code>有效运用这些数据的管理功能</code>，才能称为数据库。</p>
-<p>使用最广泛的数据库是<code>关系数据库</code>（Relational DataBase, RDB）。其中，一条数据称为记录（record），各个项目称为列（column）。</p>
-<p><code>管理关系数据库的系统称为RDBMS</code>（Relational DataBase Management System）。MySQL也是RDBMS的一种。RDBMS是以IBM公司的埃德加·弗兰克·科德（Edgar F.Codd）与1970年发表的关系数据库相关论文为基础发展起来的。</p>
-<h3 id="主流数据库"><a href="#主流数据库" class="headerlink" title="主流数据库"></a>主流数据库</h3><table>
+                <h3 id="数据库的概要"><a href="#数据库的概要" class="headerlink" title="数据库的概要"></a>数据库的概要</h3><h4 id="数据库是什么"><a href="#数据库是什么" class="headerlink" title="数据库是什么"></a>数据库是什么</h4><p>MySQL 是世界上最受欢迎的开源数据库软件。那么，我们常常听到的数据库到底是什么呢？</p>
+<p>据说，第二次世界大战后，美军为了有效管理大量的资料，便把所有的信息都集中在一个基地里，这个集中了所有信息的基地就称为数据库（databse）。“数据库” 一次便由此诞生。</p>
+<p>现在，数据库表示 <strong>“具有某种数据规则的集合”</strong>。但提到数据库时，我们一般都默认它<strong>具备对数据进行添加、查询和提取等用于管理数据</strong>的功能。所以，只是随便收集起来的数据的集合不能称为数据库。只有具备了有效运用这些数据的管理功能，才能称为数据库。</p>
+<img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/2021-01-23_11-38-33.png" style="zoom:25%;">
+
+<h4 id="关系数据库是什么"><a href="#关系数据库是什么" class="headerlink" title="关系数据库是什么"></a>关系数据库是什么</h4><p>现在使用最广泛的是<strong>关系数据库</strong> （Relational Database，RDB）。</p>
+<p>在关系数据库中，一条数据用多个项目来表示。例如，关系数据库将一条会员数据分成会员编号、姓名、住址和出生年月日等项目，然后把各个会员的相关数据收集起来。</p>
+<p>其中，一条数据称为<strong>记录（record）</strong>，各个项目称为<strong>列</strong>（column）。在刚才的例子中，xx 先生 或者 xx小姐的数据是记录，会员编号和姓名等项目是列。</p>
+<p>如果想象成 Excel 的工作表（work sheet），横向的一行就相当于记录。注意，纵向的一列中输入的是相同类型的数据。</p>
+<p>我们把收集了这些数据的表格称为<strong>表</strong>（table）。一个数据库中可以包含多个表。</p>
+<p>管理关系数据库的系统称为 <strong>RDBMS（Relational DataBase Management System）</strong>，关系数据库系统。MySQL 也是 RDBMS 的一种。</p>
+<p>在关系数据库中，不用把所有的项目都存入一个表里。我们可以把各个项目拆到多个 “具有关联性” 表中，只对需要用到的数据进行收集和使用。</p>
+<h4 id="数据库的特征"><a href="#数据库的特征" class="headerlink" title="数据库的特征"></a>数据库的特征</h4><p>如果是 Excel 的工作表，在任何单元格中都可以自由地输入字符串或数值，而且还可以通过拖拽鼠标来自由地挪动数据。但是在数据库中，上面的做法是行不通的。如果最开始决定 “在列 a 中输入整数” ，之后在列 a 中就只能输入整数，不能再输入字符串。</p>
+<p>另外，很多应用程序都有<code>还原（UNDO）</code>功能，如果操作结果不理想，可以使用该功能进行还原。但是在数据库中，如果不使用<strong>事务（t ransaction）</strong>等特殊功能，就无法还原到上一步操作。</p>
+<p>大家也许一开始会讨厌数据库这种 “缺乏灵活性” 的特性。但是多亏了这一特性，数据库才变得安全且稳定，才成了可靠的数据存储场所。“只能按照决定好的规则来操作，并且严格地进行管理” 的特征，正是数据库值得信赖的原因。</p>
+<h3 id="MySQL介绍"><a href="#MySQL介绍" class="headerlink" title="MySQL介绍"></a>MySQL介绍</h3><h4 id="主流数据库"><a href="#主流数据库" class="headerlink" title="主流数据库"></a>主流数据库</h4><table>
 <thead>
 <tr>
 <th>名称</th>
@@ -474,26 +485,52 @@
 </thead>
 <tbody><tr>
 <td>Oracle</td>
-<td>世界上最常用的商用RDBMS</td>
+<td>世界上最常用的商用 RDBMS</td>
 </tr>
 <tr>
 <td>Access</td>
-<td>微软公司Office系列的RDBMS</td>
+<td>微软公司 Office 系列的 RDBMS</td>
 </tr>
 <tr>
-<td>Microsoft SQL Servier</td>
+<td>Microsoft SQL Server</td>
 <td>微软公司的商用RDBMS</td>
 </tr>
 <tr>
 <td>PostgreSQL</td>
-<td>和MySQL一样是开源的RDBMS，在日本很受欢迎</td>
+<td>和 MySQL 一样是开源的 RDBMS，在日本很受欢迎</td>
 </tr>
 <tr>
 <td>MySQL</td>
-<td>世界上最常用的开源RDBMS</td>
+<td>世界上最常用的 RDBMS</td>
 </tr>
 </tbody></table>
-<h3 id="MySQL新功能的添加历史"><a href="#MySQL新功能的添加历史" class="headerlink" title="MySQL新功能的添加历史"></a>MySQL新功能的添加历史</h3><table>
+<h4 id="MySQL历史"><a href="#MySQL历史" class="headerlink" title="MySQL历史"></a>MySQL历史</h4><p>MySQL 是米卡埃尔·维徳纽斯（Michael Widenius） 在 1995 年开发的 RDBMS。最初，MySQL  是由瑞典的 MySQL AB 公司进行支持和开发的。维德妞斯正是这家公司的前身公司创始人。但是在 2008 年 2 月，MySQL AB 公司被 Sun 公司收购。而拥有被认为是世界第一的商用数据库 Oracle 的 Oracle 公司又与 2010年 1 月收购了 Sun 公司。也就是说，作为开源数据库世界第一的 MySQL 和作为商用数据库世界第一的 Oracle，现在都在由同一家公司管理。</p>
+<p>另外，维德妞斯原供职于 Sun 公司，但是他在 Oracle 公司收购 Sun 公司前从 Sun 公司离职，并与 2010 年创建了 MariaDB 公司，开始开发和 MySQL 具有兼容性的 MariaDB 数据库。MySQL 源与维德妞斯大女儿的名字 “My”，而 MariaDB 则源自与维德妞斯二女儿的名字“Maria”。</p>
+<p>MariaDB 最初发布的版本只是增强了 MySQL 的部分功能，但是从 2014 年 3 月发布的 10.0 版本起，MariaDB 开始有了自己专有的功能，逐渐和 MySQL 区分开来。</p>
+<h4 id="MySQL-的两种版本"><a href="#MySQL-的两种版本" class="headerlink" title="MySQL 的两种版本"></a>MySQL 的两种版本</h4><ul>
+<li>MySQL 社区版<ul>
+<li>可免费使用</li>
+<li>有参考手册（reference manual）</li>
+<li>有论坛和邮件列表，但没有技术支持</li>
+</ul>
+</li>
+<li>MySQL 商业版<ul>
+<li>需要付费</li>
+<li>定期更新，并且提供服务包（service pack）及技术支持</li>
+<li>拥有以下多个版本：MySQL 标准版（Standard Edition），MySQL 企业版（Enterprise Edition），MySQL 集群运营商级版（Cluster Carrier Grade Edition）</li>
+</ul>
+</li>
+</ul>
+<h4 id="MySQL-特征"><a href="#MySQL-特征" class="headerlink" title="MySQL 特征"></a>MySQL 特征</h4><ol>
+<li>执行速度快</li>
+<li>开放源代码</li>
+<li>支持在多种操作系统上运行</li>
+<li>支持多种编程语言</li>
+<li>拥有免费和付费两种版本</li>
+</ol>
+<p>MySQL 的执行速度非常快，这种轻快性正是它的卖点。早期的版本为了维持这种轻快性，曾削减事物、子查询和存储过程等功能，所以给人一种 ”执行速度快、但功能太简单“ 的感觉。不过，现在 MySQL 在功能方面已经不逊色于其它 RDBMS 了。</p>
+<p>MySQL 新功能的添加历史</p>
+<table>
 <thead>
 <tr>
 <th>功能</th>
@@ -541,8 +578,10 @@
 <td>5.7</td>
 </tr>
 </tbody></table>
-<h3 id="什么是SQL"><a href="#什么是SQL" class="headerlink" title="什么是SQL"></a>什么是SQL</h3><p>SQL原本是IBM公司开发的语言，但现在这门语言基本可以在所有的数据库上使用。不过麻烦的是，各个数据库使用的SQL语法稍有不同。</p>
-<p>编写查询需要遵循SQL（Structured Query Language）的规则。SQL直译过来就是结构化查询语言，用于对数据库进行操作。<code>SQL是数据库的窗口，充当用户与数据库交互的媒介</code>。</p>
+<h3 id="SQL的概要"><a href="#SQL的概要" class="headerlink" title="SQL的概要"></a>SQL的概要</h3><h4 id="查询和SQL"><a href="#查询和SQL" class="headerlink" title="查询和SQL"></a>查询和SQL</h4><p>在操作数据库的时候，作为用户的我们会向数据库发出命令（command），并指定需要处理的内容。表示这种命令的语句就是查询（query）。例如，创建表时使用的查询时 “CREATE TABLE…”，插入数据库时使用的查询是 “INSERT INTO …”。</p>
+<p>编写查询需要遵守 <strong>SQL（Structured Query Language）</strong> 的规则。SQL 直译过来就是结构化查询语言，用于对数据库进行操作。</p>
+<p>我们来看一个例子。假设你在政府办公室等地方进行咨询，在向政府办公室窗口的负责人提出 “想请 XX 部门帮忙提供 XX 证明” 的申请后，就能得到需要的文件了。如果把申请对象换成数据库，申请手续就是 SQL。SQL是数据库的窗口，充当用户与数据库交互的媒介。</p>
+<h4 id="SQL的”方言“"><a href="#SQL的”方言“" class="headerlink" title="SQL的”方言“"></a>SQL的”方言“</h4><p>SQL原本是IBM公司开发的语言，但现在这门语言基本可以在所有的数据库上使用。不过麻烦的是，各个数据库使用的SQL语法稍有不同。</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -586,7 +625,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://blog.asiama.top/posts/68d3.html">https://blog.asiama.top/posts/68d3.html</a>
+                    <a href="https://blog.asiama.top/posts/1a43.html">https://blog.asiama.top/posts/1a43.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -796,7 +835,7 @@
         repo: 'asiama.github.io',
         owner: 'asiama',
         admin: "asiama",
-        id: '2020-12-05T16-34-08',
+        id: '2021-01-23T11-22-44',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -824,13 +863,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/posts/17fc.html">
+                <a href="/posts/d16b.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/11.jpg" class="responsive-img" alt="MySQL编码设置">
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/20.jpg" class="responsive-img" alt="MySQL字符编码设置">
                         
-                        <span class="card-title">MySQL编码设置</span>
+                        <span class="card-title">MySQL字符编码设置</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -841,12 +880,12 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-12-05
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-01-23
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
-                            AsiaMa
+                            AsiaMA
                             
                         </span>
                     </div>
@@ -869,13 +908,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/posts/9511.html">
+                <a href="/posts/3687.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/13.jpg" class="responsive-img" alt="英语学习第二天">
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/0.jpg" class="responsive-img" alt="Redis管理">
                         
-                        <span class="card-title">英语学习第二天</span>
+                        <span class="card-title">Redis管理</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -886,7 +925,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-10-25
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-23
                             </span>
                         <span class="publish-author">
                             
@@ -899,8 +938,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/English/">
-                        <span class="chip bg-color">English</span>
+                    <a href="/tags/Redis/">
+                        <span class="chip bg-color">Redis</span>
                     </a>
                     
                 </div>
@@ -1053,7 +1092,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">52.4k</span>&nbsp;字
+                class="white-color">55.9k</span>&nbsp;字
             
             
             

@@ -432,14 +432,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-12-29
+                    2021-01-23
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    199
+                    378
                 </div>
                 
 
@@ -467,7 +467,16 @@ $ CREATE USER asiama@localhost IDENTIFIED BY 'A123456!'</code></pre>
 <h3 id="设置用户权限"><a href="#设置用户权限" class="headerlink" title="设置用户权限"></a>设置用户权限</h3><pre class=" language-mysql"><code class="language-mysql"># GRANT 赋予的权限 ON 数据库名.表名 TO 用户名
 $ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
 <blockquote>
-<p>用户名需要按照“用户名@主机名”的方式书写（如果不确定主机名，可以”用户名@%”来允许所有主机）。“赋予的权限”如果是所有的权限，就设置为“ALL”；如果仅允许SELECT和UPDATE,就设置为“SELECT, UPDATE”；如果是所有的数据库的所有表，就设置为“*.*”</p>
+<p><strong>注意</strong>    用户名需要按照“用户名@主机名”的方式书写（如果不确定主机名，可以”用户名@%”来允许所有主机）。“赋予的权限”如果是所有的权限，就设置为“ALL”；如果仅允许SELECT和UPDATE,就设置为“SELECT, UPDATE”；如果是所有的数据库的所有表，就设置为“*.*”</p>
+</blockquote>
+<h3 id="安全地输入密码"><a href="#安全地输入密码" class="headerlink" title="安全地输入密码"></a>安全地输入密码</h3><pre class=" language-bash"><code class="language-bash">$ mysql -uroot -p</code></pre>
+<p>在这里输入 “root” 之类的密码，就可以像前面一样启动 MySQL 监视器了。该方法可以避免通过命令历史盗取密码。</p>
+<blockquote>
+<p><strong>MySQL 命令的选项</strong>    在启动 MySQL 监视器的时候，我们输入了 <code>mysql -u root -proot</code>，这个命令其实就是在 mysql 命令的基础上添加了 -u 和 -p 两个选项。给 mysql  命令设置选项的方法主要有以下两种：</p>
+<ol>
+<li>给 “-” 指定选项名，然后加上设置的值。例如：-u root（在这种情况下，选项名只占 1 个字符）</li>
+<li>在 “–选项名=” 后加上设置的值。例如：<code>mysql --user=root --password=root --default-character-set=gbk</code></li>
+</ol>
 </blockquote>
 <script>
         document.querySelectorAll('.github-emoji')
@@ -750,13 +759,13 @@ $ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/posts/f6d7.html">
+                <a href="/posts/5487.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/9.jpg" class="responsive-img" alt="MySQL基础命令">
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/15.jpg" class="responsive-img" alt="Kotin介绍">
                         
-                        <span class="card-title">MySQL基础命令</span>
+                        <span class="card-title">Kotin介绍</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -780,8 +789,8 @@ $ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/MySQL/">
-                        <span class="chip bg-color">MySQL</span>
+                    <a href="/tags/Kotlin/">
+                        <span class="chip bg-color">Kotlin</span>
                     </a>
                     
                 </div>
@@ -795,13 +804,13 @@ $ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/posts/17fc.html">
+                <a href="/posts/9511.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/11.jpg" class="responsive-img" alt="MySQL编码设置">
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/13.jpg" class="responsive-img" alt="英语学习第二天">
                         
-                        <span class="card-title">MySQL编码设置</span>
+                        <span class="card-title">英语学习第二天</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -812,7 +821,7 @@ $ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-12-05
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-10-25
                             </span>
                         <span class="publish-author">
                             
@@ -825,8 +834,8 @@ $ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/MySQL/">
-                        <span class="chip bg-color">MySQL</span>
+                    <a href="/tags/English/">
+                        <span class="chip bg-color">English</span>
                     </a>
                     
                 </div>
@@ -979,7 +988,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">52.4k</span>&nbsp;字
+                class="white-color">55.9k</span>&nbsp;字
             
             
             

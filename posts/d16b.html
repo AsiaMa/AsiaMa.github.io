@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="MySQL编码设置, Java,Git,SpringBoot,SpringCloud,SpringCloud Alibaba等">
+    <meta name="keywords" content="MySQL字符编码设置, Java,Git,SpringBoot,SpringCloud,SpringCloud Alibaba等">
     <meta name="description" content="专注WJava后端,大数据,分享知识,分享生活">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>MySQL编码设置 | 三十二道街</title>
+    <title>MySQL字符编码设置 | 三十二道街</title>
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/awesome/css/all.css">
@@ -287,12 +287,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/11.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/20.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">MySQL编码设置</h1>
+                    <h1 class="description center-align post-title">MySQL字符编码设置</h1>
                 </div>
             </div>
         </div>
@@ -425,28 +425,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-12-05
+                    2021-01-23
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-12-29
+                    2021-01-23
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    265
+                    1.1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    4 分
                 </div>
                 
 
@@ -461,9 +461,58 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="命令提示符的UTF-8设置"><a href="#命令提示符的UTF-8设置" class="headerlink" title="命令提示符的UTF-8设置"></a>命令提示符的UTF-8设置</h3><p>Windows终端默认使用字符编码GBK进行数据的输入和输出，而数据库则使用UTF-8存储数据。其实我们也可以把命令终端的字符编码设置成UTF-8。我们需要按照下面的格式在命令终端执行<code>chcp</code></p>
-<pre class=" language-shell"><code class="language-shell">$ chcp 65001</code></pre>
-<p>chcp用于修改命令终端的字符编码，<code>65001代表UTF-8</code>。</p>
+                <h3 id="关于中文的设置"><a href="#关于中文的设置" class="headerlink" title="关于中文的设置"></a>关于中文的设置</h3><p>某种字符的集合称为<strong>字符集（character set）</strong>。例如中文汉字和英文字母都是字符集的一种。</p>
+<p>在计算机和网络上表示字符时，需要给各个字符添加识别信息，例如数字或者符号等。给各个字符分配的数字或者符号称为<strong>字符代码（character code）</strong>。</p>
+<p>给字符集分配字符代码时的规则称为<strong>字符编码（character encoding）</strong>，中文相关的主流字符编码如下所示：</p>
+<table>
+<thead>
+<tr>
+<th>字符编码名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ISO-8859-1</td>
+<td>字母的字符编码（单字节编码）</td>
+</tr>
+<tr>
+<td>GB 2312</td>
+<td>1981 年 5 月 1 日发布的简体中文汉字编码国家标准</td>
+</tr>
+<tr>
+<td>GBK</td>
+<td>1995 年 12 月发布的汉字编码国际标准，是对 GB 2312 编码的补充</td>
+</tr>
+<tr>
+<td>cp936</td>
+<td>微软 Windows 环境上在 GB 2312 的基础上扩展的字符编码，通常被视为等同于 GBK</td>
+</tr>
+<tr>
+<td>EUC-CN</td>
+<td>Linux/Unix 环境上以 GB 2312 为基础的字符编码</td>
+</tr>
+<tr>
+<td>GB 18030</td>
+<td>2000 年 3 月 17 日发布的汉字编码国际标准，是对 GBK 编码的补充，兼容 GBK 和 GB 2312 字符集</td>
+</tr>
+<tr>
+<td>UTF-8</td>
+<td>针对 Unicode 字符集的一种可变长度字符编码</td>
+</tr>
+</tbody></table>
+<p>举例来说，“啊” 字在中国国家标准 GB 2312、GBK 和 GB 18030 字符编码中的编码都为 “B0A1”，而在 UTF-8 中则为 “E5958A”。从中可以看出，即使文字相同，如果字符编码不同，表示的字符也可能不同，由此才出现了乱码现象。</p>
+<p>世界上有许多语言系统和文字，所以除了上面介绍的内容之外还有无数的字符集和字符编码。但这样一来，面向全世界发布的网页等就会变得很难处理，因此人们开发了可以支持全世界所有字符的字符集 Unicode。Unicode 的字符编码方式有好几种，现在最为常用的是在 HTML 5 中被默认使用的 UTF-8。顺便说一下，在 UTF-8 的情况下，字符集和字符编码都称为 UTF-8。</p>
+<h3 id="MySQL的字符编码设置"><a href="#MySQL的字符编码设置" class="headerlink" title="MySQL的字符编码设置"></a>MySQL的字符编码设置</h3><p>通过 Web 应用程序，我们可以把输入的数据存储到数据库，再从数据库读出数据显示在 Web 画面上。在 Web 的世界中默认使用的字符编码是 UTF-8，所以如果数据库的字符编码也是 UTF-8，就不需要进行字符编码的转换了。</p>
+<p>因为中文 Windows 系统中命令行的默认字符编码是 GBK，所以 MySQL 监视器的输入输出字符串的字符编码也是 GBK。也就是说，存储在数据库中的字符的字符编码和客户端的输入输出中使用的字符编码并不相同。</p>
+<img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/Snipaste_2021-01-23_15-37-18.png" style="zoom:25%;">
+
+<p>在这种情况下，当向数据库存储数据时（GBK —&gt; UTF-8），以及从数据库读取数据显示在客户端上时（UTF-8—&gt; GBK），都需要进行字符编码的转换。可以通过 修改MySQL 的设置文件（my.ini ）即可：</p>
+<pre class=" language-shell"><code class="language-shell"># SQL 的安装目录下,如：C:\ProgramData\MySQL\MySQL Server 8.0\my.ini
+character-set-server=utf8
+default-character-set=gbk</code></pre>
+<h3 id="命令提示符的UTF-8设置"><a href="#命令提示符的UTF-8设置" class="headerlink" title="命令提示符的UTF-8设置"></a>命令提示符的UTF-8设置</h3><p>Windows终端默认使用字符编码GBK进行数据的输入和输出，而数据库则使用UTF-8存储数据。其实我们也可以把命令终端的字符编码设置成UTF-8。我们需要按照下面的格式在命令终端执行<code>chcp</code></p>
+<pre><code>shell</code></pre>
+<p>chcp用于修改命令终端的字符编码，<code>65001代表UTF-8</code>。如果这样设置，就不需要修改 my.ini 中的内容了。</p>
 <h3 id="确认MySQL中字符编码的设置情况"><a href="#确认MySQL中字符编码的设置情况" class="headerlink" title="确认MySQL中字符编码的设置情况"></a>确认MySQL中字符编码的设置情况</h3><p>启动MySQL监视器，输入status。</p>
 <p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/one.png"></p>
 <p>1代表服务器端的字符编码设置，2代表客户端的字符编码设置。</p>
@@ -505,7 +554,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">AsiaMa</a>
+                    <a href="/about" rel="external nofollow noreferrer">AsiaMA</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -515,7 +564,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://blog.asiama.top/posts/17fc.html">https://blog.asiama.top/posts/17fc.html</a>
+                    <a href="https://blog.asiama.top/posts/d16b.html">https://blog.asiama.top/posts/d16b.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -528,7 +577,7 @@
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="/about" target="_blank">AsiaMa</a>
+                    <a href="/about" target="_blank">AsiaMA</a>
                     !
                 </span>
             </div>
@@ -725,7 +774,7 @@
         repo: 'asiama.github.io',
         owner: 'asiama',
         admin: "asiama",
-        id: '2020-12-05T17-39-05',
+        id: '2021-01-23T14-23-46',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -753,13 +802,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/posts/8cf.html">
+                <a href="/posts/cd0e.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/14.jpg" class="responsive-img" alt="MySQL权限相关">
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/2.jpg" class="responsive-img" alt="创建数据库">
                         
-                        <span class="card-title">MySQL权限相关</span>
+                        <span class="card-title">创建数据库</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -770,7 +819,7 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-12-05
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-01-23
                         </span>
                         <span class="publish-author">
                             
@@ -783,8 +832,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/MySQL/">
-                        <span class="chip bg-color">MySQL</span>
+                    <a href="/tags/Redis/">
+                        <span class="chip bg-color">Redis</span>
                     </a>
                     
                 </div>
@@ -798,13 +847,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/posts/68d3.html">
+                <a href="/posts/1a43.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/18.jpg" class="responsive-img" alt="MySQL基本介绍">
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/23.jpg" class="responsive-img" alt="MySQL的概要">
                         
-                        <span class="card-title">MySQL基本介绍</span>
+                        <span class="card-title">MySQL的概要</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -815,7 +864,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-12-05
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-23
                             </span>
                         <span class="publish-author">
                             
@@ -982,7 +1031,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">52.4k</span>&nbsp;字
+                class="white-color">55.9k</span>&nbsp;字
             
             
             

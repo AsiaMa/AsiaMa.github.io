@@ -6,7 +6,7 @@
   <link href="https://blog.asiama.top/atom.xml" rel="self"/>
   
   <link href="https://blog.asiama.top/"/>
-  <updated>2021-01-23T01:30:49.486Z</updated>
+  <updated>2021-01-24T02:06:09.472Z</updated>
   <id>https://blog.asiama.top/</id>
   
   <author>
@@ -15,6 +15,98 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>MySQL数据类型</title>
+    <link href="https://blog.asiama.top/posts/f499.html"/>
+    <id>https://blog.asiama.top/posts/f499.html</id>
+    <published>2021-01-23T08:47:43.000Z</published>
+    <updated>2021-01-24T02:06:09.472Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;什么是数据类型&quot;&gt;&lt;a href=&quot;#什么是数据类型&quot; class=&quot;headerlink&quot; title=&quot;什么是数据类型&quot;&gt;&lt;/a&gt;什么是数据类型&lt;/h3&gt;&lt;p&gt;数据库的表中只能输入各个列执行格式的数据。例如，指定为 “数值类型”</summary>
+        
+      
+    
+    
+    
+    
+    <category term="MySQL" scheme="https://blog.asiama.top/tags/MySQL/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>创建数据库</title>
+    <link href="https://blog.asiama.top/posts/cd0e.html"/>
+    <id>https://blog.asiama.top/posts/cd0e.html</id>
+    <published>2021-01-23T08:14:25.000Z</published>
+    <updated>2021-01-23T08:44:28.369Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;创建数据库&quot;&gt;&lt;a href=&quot;#创建数据库&quot; class=&quot;headerlink&quot; title=&quot;创建数据库&quot;&gt;&lt;/a&gt;创建数据库&lt;/h3&gt;&lt;pre class=&quot; language-mysql&quot;&gt;&lt;code</summary>
+        
+      
+    
+    
+    
+    
+    <category term="Redis" scheme="https://blog.asiama.top/tags/Redis/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MySQL字符编码设置</title>
+    <link href="https://blog.asiama.top/posts/d16b.html"/>
+    <id>https://blog.asiama.top/posts/d16b.html</id>
+    <published>2021-01-23T06:23:46.000Z</published>
+    <updated>2021-01-23T07:56:16.746Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;关于中文的设置&quot;&gt;&lt;a href=&quot;#关于中文的设置&quot; class=&quot;headerlink&quot; title=&quot;关于中文的设置&quot;&gt;&lt;/a&gt;关于中文的设置&lt;/h3&gt;&lt;p&gt;某种字符的集合称为&lt;strong&gt;字符集（character</summary>
+        
+      
+    
+    
+    
+    
+    <category term="MySQL" scheme="https://blog.asiama.top/tags/MySQL/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MySQL的概要</title>
+    <link href="https://blog.asiama.top/posts/1a43.html"/>
+    <id>https://blog.asiama.top/posts/1a43.html</id>
+    <published>2021-01-23T03:22:44.000Z</published>
+    <updated>2021-01-23T06:20:24.830Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;数据库的概要&quot;&gt;&lt;a href=&quot;#数据库的概要&quot; class=&quot;headerlink&quot; title=&quot;数据库的概要&quot;&gt;&lt;/a&gt;数据库的概要&lt;/h3&gt;&lt;h4 id=&quot;数据库是什么&quot;&gt;&lt;a href=&quot;#数据库是什么&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    
+    <category term="MySQL" scheme="https://blog.asiama.top/tags/MySQL/"/>
+    
+  </entry>
   
   <entry>
     <title>Redis管理</title>
@@ -383,110 +475,6 @@
     
     
     <category term="English" scheme="https://blog.asiama.top/tags/English/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>英语学习第四天</title>
-    <link href="https://blog.asiama.top/posts/f7a9.html"/>
-    <id>https://blog.asiama.top/posts/f7a9.html</id>
-    <published>2021-01-17T10:50:17.000Z</published>
-    <updated>2021-01-17T11:54:37.875Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;主语从句&quot;&gt;&lt;a href=&quot;#主语从句&quot; class=&quot;headerlink&quot; title=&quot;主语从句&quot;&gt;&lt;/a&gt;主语从句&lt;/h3&gt;&lt;h4 id=&quot;that-陈述句&quot;&gt;&lt;a href=&quot;#that-陈述句&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    
-    <category term="English" scheme="https://blog.asiama.top/tags/English/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Bean 延迟查找</title>
-    <link href="https://blog.asiama.top/posts/cdfc.html"/>
-    <id>https://blog.asiama.top/posts/cdfc.html</id>
-    <published>2021-01-16T08:16:53.000Z</published>
-    <updated>2021-01-20T13:38:40.172Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;pre class=&quot; language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt;</summary>
-        
-      
-    
-    
-    
-    <category term="JAVA" scheme="https://blog.asiama.top/categories/JAVA/"/>
-    
-    
-    <category term="Spring" scheme="https://blog.asiama.top/tags/Spring/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>通过外部单体对象来注册 Spring Bean</title>
-    <link href="https://blog.asiama.top/posts/de54.html"/>
-    <id>https://blog.asiama.top/posts/de54.html</id>
-    <published>2021-01-16T07:28:49.000Z</published>
-    <updated>2021-01-16T07:31:51.561Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;pre class=&quot; language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;class&lt;/span&gt;</summary>
-        
-      
-    
-    
-    
-    <category term="JAVA" scheme="https://blog.asiama.top/categories/JAVA/"/>
-    
-    
-    <category term="Spring" scheme="https://blog.asiama.top/tags/Spring/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>垃圾回收 Spring Bean</title>
-    <link href="https://blog.asiama.top/posts/581e.html"/>
-    <id>https://blog.asiama.top/posts/581e.html</id>
-    <published>2021-01-16T06:28:20.000Z</published>
-    <updated>2021-01-16T07:31:51.560Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;Bean垃圾回收（GC）&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;关闭Spring 容器（应用上下文）&lt;/li&gt;
-&lt;li&gt;执行GC&lt;/li&gt;
-&lt;li&gt;Spring Bean覆盖的finalize()方法被回调&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre class=&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="Java" scheme="https://blog.asiama.top/categories/Java/"/>
-    
-    
-    <category term="Spring" scheme="https://blog.asiama.top/tags/Spring/"/>
     
   </entry>
   
