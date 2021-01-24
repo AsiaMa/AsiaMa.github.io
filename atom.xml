@@ -6,7 +6,7 @@
   <link href="https://blog.asiama.top/atom.xml" rel="self"/>
   
   <link href="https://blog.asiama.top/"/>
-  <updated>2021-01-24T02:06:09.472Z</updated>
+  <updated>2021-01-24T11:24:08.940Z</updated>
   <id>https://blog.asiama.top/</id>
   
   <author>
@@ -17,11 +17,35 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>MySQL修改表</title>
+    <link href="https://blog.asiama.top/posts/1e9.html"/>
+    <id>https://blog.asiama.top/posts/1e9.html</id>
+    <published>2021-01-24T02:09:33.000Z</published>
+    <updated>2021-01-24T11:24:08.940Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;在实际的项目中，即使把表创建了出来，也需要对表经常修改。比如希望可以输入更多的字符、需要添加列、想要修改列名等情况。&lt;/p&gt;
+&lt;h3 id=&quot;ALTER-TABLE-命令&quot;&gt;&lt;a href=&quot;#ALTER-TABLE-命令&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    
+    <category term="Redis" scheme="https://blog.asiama.top/tags/Redis/"/>
+    
+  </entry>
+  
+  <entry>
     <title>MySQL数据类型</title>
     <link href="https://blog.asiama.top/posts/f499.html"/>
     <id>https://blog.asiama.top/posts/f499.html</id>
     <published>2021-01-23T08:47:43.000Z</published>
-    <updated>2021-01-24T02:06:09.472Z</updated>
+    <updated>2021-01-24T02:08:08.744Z</updated>
     
     
       
@@ -44,7 +68,7 @@
     <link href="https://blog.asiama.top/posts/cd0e.html"/>
     <id>https://blog.asiama.top/posts/cd0e.html</id>
     <published>2021-01-23T08:14:25.000Z</published>
-    <updated>2021-01-23T08:44:28.369Z</updated>
+    <updated>2021-01-24T02:41:56.003Z</updated>
     
     
       
@@ -67,7 +91,7 @@
     <link href="https://blog.asiama.top/posts/d16b.html"/>
     <id>https://blog.asiama.top/posts/d16b.html</id>
     <published>2021-01-23T06:23:46.000Z</published>
-    <updated>2021-01-23T07:56:16.746Z</updated>
+    <updated>2021-01-24T02:08:08.744Z</updated>
     
     
       
@@ -90,7 +114,7 @@
     <link href="https://blog.asiama.top/posts/1a43.html"/>
     <id>https://blog.asiama.top/posts/1a43.html</id>
     <published>2021-01-23T03:22:44.000Z</published>
-    <updated>2021-01-23T06:20:24.830Z</updated>
+    <updated>2021-01-24T02:08:08.745Z</updated>
     
     
       
@@ -452,29 +476,6 @@
     
     
     <category term="Redis" scheme="https://blog.asiama.top/tags/Redis/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>英语学习第五天</title>
-    <link href="https://blog.asiama.top/posts/3517.html"/>
-    <id>https://blog.asiama.top/posts/3517.html</id>
-    <published>2021-01-17T12:00:22.000Z</published>
-    <updated>2021-01-18T11:43:04.370Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;名词作宾语&quot;&gt;&lt;a href=&quot;#名词作宾语&quot; class=&quot;headerlink&quot; title=&quot;名词作宾语&quot;&gt;&lt;/a&gt;名词作宾语&lt;/h3&gt;&lt;p&gt;When you’re the bos s, you can make up your own</summary>
-        
-      
-    
-    
-    
-    
-    <category term="English" scheme="https://blog.asiama.top/tags/English/"/>
     
   </entry>
   

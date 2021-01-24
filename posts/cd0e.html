@@ -432,14 +432,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-01-23
+                    2021-01-24
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    654
+                    687
                 </div>
                 
 
@@ -484,7 +484,15 @@
 <h3 id="访问其他数据库"><a href="#访问其他数据库" class="headerlink" title="访问其他数据库"></a>访问其他数据库</h3><p>在使用 <code>use</code> 选择数据库的情况下也能够操作其它数据库中的表。这是可以像 “数据库名.表名” 这样把 “数据库名” 和 “表名” 用 “.” 连接起来。</p>
 <pre class=" language-mysql"><code class="language-mysql">SELECT * FROM db2.table;</code></pre>
 <h3 id="确认表的列结构"><a href="#确认表的列结构" class="headerlink" title="确认表的列结构"></a>确认表的列结构</h3><pre class=" language-mysql"><code class="language-mysql">DESC 表名;</code></pre>
-<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/two.png"></p>
+<p>例如，查看 tb1 表的数据结构：</p>
+<pre class=" language-bash"><code class="language-bash">$ DESC tb1<span class="token punctuation">;</span>
++-------+--------------+------+-----+---------+-------+
+<span class="token operator">|</span> Field <span class="token operator">|</span> Type         <span class="token operator">|</span> Null <span class="token operator">|</span> Key <span class="token operator">|</span> Default <span class="token operator">|</span> Extra <span class="token operator">|</span>
++-------+--------------+------+-----+---------+-------+
+<span class="token operator">|</span> empid <span class="token operator">|</span> varchar<span class="token punctuation">(</span>10<span class="token punctuation">)</span>  <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> NULL    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> name  <span class="token operator">|</span> varchar<span class="token punctuation">(</span>10<span class="token punctuation">)</span>  <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> NULL    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> age   <span class="token operator">|</span> int          <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> NULL    <span class="token operator">|</span>       <span class="token operator">|</span>
++-------+--------------+------+-----+---------+-------+</code></pre>
 <p>Null 表示“允许不输入任何值”，Default表示“如果什么值都不输入就用这个值”。Field表示列名，Type表示数据类型。</p>
 <p>因为列name被设置成了VARCHAR(10)，所以我们无法输入多于10个字符的数据。但是在MySQL中，即使输入了多于指定字符数（这里是10个字符）的数据也不会报错，而是会忽略无法插入的字符（这里是指10个字符之后的数据），这一点需要注意。</p>
 <blockquote>
@@ -1002,7 +1010,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">55.9k</span>&nbsp;字
+                class="white-color">59.2k</span>&nbsp;字
             
             
             
