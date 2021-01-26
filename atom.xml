@@ -6,7 +6,7 @@
   <link href="https://blog.asiama.top/atom.xml" rel="self"/>
   
   <link href="https://blog.asiama.top/"/>
-  <updated>2021-01-26T07:47:06.252Z</updated>
+  <updated>2021-01-26T12:57:10.173Z</updated>
   <id>https://blog.asiama.top/</id>
   
   <author>
@@ -17,11 +17,34 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>编辑数据</title>
+    <link href="https://blog.asiama.top/posts/3065.html"/>
+    <id>https://blog.asiama.top/posts/3065.html</id>
+    <published>2021-01-26T10:27:44.000Z</published>
+    <updated>2021-01-26T12:57:10.173Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;瞬间更新列中所有的记录&quot;&gt;&lt;a href=&quot;#瞬间更新列中所有的记录&quot; class=&quot;headerlink&quot; title=&quot;瞬间更新列中所有的记录&quot;&gt;&lt;/a&gt;瞬间更新列中所有的记录&lt;/h3&gt;&lt;p&gt;首先是修改记录的方法。修改记录时需要使用 UPDATE</summary>
+        
+      
+    
+    
+    
+    
+    <category term="MySQL" scheme="https://blog.asiama.top/tags/MySQL/"/>
+    
+  </entry>
+  
+  <entry>
     <title>使用各种条件进行提取</title>
     <link href="https://blog.asiama.top/posts/2693.html"/>
     <id>https://blog.asiama.top/posts/2693.html</id>
     <published>2021-01-24T12:54:18.000Z</published>
-    <updated>2021-01-26T07:47:06.252Z</updated>
+    <updated>2021-01-26T07:48:31.533Z</updated>
     
     
       
@@ -446,29 +469,6 @@
         
         
     <summary type="html">&lt;h3 id=&quot;String&quot;&gt;&lt;a href=&quot;#String&quot; class=&quot;headerlink&quot; title=&quot;String&quot;&gt;&lt;/a&gt;String&lt;/h3&gt;&lt;p&gt;字符串类型是 Redis</summary>
-        
-      
-    
-    
-    
-    
-    <category term="Redis" scheme="https://blog.asiama.top/tags/Redis/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Redis位操作</title>
-    <link href="https://blog.asiama.top/posts/5969.html"/>
-    <id>https://blog.asiama.top/posts/5969.html</id>
-    <published>2021-01-18T11:49:20.000Z</published>
-    <updated>2021-01-18T11:56:58.893Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;位操作命令&quot;&gt;&lt;a href=&quot;#位操作命令&quot; class=&quot;headerlink&quot; title=&quot;位操作命令&quot;&gt;&lt;/a&gt;位操作命令&lt;/h3&gt;&lt;pre class=&quot; language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$</summary>
         
       
     
