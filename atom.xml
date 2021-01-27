@@ -6,7 +6,7 @@
   <link href="https://blog.asiama.top/atom.xml" rel="self"/>
   
   <link href="https://blog.asiama.top/"/>
-  <updated>2021-01-27T01:20:26.286Z</updated>
+  <updated>2021-01-27T13:35:43.477Z</updated>
   <id>https://blog.asiama.top/</id>
   
   <author>
@@ -17,11 +17,34 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>熟练使用视图</title>
+    <link href="https://blog.asiama.top/posts/76dd.html"/>
+    <id>https://blog.asiama.top/posts/76dd.html</id>
+    <published>2021-01-27T10:26:13.000Z</published>
+    <updated>2021-01-27T13:35:43.477Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;什么是视图&quot;&gt;&lt;a href=&quot;#什么是视图&quot; class=&quot;headerlink&quot; title=&quot;什么是视图&quot;&gt;&lt;/a&gt;什么是视图&lt;/h3&gt;&lt;h4 id=&quot;视图的真面目&quot;&gt;&lt;a href=&quot;#视图的真面目&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    
+    <category term="MySQL" scheme="https://blog.asiama.top/tags/MySQL/"/>
+    
+  </entry>
+  
+  <entry>
     <title>观察者模式</title>
     <link href="https://blog.asiama.top/posts/1e3a.html"/>
     <id>https://blog.asiama.top/posts/1e3a.html</id>
     <published>2021-01-26T13:07:36.000Z</published>
-    <updated>2021-01-27T01:20:26.286Z</updated>
+    <updated>2021-01-27T10:19:31.784Z</updated>
     
     
       
@@ -46,7 +69,7 @@
     <link href="https://blog.asiama.top/posts/8c42.html"/>
     <id>https://blog.asiama.top/posts/8c42.html</id>
     <published>2021-01-26T13:00:05.000Z</published>
-    <updated>2021-01-27T10:16:07.667Z</updated>
+    <updated>2021-01-27T10:21:49.754Z</updated>
     
     
       
@@ -448,29 +471,6 @@
         
         
     <summary type="html">&lt;h3 id=&quot;普通队列&quot;&gt;&lt;a href=&quot;#普通队列&quot; class=&quot;headerlink&quot; title=&quot;普通队列&quot;&gt;&lt;/a&gt;普通队列&lt;/h3&gt;&lt;p&gt;说到队列很自然就能想到 Redis 的列表类型。如果要实现任务队列，只需要让生产者将任务使用 LPUSH</summary>
-        
-      
-    
-    
-    
-    
-    <category term="Redis" scheme="https://blog.asiama.top/tags/Redis/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>设置Redis中的key过期时间</title>
-    <link href="https://blog.asiama.top/posts/ae5.html"/>
-    <id>https://blog.asiama.top/posts/ae5.html</id>
-    <published>2021-01-21T13:10:45.000Z</published>
-    <updated>2021-01-21T13:37:08.142Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;命令介绍&quot;&gt;&lt;a href=&quot;#命令介绍&quot; class=&quot;headerlink&quot;</summary>
         
       
     

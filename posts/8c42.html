@@ -892,7 +892,23 @@ ERROR 1242 (21000): Subquery returns more than 1 row</code></pre>
 </ul>
 <pre class=" language-mysql"><code class="language-mysql">$ CREATE TABLE tb_rank LIKE tb;
 $ ALTER TABLE tb_rank ADD c_rank INT AUTO_INCREMENT PRIMARY KEY;
-$ INSERT INTO tb_rank(empid, sales, month) (SELECT empid,sales, month FROM tb ORDER BY sales DESC);</code></pre>
+$ INSERT INTO tb_rank(empid, sales, month) (SELECT empid,sales, month FROM tb ORDER BY sales DESC);
+$ SELECT * FROM tb_rank;
++-------+-------+-------+--------+
+| empid | sales | month | c_rank |
++-------+-------+-------+--------+
+| A101  |   300 |     5 |      1 |
+| A102  |   205 |     6 |      2 |
+| A101  |   184 |     4 |      3 |
+| A104  |   181 |     4 |      4 |
+| A103  |   101 |     4 |      5 |
+| A104  |    93 |     5 |      6 |
+| A107  |    87 |     6 |      7 |
+| A102  |    54 |     5 |      8 |
+| A103  |    17 |     5 |      9 |
+| A103  |    12 |     6 |     10 |
++-------+-------+-------+--------+
+10 rows in set (0.00 sec)</code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -1407,7 +1423,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">75.7k</span>&nbsp;字
+                class="white-color">77.9k</span>&nbsp;字
             
             
             

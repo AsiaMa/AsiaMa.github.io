@@ -262,42 +262,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Java的不足</title>
-    <url>/posts/26f4.html</url>
-    <content><![CDATA[<h3 id="检查异常"><a href="#检查异常" class="headerlink" title="检查异常"></a>检查异常</h3><p>检查异常会在编译时强制执行try catch处理，同时还需要进行某种排序处理。检查异常是一个失败的实践，几乎所有的主要API提供者都返回可检查异常。Kotlin中摒弃了检查异常。</p>
-<h3 id="基本类型和数组"><a href="#基本类型和数组" class="headerlink" title="基本类型和数组"></a>基本类型和数组</h3><p>Java的这个设计保留了字节码的底层细节，违反了“凡事皆为对象”的原则，如泛型无法包容基本类型就是一个例子。这也使得Java的类型系统显得不是那么地简单统一。比较好的方案是，源代码不用直接使用基本类型和数组，由编译器（或者JVM）来决定是否可以帮你对其优化，而Kotlin正是这么做的。</p>
-<h3 id="静态变量"><a href="#静态变量" class="headerlink" title="静态变量"></a>静态变量</h3><p>静态方法经常会导致需要显式的定义接口，从而使得API更加复杂。一个更好的办法就是采用单例对象，单例对象在大多数情况下表现得与静态对象差不多，但是可以像一个对象被传递。Kotlin中提供了object单例对象。</p>
-<h3 id="空指针异常"><a href="#空指针异常" class="headerlink" title="空指针异常"></a>空指针异常</h3><p>在Java中我们不得不写一堆防御代码来避免令人头疼的NPE。Kotlin中引入可空类型与安全调用符、Elvis操作符等特性来实现空安全。</p>
-<h3 id="一堆getter-setter单调冗长的样板代码"><a href="#一堆getter-setter单调冗长的样板代码" class="headerlink" title="一堆getter/setter单调冗长的样板代码"></a>一堆getter/setter单调冗长的样板代码</h3><p>在Kotlin中，我们可以使用数据类：</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">Person</span><span class="token punctuation">(</span><span class="token keyword">val</span> id<span class="token operator">:</span> Int<span class="token punctuation">,</span> <span class="token keyword">val</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span></code></pre>
-<h3 id="不容易传递函数"><a href="#不容易传递函数" class="headerlink" title="不容易传递函数"></a>不容易传递函数</h3><p>Java中没有一等函数类型，函数式（FP）编程只能通过使用接口类型以及多态特性“曲线”来实现。Java会将每一个算法（方法）都放入类中，这种限制会出现这样的“荒唐事”：我们只想实现一个函数算法，而这个时候必须还要给出一个类来放置这个方法；同样，如果在其它地方调用这个方法，必须通过创建该类来实现调用。在Kotlin中直接提供了一等函数（First-Class Function Type）类型，其跟普通类型一样，函数类型可以作为值来传递，也可以作为返回值。</p>
-<blockquote>
-<p>不可否认的是，C、C++和Java语言都是非常优秀的编程语言。但是事物总是不断发展变化的。就像C++语言是对C语言的继承与发展，Java语言是对C++语言的继承与改造，而Kotlin语言也是对Java语言的继承与变革。</p>
-</blockquote>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>Kotlin</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Kotin介绍</title>
     <url>/posts/5487.html</url>
     <content><![CDATA[<h3 id="Kotlin的主要特征"><a href="#Kotlin的主要特征" class="headerlink" title="Kotlin的主要特征"></a>Kotlin的主要特征</h3><h4 id="静态类型"><a href="#静态类型" class="headerlink" title="静态类型"></a>静态类型</h4><p>Kotlin和Java一样是一种静态类型的编程语言。这意味着<code>所有表达式的类型在编译器已经确定了，而编译器就能验证对象是否包含了你想访问的方法或者字段</code>。</p>
@@ -340,6 +304,80 @@ b<span class="token operator">?</span><span class="token punctuation">.</span>le
 <span class="token punctuation">}</span></code></pre>
 <h4 id="互操作性"><a href="#互操作性" class="headerlink" title="互操作性"></a>互操作性</h4><p>Kotlin的优势是既有Java的完整生态（Kotlin完全无缝使用各类Java API框架库）,又有现代语言的高级特性（语法糖）。</p>
 <h3 id="编程哲学"><a href="#编程哲学" class="headerlink" title="编程哲学"></a>编程哲学</h3><p>编程的真正问题在于，如何把人类脑子里对问题的解决方案“具化”到机器世界，而这个“具化”过程正是编程语言所要表达的东西。如何富有表现力并且安全简洁的表达，这是所有编程语言所要解决的问题。</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Kotlin单例</title>
+    <url>/posts/9fbb.html</url>
+    <content><![CDATA[<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">class</span> Singleton <span class="token keyword">private</span> <span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">companion</span> <span class="token keyword">object</span> <span class="token punctuation">{</span>
+        <span class="token keyword">fun</span> <span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> Singleton <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> Holder<span class="token punctuation">.</span>instance
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">object</span> Holder <span class="token punctuation">{</span>
+        <span class="token keyword">val</span> instance <span class="token operator">=</span> <span class="token function">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java的不足</title>
+    <url>/posts/26f4.html</url>
+    <content><![CDATA[<h3 id="检查异常"><a href="#检查异常" class="headerlink" title="检查异常"></a>检查异常</h3><p>检查异常会在编译时强制执行try catch处理，同时还需要进行某种排序处理。检查异常是一个失败的实践，几乎所有的主要API提供者都返回可检查异常。Kotlin中摒弃了检查异常。</p>
+<h3 id="基本类型和数组"><a href="#基本类型和数组" class="headerlink" title="基本类型和数组"></a>基本类型和数组</h3><p>Java的这个设计保留了字节码的底层细节，违反了“凡事皆为对象”的原则，如泛型无法包容基本类型就是一个例子。这也使得Java的类型系统显得不是那么地简单统一。比较好的方案是，源代码不用直接使用基本类型和数组，由编译器（或者JVM）来决定是否可以帮你对其优化，而Kotlin正是这么做的。</p>
+<h3 id="静态变量"><a href="#静态变量" class="headerlink" title="静态变量"></a>静态变量</h3><p>静态方法经常会导致需要显式的定义接口，从而使得API更加复杂。一个更好的办法就是采用单例对象，单例对象在大多数情况下表现得与静态对象差不多，但是可以像一个对象被传递。Kotlin中提供了object单例对象。</p>
+<h3 id="空指针异常"><a href="#空指针异常" class="headerlink" title="空指针异常"></a>空指针异常</h3><p>在Java中我们不得不写一堆防御代码来避免令人头疼的NPE。Kotlin中引入可空类型与安全调用符、Elvis操作符等特性来实现空安全。</p>
+<h3 id="一堆getter-setter单调冗长的样板代码"><a href="#一堆getter-setter单调冗长的样板代码" class="headerlink" title="一堆getter/setter单调冗长的样板代码"></a>一堆getter/setter单调冗长的样板代码</h3><p>在Kotlin中，我们可以使用数据类：</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">Person</span><span class="token punctuation">(</span><span class="token keyword">val</span> id<span class="token operator">:</span> Int<span class="token punctuation">,</span> <span class="token keyword">val</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span></code></pre>
+<h3 id="不容易传递函数"><a href="#不容易传递函数" class="headerlink" title="不容易传递函数"></a>不容易传递函数</h3><p>Java中没有一等函数类型，函数式（FP）编程只能通过使用接口类型以及多态特性“曲线”来实现。Java会将每一个算法（方法）都放入类中，这种限制会出现这样的“荒唐事”：我们只想实现一个函数算法，而这个时候必须还要给出一个类来放置这个方法；同样，如果在其它地方调用这个方法，必须通过创建该类来实现调用。在Kotlin中直接提供了一等函数（First-Class Function Type）类型，其跟普通类型一样，函数类型可以作为值来传递，也可以作为返回值。</p>
+<blockquote>
+<p>不可否认的是，C、C++和Java语言都是非常优秀的编程语言。但是事物总是不断发展变化的。就像C++语言是对C语言的继承与发展，Java语言是对C++语言的继承与改造，而Kotlin语言也是对Java语言的继承与变革。</p>
+</blockquote>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -438,44 +476,6 @@ b<span class="token operator">?</span><span class="token punctuation">.</span>le
     l1<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
     <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"test2"</span><span class="token punctuation">)</span>
     <span class="token keyword">return</span> l1
-<span class="token punctuation">}</span></code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>Kotlin</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Kotlin单例</title>
-    <url>/posts/9fbb.html</url>
-    <content><![CDATA[<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">class</span> Singleton <span class="token keyword">private</span> <span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-
-    <span class="token keyword">companion</span> <span class="token keyword">object</span> <span class="token punctuation">{</span>
-        <span class="token keyword">fun</span> <span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> Singleton <span class="token punctuation">{</span>
-            <span class="token keyword">return</span> Holder<span class="token punctuation">.</span>instance
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">private</span> <span class="token keyword">object</span> Holder <span class="token punctuation">{</span>
-        <span class="token keyword">val</span> instance <span class="token operator">=</span> <span class="token function">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
@@ -1010,6 +1010,108 @@ $ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
       </tags>
   </entry>
   <entry>
+    <title>Redis小热身</title>
+    <url>/posts/4f87.html</url>
+    <content><![CDATA[<h3 id="redis-server-配置"><a href="#redis-server-配置" class="headerlink" title="redis-server 配置"></a>redis-server 配置</h3><p>Redis 支持通过配置文件来设置启动参数，如：</p>
+<pre class=" language-bash"><code class="language-bash">$ redis-server /path/to/redis.conf</code></pre>
+<p>通过启动参数传递同名的配置选项会覆盖配置文件中相应的参数，就像这样：</p>
+<pre class=" language-bash"><code class="language-bash">$ redis-server /path/to/redis.conf --loglevel warning</code></pre>
+<p>Redis 运行时通过 CONFIG SET 命令在不重新启动 Redis 的情况下动态修改部分 Redid配置：</p>
+<pre class=" language-bash"><code class="language-bash">$ CONFIG SET loglevel warning
+OK</code></pre>
+<p>并不是所有配置都可以使用Config SET 命令修改。同样在运行的时候也可以使用 CONFIG GET 命令获得 Redis 当前的配置情况：</p>
+<pre class=" language-bash"><code class="language-bash">$ CONFIG GET loglevel
+1<span class="token punctuation">)</span> <span class="token string">"loglevel"</span>
+2<span class="token punctuation">)</span> <span class="token string">"notice"</span></code></pre>
+<p>其中第一行字符串回复表示的是选项名，第二行既是选项值。</p>
+<h3 id="redsic-cli-连接"><a href="#redsic-cli-连接" class="headerlink" title="redsic-cli 连接"></a>redsic-cli 连接</h3><p>通过 redis-cli 向 Redis 发送命令有两种方式，第一种方式是将命令作为 redis-cli 的参数执行，如：</p>
+<pre class=" language-bash"><code class="language-bash">$ redis-cli SHUTDOWN</code></pre>
+<p>redis-cli 执行时会自动按照默认配置（服务器地址为 127.0.0.1，端口号为 6379）连接 Redis，通过 -h 和 -p 参数可以自定义地址和端口号，-a 参数后跟 redis 连接密码：</p>
+<pre class=" language-bash"><code class="language-bash">$ redis-cli -h 127.0.0.1 -p 6379 -a password</code></pre>
+<p>第二种方式是不附带参数运行 redis-cli，这样会进入交互模式，可以自由输入命令，例如：</p>
+<pre class=" language-bash"><code class="language-bash">$ redis-cli
+127.0.0.1:6379<span class="token operator">></span> PING
+PONG</code></pre>
+<p>这种方式在输入多条命令时比较方便。</p>
+<h3 id="简单的几个小命令"><a href="#简单的几个小命令" class="headerlink" title="简单的几个小命令"></a>简单的几个小命令</h3><ol>
+<li>获得符合规则的键名列表</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ KEYS pattern</code></pre>
+<p>pattern 支持 glob 风格通配符格式：</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>？</td>
+<td>匹配一个字符</td>
+</tr>
+<tr>
+<td>*</td>
+<td>匹配任意个（包括0个）字符</td>
+</tr>
+<tr>
+<td>[]</td>
+<td>匹配括号间的任一字符，可以使用 “-” 符号表示一个范围，如 a[b-d] 可以匹配 “ab”、“ac” 和 “ad”</td>
+</tr>
+<tr>
+<td>\x</td>
+<td>匹配字符 x，用于转义符号。如要匹配 “?” 就需要使用 ?</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>KEYS 命令需要遍历 Redis 中的所有键，当键的数量较多时会影响性能，不建议在生产环境中使用。Redis 不区分命令大小写。</p>
+</blockquote>
+<ol start="2">
+<li>判断一个键是否存在</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ EXISTS key</code></pre>
+<p>如果键存在则返回整数类型1，否则返回0。</p>
+<ol start="3">
+<li>删除键</li>
+</ol>
+<pre><code>$ DEL key</code></pre>
+<p>可以删除一个或多个键，返回值是删除的键的个数。</p>
+<blockquote>
+<p><strong>技巧</strong>     DEL 命令的参数不支持通配符，但我们可以结合 Linux 的管道和 xargs 命令自己实现删除所有符合规则的键盘。比如要删除所有以 “user:” 开头的键，就可以执行<code>redis-cli KEYS "user:*" | xagrs redis cli DEL</code>。另外由于 DEL 命令支持多个键作为参数，所以还可执行如下命令来达到同样的效果，性能更好。</p>
+<pre class=" language-bash"><code class="language-bash">$ redis-cli DEL `redis-cli KEYS <span class="token string">"user:*"</span>`</code></pre>
+<p>如果连接redis 需要密码，则可以使用下面的这个命令</p>
+<pre class=" language-bash"><code class="language-bash">$ redis-cli -a 123456 DEL `redis-cli -a 123456 keys <span class="token string">"user:*"</span>`</code></pre>
+</blockquote>
+<ol start="4">
+<li>获得键值的数据类型</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">$ TYPE key</code></pre>
+<h3 id="命名习惯"><a href="#命名习惯" class="headerlink" title="命名习惯"></a>命名习惯</h3><blockquote>
+<p>Redis 对于键的命名并没有强制的要求，但比较好的实践是用 <strong>“对象类型:对象ID:对象属性”</strong> 来命名一个键，如使用键  <code>user:1:friends</code> 来存储 ID 为 1 的用户的好友列表。对于多个单词则推荐使用 <code>“.”</code> 分隔，一方面是沿用以前的习惯（Redis 以前版本键名不能包含空格等特殊字符），另一方面是在 redis-cli 中容易输入，无需使用双引号包裹。</p>
+</blockquote>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MySQL的概要</title>
     <url>/posts/1a43.html</url>
     <content><![CDATA[<h3 id="数据库的概要"><a href="#数据库的概要" class="headerlink" title="数据库的概要"></a>数据库的概要</h3><h4 id="数据库是什么"><a href="#数据库是什么" class="headerlink" title="数据库是什么"></a>数据库是什么</h4><p>MySQL 是世界上最受欢迎的开源数据库软件。那么，我们常常听到的数据库到底是什么呢？</p>
@@ -1153,108 +1255,6 @@ $ GRANT ALL ON db1.* TO asiama@localhost</code></pre>
       </script>]]></content>
       <tags>
         <tag>MySQL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Redis小热身</title>
-    <url>/posts/4f87.html</url>
-    <content><![CDATA[<h3 id="redis-server-配置"><a href="#redis-server-配置" class="headerlink" title="redis-server 配置"></a>redis-server 配置</h3><p>Redis 支持通过配置文件来设置启动参数，如：</p>
-<pre class=" language-bash"><code class="language-bash">$ redis-server /path/to/redis.conf</code></pre>
-<p>通过启动参数传递同名的配置选项会覆盖配置文件中相应的参数，就像这样：</p>
-<pre class=" language-bash"><code class="language-bash">$ redis-server /path/to/redis.conf --loglevel warning</code></pre>
-<p>Redis 运行时通过 CONFIG SET 命令在不重新启动 Redis 的情况下动态修改部分 Redid配置：</p>
-<pre class=" language-bash"><code class="language-bash">$ CONFIG SET loglevel warning
-OK</code></pre>
-<p>并不是所有配置都可以使用Config SET 命令修改。同样在运行的时候也可以使用 CONFIG GET 命令获得 Redis 当前的配置情况：</p>
-<pre class=" language-bash"><code class="language-bash">$ CONFIG GET loglevel
-1<span class="token punctuation">)</span> <span class="token string">"loglevel"</span>
-2<span class="token punctuation">)</span> <span class="token string">"notice"</span></code></pre>
-<p>其中第一行字符串回复表示的是选项名，第二行既是选项值。</p>
-<h3 id="redsic-cli-连接"><a href="#redsic-cli-连接" class="headerlink" title="redsic-cli 连接"></a>redsic-cli 连接</h3><p>通过 redis-cli 向 Redis 发送命令有两种方式，第一种方式是将命令作为 redis-cli 的参数执行，如：</p>
-<pre class=" language-bash"><code class="language-bash">$ redis-cli SHUTDOWN</code></pre>
-<p>redis-cli 执行时会自动按照默认配置（服务器地址为 127.0.0.1，端口号为 6379）连接 Redis，通过 -h 和 -p 参数可以自定义地址和端口号，-a 参数后跟 redis 连接密码：</p>
-<pre class=" language-bash"><code class="language-bash">$ redis-cli -h 127.0.0.1 -p 6379 -a password</code></pre>
-<p>第二种方式是不附带参数运行 redis-cli，这样会进入交互模式，可以自由输入命令，例如：</p>
-<pre class=" language-bash"><code class="language-bash">$ redis-cli
-127.0.0.1:6379<span class="token operator">></span> PING
-PONG</code></pre>
-<p>这种方式在输入多条命令时比较方便。</p>
-<h3 id="简单的几个小命令"><a href="#简单的几个小命令" class="headerlink" title="简单的几个小命令"></a>简单的几个小命令</h3><ol>
-<li>获得符合规则的键名列表</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash">$ KEYS pattern</code></pre>
-<p>pattern 支持 glob 风格通配符格式：</p>
-<table>
-<thead>
-<tr>
-<th>符号</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>？</td>
-<td>匹配一个字符</td>
-</tr>
-<tr>
-<td>*</td>
-<td>匹配任意个（包括0个）字符</td>
-</tr>
-<tr>
-<td>[]</td>
-<td>匹配括号间的任一字符，可以使用 “-” 符号表示一个范围，如 a[b-d] 可以匹配 “ab”、“ac” 和 “ad”</td>
-</tr>
-<tr>
-<td>\x</td>
-<td>匹配字符 x，用于转义符号。如要匹配 “?” 就需要使用 ?</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p>KEYS 命令需要遍历 Redis 中的所有键，当键的数量较多时会影响性能，不建议在生产环境中使用。Redis 不区分命令大小写。</p>
-</blockquote>
-<ol start="2">
-<li>判断一个键是否存在</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash">$ EXISTS key</code></pre>
-<p>如果键存在则返回整数类型1，否则返回0。</p>
-<ol start="3">
-<li>删除键</li>
-</ol>
-<pre><code>$ DEL key</code></pre>
-<p>可以删除一个或多个键，返回值是删除的键的个数。</p>
-<blockquote>
-<p><strong>技巧</strong>     DEL 命令的参数不支持通配符，但我们可以结合 Linux 的管道和 xargs 命令自己实现删除所有符合规则的键盘。比如要删除所有以 “user:” 开头的键，就可以执行<code>redis-cli KEYS "user:*" | xagrs redis cli DEL</code>。另外由于 DEL 命令支持多个键作为参数，所以还可执行如下命令来达到同样的效果，性能更好。</p>
-<pre class=" language-bash"><code class="language-bash">$ redis-cli DEL `redis-cli KEYS <span class="token string">"user:*"</span>`</code></pre>
-<p>如果连接redis 需要密码，则可以使用下面的这个命令</p>
-<pre class=" language-bash"><code class="language-bash">$ redis-cli -a 123456 DEL `redis-cli -a 123456 keys <span class="token string">"user:*"</span>`</code></pre>
-</blockquote>
-<ol start="4">
-<li>获得键值的数据类型</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash">$ TYPE key</code></pre>
-<h3 id="命名习惯"><a href="#命名习惯" class="headerlink" title="命名习惯"></a>命名习惯</h3><blockquote>
-<p>Redis 对于键的命名并没有强制的要求，但比较好的实践是用 <strong>“对象类型:对象ID:对象属性”</strong> 来命名一个键，如使用键  <code>user:1:friends</code> 来存储 ID 为 1 的用户的好友列表。对于多个单词则推荐使用 <code>“.”</code> 分隔，一方面是沿用以前的习惯（Redis 以前版本键名不能包含空格等特殊字符），另一方面是在 redis-cli 中容易输入，无需使用双引号包裹。</p>
-</blockquote>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
@@ -2542,121 +2542,6 @@ object Perfect<span class="token punctuation">{</span>
       </tags>
   </entry>
   <entry>
-    <title>使用Docker安装YApi</title>
-    <url>/posts/b5f9.html</url>
-    <content><![CDATA[<h3 id="启动MongoDB"><a href="#启动MongoDB" class="headerlink" title="启动MongoDB"></a>启动MongoDB</h3><ol>
-<li>默认安装mongo</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash">docker run -d --name mongo-yapi mongo</code></pre>
-<ol start="2">
-<li>挂载宿主目录安装mongo</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 创建挂载目录</span>
-<span class="token function">mkdir</span> -p /data/yapi/mongodata </code></pre>
-<ol start="3">
-<li>运行mongo映射主机目录/data/yapi/mongodata</li>
-</ol>
-<pre><code>docker run --restart always -v /data/yapi/mongodata:/data/db  -d --name mongo-yapi mongo</code></pre>
-<h3 id="获取YApi镜像"><a href="#获取YApi镜像" class="headerlink" title="获取YApi镜像"></a>获取YApi镜像</h3><ol>
-<li>从阿里云镜像仓库拉取</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash">docker pull registry.cn-hangzhou.aliyuncs.com/anoy/yapi</code></pre>
-<ol start="2">
-<li>初始化 Yapi 数据库索引及管理员账号</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash">docker run -it --rm --link mongo-yapi:mongo   --entrypoint <span class="token function">npm</span>  --workdir /api/vendors  registry.cn-hangzhou.aliyuncs.com/anoy/yapi   run install-server</code></pre>
-<blockquote>
-<p>自定义配置文件挂载到目录 <code>/api/config.json</code>，官方自定义配置文件 -&gt; <a href="https://github.com/YMFE/yapi/blob/master/config_example.json">传送门</a></p>
-</blockquote>
-<ol start="3">
-<li>启动 Yapi 服务</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash">docker run -d   --name yapi  --link mongo-yapi:mongo  --workdir /api/vendors   -p 3000:3000   registry.cn-hangzhou.aliyuncs.com/anoy/yapi   server/app.js</code></pre>
-<h3 id="使用YApi"><a href="#使用YApi" class="headerlink" title="使用YApi"></a>使用YApi</h3><p>访问 <code>http://localhost:3000</code> 登录账号 <code>admin@admin.com</code>，密码 <code>ymfe.org</code></p>
-<p>至此，帅气的 Yapi 就可以轻松使用啦！</p>
-<h3 id="其它相关操作"><a href="#其它相关操作" class="headerlink" title="其它相关操作"></a>其它相关操作</h3><ol>
-<li>关闭yapi</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash">docker stop yapi</code></pre>
-<ol start="2">
-<li>开启yapi</li>
-</ol>
-<pre><code>docker start yapi</code></pre>
-<ol start="3">
-<li>升级yapi</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 1、停止并删除旧版容器</span>
-docker <span class="token function">rm</span> -f yapi
-
-<span class="token comment" spellcheck="true"># 2、获取最新镜像</span>
-docker pull registry.cn-hangzhou.aliyuncs.com/anoy/yapi
-
-<span class="token comment" spellcheck="true"># 3、启动新容器</span>
-docker run -d  --name yapi  --link mongo-yapi:mongo  --workdir /api/vendors  -p 3000:3000   registry.cn-hangzhou.aliyuncs.com/anoy/yapi   server/app.js</code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>YApi</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用Git之前需要做的最小配置</title>
-    <url>/posts/5174.html</url>
-    <content><![CDATA[<h3 id="配置user-name-和-user-email"><a href="#配置user-name-和-user-email" class="headerlink" title="配置user.name 和 user.email"></a>配置user.name 和 user.email</h3><p>全局配置「对当前用户所有仓库有效」</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --global user.name <span class="token string">"your_name"</span>
-$ <span class="token function">git</span> config --global user.email <span class="token string">"your_email"</span></code></pre>
-<p>缺省等同于local「只对某个仓库有效」</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --local user.name <span class="token string">"your_name"</span>
-$ <span class="token function">git</span> config --local user.email <span class="token string">"your_email"</span></code></pre>
-<p>系统配置「对系统所有登录的用户有效」</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --system user.name <span class="token string">"your_name"</span>
-$ <span class="token function">git</span> config --system user.email <span class="token string">"your_email"</span></code></pre>
-<h3 id="显示config的配置"><a href="#显示config的配置" class="headerlink" title="显示config的配置"></a>显示config的配置</h3><pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --list --local
-$ <span class="token function">git</span> config --list --global
-$ <span class="token function">git</span> config --list --system</code></pre>
-<h3 id="查看某一个属性"><a href="#查看某一个属性" class="headerlink" title="查看某一个属性"></a>查看某一个属性</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --global user.name</code></pre>
-<h3 id="移除设置"><a href="#移除设置" class="headerlink" title="移除设置"></a>移除设置</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --unset --global user.email</code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>使用Redis实现任务队列</title>
     <url>/posts/4c47.html</url>
     <content><![CDATA[<h3 id="普通队列"><a href="#普通队列" class="headerlink" title="普通队列"></a>普通队列</h3><p>说到队列很自然就能想到 Redis 的列表类型。如果要实现任务队列，只需要让生产者将任务使用 LPUSH 命令加入到某个键中，另一边让消费者不断地使用 RPOP 命令从该键中取出任务即可。</p>
@@ -2739,6 +2624,121 @@ $ RPUSH queue:3 task2
       </script>]]></content>
       <tags>
         <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用Git之前需要做的最小配置</title>
+    <url>/posts/5174.html</url>
+    <content><![CDATA[<h3 id="配置user-name-和-user-email"><a href="#配置user-name-和-user-email" class="headerlink" title="配置user.name 和 user.email"></a>配置user.name 和 user.email</h3><p>全局配置「对当前用户所有仓库有效」</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --global user.name <span class="token string">"your_name"</span>
+$ <span class="token function">git</span> config --global user.email <span class="token string">"your_email"</span></code></pre>
+<p>缺省等同于local「只对某个仓库有效」</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --local user.name <span class="token string">"your_name"</span>
+$ <span class="token function">git</span> config --local user.email <span class="token string">"your_email"</span></code></pre>
+<p>系统配置「对系统所有登录的用户有效」</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --system user.name <span class="token string">"your_name"</span>
+$ <span class="token function">git</span> config --system user.email <span class="token string">"your_email"</span></code></pre>
+<h3 id="显示config的配置"><a href="#显示config的配置" class="headerlink" title="显示config的配置"></a>显示config的配置</h3><pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --list --local
+$ <span class="token function">git</span> config --list --global
+$ <span class="token function">git</span> config --list --system</code></pre>
+<h3 id="查看某一个属性"><a href="#查看某一个属性" class="headerlink" title="查看某一个属性"></a>查看某一个属性</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --global user.name</code></pre>
+<h3 id="移除设置"><a href="#移除设置" class="headerlink" title="移除设置"></a>移除设置</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --unset --global user.email</code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用Docker安装YApi</title>
+    <url>/posts/b5f9.html</url>
+    <content><![CDATA[<h3 id="启动MongoDB"><a href="#启动MongoDB" class="headerlink" title="启动MongoDB"></a>启动MongoDB</h3><ol>
+<li>默认安装mongo</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">docker run -d --name mongo-yapi mongo</code></pre>
+<ol start="2">
+<li>挂载宿主目录安装mongo</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 创建挂载目录</span>
+<span class="token function">mkdir</span> -p /data/yapi/mongodata </code></pre>
+<ol start="3">
+<li>运行mongo映射主机目录/data/yapi/mongodata</li>
+</ol>
+<pre><code>docker run --restart always -v /data/yapi/mongodata:/data/db  -d --name mongo-yapi mongo</code></pre>
+<h3 id="获取YApi镜像"><a href="#获取YApi镜像" class="headerlink" title="获取YApi镜像"></a>获取YApi镜像</h3><ol>
+<li>从阿里云镜像仓库拉取</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">docker pull registry.cn-hangzhou.aliyuncs.com/anoy/yapi</code></pre>
+<ol start="2">
+<li>初始化 Yapi 数据库索引及管理员账号</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">docker run -it --rm --link mongo-yapi:mongo   --entrypoint <span class="token function">npm</span>  --workdir /api/vendors  registry.cn-hangzhou.aliyuncs.com/anoy/yapi   run install-server</code></pre>
+<blockquote>
+<p>自定义配置文件挂载到目录 <code>/api/config.json</code>，官方自定义配置文件 -&gt; <a href="https://github.com/YMFE/yapi/blob/master/config_example.json">传送门</a></p>
+</blockquote>
+<ol start="3">
+<li>启动 Yapi 服务</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">docker run -d   --name yapi  --link mongo-yapi:mongo  --workdir /api/vendors   -p 3000:3000   registry.cn-hangzhou.aliyuncs.com/anoy/yapi   server/app.js</code></pre>
+<h3 id="使用YApi"><a href="#使用YApi" class="headerlink" title="使用YApi"></a>使用YApi</h3><p>访问 <code>http://localhost:3000</code> 登录账号 <code>admin@admin.com</code>，密码 <code>ymfe.org</code></p>
+<p>至此，帅气的 Yapi 就可以轻松使用啦！</p>
+<h3 id="其它相关操作"><a href="#其它相关操作" class="headerlink" title="其它相关操作"></a>其它相关操作</h3><ol>
+<li>关闭yapi</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">docker stop yapi</code></pre>
+<ol start="2">
+<li>开启yapi</li>
+</ol>
+<pre><code>docker start yapi</code></pre>
+<ol start="3">
+<li>升级yapi</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 1、停止并删除旧版容器</span>
+docker <span class="token function">rm</span> -f yapi
+
+<span class="token comment" spellcheck="true"># 2、获取最新镜像</span>
+docker pull registry.cn-hangzhou.aliyuncs.com/anoy/yapi
+
+<span class="token comment" spellcheck="true"># 3、启动新容器</span>
+docker run -d  --name yapi  --link mongo-yapi:mongo  --workdir /api/vendors  -p 3000:3000   registry.cn-hangzhou.aliyuncs.com/anoy/yapi   server/app.js</code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>YApi</tag>
       </tags>
   </entry>
   <entry>
@@ -3981,6 +3981,251 @@ map <span class="token operator">=</span> strategies<span class="token punctuati
       <tags>
         <tag>策略</tag>
         <tag>工厂</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>熟练使用视图</title>
+    <url>/posts/76dd.html</url>
+    <content><![CDATA[<h3 id="什么是视图"><a href="#什么是视图" class="headerlink" title="什么是视图"></a>什么是视图</h3><h4 id="视图的真面目"><a href="#视图的真面目" class="headerlink" title="视图的真面目"></a>视图的真面目</h4><p>前面我们学习了多种使用 SELECT 提取纪录的方法。将 SELECT 的结果像表一样保留下来的虚表就是视图。</p>
+<p>视图不是表。因此，视图中并没有保存记录或者列中的数据。也会说，视图是一种信息，用于查询记录。</p>
+<h4 id="视图的用途"><a href="#视图的用途" class="headerlink" title="视图的用途"></a>视图的用途</h4><p>视图虽然看起来像表，但它没有实体，只是一种信息。视图的便利之处在于，用户可以按照想要的条件收集某表中某列的数据。</p>
+<p>之前那种通过设置条件从表中提取记录的做法非常麻烦。如果相同的提出操作以视图的方式执行，就可以将视图作为符合用户个人喜好的表来使用。</p>
+<p>从用户的角度来看，视图和表使用上并没有区别。和表一样，视图也可以进行 SELECT 和 UPDATE。如果更新视图的记录，基表的记录也会更新。</p>
+<img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/2021-01-27_19-05-07.png" style="zoom:87%;">
+
+<h3 id="使用视图"><a href="#使用视图" class="headerlink" title="使用视图"></a>使用视图</h3><h4 id="创建视图"><a href="#创建视图" class="headerlink" title="创建视图"></a>创建视图</h4><pre class=" language-mysql"><code class="language-mysql">$ CREATE VIEW 视图名 AS SELECT 列名 FROM 表名 WHERE 条件;</code></pre>
+<p>上面的语句表示 “对 SELECT 的记录 CREATE VIEW（视图）”。不要忘记在 SELECT 的前面加上 AS。</p>
+<p>上述语句中的 “ WHERE 条件”，实际上也可以 换成 ORDER BY、LIMIT 和 JOIN 等。总之，要在某些条件下选择列，创建虚拟的表。也就是将前面执行的许多 SELECT 结果通过 CREATE VIEW … AS 创建为视图。</p>
+<p>员工信息表 tb1 由员工号（empid）、姓名（name）和年龄（age）组成。试着创建没有员工号、只包含姓名和年龄这两个列的视图。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ CREATE VIEW v1 
+          AS
+  SELECT name, age 
+          FROM tb1;
+
+$ SELECT * FROM v1;
++--------+------+
+| name   | age  |
++--------+------+
+| 佐腾   |   40 |
+| 高桥   |   28 |
+| 中川   |   20 |
+| 渡边   |   23 |
+| 西泽   |   35 |
++--------+------+
+5 rows in set (0.01 sec)</code></pre>
+<p>这次我们只从一个表中提取了列，实际上也可以使用多个表，通过设置条件来提取想要的内容。</p>
+<h4 id="通过视图更新列的值"><a href="#通过视图更新列的值" class="headerlink" title="通过视图更新列的值"></a>通过视图更新列的值</h4><p>视图只显示了基表的一部分。因此，如果更新了基表的值，收集并显示基表值的视图的值也会更新。</p>
+<p>那么，如果更新了视图的值，基表的值又会怎样呢？实际上，视图不仅是基表的一部分，它也是指向基表数据的窗口。因此，如果更新视图的值，基表的值也会随之更新。</p>
+<p>我们来试着更新一下视图 v1 的记录，看看视图的记录更新是否反映到了基表中。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ UPDATE v1 SET name = '主任·佐腾' WHERE name = '佐腾';
+
+$ SELECT * FROM v1;
++----------------+------+
+| name           | age  |
++----------------+------+
+| 主任·佐腾      |   40 |
+| 高桥           |   28 |
+| 中川           |   20 |
+| 渡边           |   23 |
+| 西泽           |   35 |
++----------------+------+
+5 rows in set (0.00 sec)
+
+$ SELECt * FROM tb1;
++-------+----------------+------+
+| empid | name           | age  |
++-------+----------------+------+
+| A101  | 主任·佐腾      |   40 |
+| A102  | 高桥           |   28 |
+| A103  | 中川           |   20 |
+| A104  | 渡边           |   23 |
+| A105  | 西泽           |   35 |
++-------+----------------+------+
+5 rows in set (0.00 sec)</code></pre>
+<p>看来基表 tb1 的值也更新了。由此我们可以得知，如果更新视图的值，其基表的记录也会随之更新。</p>
+<h3 id="设置条件创建视图"><a href="#设置条件创建视图" class="headerlink" title="设置条件创建视图"></a>设置条件创建视图</h3><p>我们将从两个表中提取纪录并通过 WHERE 设置条件来创建视图。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ CREATE VIEW v2 
+            AS 
+    SELECT tb.empid, tb1.name, tb.sales 
+            FROM tb 
+    JOIN tb1 
+            USING(empid) 
+    WHERE tb.sales >= 100;
+
+$ SELECT * FROM v2;
++-------+----------------+-------+
+| empid | name           | sales |
++-------+----------------+-------+
+| A103  | 中川           |   101 |
+| A104  | 渡边           |   181 |
+| A101  | 主任·佐腾      |   184 |
+| A101  | 主任·佐腾      |   300 |
+| A102  | 高桥           |   205 |
++-------+----------------+-------+
+5 rows in set (0.01 sec)</code></pre>
+<p>执行下面的命令</p>
+<pre class=" language-mysql"><code class="language-mysql">$ UPDATE tb SET sales = 777 WHERE sales = 54;
+
+$ SELECT * FROM v2;
++-------+----------------+-------+
+| empid | name           | sales |
++-------+----------------+-------+
+| A103  | 中川           |   101 |
+| A102  | 高桥           |   777 |
+| A104  | 渡边           |   181 |
+| A101  | 主任·佐腾      |   184 |
+| A101  | 主任·佐腾      |   300 |
+| A102  | 高桥           |   205 |
++-------+----------------+-------+
+6 rows in set (0.00 sec)</code></pre>
+<p>可以看到视图 v2 的值也更新了。也就是说，在符合视图设置条件的情况下，如果基表更新，视图中的记录也会随之更新。设置了条件的视图始终会显示与条件相匹配的记录。</p>
+<h4 id="确认视图"><a href="#确认视图" class="headerlink" title="确认视图"></a>确认视图</h4><pre class=" language-mysql"><code class="language-mysql">$ SHOW TABLE;</code></pre>
+<p>视图会与表交织在一起显示出来。</p>
+<p>和表一样，列结构可以通过 DESC 显示出来。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ DESC v2;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| empid | varchar(10)  | YES  |     | NULL    |       |
+| name  | varchar(100) | YES  |     | NULL    |       |
+| sales | int          | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)</code></pre>
+<p>显示视图的详细信息：</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SHOW CREATE VIEW 视图名;</code></pre>
+<h3 id="限制通过视图写入"><a href="#限制通过视图写入" class="headerlink" title="限制通过视图写入"></a>限制通过视图写入</h3><p>视图是用户从基表上随意收集的列。换句话说，作为视图可见的部分大多是基表中的一部分内容。对视图执行 INSERT 操作，就意味着只能向表中的一部分内容中插入数据。</p>
+<p>前面介绍的有点啰嗦，用一句话概括就是对视图执行 INSERT 操作是有限制的。例如，在使用了 UNION、JOIN、子查询的视图中，不能执行 INSERT 。如果只是从一个表中提取了列，那么执行 INSERT 是没有任何问题的。</p>
+<p>插入方法和向表中插入数据的方法相同。</p>
+<p>执行下面的命令：</p>
+<pre class=" language-mysql"><code class="language-mysql">$ INSERT INTO v1 VALUES('临时工·石田', 18);
+Query OK, 1 row affected (0.00 sec)
+
+$ INSERT INTO v2 VALUES(null, 'AsiaMa', 28);
+ERROR 1394 (HY000): Can not insert into join view 'db1.v2' without fields list
+
+$ SELECT * FROM v1;
++-------------------+------+
+| name              | age  |
++-------------------+------+
+| 主任·佐腾         |   40 |
+| 高桥              |   28 |
+| 中川              |   20 |
+| 渡边              |   23 |
+| 西泽              |   35 |
+| 临时工·石田       |   18 |
++-------------------+------+
+6 rows in set (0.00 sec)</code></pre>
+<p>姓名和年龄被完整地插入到了视图 v1 中。那么，视图 v1 的基表 tb1 会变成什么样呢？</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT * FROM tb1;
++-------+-------------------+------+
+| empid | name              | age  |
++-------+-------------------+------+
+| A101  | 主任·佐腾         |   40 |
+| A102  | 高桥              |   28 |
+| A103  | 中川              |   20 |
+| A104  | 渡边              |   23 |
+| A105  | 西泽              |   35 |
+| NULL  | 临时工·石田       |   18 |
++-------+-------------------+------+
+6 rows in set (0.00 sec)</code></pre>
+<p>看来 “临时表·石田” 和 “18” 这两个数据都 INSERT 成功了。另外，对于在视图 v1 中没有被定义的列 empid，因为没有插入数据，所以输入了 NULL。</p>
+<h4 id="设置了条件的基表中会发生什么变化"><a href="#设置了条件的基表中会发生什么变化" class="headerlink" title="设置了条件的基表中会发生什么变化"></a>设置了条件的基表中会发生什么变化</h4><p>如果在设置了条件的视图中插入违反条件的数据，基表会发生什么变化呢？</p>
+<pre class=" language-mysql"><code class="language-mysql">$ CREATE VIEW v3 
+            AS 
+    SELECT empid, sales 
+            FROM tb 
+    WHERE sales >= 100;
+
+$ SELECT * FROM v3;
++-------+-------+
+| empid | sales |
++-------+-------+
+| A103  |   101 |
+| A104  |   181 |
+| A101  |   184 |
+| A101  |   300 |
+| A102  |   205 |
++-------+-------+
+5 rows in set (0.01 sec)</code></pre>
+<ul>
+<li>插入不符合视图条件的记录</li>
+</ul>
+<pre class=" language-mysql"><code class="language-mysql">$ INSERT INTO v3 VALUES('恶意刁难', 50);
+Query OK, 1 row affected (0.01 sec)
+
+$ SELECT * FROM v3;
++-------+-------+
+| empid | sales |
++-------+-------+
+| A103  |   101 |
+| A104  |   181 |
+| A101  |   184 |
+| A101  |   300 |
+| A102  |   205 |
++-------+-------+
+5 rows in set (0.00 sec)</code></pre>
+<p>视图 v3 看不到刚才插入的值，那么基表 tb 会变成什么样呢？</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT * FROM tb;
++--------------+-------+-------+
+| empid        | sales | month |
++--------------+-------+-------+
+| A103         |   101 |     4 |
+| A102         |    54 |     5 |
+| A104         |   181 |     4 |
+| A101         |   184 |     4 |
+| A103         |    17 |     5 |
+| A101         |   300 |     5 |
+| A102         |   205 |     6 |
+| A104         |    93 |     5 |
+| A103         |    12 |     6 |
+| A107         |    87 |     6 |
+| 恶意刁难     |    50 |  NULL |
++--------------+-------+-------+
+11 rows in set (0.00 sec)</code></pre>
+<p>基表 tb 中竟然插入了这个值！在默认情况下，WHERE 条件会被忽略，数据会 INSERT 到基表中。</p>
+<h4 id="当与视图的条件不匹配时报错"><a href="#当与视图的条件不匹配时报错" class="headerlink" title="当与视图的条件不匹配时报错"></a>当与视图的条件不匹配时报错</h4><p>当通过视图 INSERT 记录时，即使与 WHERE 条件不匹配，数据也会直接输入到基表中。这是否意味着总是可以输入与 WHERE 条件不符的记录呢？</p>
+<p>但是，对于有条件限制的视图，无视条件输入记录有时会带来一定的麻烦。另外，从视图中输入的记录无法在改视图中确认也是一件很麻烦的事。</p>
+<p>为了应对这些情况，我们可以将视图设置成 “不接受与条件不匹配的记录”。为了防止输入与 WHERE 条件不匹配的记录，我们可以使用 CREATE VIEW 创建视图时，加上 WITH CHECK OPERON。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ CREATE VIEW v4 
+            AS 
+    SELECT empid, sales 
+            FROM tb 
+    WHERE sales >= 100
+            WITH CHECK OPTION;
+
+$ INSERT INTO v4 VALUES('恶意刁难', 50);
+ERROR 1369 (HY000): CHECK OPTION failed 'db1.v4'</code></pre>
+<p>这样就无法输入不符合条件的记录了。</p>
+<h3 id="替换、修改和删除视图"><a href="#替换、修改和删除视图" class="headerlink" title="替换、修改和删除视图"></a>替换、修改和删除视图</h3><p>当执行 CREATE VIEW 时，如果已经有同名的视图存在，该命令报错。在这种情况下，可以像 “CREATE OR REPLACE VIEW …” 这样，加上 OR REPLACE 替换视图。也就是说，删除已经存在的同名的视图，创建新的视图。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ CREATE OR REPLACE VIEW v1 AS SELECT NOW();
+</code></pre>
+<h4 id="修改视图结构"><a href="#修改视图结构" class="headerlink" title="修改视图结构"></a>修改视图结构</h4><pre class=" language-mysql"><code class="language-mysql">$ ALTER VIEW 视图名 AS SELECT 列名 FROM 表名;</code></pre>
+<p>与使用 “CREATE VIEW … AS SELECT” 创建视图的方法基本相同。</p>
+<h4 id="删除视图"><a href="#删除视图" class="headerlink" title="删除视图"></a>删除视图</h4><pre class=" language-mysql"><code class="language-mysql">$ DROP VIEW 视图名;</code></pre>
+<p>如果视图不存在，该命令就会报错。可以执行下面的命令：</p>
+<pre class=" language-mysql"><code class="language-mysql"># 目标视图不存在，只是不执行操作而已
+$ DROP VIEW IF EXISTS v1;</code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>MySQL</tag>
       </tags>
   </entry>
   <entry>
@@ -7269,7 +7514,23 @@ ERROR 1242 (21000): Subquery returns more than 1 row</code></pre>
 </ul>
 <pre class=" language-mysql"><code class="language-mysql">$ CREATE TABLE tb_rank LIKE tb;
 $ ALTER TABLE tb_rank ADD c_rank INT AUTO_INCREMENT PRIMARY KEY;
-$ INSERT INTO tb_rank(empid, sales, month) (SELECT empid,sales, month FROM tb ORDER BY sales DESC);</code></pre>
+$ INSERT INTO tb_rank(empid, sales, month) (SELECT empid,sales, month FROM tb ORDER BY sales DESC);
+$ SELECT * FROM tb_rank;
++-------+-------+-------+--------+
+| empid | sales | month | c_rank |
++-------+-------+-------+--------+
+| A101  |   300 |     5 |      1 |
+| A102  |   205 |     6 |      2 |
+| A101  |   184 |     4 |      3 |
+| A104  |   181 |     4 |      4 |
+| A103  |   101 |     4 |      5 |
+| A104  |    93 |     5 |      6 |
+| A107  |    87 |     6 |      7 |
+| A102  |    54 |     5 |      8 |
+| A103  |    17 |     5 |      9 |
+| A103  |    12 |     6 |     10 |
++-------+-------+-------+--------+
+10 rows in set (0.00 sec)</code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
