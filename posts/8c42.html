@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="MySQL的概要, Java,Git,SpringBoot,SpringCloud,SpringCloud Alibaba等">
+    <meta name="keywords" content="使用多个表, Java,Git,SpringBoot,SpringCloud,SpringCloud Alibaba等">
     <meta name="description" content="专注WJava后端,大数据,分享知识,分享生活">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>MySQL的概要 | 三十二道街</title>
+    <title>使用多个表 | 三十二道街</title>
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/awesome/css/all.css">
@@ -287,12 +287,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/23.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/1.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">MySQL的概要</h1>
+                    <h1 class="description center-align post-title">使用多个表</h1>
                 </div>
             </div>
         </div>
@@ -425,7 +425,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-01-23
+                    2021-01-26
                 </div>
                 
 
@@ -439,14 +439,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.8k
+                    4.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    6 分
+                    17 分
                 </div>
                 
 
@@ -461,126 +461,438 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="数据库的概要"><a href="#数据库的概要" class="headerlink" title="数据库的概要"></a>数据库的概要</h3><h4 id="数据库是什么"><a href="#数据库是什么" class="headerlink" title="数据库是什么"></a>数据库是什么</h4><p>MySQL 是世界上最受欢迎的开源数据库软件。那么，我们常常听到的数据库到底是什么呢？</p>
-<p>据说，第二次世界大战后，美军为了有效管理大量的资料，便把所有的信息都集中在一个基地里，这个集中了所有信息的基地就称为数据库（databse）。“数据库” 一次便由此诞生。</p>
-<p>现在，数据库表示 <strong>“具有某种数据规则的集合”</strong>。但提到数据库时，我们一般都默认它<strong>具备对数据进行添加、查询和提取等用于管理数据</strong>的功能。所以，只是随便收集起来的数据的集合不能称为数据库。只有具备了有效运用这些数据的管理功能，才能称为数据库。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/Snipaste_2021-01-27_11-15-05.png"></p>
-<h4 id="关系数据库是什么"><a href="#关系数据库是什么" class="headerlink" title="关系数据库是什么"></a>关系数据库是什么</h4><p>现在使用最广泛的是<strong>关系数据库</strong> （Relational Database，RDB）。</p>
-<p>在关系数据库中，一条数据用多个项目来表示。例如，关系数据库将一条会员数据分成会员编号、姓名、住址和出生年月日等项目，然后把各个会员的相关数据收集起来。</p>
-<p>其中，一条数据称为<strong>记录（record）</strong>，各个项目称为<strong>列</strong>（column）。在刚才的例子中，xx 先生 或者 xx小姐的数据是记录，会员编号和姓名等项目是列。</p>
-<p>如果想象成 Excel 的工作表（work sheet），横向的一行就相当于记录。注意，纵向的一列中输入的是相同类型的数据。</p>
-<p>我们把收集了这些数据的表格称为<strong>表</strong>（table）。一个数据库中可以包含多个表。</p>
-<p>管理关系数据库的系统称为 <strong>RDBMS（Relational DataBase Management System）</strong>，关系数据库系统。MySQL 也是 RDBMS 的一种。</p>
-<p>在关系数据库中，不用把所有的项目都存入一个表里。我们可以把各个项目拆到多个 “具有关联性” 表中，只对需要用到的数据进行收集和使用。</p>
-<h4 id="数据库的特征"><a href="#数据库的特征" class="headerlink" title="数据库的特征"></a>数据库的特征</h4><p>如果是 Excel 的工作表，在任何单元格中都可以自由地输入字符串或数值，而且还可以通过拖拽鼠标来自由地挪动数据。但是在数据库中，上面的做法是行不通的。如果最开始决定 “在列 a 中输入整数” ，之后在列 a 中就只能输入整数，不能再输入字符串。</p>
-<p>另外，很多应用程序都有<code>还原（UNDO）</code>功能，如果操作结果不理想，可以使用该功能进行还原。但是在数据库中，如果不使用<strong>事务（t ransaction）</strong>等特殊功能，就无法还原到上一步操作。</p>
-<p>大家也许一开始会讨厌数据库这种 “缺乏灵活性” 的特性。但是多亏了这一特性，数据库才变得安全且稳定，才成了可靠的数据存储场所。“只能按照决定好的规则来操作，并且严格地进行管理” 的特征，正是数据库值得信赖的原因。</p>
-<h3 id="MySQL介绍"><a href="#MySQL介绍" class="headerlink" title="MySQL介绍"></a>MySQL介绍</h3><h4 id="主流数据库"><a href="#主流数据库" class="headerlink" title="主流数据库"></a>主流数据库</h4><table>
-<thead>
-<tr>
-<th>名称</th>
-<th>特征</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Oracle</td>
-<td>世界上最常用的商用 RDBMS</td>
-</tr>
-<tr>
-<td>Access</td>
-<td>微软公司 Office 系列的 RDBMS</td>
-</tr>
-<tr>
-<td>Microsoft SQL Server</td>
-<td>微软公司的商用RDBMS</td>
-</tr>
-<tr>
-<td>PostgreSQL</td>
-<td>和 MySQL 一样是开源的 RDBMS，在日本很受欢迎</td>
-</tr>
-<tr>
-<td>MySQL</td>
-<td>世界上最常用的 RDBMS</td>
-</tr>
-</tbody></table>
-<h4 id="MySQL历史"><a href="#MySQL历史" class="headerlink" title="MySQL历史"></a>MySQL历史</h4><p>MySQL 是米卡埃尔·维徳纽斯（Michael Widenius） 在 1995 年开发的 RDBMS。最初，MySQL  是由瑞典的 MySQL AB 公司进行支持和开发的。维德妞斯正是这家公司的前身公司创始人。但是在 2008 年 2 月，MySQL AB 公司被 Sun 公司收购。而拥有被认为是世界第一的商用数据库 Oracle 的 Oracle 公司又与 2010年 1 月收购了 Sun 公司。也就是说，作为开源数据库世界第一的 MySQL 和作为商用数据库世界第一的 Oracle，现在都在由同一家公司管理。</p>
-<p>另外，维德妞斯原供职于 Sun 公司，但是他在 Oracle 公司收购 Sun 公司前从 Sun 公司离职，并与 2010 年创建了 MariaDB 公司，开始开发和 MySQL 具有兼容性的 MariaDB 数据库。MySQL 源与维德妞斯大女儿的名字 “My”，而 MariaDB 则源自与维德妞斯二女儿的名字“Maria”。</p>
-<p>MariaDB 最初发布的版本只是增强了 MySQL 的部分功能，但是从 2014 年 3 月发布的 10.0 版本起，MariaDB 开始有了自己专有的功能，逐渐和 MySQL 区分开来。</p>
-<h4 id="MySQL-的两种版本"><a href="#MySQL-的两种版本" class="headerlink" title="MySQL 的两种版本"></a>MySQL 的两种版本</h4><ul>
-<li>MySQL 社区版<ul>
-<li>可免费使用</li>
-<li>有参考手册（reference manual）</li>
-<li>有论坛和邮件列表，但没有技术支持</li>
-</ul>
+                <h3 id="显示多个表的记录"><a href="#显示多个表的记录" class="headerlink" title="显示多个表的记录"></a>显示多个表的记录</h3><h4 id="确认本章示例中使用的多个表"><a href="#确认本章示例中使用的多个表" class="headerlink" title="确认本章示例中使用的多个表"></a>确认本章示例中使用的多个表</h4><p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/Snipaste_2021-01-27_11-09-50.png"></p>
+<h4 id="显示多条提取结果"><a href="#显示多条提取结果" class="headerlink" title="显示多条提取结果"></a>显示多条提取结果</h4><p>从多个表中取出记录，并将它们汇总到一起显示出来。我们可以使用 UNION 命令从多个表中提取记录并将它们合并起来。</p>
+<p>比如从去年的客户表和今年的客户表中把老客户的记录提取出来，然后合并到一起显示。也可以合并结构不同的表数据。一般来说，合并到一起显示的列，其数据类型需要一致。不过，即使数据类型不同，很多时候 MySQL 也会对可以合并的记录一起合并。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT 列名1 FROM 表名1 UNION SELECT 列名2 FROM 表名;</code></pre>
+<p>写成一行的话有点不好理解。执行换行和缩进后，格式会变成下面这样。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT 
+                列名 1
+    FROM 
+                表名 1
+UNION
+    SELECT 
+                列名 2
+    FROM
+                表名 2;</code></pre>
+<p>UNION 将两个 “SELECT … FROM …” 的结果合并存了起来。</p>
+<p>首先试着合并具有相同列结构的表 tb1 和 tb2 的记录。因为合并的是所有的列，所以需要用 UNION 把 ”SELECT * FROM …“ 连接起来。</p>
+<pre class=" language-mysql"><code class="language-mysql">SELECT * FROM tb1 UNION SELECT * FROM tb2;
++-------+--------+------+
+| empid | name   | age  |
++-------+--------+------+
+| A101  | 佐腾   |   40 |
+| A102  | 高桥   |   28 |
+| A103  | 中川   |   20 |
+| A104  | 渡边   |   23 |
+| A105  | 西泽   |   35 |
+| A106  | 中村   |   26 |
+| A107  | 田中   |   24 |
+| A108  | 铃木   |   23 |
+| A109  | 村井   |   25 |
+| A110  | 吉田   |   27 |
++-------+--------+------+
+10 rows in set (0.00 sec)</code></pre>
+<p>为了便于阅读，我们可以用 () 把各个 “SELECT …” 括起来。这种写法更容易理解。</p>
+<pre class=" language-mysql"><code class="language-mysql">(SELECT * FROM tb1) UNION (SELECT * FROM tb2);</code></pre>
+<h4 id="使用-UNION-合并-3-个以上的表"><a href="#使用-UNION-合并-3-个以上的表" class="headerlink" title="使用 UNION 合并 3 个以上的表"></a>使用 UNION 合并 3 个以上的表</h4><p>将 empid 为 A102、A103、A104、A107 的记录一个一个地 SELECT 出来，然后使用 UNION 进行合并。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ (SELECT * FROM tb WHERE empid = 'A102')
+UNION (SELECT * FROM tb WHERE empid = 'A103')
+UNION (SELECT * FROM tb WHERE empid = 'A104')
+UNION (SELECT * FROM tb WHERE empid = 'A107');</code></pre>
+<h4 id="按条件合并多条提取结果进行显示"><a href="#按条件合并多条提取结果进行显示" class="headerlink" title="按条件合并多条提取结果进行显示"></a>按条件合并多条提取结果进行显示</h4><p>当使用 UNION 合并提取的多条记录时，如果需要添加条件，可以在各个命令的最后加上 “WHERE 条件”。</p>
+<p>试着提取符合下面两个条件中任意一个条件的员工的员工号：</p>
+<ol>
+<li><p>表 tb 中销售额（sales）大于等于 200 万元的员工的员工号（empid）（筛选出 A101 和 A102）</p>
 </li>
-<li>MySQL 商业版<ul>
-<li>需要付费</li>
-<li>定期更新，并且提供服务包（service pack）及技术支持</li>
-<li>拥有以下多个版本：MySQL 标准版（Standard Edition），MySQL 企业版（Enterprise Edition），MySQL 集群运营商级版（Cluster Carrier Grade Edition）</li>
-</ul>
+<li><p>表 tb1 中年龄（age）大于等于 35 岁员工的员工号    (筛选出 A101 和  A105)</p>
 </li>
-</ul>
-<h4 id="MySQL-特征"><a href="#MySQL-特征" class="headerlink" title="MySQL 特征"></a>MySQL 特征</h4><ol>
-<li>执行速度快</li>
-<li>开放源代码</li>
-<li>支持在多种操作系统上运行</li>
-<li>支持多种编程语言</li>
-<li>拥有免费和付费两种版本</li>
 </ol>
-<p>MySQL 的执行速度非常快，这种轻快性正是它的卖点。早期的版本为了维持这种轻快性，曾削减事物、子查询和存储过程等功能，所以给人一种 ”执行速度快、但功能太简单“ 的感觉。不过，现在 MySQL 在功能方面已经不逊色于其它 RDBMS 了。</p>
-<p>MySQL 新功能的添加历史</p>
-<table>
-<thead>
-<tr>
-<th>功能</th>
-<th>添加该功能时的MySQL版本</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>事务</td>
-<td>4.0（从版本3.23.38开始可以使用该功能）</td>
-</tr>
-<tr>
-<td>合并</td>
-<td>4.0</td>
-</tr>
-<tr>
-<td>子查询</td>
-<td>4.1</td>
-</tr>
-<tr>
-<td>视图</td>
-<td>5.0</td>
-</tr>
-<tr>
-<td>存储过程</td>
-<td>5.0</td>
-</tr>
-<tr>
-<td>存储函数</td>
-<td>5.0</td>
-</tr>
-<tr>
-<td>触发器</td>
-<td>5.0</td>
-</tr>
-<tr>
-<td>默认存储引擎变为InnoDB</td>
-<td>5.5</td>
-</tr>
-<tr>
-<td>半同步复制</td>
-<td>5.5</td>
-</tr>
-<tr>
-<td>无损半同步复制</td>
-<td>5.7</td>
-</tr>
-</tbody></table>
-<h3 id="SQL的概要"><a href="#SQL的概要" class="headerlink" title="SQL的概要"></a>SQL的概要</h3><h4 id="查询和SQL"><a href="#查询和SQL" class="headerlink" title="查询和SQL"></a>查询和SQL</h4><p>在操作数据库的时候，作为用户的我们会向数据库发出命令（command），并指定需要处理的内容。表示这种命令的语句就是查询（query）。例如，创建表时使用的查询时 “CREATE TABLE…”，插入数据库时使用的查询是 “INSERT INTO …”。</p>
-<p>编写查询需要遵守 <strong>SQL（Structured Query Language）</strong> 的规则。SQL 直译过来就是结构化查询语言，用于对数据库进行操作。</p>
-<p>我们来看一个例子。假设你在政府办公室等地方进行咨询，在向政府办公室窗口的负责人提出 “想请 XX 部门帮忙提供 XX 证明” 的申请后，就能得到需要的文件了。如果把申请对象换成数据库，申请手续就是 SQL。SQL是数据库的窗口，充当用户与数据库交互的媒介。</p>
-<h4 id="SQL的”方言“"><a href="#SQL的”方言“" class="headerlink" title="SQL的”方言“"></a>SQL的”方言“</h4><p>SQL原本是IBM公司开发的语言，但现在这门语言基本可以在所有的数据库上使用。不过麻烦的是，各个数据库使用的SQL语法稍有不同。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ (SELECT empid FROM tb WHERE sales >= 200) UNION (SELECT empid FROM tb1 WHERE age >= 35);
++-------+
+| empid |
++-------+
+| A101  |
+| A102  |
+| A105  |
++-------+
+3 rows in set (0.01 sec)</code></pre>
+<h4 id="合并显示多条提取结果（允许重复）"><a href="#合并显示多条提取结果（允许重复）" class="headerlink" title="合并显示多条提取结果（允许重复）"></a>合并显示多条提取结果（允许重复）</h4><p>每个员工的员工号整齐地显示出来。大家可能认为这是理所当然的，但事实并非如此。这个结果合并的是多个表中的记录。也就是说，根据条件 1 提取了 A101 和 A102，根据条件 2 提取了 A101 和 A105，所以按理说应该显示多个 A101。但是，A101 仅显示了一条记录。之所以会出现这样的情况，是因为在提取纪录的同时执行了 “消除重复记录” 的操作。</p>
+<p>如果对大量记录执行 “消除重复” 的操作，就会产生一定的等待时间。因此，在处理大量记录的情况下，省去这项操作效率更高。我们可以通过 UNION 加上 ALL 来省去消除重复记录的操作。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ (SELECT empid FROM tb WHERE sales >= 200) UNION ALL (SELECT empid FROM tb1 WHERE age >= 35);
++-------+
+| empid |
++-------+
+| A101  |
+| A102  |
+| A101  |
+| A105  |
++-------+
+4 rows in set (0.00 sec)</code></pre>
+<h3 id="连接多个表并显示-内连接"><a href="#连接多个表并显示-内连接" class="headerlink" title="连接多个表并显示(内连接)"></a>连接多个表并显示(内连接)</h3><p>将多个表通过某个连接键连接在一起的处理称为 “连接”。这种处理符合关系数据库的特性。</p>
+<p>表 tb 中 empid 为 A101 的员工是 40 岁的佐藤。可如果只看表 tb，我们是无法得知员工姓名的。因此，我们需要将销售信息表 tb 和员工信息表 tb1 共同拥有的列 empid 设置为连接键，连接这两个表并显示出来。</p>
+<p>我们可以使用 JOIN 连接两个表</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT 列名 FROM 表1 JOIN 要连接的表2 ON 表1的列 = 表2的列</code></pre>
+<p>ON 的后面要写上作为连接键的条件。例如，在连接表 tb 和表 tb1 的情况下，由于列 empid 是共同的列，所以我们要设置这个键为连接键。在 “ON 表1的列 = 表2的列” 的部分中， “xx 表的 xx 列” 的中间要加上 “.”。就像下面这样：</p>
+<pre class=" language-mysql"><code class="language-mysql">ON tb.empid = tb1.empid</code></pre>
+<p>这里我们暂时使用 ‘*’ 将所有的列都显示出来：</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT * FROM tb JOIN tb1 ON tb.empid = tb1.empid;
++-------+-------+-------+-------+--------+------+
+| empid | sales | month | empid | name   | age  |
++-------+-------+-------+-------+--------+------+
+| A103  |   101 |     4 | A103  | 中川   |   20 |
+| A102  |    54 |     5 | A102  | 高桥   |   28 |
+| A104  |   181 |     4 | A104  | 渡边   |   23 |
+| A101  |   184 |     4 | A101  | 佐腾   |   40 |
+| A103  |    17 |     5 | A103  | 中川   |   20 |
+| A101  |   300 |     5 | A101  | 佐腾   |   40 |
+| A102  |   205 |     6 | A102  | 高桥   |   28 |
+| A104  |    93 |     5 | A104  | 渡边   |   23 |
+| A103  |    12 |     6 | A103  | 中川   |   20 |
++-------+-------+-------+-------+--------+------+
+9 rows in set (0.00 sec)</code></pre>
+<p>像这样把不同的表中相匹配的记录提取出来的连接方式称为<strong>内连接</strong>。如果要明确指出某一处理是内连接，可以将 JOIN 部分写成 INNER JOIN。像下面这样 JOIN 的前面加上 INNER，结果不会发生任何改变。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT * FROM tb INNER JOIN tb1 ON tb.empid = tb1.empid;</code></pre>
+<h4 id="选择列进行显示"><a href="#选择列进行显示" class="headerlink" title="选择列进行显示"></a>选择列进行显示</h4><p>我们使用 “*” 显示了所有的列。这次，我们来选择要显示的列。不过，在连接表的时候如果只写 name 和 sales，MySQL 会不知道这些列属于哪个表。在这种情况下，我们要把列名写成 “表名.列名”。另外，列会按照指定的顺序显示。同一列显示多少次都没有关系。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT tb.empid, tb1.name, tb.sales 
+        FROM tb 
+    JOIN tb1
+        ON tb.empid = tb1.empid;
++-------+--------+-------+
+| empid | name   | sales |
++-------+--------+-------+
+| A103  | 中川   |   101 |
+| A102  | 高桥   |    54 |
+| A104  | 渡边   |   181 |
+| A101  | 佐腾   |   184 |
+| A103  | 中川   |    17 |
+| A101  | 佐腾   |   300 |
+| A102  | 高桥   |   205 |
+| A104  | 渡边   |    93 |
+| A103  | 中川   |    12 |
++-------+--------+-------+
+9 rows in set (0.00 sec)</code></pre>
+<h4 id="给表添加别名"><a href="#给表添加别名" class="headerlink" title="给表添加别名"></a>给表添加别名</h4><pre class=" language-mysql"><code class="language-mysql">表名 AS 别名</code></pre>
+<h4 id="使用-USING-使-ON-的部分更容易阅读"><a href="#使用-USING-使-ON-的部分更容易阅读" class="headerlink" title="使用 USING 使 ON~ 的部分更容易阅读"></a>使用 USING 使 ON~ 的部分更容易阅读</h4><p>在前面的示例中，作为连接键的两个列恰好都是 empid 这个名字。在使用相同列名进行指定的情况下，我们可以使用 <strong>USING(作为连接键的列名)</strong> 简单地进行记述。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT tb.empid, tb1.name, tb.sales FROM tb JOIN tb1 USING(empid);
++-------+--------+-------+
+| empid | name   | sales |
++-------+--------+-------+
+| A103  | 中川   |   101 |
+| A102  | 高桥   |    54 |
+| A104  | 渡边   |   181 |
+| A101  | 佐腾   |   184 |
+| A103  | 中川   |    17 |
+| A101  | 佐腾   |   300 |
+| A102  | 高桥   |   205 |
+| A104  | 渡边   |    93 |
+| A103  | 中川   |    12 |
++-------+--------+-------+
+9 rows in set (0.00 sec)</code></pre>
+<h4 id="通过-WHERE-设置条件从连接表中提取纪录"><a href="#通过-WHERE-设置条件从连接表中提取纪录" class="headerlink" title="通过 WHERE 设置条件从连接表中提取纪录"></a>通过 WHERE 设置条件从连接表中提取纪录</h4><p>通过 WHERE 来设置条件，仅显示连接表中符合条件的记录。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT tb.empid AS 员工号, tb1.name AS 姓名, tb.sales AS 销售额
+            FROM tb
+    JOIN tb1
+            USING(empid)
+    WHERE tb.sales >= 100;
++-----------+--------+-----------+
+| 员工号    | 姓名   | 销售额    |
++-----------+--------+-----------+
+| A103      | 中川   |       101 |
+| A104      | 渡边   |       181 |
+| A101      | 佐腾   |       184 |
+| A101      | 佐腾   |       300 |
+| A102      | 高桥   |       205 |
++-----------+--------+-----------+
+5 rows in set (0.00 sec)</code></pre>
+<h4 id="提取多个表中的记录"><a href="#提取多个表中的记录" class="headerlink" title="提取多个表中的记录"></a>提取多个表中的记录</h4><p>我们可以使用 JOIN 连接多个表。在 “SELECT … JOIN … ON …” 的基础上加上 “JOIN … ON …” 就可以对多个表进行连接。但是，在连接多个表的情况下，处理时间会相应地变长，记述的内容也会变得难以理解。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT ~ FROM
+ 表名 1
+ JOIN 表名 2 连接条件
+ JOIN 表名 3 连接条件
+ ...;</code></pre>
+<p>公司员工的 “出生地” 信息保存在表 tb3 中。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT tb.empid, tb.sales, tb1.name, tb3.region
+    FROM tb
+JOIN tb1
+    USING(empid)
+JOIN tb3
+    USING(empid);</code></pre>
+<p>我们使用 3 个表共有的列 empid 执行了 USING(empid)。如果使用 ON 将 ON tb.empid = tb1.empid 和  on tb.empid = tb3.empid。</p>
+<h3 id="显示多个表的所有记录（外连接）"><a href="#显示多个表的所有记录（外连接）" class="headerlink" title="显示多个表的所有记录（外连接）"></a>显示多个表的所有记录（外连接）</h3><pre class=" language-mysql"><code class="language-mysql">$ SELECT x.empid, y.name, x.sales
+      FROM tb AS x
+  JOIN tb1 AS y
+      on x.empid = y.empid;
++-------+--------+-------+
+| empid | name   | sales |
++-------+--------+-------+
+| A103  | 中川   |   101 |
+| A102  | 高桥   |    54 |
+| A104  | 渡边   |   181 |
+| A101  | 佐腾   |   184 |
+| A103  | 中川   |    17 |
+| A101  | 佐腾   |   300 |
+| A102  | 高桥   |   205 |
+| A104  | 渡边   |    93 |
+| A103  | 中川   |    12 |
++-------+--------+-------+
+9 rows in set (0.00 sec)</code></pre>
+<p>实际上，表 tb 中有一个 empid = A107 的人，但这个人没有登记在表 tb1 的员工名单上。A107是其它营业所的员工，所有表 tb1 中没有这个人的数据。虽然他贡献了一部分销售额，但使用 JOIN 连接表时不会显示这个人的记录。</p>
+<p>另外，员工信息表 tb1 中虽然有 A105 西泽的信息，但销售信息表 tb 没有他的相关信息。也就是说，虽然西泽被列入了员工名册中，但可能因为没有销售成绩，所以销售信息表中没有显示 A105 的记录。</p>
+<ul>
+<li><strong>使用了 JOIN (或者 INNER JOIN) 的 “内连接” 只会提取与连接键相匹配的记录</strong></li>
+</ul>
+<p>因此，只存在表 tb 或者表 tb1 中的记录将被忽略。但是，我们有时也会遇到必须显示这些记录的情况。这这种情况下，我们需要使用 <strong>外连接</strong>。外连接具有一下特性：</p>
+<ul>
+<li><strong>即使与连接键不匹配，外链接也会提取两个表中的所有记录。</strong></li>
+</ul>
+<h4 id="外连接的种类"><a href="#外连接的种类" class="headerlink" title="外连接的种类"></a>外连接的种类</h4><ul>
+<li>左外连接<ul>
+<li>显示 “相匹配的记录” 和 “表1（即左表）的全部记录”</li>
+</ul>
+</li>
+<li>右外连接<ul>
+<li>显示 “相匹配的记录” 和 “要连接的表2（即右表）的全部记录”</li>
+</ul>
+</li>
+</ul>
+<h4 id="使用左外连接"><a href="#使用左外连接" class="headerlink" title="使用左外连接"></a>使用左外连接</h4><p>当进行左外连接时，我们只需将内连接中使用的 JOIN 修改为 <strong>LEFT JOIN</strong> 即可。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT 列名
+            FROM 表1
+    LEFT JOIN 要连接的表2
+            ON 表1的列 = 表2的列 </code></pre>
+<p>使用左外连接显示表 tb 和 表 tb1 相匹配的记录，以及表 tb 的所有记录。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT tb.empid, tb1.name FROM tb LEFT JOIN tb1 USING(empid);
++-------+--------+
+| empid | name   |
++-------+--------+
+| A103  | 中川   |
+| A102  | 高桥   |
+| A104  | 渡边   |
+| A101  | 佐腾   |
+| A103  | 中川   |
+| A101  | 佐腾   |
+| A102  | 高桥   |
+| A104  | 渡边   |
+| A103  | 中川   |
+| A107  | NULL   |
++-------+--------+
+10 rows in set (0.00 sec)</code></pre>
+<h4 id="使用右外连接"><a href="#使用右外连接" class="headerlink" title="使用右外连接"></a>使用右外连接</h4><p>通过右外连接显示 “相匹配的记录” 和 “要连接的右表的所有记录”。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT 列名 
+            FROM 表 1
+    RIGHT JOIN 要连接的表2
+            ON 表1的列 = 表2的列</code></pre>
+<p>有些记录在员工信息表 tb1 中有，但在销售信息表 tb 中没有，对于这种没有销售额的员工的记录，我们也将其全部显示出来。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT tb.empid, tb1.name
+            FROM tb
+    RIGHT JOIN tb1
+    USING(empid);
++-------+--------+
+| empid | name   |
++-------+--------+
+| A103  | 中川   |
+| A102  | 高桥   |
+| A104  | 渡边   |
+| A101  | 佐腾   |
+| A103  | 中川   |
+| A101  | 佐腾   |
+| A102  | 高桥   |
+| A104  | 渡边   |
+| A103  | 中川   |
+| NULL  | 西泽   |
++-------+--------+
+10 rows in set (0.00 sec)</code></pre>
+<p>执行的结果中显示了表 tb 和表 tb1 相匹配的记录，以及右表 tb1 的所有记录。</p>
+<blockquote>
+<p><strong>加上 OUTER 后的书写方法</strong>    </p>
+<p>LEFT JOIN 也可以写成 LEFT OUTER JOIN。同样，RIGHT JOIN 也可以写成 RIGHT OUTER JOIN。</p>
+</blockquote>
+<h3 id="自连接"><a href="#自连接" class="headerlink" title="自连接"></a>自连接</h3><p>我们可以将表与其自身，也就是和同名的表进行连接。这种连接方式称为自连接。因为是两个同名的表进行连接，所以如果直接执行连接，就会显示出两个同名的列。这样就无法对列进行识别了（发生了错误），因此连接时必须定义别名。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT 列名 FROM 表名 AS 别名1 JOIN 表名 AS 别名2;</code></pre>
+<p>我们试着对员工信息表 tb1 进行自连接，并把所有的列显示出来。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT * FROM tb1 AS a JOIN tb1 AS b;
++-------+--------+------+-------+--------+------+
+| empid | name   | age  | empid | name   | age  |
++-------+--------+------+-------+--------+------+
+| A101  | 佐腾   |   40 | A101  | 佐腾   |   40 |
+| A102  | 高桥   |   28 | A101  | 佐腾   |   40 |
+| A103  | 中川   |   20 | A101  | 佐腾   |   40 |
+| A104  | 渡边   |   23 | A101  | 佐腾   |   40 |
+| A105  | 西泽   |   35 | A101  | 佐腾   |   40 |
+| A101  | 佐腾   |   40 | A102  | 高桥   |   28 |
+| A102  | 高桥   |   28 | A102  | 高桥   |   28 |
+| A103  | 中川   |   20 | A102  | 高桥   |   28 |
+| A104  | 渡边   |   23 | A102  | 高桥   |   28 |
+| A105  | 西泽   |   35 | A102  | 高桥   |   28 |
+| A101  | 佐腾   |   40 | A103  | 中川   |   20 |
+| A102  | 高桥   |   28 | A103  | 中川   |   20 |
+| A103  | 中川   |   20 | A103  | 中川   |   20 |
+| A104  | 渡边   |   23 | A103  | 中川   |   20 |
+| A105  | 西泽   |   35 | A103  | 中川   |   20 |
+| A101  | 佐腾   |   40 | A104  | 渡边   |   23 |
+| A102  | 高桥   |   28 | A104  | 渡边   |   23 |
+| A103  | 中川   |   20 | A104  | 渡边   |   23 |
+| A104  | 渡边   |   23 | A104  | 渡边   |   23 |
+| A105  | 西泽   |   35 | A104  | 渡边   |   23 |
+| A101  | 佐腾   |   40 | A105  | 西泽   |   35 |
+| A102  | 高桥   |   28 | A105  | 西泽   |   35 |
+| A103  | 中川   |   20 | A105  | 西泽   |   35 |
+| A104  | 渡边   |   23 | A105  | 西泽   |   35 |
+| A105  | 西泽   |   35 | A105  | 西泽   |   35 |
++-------+--------+------+-------+--------+------+
+25 rows in set (0.01 sec)</code></pre>
+<h4 id="排序的技巧-其一"><a href="#排序的技巧-其一" class="headerlink" title="排序的技巧 其一"></a>排序的技巧 其一</h4><p>自连接的结果中会包含所有的组合。如果其中有你想要的组合，之后就可以通过设置条件来选出想要的内容了。</p>
+<img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/2991611739549_.pic_hd.jpg" style="zoom:50%;">
+
+<p>请看右侧为 “佐藤 40 ”，左侧为 “佐藤 40 ”、“高桥 28 ”、“中川 20 ”、“渡边 23 ”、“西泽 35 ” 的 5 行记录。</p>
+<p>在这 5 行记录中，大于等于右侧 “佐藤 40 ” 中 40 这个数字的数据在左侧仅有 1，所以佐藤排名第一。</p>
+<p>同样，请看右侧 “高桥 28”，左侧为 “佐藤 40 ”、“高桥 28 ”、“中川 20 ”、“渡边 23 ”、“西泽 35 ” 的 5 行记录。</p>
+<p>在这 5 行记录中，其中大于等于右侧 “高桥 28 ” 中 28 这个数字的数据在左侧有 3个，分别是 40、38、28，也就是说高桥排在第三。</p>
+<p>像这样，在右侧相同的 5 行记录的范围内，大于等于右侧 age 的值在左侧 age 中的个数就是排名。</p>
+<p>换句话说，就是只需要自连接，并对每一组 empid 计算大于等于右侧 age 的值在左侧 age 中的个数即可。该数可以通过 COUNT(*) 计算。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT a.name, a.age, COUNT(*)
+        FROM tb1 AS a
+    JOIN tb1 AS b
+        WHERE a.age <= b.age
+    GROUP BY a.empid;
++--------+------+----------+
+| name   | age  | COUNT(*) |
++--------+------+----------+
+| 佐腾   |   40 |        1 |
+| 高桥   |   28 |        3 |
+| 中川   |   20 |        5 |
+| 渡边   |   23 |        4 |
+| 西泽   |   35 |        2 |
++--------+------+----------+
+5 rows in set (0.01 sec)</code></pre>
+<h3 id="从-SELECT-的记录中-SELECT-子查询"><a href="#从-SELECT-的记录中-SELECT-子查询" class="headerlink" title="从 SELECT 的记录中 SELECT (子查询)"></a>从 SELECT 的记录中 SELECT (子查询)</h3><h4 id="什么是子查询"><a href="#什么是子查询" class="headerlink" title="什么是子查询"></a>什么是子查询</h4><p>使用子查询可以完成两个阶段的处理：执行查询，然后使用检索到的记录进一步执行查询。例如，在第一阶段中进行 “从销售信息表中提取销售额大于等于200万元的员工号” 的处理，然后在第二阶段中进行  “从提取出来的员工号中提出相对应的姓名” 的处理。 第一阶段的查询称为 <strong>子查询</strong>。</p>
+<p>第一阶段的子查询可以返回值、列和记录等。许多使用了子查询的处理，可以用其他方法取代，例如内连接。但是，子查询的处理方式更容易理解，处理效率也更高。</p>
+<h4 id="显示最大值（返回的值的子查询-其一）"><a href="#显示最大值（返回的值的子查询-其一）" class="headerlink" title="显示最大值（返回的值的子查询 其一）"></a>显示最大值（返回的值的子查询 其一）</h4><ul>
+<li>显示表 tb 中列 sales 最大值的记录</li>
+</ul>
+<p>换句话说，就是显示在销售信息表 tb 中销售额最高（sales最大） 的员工记录。列的最大值可以用 MAX 函数计算。或许有人会想 ”这还不简单“，按照下面的方式处理不就可以了。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT * FROM tb WHERE sales = MAX(sales);</code></pre>
+<p>试着执行一下，结果会发生错误。只写 MAX(sales) 是不会计算出列 sales 的最大值的。想要获取列 sales 中的最大值，就需要按照下面的方式进行查询。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT MAX(sales) FROM tb;</code></pre>
+<p>当提取最大值相对应的记录时，需要先通过上面的操作获取最大值，然后从表 tb 中提取纪录。这里，子查询就起到了非常重要的作用。首先，在第一阶段的查询中取出 MAX(sales) 的值，然后在第二阶段选择（SELECT）包含了最大值的列 sales 的纪录。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT * FROM tb WHERE sales IN (第一阶段的处理结果);</code></pre>
+<p>执行下面的命令：</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT *
+            FROM tb 
+    WHERE sales 
+            in (SELECT MAX(seles) FROM tb);
++-------+-------+-------+
+| empid | sales | month |
++-------+-------+-------+
+| A101  |   300 |     5 |
++-------+-------+-------+
+1 row in set (0.02 sec)</code></pre>
+<blockquote>
+<p><strong>GROUP BY 函数</strong>    MAX、AVG 和 SUM 等聚合函数也称为 “GROUP BY” 函数，这类函数用于处理分组后的值。但是，在没有 “GROUP BY” 的情况下，这类函数会将整个表作为一个组进行处理。</p>
+</blockquote>
+<h4 id="提取大于等于平均值的纪录（返回值的子查询-其二）"><a href="#提取大于等于平均值的纪录（返回值的子查询-其二）" class="headerlink" title="提取大于等于平均值的纪录（返回值的子查询 其二）"></a>提取大于等于平均值的纪录（返回值的子查询 其二）</h4><p>试着计算员工信息报 tb1 中员工的平均年龄，并提取大于等于平均年龄的员工的纪录。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT * 
+            FROM tb1 
+    WHERE AGE >= (SELECT AVG(age) FROM tb1);
++-------+--------+------+
+| empid | name   | age  |
++-------+--------+------+
+| A101  | 佐腾   |   40 |
+| A105  | 西泽   |   35 |
++-------+--------+------+
+2 rows in set (0.00 sec)</code></pre>
+<blockquote>
+<p><strong>子查询和内连接的提取结果的差异（虽然相似但不同!）</strong></p>
+<p>子查询和内连接非常相似。我们来看一个例子。对于销售信息表 tb 中存在的员工号 empid，显示员工信息表 tb1 中相应的员工号 empid 和 姓名name。下面分别用 “子查询” 和 “内连接” 实现上述内容的示例。</p>
+<ul>
+<li>子查询</li>
+</ul>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT empid, name 
+          FROM tb1 
+  WHERE empid IN (SELECT empid FROM tb);
++-------+--------+
+| empid | name   |
++-------+--------+
+| A101  | 佐腾   |
+| A102  | 高桥   |
+| A103  | 中川   |
+| A104  | 渡边   |
+4 rows in set (0.00 sec)</code></pre>
+<ul>
+<li>内连接</li>
+</ul>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT tb1.empid, tb1.name 
+            FROM tb1 
+    JOIN tb ON tb1.empid = tb.empid;
++-------+--------+
+| empid | name   |
++-------+--------+
+| A103  | 中川   |
+| A102  | 高桥   |
+| A104  | 渡边   |
+| A101  | 佐腾   |
+| A103  | 中川   |
+| A101  | 佐腾   |
+| A102  | 高桥   |
+| A104  | 渡边   |
+| A103  | 中川   |
++-------+--------+
+9 rows in set (0.00 sec)</code></pre>
+<p>二者的执行结果是不同的。在使用子查询的情况下，会先提取表 tb 中存在 empid，然后仅显示和表 tb1 相匹配的纪录。而使用内连接的话，将显示表 tb 中所有的纪录。</p>
+</blockquote>
+<h4 id="使用-“-”-代替-IN-会报错吗"><a href="#使用-“-”-代替-IN-会报错吗" class="headerlink" title="使用 “=” 代替 IN 会报错吗"></a>使用 “=” 代替 IN 会报错吗</h4><pre class=" language-mysql"><code class="language-mysql">$ SELECT * 
+            FROM tb1 
+    WHERE empid = (SELECT empid FROM tb WHERE sales >= 200);
+ERROR 1242 (21000): Subquery returns more than 1 row</code></pre>
+<p>很遗憾，执行此命令会出现 <code>ERROR 1242 (21000): Subquery returns more than 1 row</code>（子查询返回的结果多于一行）。如果满足 “e pid 与 x x 恰好一致” 的条件，使用 “=” 也无妨。但是在这个示例中，多条记录在第一阶段被提取了出来，因此必须使用表示 “…之一” 的 IN。</p>
+<p>当然，如果只有一条相对应的记录，那么即使使用 “=” 也不会报错。如：</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT * 
+            FROM tb1 
+    WHERE empid = (SELECT empid FROM tb ORDER BY sales DESC LIMIT 1);
++-------+--------+------+
+| empid | name   | age  |
++-------+--------+------+
+| A101  | 佐腾   |   40 |
++-------+--------+------+
+1 row in set (0.00 sec)</code></pre>
+<p>LIMIT 1 时仅能提出一条记录，所以使用 “=” 也不会报错。</p>
+<h4 id="使用-EXISTS，仅以存在的记录为对象"><a href="#使用-EXISTS，仅以存在的记录为对象" class="headerlink" title="使用 EXISTS，仅以存在的记录为对象"></a>使用 EXISTS，仅以存在的记录为对象</h4><p>我们也可以使用 EXISTS，不返回指定的列而返回 “第一阶段子查询存在的目标记录” 这样的信息。</p>
+<ul>
+<li>从表 tb 中提取有销售额的员工的记录，然后从表 tb1 中提取相对应的记录显示出来。</li>
+</ul>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT * 
+            FROM tb1 
+    WHERE EXISTS(SELECT * FROM tb WHERE tb.empid = tb1.empid);
++-------+--------+------+
+| empid | name   | age  |
++-------+--------+------+
+| A101  | 佐腾   |   40 |
+| A102  | 高桥   |   28 |
+| A103  | 中川   |   20 |
+| A104  | 渡边   |   23 |
++-------+--------+------+
+4 rows in set (0.00 sec)</code></pre>
+<p>A105 在表 tb 中不存在相应的 empid，所以没有显示出来。从中我们可以知道，A105 的西泽没有销售额。</p>
+<h4 id="使用-NOT-EXISTS"><a href="#使用-NOT-EXISTS" class="headerlink" title="使用 NOT EXISTS"></a>使用 NOT EXISTS</h4><pre class=" language-mysql"><code class="language-mysql">$ SELECT * 
+            FROM tb1 
+    WHERE EXISTS(SELECT * FROM tb WHERE tb.empid = tb1.empid);
+| empid | name   | age  |
++-------+--------+------+
+| A105  | 西泽   |   35 |
++-------+--------+------+
+1 row in set (0.01 sec)    </code></pre>
+<p>从中我们可以知道，没有销售额的员工是 35 岁的 A105 西泽。</p>
+<h4 id="排序的技巧-其二"><a href="#排序的技巧-其二" class="headerlink" title="排序的技巧 其二"></a>排序的技巧 其二</h4><p>在使用子查询的情况下，我们可以用各种各样的方法进行排序，而且这些方法比自连接的方法更容易理解。这里来介绍其中一种方法。</p>
+<ul>
+<li>创建和表 tb 结构相同的表 tb_rank。</li>
+<li>向表 tb_rank 中添加具有自动连续编号功能的列 c_rank。</li>
+<li>对表 tb 执行按列 sales 由高到低排序的 SELECT 子查询</li>
+<li>将子查询的结果 INSERT 到 tb_rank 中。</li>
+</ul>
+<pre class=" language-mysql"><code class="language-mysql">$ CREATE TABLE tb_rank LIKE tb;
+$ ALTER TABLE tb_rank ADD c_rank INT AUTO_INCREMENT PRIMARY KEY;
+$ INSERT INTO tb_rank(empid, sales, month) (SELECT empid,sales, month FROM tb ORDER BY sales DESC);</code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -624,7 +936,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://blog.asiama.top/posts/1a43.html">https://blog.asiama.top/posts/1a43.html</a>
+                    <a href="https://blog.asiama.top/posts/8c42.html">https://blog.asiama.top/posts/8c42.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -834,7 +1146,7 @@
         repo: 'asiama.github.io',
         owner: 'asiama',
         admin: "asiama",
-        id: '2021-01-23T11-22-44',
+        id: '2021-01-26T21-00-05',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -862,13 +1174,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/posts/d16b.html">
+                <a href="/posts/1e3a.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/20.jpg" class="responsive-img" alt="MySQL字符编码设置">
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/10.jpg" class="responsive-img" alt="观察者模式">
                         
-                        <span class="card-title">MySQL字符编码设置</span>
+                        <span class="card-title">观察者模式</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -879,12 +1191,16 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-01-23
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-01-26
                         </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            AsiaMA
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="post-category">
+                                    设计模式
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -892,8 +1208,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/MySQL/">
-                        <span class="chip bg-color">MySQL</span>
+                    <a href="/tags/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/">
+                        <span class="chip bg-color">观察者模式</span>
                     </a>
                     
                 </div>
@@ -907,13 +1223,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/posts/3687.html">
+                <a href="/posts/3065.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/0.jpg" class="responsive-img" alt="Redis管理">
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/1.jpg" class="responsive-img" alt="编辑数据">
                         
-                        <span class="card-title">Redis管理</span>
+                        <span class="card-title">编辑数据</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -924,7 +1240,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-23
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-26
                             </span>
                         <span class="publish-author">
                             
@@ -937,8 +1253,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Redis/">
-                        <span class="chip bg-color">Redis</span>
+                    <a href="/tags/MySQL/">
+                        <span class="chip bg-color">MySQL</span>
                     </a>
                     
                 </div>

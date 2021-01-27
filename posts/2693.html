@@ -432,7 +432,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-01-26
+                    2021-01-27
                 </div>
                 
 
@@ -987,7 +987,8 @@ END     |
 <pre class=" language-mysql"><code class="language-mysql">SELECT 统计列 FROM 表名 GROUP BY 分组列 HAVING 条件;</code></pre>
 <p>用 HAVING 设置的条件适用于分组的结果值。</p>
 <p>设置 “按员工号分组计算总销售额，但仅显示小组总销售额大于等于 200 万元的记录” 的条件。具体来说，就是对于表 tb 中的每一种 empid，显示 “列 sales 的总和大于等于 200” 的列 empid 及列 sales 的总和。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/2021-01-26_15-13-26.png"></p>
+<img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/Snipaste_2021-01-27_11-34-14.png" style="zoom:50%;">
+
 <pre class=" language-mysql"><code class="language-mysql">$ SELECT empid, SUM(sales) FROM tb GROUP BY empid HAVING SUM(sales) >= 200;
 +-------+------------+
 | empid | SUM(sales) |
@@ -1001,7 +1002,7 @@ END     |
 <h3 id="提取纪录后分组"><a href="#提取纪录后分组" class="headerlink" title="提取纪录后分组"></a>提取纪录后分组</h3><p>与 “分组后提取纪录” 相反，下面将介绍 “提取纪录后分组” 的相关内容。例如，仅提取销售额大于等于 1 万元的交易纪录，并以该纪录为对象计算各员工的平均销售额。</p>
 <p>我们需要使用 WHERE 执行分组之前的提取操作。与以往不同的是，使用 GROUP BY 分组的操作要放到最后面。</p>
 <p>下面我们试着仅提取销售额（sales） 大于等于 50 万元的交易纪录，并以该纪录为对象计算各员工的平均销售额。具体来说，就是对与表 tb 的列 sales 中大于等于 50 的纪录，按照列 empid 分组后，显示列 empid 以及各组 sales 的平均值。</p>
-<img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/2021-01-26_15-12-16.png" style="zoom:50%;">
+<img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/Snipaste_2021-01-27_11-37-13.png" style="zoom:40%;">
 
 <p>执行下面的命令：</p>
 <pre class=" language-mysql"><code class="language-mysql">$ SELECT empid, AVG(sales) FROM tb WHERE sales >= 50 GROUP BY empid;
@@ -1563,7 +1564,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">65.6k</span>&nbsp;字
+                class="white-color">75.7k</span>&nbsp;字
             
             
             
