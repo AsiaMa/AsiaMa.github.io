@@ -6,7 +6,7 @@
   <link href="https://blog.asiama.top/atom.xml" rel="self"/>
   
   <link href="https://blog.asiama.top/"/>
-  <updated>2021-01-28T02:25:29.701Z</updated>
+  <updated>2021-01-28T02:28:01.780Z</updated>
   <id>https://blog.asiama.top/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title></title>
-    <link href="https://blog.asiama.top/posts/0.html"/>
-    <id>https://blog.asiama.top/posts/0.html</id>
-    <published>2021-01-27T13:36:56.402Z</published>
-    <updated>2021-01-28T02:25:29.701Z</updated>
+    <title>熟练使用存储过程</title>
+    <link href="https://blog.asiama.top/posts/5d64.html"/>
+    <id>https://blog.asiama.top/posts/5d64.html</id>
+    <published>2021-01-28T02:27:12.000Z</published>
+    <updated>2021-01-28T02:28:01.780Z</updated>
     
     
       
@@ -34,6 +34,8 @@
     
     
     
+    
+    <category term="MySQL" scheme="https://blog.asiama.top/tags/MySQL/"/>
     
   </entry>
   
