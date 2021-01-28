@@ -6,7 +6,7 @@
   <link href="https://blog.asiama.top/atom.xml" rel="self"/>
   
   <link href="https://blog.asiama.top/"/>
-  <updated>2021-01-27T13:35:43.477Z</updated>
+  <updated>2021-01-28T02:25:29.701Z</updated>
   <id>https://blog.asiama.top/</id>
   
   <author>
@@ -17,11 +17,32 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title></title>
+    <link href="https://blog.asiama.top/posts/0.html"/>
+    <id>https://blog.asiama.top/posts/0.html</id>
+    <published>2021-01-27T13:36:56.402Z</published>
+    <updated>2021-01-28T02:25:29.701Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;什么是存储过程&quot;&gt;&lt;a href=&quot;#什么是存储过程&quot; class=&quot;headerlink&quot; title=&quot;什么是存储过程&quot;&gt;&lt;/a&gt;什么是存储过程&lt;/h3&gt;&lt;p&gt;将多个 SQL 语句组合成一个只需要使用命令 “CALL xx” 就能执行的集合，该集合就称为</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
     <title>熟练使用视图</title>
     <link href="https://blog.asiama.top/posts/76dd.html"/>
     <id>https://blog.asiama.top/posts/76dd.html</id>
     <published>2021-01-27T10:26:13.000Z</published>
-    <updated>2021-01-27T13:35:43.477Z</updated>
+    <updated>2021-01-27T13:36:25.827Z</updated>
     
     
       
@@ -448,29 +469,6 @@
         
         
     <summary type="html">&lt;h3 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;headerlink&quot; title=&quot;介绍&quot;&gt;&lt;/a&gt;介绍&lt;/h3&gt;&lt;p&gt;Redis 支持两种方式的持久化，一种是 RDB 方式，另一种是 AOF 方式。前者会根据指定的规则 “定时”</summary>
-        
-      
-    
-    
-    
-    
-    <category term="Redis" scheme="https://blog.asiama.top/tags/Redis/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>使用Redis实现任务队列</title>
-    <link href="https://blog.asiama.top/posts/4c47.html"/>
-    <id>https://blog.asiama.top/posts/4c47.html</id>
-    <published>2021-01-21T13:13:04.000Z</published>
-    <updated>2021-01-21T13:37:08.140Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;普通队列&quot;&gt;&lt;a href=&quot;#普通队列&quot; class=&quot;headerlink&quot; title=&quot;普通队列&quot;&gt;&lt;/a&gt;普通队列&lt;/h3&gt;&lt;p&gt;说到队列很自然就能想到 Redis 的列表类型。如果要实现任务队列，只需要让生产者将任务使用 LPUSH</summary>
         
       
     

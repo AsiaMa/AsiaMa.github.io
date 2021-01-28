@@ -262,6 +262,42 @@
       </tags>
   </entry>
   <entry>
+    <title>Java的不足</title>
+    <url>/posts/26f4.html</url>
+    <content><![CDATA[<h3 id="检查异常"><a href="#检查异常" class="headerlink" title="检查异常"></a>检查异常</h3><p>检查异常会在编译时强制执行try catch处理，同时还需要进行某种排序处理。检查异常是一个失败的实践，几乎所有的主要API提供者都返回可检查异常。Kotlin中摒弃了检查异常。</p>
+<h3 id="基本类型和数组"><a href="#基本类型和数组" class="headerlink" title="基本类型和数组"></a>基本类型和数组</h3><p>Java的这个设计保留了字节码的底层细节，违反了“凡事皆为对象”的原则，如泛型无法包容基本类型就是一个例子。这也使得Java的类型系统显得不是那么地简单统一。比较好的方案是，源代码不用直接使用基本类型和数组，由编译器（或者JVM）来决定是否可以帮你对其优化，而Kotlin正是这么做的。</p>
+<h3 id="静态变量"><a href="#静态变量" class="headerlink" title="静态变量"></a>静态变量</h3><p>静态方法经常会导致需要显式的定义接口，从而使得API更加复杂。一个更好的办法就是采用单例对象，单例对象在大多数情况下表现得与静态对象差不多，但是可以像一个对象被传递。Kotlin中提供了object单例对象。</p>
+<h3 id="空指针异常"><a href="#空指针异常" class="headerlink" title="空指针异常"></a>空指针异常</h3><p>在Java中我们不得不写一堆防御代码来避免令人头疼的NPE。Kotlin中引入可空类型与安全调用符、Elvis操作符等特性来实现空安全。</p>
+<h3 id="一堆getter-setter单调冗长的样板代码"><a href="#一堆getter-setter单调冗长的样板代码" class="headerlink" title="一堆getter/setter单调冗长的样板代码"></a>一堆getter/setter单调冗长的样板代码</h3><p>在Kotlin中，我们可以使用数据类：</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">Person</span><span class="token punctuation">(</span><span class="token keyword">val</span> id<span class="token operator">:</span> Int<span class="token punctuation">,</span> <span class="token keyword">val</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span></code></pre>
+<h3 id="不容易传递函数"><a href="#不容易传递函数" class="headerlink" title="不容易传递函数"></a>不容易传递函数</h3><p>Java中没有一等函数类型，函数式（FP）编程只能通过使用接口类型以及多态特性“曲线”来实现。Java会将每一个算法（方法）都放入类中，这种限制会出现这样的“荒唐事”：我们只想实现一个函数算法，而这个时候必须还要给出一个类来放置这个方法；同样，如果在其它地方调用这个方法，必须通过创建该类来实现调用。在Kotlin中直接提供了一等函数（First-Class Function Type）类型，其跟普通类型一样，函数类型可以作为值来传递，也可以作为返回值。</p>
+<blockquote>
+<p>不可否认的是，C、C++和Java语言都是非常优秀的编程语言。但是事物总是不断发展变化的。就像C++语言是对C语言的继承与发展，Java语言是对C++语言的继承与改造，而Kotlin语言也是对Java语言的继承与变革。</p>
+</blockquote>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Kotin介绍</title>
     <url>/posts/5487.html</url>
     <content><![CDATA[<h3 id="Kotlin的主要特征"><a href="#Kotlin的主要特征" class="headerlink" title="Kotlin的主要特征"></a>Kotlin的主要特征</h3><h4 id="静态类型"><a href="#静态类型" class="headerlink" title="静态类型"></a>静态类型</h4><p>Kotlin和Java一样是一种静态类型的编程语言。这意味着<code>所有表达式的类型在编译器已经确定了，而编译器就能验证对象是否包含了你想访问的方法或者字段</code>。</p>
@@ -304,80 +340,6 @@ b<span class="token operator">?</span><span class="token punctuation">.</span>le
 <span class="token punctuation">}</span></code></pre>
 <h4 id="互操作性"><a href="#互操作性" class="headerlink" title="互操作性"></a>互操作性</h4><p>Kotlin的优势是既有Java的完整生态（Kotlin完全无缝使用各类Java API框架库）,又有现代语言的高级特性（语法糖）。</p>
 <h3 id="编程哲学"><a href="#编程哲学" class="headerlink" title="编程哲学"></a>编程哲学</h3><p>编程的真正问题在于，如何把人类脑子里对问题的解决方案“具化”到机器世界，而这个“具化”过程正是编程语言所要表达的东西。如何富有表现力并且安全简洁的表达，这是所有编程语言所要解决的问题。</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>Kotlin</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Kotlin单例</title>
-    <url>/posts/9fbb.html</url>
-    <content><![CDATA[<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">class</span> Singleton <span class="token keyword">private</span> <span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-
-    <span class="token keyword">companion</span> <span class="token keyword">object</span> <span class="token punctuation">{</span>
-        <span class="token keyword">fun</span> <span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> Singleton <span class="token punctuation">{</span>
-            <span class="token keyword">return</span> Holder<span class="token punctuation">.</span>instance
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">private</span> <span class="token keyword">object</span> Holder <span class="token punctuation">{</span>
-        <span class="token keyword">val</span> instance <span class="token operator">=</span> <span class="token function">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>Kotlin</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java的不足</title>
-    <url>/posts/26f4.html</url>
-    <content><![CDATA[<h3 id="检查异常"><a href="#检查异常" class="headerlink" title="检查异常"></a>检查异常</h3><p>检查异常会在编译时强制执行try catch处理，同时还需要进行某种排序处理。检查异常是一个失败的实践，几乎所有的主要API提供者都返回可检查异常。Kotlin中摒弃了检查异常。</p>
-<h3 id="基本类型和数组"><a href="#基本类型和数组" class="headerlink" title="基本类型和数组"></a>基本类型和数组</h3><p>Java的这个设计保留了字节码的底层细节，违反了“凡事皆为对象”的原则，如泛型无法包容基本类型就是一个例子。这也使得Java的类型系统显得不是那么地简单统一。比较好的方案是，源代码不用直接使用基本类型和数组，由编译器（或者JVM）来决定是否可以帮你对其优化，而Kotlin正是这么做的。</p>
-<h3 id="静态变量"><a href="#静态变量" class="headerlink" title="静态变量"></a>静态变量</h3><p>静态方法经常会导致需要显式的定义接口，从而使得API更加复杂。一个更好的办法就是采用单例对象，单例对象在大多数情况下表现得与静态对象差不多，但是可以像一个对象被传递。Kotlin中提供了object单例对象。</p>
-<h3 id="空指针异常"><a href="#空指针异常" class="headerlink" title="空指针异常"></a>空指针异常</h3><p>在Java中我们不得不写一堆防御代码来避免令人头疼的NPE。Kotlin中引入可空类型与安全调用符、Elvis操作符等特性来实现空安全。</p>
-<h3 id="一堆getter-setter单调冗长的样板代码"><a href="#一堆getter-setter单调冗长的样板代码" class="headerlink" title="一堆getter/setter单调冗长的样板代码"></a>一堆getter/setter单调冗长的样板代码</h3><p>在Kotlin中，我们可以使用数据类：</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">Person</span><span class="token punctuation">(</span><span class="token keyword">val</span> id<span class="token operator">:</span> Int<span class="token punctuation">,</span> <span class="token keyword">val</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span></code></pre>
-<h3 id="不容易传递函数"><a href="#不容易传递函数" class="headerlink" title="不容易传递函数"></a>不容易传递函数</h3><p>Java中没有一等函数类型，函数式（FP）编程只能通过使用接口类型以及多态特性“曲线”来实现。Java会将每一个算法（方法）都放入类中，这种限制会出现这样的“荒唐事”：我们只想实现一个函数算法，而这个时候必须还要给出一个类来放置这个方法；同样，如果在其它地方调用这个方法，必须通过创建该类来实现调用。在Kotlin中直接提供了一等函数（First-Class Function Type）类型，其跟普通类型一样，函数类型可以作为值来传递，也可以作为返回值。</p>
-<blockquote>
-<p>不可否认的是，C、C++和Java语言都是非常优秀的编程语言。但是事物总是不断发展变化的。就像C++语言是对C语言的继承与发展，Java语言是对C++语言的继承与改造，而Kotlin语言也是对Java语言的继承与变革。</p>
-</blockquote>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -476,6 +438,44 @@ b<span class="token operator">?</span><span class="token punctuation">.</span>le
     l1<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
     <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"test2"</span><span class="token punctuation">)</span>
     <span class="token keyword">return</span> l1
+<span class="token punctuation">}</span></code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Kotlin单例</title>
+    <url>/posts/9fbb.html</url>
+    <content><![CDATA[<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">class</span> Singleton <span class="token keyword">private</span> <span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">companion</span> <span class="token keyword">object</span> <span class="token punctuation">{</span>
+        <span class="token keyword">fun</span> <span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> Singleton <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> Holder<span class="token punctuation">.</span>instance
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">object</span> Holder <span class="token punctuation">{</span>
+        <span class="token keyword">val</span> instance <span class="token operator">=</span> <span class="token function">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
@@ -2057,6 +2057,94 @@ OK</code></pre>
       </tags>
   </entry>
   <entry>
+    <title>kotlin如何实现空安全</title>
+    <url>/posts/b698.html</url>
+    <content><![CDATA[<ol>
+<li><p>通过静态代码检查，编译插件检查，在编译器避免空指针异常</p>
+</li>
+<li><p>每次引用对象的时候，都去进行对象判空，在运行期间避免对象空指针</p>
+</li>
+</ol>
+<blockquote>
+<p>将一个对象的两种类型（可以为空的类型与不可以为空的类型）做一个彻底的分离。如果是不可能为空的对象，在编译期会禁止赋一个null值（编译期避免）；如果是有可能为空的对象，那么在对这个对象进行调用的时候，都会进行的非空判断（运行期避免）。</p>
+</blockquote>
+<h3 id="可空对象"><a href="#可空对象" class="headerlink" title="可空对象"></a>可空对象</h3><pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">val</span> a<span class="token operator">:</span> String<span class="token operator">?</span> <span class="token operator">=</span> <span class="token keyword">null</span>
+    <span class="token function">println</span><span class="token punctuation">(</span><span class="token function">getValue</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">fun</span> <span class="token function">getValue</span><span class="token punctuation">(</span>s<span class="token operator">:</span> String<span class="token operator">?</span><span class="token punctuation">)</span><span class="token operator">:</span> String <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token string">"1"</span> <span class="token operator">+</span> s<span class="token operator">?</span><span class="token punctuation">.</span>length
+<span class="token punctuation">}</span></code></pre>
+<p>进行反编译，可以看到kotlin生成的class文件中进行了非空判断。</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">import</span> kotlin<span class="token punctuation">.</span>Metadata<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>jetbrains<span class="token punctuation">.</span>annotations<span class="token punctuation">.</span>NotNull<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>jetbrains<span class="token punctuation">.</span>annotations<span class="token punctuation">.</span>Nullable<span class="token punctuation">;</span>
+
+<span class="token annotation punctuation">@Metadata</span><span class="token punctuation">(</span>mv <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">,</span> bv <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">}</span><span class="token punctuation">,</span> k <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">,</span> d1 <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"\000\020\n\000\n\002\020\016\n\002\b\002\n\002\020\002\n\000\032\020\020\000\032\0020\0012\b\020\002\032\004\030\0010\001\032\006\020\003\032\0020\004\006\005"</span><span class="token punctuation">}</span><span class="token punctuation">,</span> d2 <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"getValue"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"s"</span><span class="token punctuation">,</span> <span class="token string">"main"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"my-kotlin"</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">HelloKt</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    String a <span class="token operator">=</span> <span class="token punctuation">(</span>String<span class="token punctuation">)</span>null<span class="token punctuation">;</span>
+    String str1 <span class="token operator">=</span> <span class="token function">getValue</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>str1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token annotation punctuation">@NotNull</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> String <span class="token function">getValue</span><span class="token punctuation">(</span><span class="token annotation punctuation">@Nullable</span> String s<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token string">"1"</span> <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>s <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token punctuation">(</span>String<span class="token punctuation">)</span>Integer<span class="token punctuation">.</span><span class="token function">valueOf</span><span class="token punctuation">(</span>s<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">:</span> null<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<h3 id="不可空对象"><a href="#不可空对象" class="headerlink" title="不可空对象"></a>不可空对象</h3><pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">val</span> a<span class="token operator">:</span> String <span class="token operator">=</span> <span class="token string">"abc"</span>
+    <span class="token function">println</span><span class="token punctuation">(</span><span class="token function">getValue</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">fun</span> <span class="token function">getValue</span><span class="token punctuation">(</span>s<span class="token operator">:</span> String<span class="token punctuation">)</span><span class="token operator">:</span> String <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token string">"1"</span> <span class="token operator">+</span> s<span class="token punctuation">.</span>length
+<span class="token punctuation">}</span></code></pre>
+<p>进行反编译，可以看到kotlin生成的class文件中直接进行了断言（断言对象不会为null）</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">import</span> kotlin<span class="token punctuation">.</span>Metadata<span class="token punctuation">;</span>
+<span class="token keyword">import</span> kotlin<span class="token punctuation">.</span>jvm<span class="token punctuation">.</span>internal<span class="token punctuation">.</span>Intrinsics<span class="token punctuation">;</span>
+<span class="token keyword">import</span> org<span class="token punctuation">.</span>jetbrains<span class="token punctuation">.</span>annotations<span class="token punctuation">.</span>NotNull<span class="token punctuation">;</span>
+
+<span class="token annotation punctuation">@Metadata</span><span class="token punctuation">(</span>mv <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">,</span> bv <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">}</span><span class="token punctuation">,</span> k <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">,</span> d1 <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"\000\020\n\000\n\002\020\016\n\002\b\002\n\002\020\002\n\000\032\016\020\000\032\0020\0012\006\020\002\032\0020\001\032\006\020\003\032\0020\004\006\005"</span><span class="token punctuation">}</span><span class="token punctuation">,</span> d2 <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"getValue"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"s"</span><span class="token punctuation">,</span> <span class="token string">"main"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"my-kotlin"</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">HelloKt</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    String a <span class="token operator">=</span> <span class="token string">"abc"</span><span class="token punctuation">;</span>
+    String str1 <span class="token operator">=</span> <span class="token function">getValue</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>str1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token annotation punctuation">@NotNull</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> String <span class="token function">getValue</span><span class="token punctuation">(</span><span class="token annotation punctuation">@NotNull</span> String s<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    Intrinsics<span class="token punctuation">.</span><span class="token function">checkNotNullParameter</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> <span class="token string">"s"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token string">"1"</span> <span class="token operator">+</span> s<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Stream中flatmap使用</title>
     <url>/posts/9fb2.html</url>
     <content><![CDATA[<h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><h4 id="我的理解"><a href="#我的理解" class="headerlink" title="我的理解"></a>我的理解</h4><p>map：map方法返回的是一个object，map将流中的当前元素替换为此返回值；</p>
@@ -2289,94 +2377,6 @@ System<span class="token punctuation">.</span>out<span class="token punctuation"
       </tags>
   </entry>
   <entry>
-    <title>kotlin如何实现空安全</title>
-    <url>/posts/b698.html</url>
-    <content><![CDATA[<ol>
-<li><p>通过静态代码检查，编译插件检查，在编译器避免空指针异常</p>
-</li>
-<li><p>每次引用对象的时候，都去进行对象判空，在运行期间避免对象空指针</p>
-</li>
-</ol>
-<blockquote>
-<p>将一个对象的两种类型（可以为空的类型与不可以为空的类型）做一个彻底的分离。如果是不可能为空的对象，在编译期会禁止赋一个null值（编译期避免）；如果是有可能为空的对象，那么在对这个对象进行调用的时候，都会进行的非空判断（运行期避免）。</p>
-</blockquote>
-<h3 id="可空对象"><a href="#可空对象" class="headerlink" title="可空对象"></a>可空对象</h3><pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">val</span> a<span class="token operator">:</span> String<span class="token operator">?</span> <span class="token operator">=</span> <span class="token keyword">null</span>
-    <span class="token function">println</span><span class="token punctuation">(</span><span class="token function">getValue</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">fun</span> <span class="token function">getValue</span><span class="token punctuation">(</span>s<span class="token operator">:</span> String<span class="token operator">?</span><span class="token punctuation">)</span><span class="token operator">:</span> String <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> <span class="token string">"1"</span> <span class="token operator">+</span> s<span class="token operator">?</span><span class="token punctuation">.</span>length
-<span class="token punctuation">}</span></code></pre>
-<p>进行反编译，可以看到kotlin生成的class文件中进行了非空判断。</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">import</span> kotlin<span class="token punctuation">.</span>Metadata<span class="token punctuation">;</span>
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>jetbrains<span class="token punctuation">.</span>annotations<span class="token punctuation">.</span>NotNull<span class="token punctuation">;</span>
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>jetbrains<span class="token punctuation">.</span>annotations<span class="token punctuation">.</span>Nullable<span class="token punctuation">;</span>
-
-<span class="token annotation punctuation">@Metadata</span><span class="token punctuation">(</span>mv <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">,</span> bv <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">}</span><span class="token punctuation">,</span> k <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">,</span> d1 <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"\000\020\n\000\n\002\020\016\n\002\b\002\n\002\020\002\n\000\032\020\020\000\032\0020\0012\b\020\002\032\004\030\0010\001\032\006\020\003\032\0020\004\006\005"</span><span class="token punctuation">}</span><span class="token punctuation">,</span> d2 <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"getValue"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"s"</span><span class="token punctuation">,</span> <span class="token string">"main"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"my-kotlin"</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
-<span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">HelloKt</span> <span class="token punctuation">{</span>
-  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    String a <span class="token operator">=</span> <span class="token punctuation">(</span>String<span class="token punctuation">)</span>null<span class="token punctuation">;</span>
-    String str1 <span class="token operator">=</span> <span class="token function">getValue</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>str1<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-
-  <span class="token annotation punctuation">@NotNull</span>
-  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> String <span class="token function">getValue</span><span class="token punctuation">(</span><span class="token annotation punctuation">@Nullable</span> String s<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> <span class="token string">"1"</span> <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>s <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token punctuation">(</span>String<span class="token punctuation">)</span>Integer<span class="token punctuation">.</span><span class="token function">valueOf</span><span class="token punctuation">(</span>s<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">:</span> null<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
-<h3 id="不可空对象"><a href="#不可空对象" class="headerlink" title="不可空对象"></a>不可空对象</h3><pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">val</span> a<span class="token operator">:</span> String <span class="token operator">=</span> <span class="token string">"abc"</span>
-    <span class="token function">println</span><span class="token punctuation">(</span><span class="token function">getValue</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">fun</span> <span class="token function">getValue</span><span class="token punctuation">(</span>s<span class="token operator">:</span> String<span class="token punctuation">)</span><span class="token operator">:</span> String <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> <span class="token string">"1"</span> <span class="token operator">+</span> s<span class="token punctuation">.</span>length
-<span class="token punctuation">}</span></code></pre>
-<p>进行反编译，可以看到kotlin生成的class文件中直接进行了断言（断言对象不会为null）</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">import</span> kotlin<span class="token punctuation">.</span>Metadata<span class="token punctuation">;</span>
-<span class="token keyword">import</span> kotlin<span class="token punctuation">.</span>jvm<span class="token punctuation">.</span>internal<span class="token punctuation">.</span>Intrinsics<span class="token punctuation">;</span>
-<span class="token keyword">import</span> org<span class="token punctuation">.</span>jetbrains<span class="token punctuation">.</span>annotations<span class="token punctuation">.</span>NotNull<span class="token punctuation">;</span>
-
-<span class="token annotation punctuation">@Metadata</span><span class="token punctuation">(</span>mv <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">,</span> bv <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">}</span><span class="token punctuation">,</span> k <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">,</span> d1 <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"\000\020\n\000\n\002\020\016\n\002\b\002\n\002\020\002\n\000\032\016\020\000\032\0020\0012\006\020\002\032\0020\001\032\006\020\003\032\0020\004\006\005"</span><span class="token punctuation">}</span><span class="token punctuation">,</span> d2 <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"getValue"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"s"</span><span class="token punctuation">,</span> <span class="token string">"main"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"my-kotlin"</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
-<span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">HelloKt</span> <span class="token punctuation">{</span>
-  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    String a <span class="token operator">=</span> <span class="token string">"abc"</span><span class="token punctuation">;</span>
-    String str1 <span class="token operator">=</span> <span class="token function">getValue</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>str1<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-
-  <span class="token annotation punctuation">@NotNull</span>
-  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> String <span class="token function">getValue</span><span class="token punctuation">(</span><span class="token annotation punctuation">@NotNull</span> String s<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    Intrinsics<span class="token punctuation">.</span><span class="token function">checkNotNullParameter</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> <span class="token string">"s"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token string">"1"</span> <span class="token operator">+</span> s<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>Kotlin</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>kotlin泛型</title>
     <url>/posts/3e59.html</url>
     <content><![CDATA[<p>通过<code>where</code>关键字，对泛型参数限定满足所有条件</p>
@@ -2542,6 +2542,121 @@ object Perfect<span class="token punctuation">{</span>
       </tags>
   </entry>
   <entry>
+    <title>使用Docker安装YApi</title>
+    <url>/posts/b5f9.html</url>
+    <content><![CDATA[<h3 id="启动MongoDB"><a href="#启动MongoDB" class="headerlink" title="启动MongoDB"></a>启动MongoDB</h3><ol>
+<li>默认安装mongo</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">docker run -d --name mongo-yapi mongo</code></pre>
+<ol start="2">
+<li>挂载宿主目录安装mongo</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 创建挂载目录</span>
+<span class="token function">mkdir</span> -p /data/yapi/mongodata </code></pre>
+<ol start="3">
+<li>运行mongo映射主机目录/data/yapi/mongodata</li>
+</ol>
+<pre><code>docker run --restart always -v /data/yapi/mongodata:/data/db  -d --name mongo-yapi mongo</code></pre>
+<h3 id="获取YApi镜像"><a href="#获取YApi镜像" class="headerlink" title="获取YApi镜像"></a>获取YApi镜像</h3><ol>
+<li>从阿里云镜像仓库拉取</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">docker pull registry.cn-hangzhou.aliyuncs.com/anoy/yapi</code></pre>
+<ol start="2">
+<li>初始化 Yapi 数据库索引及管理员账号</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">docker run -it --rm --link mongo-yapi:mongo   --entrypoint <span class="token function">npm</span>  --workdir /api/vendors  registry.cn-hangzhou.aliyuncs.com/anoy/yapi   run install-server</code></pre>
+<blockquote>
+<p>自定义配置文件挂载到目录 <code>/api/config.json</code>，官方自定义配置文件 -&gt; <a href="https://github.com/YMFE/yapi/blob/master/config_example.json">传送门</a></p>
+</blockquote>
+<ol start="3">
+<li>启动 Yapi 服务</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">docker run -d   --name yapi  --link mongo-yapi:mongo  --workdir /api/vendors   -p 3000:3000   registry.cn-hangzhou.aliyuncs.com/anoy/yapi   server/app.js</code></pre>
+<h3 id="使用YApi"><a href="#使用YApi" class="headerlink" title="使用YApi"></a>使用YApi</h3><p>访问 <code>http://localhost:3000</code> 登录账号 <code>admin@admin.com</code>，密码 <code>ymfe.org</code></p>
+<p>至此，帅气的 Yapi 就可以轻松使用啦！</p>
+<h3 id="其它相关操作"><a href="#其它相关操作" class="headerlink" title="其它相关操作"></a>其它相关操作</h3><ol>
+<li>关闭yapi</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">docker stop yapi</code></pre>
+<ol start="2">
+<li>开启yapi</li>
+</ol>
+<pre><code>docker start yapi</code></pre>
+<ol start="3">
+<li>升级yapi</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 1、停止并删除旧版容器</span>
+docker <span class="token function">rm</span> -f yapi
+
+<span class="token comment" spellcheck="true"># 2、获取最新镜像</span>
+docker pull registry.cn-hangzhou.aliyuncs.com/anoy/yapi
+
+<span class="token comment" spellcheck="true"># 3、启动新容器</span>
+docker run -d  --name yapi  --link mongo-yapi:mongo  --workdir /api/vendors  -p 3000:3000   registry.cn-hangzhou.aliyuncs.com/anoy/yapi   server/app.js</code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>YApi</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用Git之前需要做的最小配置</title>
+    <url>/posts/5174.html</url>
+    <content><![CDATA[<h3 id="配置user-name-和-user-email"><a href="#配置user-name-和-user-email" class="headerlink" title="配置user.name 和 user.email"></a>配置user.name 和 user.email</h3><p>全局配置「对当前用户所有仓库有效」</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --global user.name <span class="token string">"your_name"</span>
+$ <span class="token function">git</span> config --global user.email <span class="token string">"your_email"</span></code></pre>
+<p>缺省等同于local「只对某个仓库有效」</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --local user.name <span class="token string">"your_name"</span>
+$ <span class="token function">git</span> config --local user.email <span class="token string">"your_email"</span></code></pre>
+<p>系统配置「对系统所有登录的用户有效」</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --system user.name <span class="token string">"your_name"</span>
+$ <span class="token function">git</span> config --system user.email <span class="token string">"your_email"</span></code></pre>
+<h3 id="显示config的配置"><a href="#显示config的配置" class="headerlink" title="显示config的配置"></a>显示config的配置</h3><pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --list --local
+$ <span class="token function">git</span> config --list --global
+$ <span class="token function">git</span> config --list --system</code></pre>
+<h3 id="查看某一个属性"><a href="#查看某一个属性" class="headerlink" title="查看某一个属性"></a>查看某一个属性</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --global user.name</code></pre>
+<h3 id="移除设置"><a href="#移除设置" class="headerlink" title="移除设置"></a>移除设置</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --unset --global user.email</code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用Redis实现任务队列</title>
     <url>/posts/4c47.html</url>
     <content><![CDATA[<h3 id="普通队列"><a href="#普通队列" class="headerlink" title="普通队列"></a>普通队列</h3><p>说到队列很自然就能想到 Redis 的列表类型。如果要实现任务队列，只需要让生产者将任务使用 LPUSH 命令加入到某个键中，另一边让消费者不断地使用 RPOP 命令从该键中取出任务即可。</p>
@@ -2624,121 +2739,6 @@ $ RPUSH queue:3 task2
       </script>]]></content>
       <tags>
         <tag>Redis</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用Git之前需要做的最小配置</title>
-    <url>/posts/5174.html</url>
-    <content><![CDATA[<h3 id="配置user-name-和-user-email"><a href="#配置user-name-和-user-email" class="headerlink" title="配置user.name 和 user.email"></a>配置user.name 和 user.email</h3><p>全局配置「对当前用户所有仓库有效」</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --global user.name <span class="token string">"your_name"</span>
-$ <span class="token function">git</span> config --global user.email <span class="token string">"your_email"</span></code></pre>
-<p>缺省等同于local「只对某个仓库有效」</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --local user.name <span class="token string">"your_name"</span>
-$ <span class="token function">git</span> config --local user.email <span class="token string">"your_email"</span></code></pre>
-<p>系统配置「对系统所有登录的用户有效」</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --system user.name <span class="token string">"your_name"</span>
-$ <span class="token function">git</span> config --system user.email <span class="token string">"your_email"</span></code></pre>
-<h3 id="显示config的配置"><a href="#显示config的配置" class="headerlink" title="显示config的配置"></a>显示config的配置</h3><pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --list --local
-$ <span class="token function">git</span> config --list --global
-$ <span class="token function">git</span> config --list --system</code></pre>
-<h3 id="查看某一个属性"><a href="#查看某一个属性" class="headerlink" title="查看某一个属性"></a>查看某一个属性</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --global user.name</code></pre>
-<h3 id="移除设置"><a href="#移除设置" class="headerlink" title="移除设置"></a>移除设置</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --unset --global user.email</code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用Docker安装YApi</title>
-    <url>/posts/b5f9.html</url>
-    <content><![CDATA[<h3 id="启动MongoDB"><a href="#启动MongoDB" class="headerlink" title="启动MongoDB"></a>启动MongoDB</h3><ol>
-<li>默认安装mongo</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash">docker run -d --name mongo-yapi mongo</code></pre>
-<ol start="2">
-<li>挂载宿主目录安装mongo</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 创建挂载目录</span>
-<span class="token function">mkdir</span> -p /data/yapi/mongodata </code></pre>
-<ol start="3">
-<li>运行mongo映射主机目录/data/yapi/mongodata</li>
-</ol>
-<pre><code>docker run --restart always -v /data/yapi/mongodata:/data/db  -d --name mongo-yapi mongo</code></pre>
-<h3 id="获取YApi镜像"><a href="#获取YApi镜像" class="headerlink" title="获取YApi镜像"></a>获取YApi镜像</h3><ol>
-<li>从阿里云镜像仓库拉取</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash">docker pull registry.cn-hangzhou.aliyuncs.com/anoy/yapi</code></pre>
-<ol start="2">
-<li>初始化 Yapi 数据库索引及管理员账号</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash">docker run -it --rm --link mongo-yapi:mongo   --entrypoint <span class="token function">npm</span>  --workdir /api/vendors  registry.cn-hangzhou.aliyuncs.com/anoy/yapi   run install-server</code></pre>
-<blockquote>
-<p>自定义配置文件挂载到目录 <code>/api/config.json</code>，官方自定义配置文件 -&gt; <a href="https://github.com/YMFE/yapi/blob/master/config_example.json">传送门</a></p>
-</blockquote>
-<ol start="3">
-<li>启动 Yapi 服务</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash">docker run -d   --name yapi  --link mongo-yapi:mongo  --workdir /api/vendors   -p 3000:3000   registry.cn-hangzhou.aliyuncs.com/anoy/yapi   server/app.js</code></pre>
-<h3 id="使用YApi"><a href="#使用YApi" class="headerlink" title="使用YApi"></a>使用YApi</h3><p>访问 <code>http://localhost:3000</code> 登录账号 <code>admin@admin.com</code>，密码 <code>ymfe.org</code></p>
-<p>至此，帅气的 Yapi 就可以轻松使用啦！</p>
-<h3 id="其它相关操作"><a href="#其它相关操作" class="headerlink" title="其它相关操作"></a>其它相关操作</h3><ol>
-<li>关闭yapi</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash">docker stop yapi</code></pre>
-<ol start="2">
-<li>开启yapi</li>
-</ol>
-<pre><code>docker start yapi</code></pre>
-<ol start="3">
-<li>升级yapi</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 1、停止并删除旧版容器</span>
-docker <span class="token function">rm</span> -f yapi
-
-<span class="token comment" spellcheck="true"># 2、获取最新镜像</span>
-docker pull registry.cn-hangzhou.aliyuncs.com/anoy/yapi
-
-<span class="token comment" spellcheck="true"># 3、启动新容器</span>
-docker run -d  --name yapi  --link mongo-yapi:mongo  --workdir /api/vendors  -p 3000:3000   registry.cn-hangzhou.aliyuncs.com/anoy/yapi   server/app.js</code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>YApi</tag>
       </tags>
   </entry>
   <entry>
@@ -3675,287 +3675,279 @@ $mysql db1 -u root -p123456 -e "SELECT * FROM tb1"</code></pre>
       </tags>
   </entry>
   <entry>
-    <title>探讨复杂的 if-else 语句“优雅处理”的思路</title>
-    <url>/posts/afc9.html</url>
-    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在实际开发中，往往不是简单 if-else 结构，我们通常会不经意间写下如下代码：</p>
-<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// -------------------- 理想中的 if-else  --------------------</span>
-<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">today</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isWeekend</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"玩游戏"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"上班!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">// -------------------- 现实中的 if-else  --------------------</span>
-<span class="token keyword">if</span> <span class="token punctuation">(</span>money <span class="token operator">>=</span> <span class="token number">1000</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>type <span class="token operator">==</span> UserType<span class="token punctuation">.</span>SILVER_VIP<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <title></title>
+    <url>/posts/0.html</url>
+    <content><![CDATA[<h3 id="什么是存储过程"><a href="#什么是存储过程" class="headerlink" title="什么是存储过程"></a>什么是存储过程</h3><p>将多个 SQL 语句组合成一个只需要使用命令 “CALL xx” 就能执行的集合，该集合就称为 <strong>存储过程（stored procedure）</strong>。“存储（store）表示保存，“过程” 表示步骤。也就是说，存储过程是将一系列步骤归纳并存储起来的集合。</p>
+<img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/Snipaste_2021-01-27_21-42-17.png" style="zoom:50%;">
 
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"白银会员 优惠50元"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        result <span class="token operator">=</span> money <span class="token operator">-</span> <span class="token number">50</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>type <span class="token operator">==</span> UserType<span class="token punctuation">.</span>GOLD_VIP<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<p>由于可以自动执行许多实现准备好的命令，所以处理效率很高。但是，在存储了重要数据的数据库中，执行没有经过充分验证的存储过程是非常危险的，这一点需要牢记。</p>
+<p>存储过程乍一看让人觉得难以理解，但只要学会了它的使用方法，用起来就非常方便。</p>
+<h3 id="使用存储过程"><a href="#使用存储过程" class="headerlink" title="使用存储过程"></a>使用存储过程</h3><p>当创建存储过程时，我们需要像下面这样执行 CREATE PROCEDURE 命令。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ CREATE PROCEDURE 存储过程名
+    BEGIN
+        SQL 语句1
+        SQL 语句2
+    END</code></pre>
+<p>从 BEGIN 到 END 为止的内容是存储过程的主体。</p>
+<p>在开头加上 BEGIN，在结尾加上 END，这么做可以明确表示 “这这里到这里是存储过程的命令”。</p>
+<p>因为存储过程的内容是 “普通的 SQL 语句”，所以需要在命令的末尾添加分隔符 “;”。主体部分像下面这样：</p>
+<pre class=" language-mysql"><code class="language-mysql">BEGIN
+SELECT * FROM tb;
+SELECT * FROM tb1;
+END</code></pre>
+<h4 id="修改分隔符的设置"><a href="#修改分隔符的设置" class="headerlink" title="修改分隔符的设置"></a>修改分隔符的设置</h4><pre class=" language-mysql"><code class="language-mysql">$ delimiter //</code></pre>
+<p>执行下面的命令：</p>
+<pre class=" language-mysql"><code class="language-mysql">$ delimiter //
+$ CREATE PROCEDURE pr1()
+    BEGIN
+    SELECT * FROM tb;
+    SELECT * FROM tb1;
+    END
+    //
+$ delimiter ;</code></pre>
+<h4 id="执行存储过程"><a href="#执行存储过程" class="headerlink" title="执行存储过程"></a>执行存储过程</h4><pre class=" language-mysql"><code class="language-mysql">$ CALL pr1();
++-------+-------------------+------+
+| empid | name              | age  |
++-------+-------------------+------+
+| A101  | 主任·佐腾         |   40 |
+| A102  | 高桥              |   28 |
+| A103  | 中川              |   20 |
+| A104  | 渡边              |   23 |
+| A105  | 西泽              |   35 |
+| NULL  | 临时工·石田       |   18 |
++-------+-------------------+------+
+6 rows in set (0.01 sec)
 
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"黄金会员 8折"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        result <span class="token operator">=</span> money <span class="token operator">*</span> <span class="token number">0.8</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>type <span class="token operator">==</span> UserType<span class="token punctuation">.</span>PLATINUM_VIP<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
++--------------+-------+-------+
+| empid        | sales | month |
++--------------+-------+-------+
+| A103         |   101 |     4 |
+| A102         |    54 |     5 |
+| A104         |   181 |     4 |
+| A101         |   184 |     4 |
+| A103         |    17 |     5 |
+| A101         |   300 |     5 |
+| A102         |   205 |     6 |
+| A104         |    93 |     5 |
+| A103         |    12 |     6 |
+| A107         |    87 |     6 |
+| 恶意刁难     |    50 |  NULL |
+| 恶意刁难     |    50 |  NULL |
++--------------+-------+-------+
+12 rows in set (0.01 sec)
 
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"白金会员 优惠50元，再打7折"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        result <span class="token operator">=</span> <span class="token punctuation">(</span>money <span class="token operator">-</span> <span class="token number">50</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">0.7</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"普通会员 不打折"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        result <span class="token operator">=</span> money<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">//省略 n 个 if-else ......</span></code></pre>
-<p>毫不夸张的说，我们都写过类似的代码，回想起被 if-else 支配的恐惧，我们常常无所下手，甚至不了了之。</p>
-<p>下面分享一下我遇到复杂的 if-else 语句“优雅处理”思路。如有不妥，欢迎大家一起交流学习。</p>
-<h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><p>假设有这么一个需求：</p>
-<p>一个电商系统，当用户消费满1000 金额，可以根据用户VIP等级，享受打折优惠。根据用户VIP等级，计算出用户最终的费用。</p>
+Query OK, 0 rows affected (0.01 sec)</code></pre>
+<h4 id="创建只显示大于等于指定值的记录的存储过程"><a href="#创建只显示大于等于指定值的记录的存储过程" class="headerlink" title="创建只显示大于等于指定值的记录的存储过程"></a>创建只显示大于等于指定值的记录的存储过程</h4><pre class=" language-mysql"><code class="language-mysql">$ CREATE PROCEDURE 存储过程名 (参数名 数据类型);</code></pre>
+<p>这里，我们来创建一个 “显示销售额大于等于指定值的记录” 的基本存储过程。</p>
+<p>例如，当向存储过程 pr 中指定整数类型参数 d 时，存储过程就可以编写 PROCEDURE pr(d INT)。参数 d 在 SQL 语句中的编写方式与数值相同。</p>
 <ul>
-<li>普通会员 不打折</li>
-<li>白银会员 优惠50元</li>
-<li>黄金会员 8折</li>
-<li>白金会员 优惠50元，再打7折</li>
+<li>显示表 tb 中 sales 大于等于参数 d 的记录</li>
 </ul>
-<h3 id="编码实现"><a href="#编码实现" class="headerlink" title="编码实现"></a>编码实现</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">double</span> <span class="token function">getResult</span><span class="token punctuation">(</span><span class="token keyword">long</span> money<span class="token punctuation">,</span> <span class="token keyword">int</span> type<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT * FROM tb WHERE sales >= d;</code></pre>
+<p>下面试着创建存储过程 pr2。如果指定整数类型的参数 d 的值执行该存储过程，表 tb 中销售额大于等于 d 的记录就会显示出来。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ delimiter //
+$ CREATE PROCEDURE pr2(d INT)
+    BEGIN
+    SELECT * FROM tb WHERE sales >= d
+    END
+    //
+$ delimiter ;</code></pre>
+<p>下面我们试着把数值 200 指定为参数来执行存储过程 pr2。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ CALL pr2(200);
++-------+-------+-------+
+| empid | sales | month |
++-------+-------+-------+
+| A101  |   300 |     5 |
+| A102  |   205 |     6 |
++-------+-------+-------+
+2 rows in set (0.01 sec)
 
-    <span class="token keyword">double</span> result <span class="token operator">=</span> money<span class="token punctuation">;</span>
-
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>money <span class="token operator">>=</span> <span class="token number">1000</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>type <span class="token operator">==</span> UserType<span class="token punctuation">.</span>SILVER_VIP<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-
-            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"白银会员 优惠50元"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            result <span class="token operator">=</span> money <span class="token operator">-</span> <span class="token number">50</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>type <span class="token operator">==</span> UserType<span class="token punctuation">.</span>GOLD_VIP<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-
-            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"黄金会员 8折"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            result <span class="token operator">=</span> money <span class="token operator">*</span> <span class="token number">0.8</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>type <span class="token operator">==</span> UserType<span class="token punctuation">.</span>PLATINUM_VIP<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-
-            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"白金会员 优惠50元，再打7折"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            result <span class="token operator">=</span> <span class="token punctuation">(</span>money <span class="token operator">-</span> <span class="token number">50</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">0.7</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
-            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"普通会员 不打折"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            result <span class="token operator">=</span> money<span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">return</span> result<span class="token punctuation">;</span>
-<span class="token punctuation">}</span></code></pre>
-<p>为了方便演示，代码上我进行了简单实现，但实际上 if - else 会进行复杂的逻辑计费。从功能上来说，基本完成，但是对于我这种有代码洁癖的人来说，代码质量上不忍直视。我们开始着手 优化一下我们的第一版代码吧。</p>
-<h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><p>看到如上代码，聪明的朋友首先想到的是，这不是典型的策略模式吗？</p>
-<p>你可真是个机灵鬼，我们先尝试用策略模式来优化一下代码吧。</p>
-<h3 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h3><blockquote>
-<p>可能有的朋友还不清楚，什么是策略模式。策略模式是定义一系列的算法,把它们一个个封装起来, 并且使它们可相互替换。</p>
-<p>比如上述需求，有返利、有打折、有折上折等等。这些算法本身就是一种策略。并且这些算法可以相互替换的，比如今天我想让 白银会员优惠50，明天可以替换为 白银会员打9折。</p>
-<p>说了那么多，不如编码来得实在。</p>
+Query OK, 0 rows affected (0.01 sec)</code></pre>
+<blockquote>
+<p><strong>在参数中加上 IN 的例子</strong></p>
+<p>在参数的前面加上 IN 也会得到相同的结果 （IN d INT）。相反，如果想将处理结果传给参数，则需要加上 OUT。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ delimiter //
+$ CREATE PROCEDURE pr2(IN d INT)
+    BEGIN
+    SELECT * FROM tb WHERE sales >= d
+    END
+    //
+$ delimiter ;</code></pre>
 </blockquote>
-<h3 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Strategy</span> <span class="token punctuation">{</span>
+<h3 id="显示、删除存储过程"><a href="#显示、删除存储过程" class="headerlink" title="显示、删除存储过程"></a>显示、删除存储过程</h3><pre class=" language-mysql"><code class="language-mysql">$ SHOW CREATE PROCEDURE 存储过程名;
 
-    <span class="token comment" spellcheck="true">// 计费方法</span>
-    <span class="token keyword">double</span> <span class="token function">compute</span><span class="token punctuation">(</span><span class="token keyword">long</span> money<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+$ SHOW CREATE PROCEDURE pr2;
++-----------+-----------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------+----------------------+----------------------+--------------------+
+| Procedure | sql_mode                                                                                                              | Create Procedure                                                                              | character_set_client | collation_connection | Database Collation |
++-----------+-----------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------+----------------------+----------------------+--------------------+
+| pr2       | ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION | CREATE DEFINER=`root`@`%` PROCEDURE `pr2`(d INT)
+BEGIN
+SELECT * FROM tb WHERE sales >= d;
+END | utf8mb4              | utf8mb4_0900_ai_ci   | utf8mb4_0900_ai_ci |
++-----------+-----------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------+----------------------+----------------------+--------------------+
+1 row in set (0.00 sec)</code></pre>
+<h4 id="删除存储过程"><a href="#删除存储过程" class="headerlink" title="删除存储过程"></a>删除存储过程</h4><pre class=" language-mysql"><code class="language-mysql">$ DROP PROCEDURE 存储过程名;</code></pre>
+<h3 id="什么是存储函数"><a href="#什么是存储函数" class="headerlink" title="什么是存储函数"></a>什么是存储函数</h3><p><strong>存储函数（stored function）</strong> 的思考方式和操作方法与存储过程基本相同。与存储过程唯一不同的一点是，存储函数在执行后会返回一个值。</p>
+<img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/Snipaste_2021-01-27_22-18-32.png" style="zoom:67%;">
 
-<span class="token comment" spellcheck="true">// 普通会员策略</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">OrdinaryStrategy</span> <span class="token keyword">implements</span> <span class="token class-name">Strategy</span> <span class="token punctuation">{</span>
+<p>正如它的名字所表达的那样，存储函数可以作为函数工作。MySQL 中有许多函数，但使用存储函数可以创建自定义的函数。所以存储函数也称为<strong>用户自定义函数</strong>。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ CREATE FUNCTION 存储函数名(参数 数据类型) RETURNS 返回值的数据类型
+    BEGIN
+            SQL 语句 ...
+            RETURN 返回值·表达式
+  END</code></pre>
+<p>和存储过程一样，我们可以在 （）内指定参数。即使没有指定参数，也必须加上（）。例如，当创建了名为 fu 的存储函数时，fu() 本身将返回存储函数中 RETURN xx 的 xx 部分。</p>
+<h3 id="使用存储函数"><a href="#使用存储函数" class="headerlink" title="使用存储函数"></a>使用存储函数</h3><p>存储函数有可能对复制 和 数据的恢复产生影响。因此，参数 log_bin_trust_function_creators 的初始值被设置为 0，这样就不能使用存储函数了。要想使用存储函数，就需要执行下面的操作修改此设置。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SET GLOBAL log_bin_trust_function_creators = 1;
+# 确认设置是否已正确修改
+$ SHOW VARIABLES LIKE 'log_bin_trust_function_creators';</code></pre>
+<p>如果 log_bin_trust_function_creators 被设置成了 ON，就可以使用存储函数。另外使用存储函数还需要相应的权限。大家使用的 root 用户已经包含了这个权限（Super 权限），但是普通用户就需要额外添加权限了。</p>
+<h4 id="使用存储函数计算标准体重"><a href="#使用存储函数计算标准体重" class="headerlink" title="使用存储函数计算标准体重"></a>使用存储函数计算标准体重</h4><ul>
+<li>标准体重 = 身高(cm) x 身高(cm) x 22/10000</li>
+</ul>
+<pre class=" language-mysql"><code class="language-mysql">$ delimiter //
+$ CREATE FUNCTION fu1(height INT) RETURNS DOUBLE
+    BEGIN
+    RETURN height * height * 22/10000; #这里一定要有分号
+    END
+    //
+$ delimiter ;</code></pre>
+<p>执行下面的命令</p>
+<pre class=" language-mysql"><code class="language-mysql">SELECT fu1(174);
++----------+
+| fu1(174) |
++----------+
+|  66.6072 |
++----------+
+1 row in set (0.00 sec)</code></pre>
+<h4 id="返回记录平均值的存储函数"><a href="#返回记录平均值的存储函数" class="headerlink" title="返回记录平均值的存储函数"></a>返回记录平均值的存储函数</h4><pre class=" language-mysql"><code class="language-mysql">$ CREATE FUNCTION fu2() RETURNS DOUBLE
+    BEGIN
+    DECLARE r DOUBLE;
+    SELECT AVG(sales) INTO r FROM tb;
+    RETURN r;
+    END</code></pre>
+<p>平均值需要通过 SELECT AVG 来计算。这个值必须赋给变量。我们可以把变量理解为 “保管值的箱子”。要想使用变量，就需要通过 DECLARE 定义变量。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ DECLARE 变量名 变量类型</code></pre>
+<p>我们把变量名设置成了 r 。平均值会输入到变量 r 中。为了能够处理小数部分，我们数据类型指定为 DOUBLE 类型。下面的 SQL 语句用于从表 tb 中提取列 sales 的平均值。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT AVG(sales) FROM tb;</code></pre>
+<p>把 AVG(sales) 赋给 DECLARE 中定义的变量 r 时需要使用 INTO。于是 SQL 语句就变成了</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT AVG(sales) INTO r FROM tb;</code></pre>
+<p>这样，平均值就输入了变量 r 中。我们可以使用 RETURN 让这个平均值作为存储函数的值返回。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT fu2();
++---------------+
+| fu2()         |
++---------------+
+| 111.166666666 |
++---------------+
+1 row in set (0.01 sec)</code></pre>
+<h3 id="显示和删除存储函数"><a href="#显示和删除存储函数" class="headerlink" title="显示和删除存储函数"></a>显示和删除存储函数</h3><pre class=" language-mysql"><code class="language-mysql"># 删除存储函数
+$ DROP FUNCTION 存储函数名;
+# 显示存储函数
+$ SHOW CREATE FUNCTION 存储函数名;</code></pre>
+<h3 id="什么是触发器"><a href="#什么是触发器" class="headerlink" title="什么是触发器"></a>什么是触发器</h3><p><strong>触发器( trigger )</strong> 是一种对表执行某种操作后会出发执行其它命令的机制。</p>
+<p>当执行 INSERT、UPDATE 和 DELETE 等命令时，作为触发器提前设置好的操作也会被执行。例如，创建一个触发器，当某表的记录发生更新时，就以此为契机将更新的内容记录到另一个表中。</p>
+<img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/Snipaste_2021-01-28_09-33-39.png" style="zoom:50%;">
 
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">double</span> <span class="token function">compute</span><span class="token punctuation">(</span><span class="token keyword">long</span> money<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"普通会员 不打折"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> money<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+<p>触发器也常作为处理的记录或者处理失败时的备份使用。</p>
+<p>触发器是一个非常强大的功能，只听过文字介绍很难了解到这个功能有哪些优点。我们先创建一个触发器来体验一下。</p>
+<p>这里我们来创建一个 “如果删除了表中的记录，被删除的记录就会复制到其它表中” 的触发器。也就是说对表 tb1 执行 “DELETE FROM tb1 …; ” 命令，被删除的记录就会全部插入到表 tb1_from 中。这样一来，我们就可以随时恢复已删除的记录了。</p>
+<p>请事先创建一个空表 tb1_from 用于插入表 tb1 中删除的记录。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ CREATE TABLE tb1_from LIKE tb1;</code></pre>
+<h3 id="创建触发器"><a href="#创建触发器" class="headerlink" title="创建触发器"></a>创建触发器</h3><p>触发器会对表执行 INSERT、UPDATE 和 DELETE 等命令之前（Before）或之后（After）被调用和执行。</p>
+<h4 id="触发器被触发的时机"><a href="#触发器被触发的时机" class="headerlink" title="触发器被触发的时机"></a>触发器被触发的时机</h4><table>
+<thead>
+<tr>
+<th>BEFORE</th>
+<th>在对表进行处理之前触发</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>AFTER</td>
+<td>在对表进行处理之后触发</td>
+</tr>
+</tbody></table>
+<p>另外，对表进行处理之前的列值和对表进行处理之后的列值，可以向下面这样通过 “OLD.列名” “NEW.列名” 获得。</p>
+<table>
+<thead>
+<tr>
+<th>OLD.列名</th>
+<th>对表进行处理之前的列值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NEW.列名</td>
+<td>对表进行处理之后的列值</td>
+</tr>
+</tbody></table>
+<p>也就是说，执行 INSERT、UPDATE 和 DELETE 命令之前的列值可以通过 “OLD.列名” 获得，执行这些命令之后的列值可以通过 “NEW.列名” 获得。</p>
+<p>但是，根据命令的不同，有的列值可以取出来，有的列值不能取出来。</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>执行前（OLD.列名）使用BEFORE</th>
+<th>执行后（NEW.列名）使用AFTER</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>INSERT</td>
+<td>NO</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>YES</td>
+<td>NO</td>
+</tr>
+<tr>
+<td>UPDATE</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+</tbody></table>
+<h4 id="创建触发器-1"><a href="#创建触发器-1" class="headerlink" title="创建触发器"></a>创建触发器</h4><pre class=" language-mysql"><code class="language-mysql">$ CREATE TRIGGER 触发器名 BEFORE (或者 AFTER) DELETE 等命令
+    ON 表名 FOR EACH ROW
+    BEGIN
+            使用更新前(OLD.列名) 或者更新后(NEW.列名) 的处理
+    END</code></pre>
+<p>在触发器主体的描述中，各个命令的末尾要加上分号 “;”。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ delimiter //
+$ CREATE TRIGGER tr1 BEFORE DELETE ON tb1 FOR EACH ROW
+    BEGIN
+    INSERT INTO tb1_from VALUES(OLD.empid, OLD.name, OLD.age);
+    END
+    //
+$ delimiter ;</code></pre>
+<p>触发器创建成功了。现在，表 tb1 删除的记录应该能够插入到表 tb1_form 中了。不管是 1 条记录还是 2 条记录，触发器都会进行处理，所以我们干脆把所有记录都删掉。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ DELETE FROM tb1;
 
-<span class="token comment" spellcheck="true">// 白银会员策略</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SilverStrategy</span> <span class="token keyword">implements</span> <span class="token class-name">Strategy</span> <span class="token punctuation">{</span>
-
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">double</span> <span class="token function">compute</span><span class="token punctuation">(</span><span class="token keyword">long</span> money<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"白银会员 优惠50元"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> money <span class="token operator">-</span> <span class="token number">50</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-<span class="token comment" spellcheck="true">// 黄金会员策略</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">GoldStrategy</span> <span class="token keyword">implements</span> <span class="token class-name">Strategy</span><span class="token punctuation">{</span>
-
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">double</span> <span class="token function">compute</span><span class="token punctuation">(</span><span class="token keyword">long</span> money<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"黄金会员 8折"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> money <span class="token operator">*</span> <span class="token number">0.8</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-<span class="token comment" spellcheck="true">// 白金会员策略</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">PlatinumStrategy</span> <span class="token keyword">implements</span> <span class="token class-name">Strategy</span> <span class="token punctuation">{</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">double</span> <span class="token function">compute</span><span class="token punctuation">(</span><span class="token keyword">long</span> money<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"白金会员 优惠50元，再打7折"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> <span class="token punctuation">(</span>money <span class="token operator">-</span> <span class="token number">50</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">0.7</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
-<p>我们定义来一个 Strategy 接口，并且定义 四个子类，实现接口。在对应的 compute方法 实现自身策略的计费逻辑。</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">double</span> <span class="token function">getResult</span><span class="token punctuation">(</span><span class="token keyword">long</span> money<span class="token punctuation">,</span> <span class="token keyword">int</span> type<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-
-    <span class="token keyword">double</span> result <span class="token operator">=</span> money<span class="token punctuation">;</span>
-
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>money <span class="token operator">>=</span> <span class="token number">1000</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>type <span class="token operator">==</span> UserType<span class="token punctuation">.</span>SILVER_VIP<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-
-            result <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SilverStrategy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">compute</span><span class="token punctuation">(</span>money<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>type <span class="token operator">==</span> UserType<span class="token punctuation">.</span>GOLD_VIP<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-
-            result <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">GoldStrategy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">compute</span><span class="token punctuation">(</span>money<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>type <span class="token operator">==</span> UserType<span class="token punctuation">.</span>PLATINUM_VIP<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-
-            result <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">PlatinumStrategy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">compute</span><span class="token punctuation">(</span>money<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
-            result <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">OrdinaryStrategy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">compute</span><span class="token punctuation">(</span>money<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">return</span> result<span class="token punctuation">;</span>
-<span class="token punctuation">}</span></code></pre>
-<p>然后对应 getResult 方法，根据 type 替换为对应的 用户VIP 策略。这里代码上出现了重复的调用 compute ，我们可以尝试进一步优化</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">double</span> <span class="token function">getResult</span><span class="token punctuation">(</span><span class="token keyword">long</span> money<span class="token punctuation">,</span> <span class="token keyword">int</span> type<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>money <span class="token operator">&lt;</span> <span class="token number">1000</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> money<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    Strategy strategy<span class="token punctuation">;</span>
-
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>type <span class="token operator">==</span> UserType<span class="token punctuation">.</span>SILVER_VIP<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        strategy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SilverStrategy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>type <span class="token operator">==</span> UserType<span class="token punctuation">.</span>GOLD_VIP<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        strategy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">GoldStrategy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>type <span class="token operator">==</span> UserType<span class="token punctuation">.</span>PLATINUM_VIP<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        strategy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">PlatinumStrategy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
-        strategy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">OrdinaryStrategy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">return</span> strategy<span class="token punctuation">.</span><span class="token function">compute</span><span class="token punctuation">(</span>money<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span></code></pre>
-<p>我们在这里把 money &lt; 1000 的情况提前 return。更关注于满1000逻辑 ,也可以减少不必要的缩进。</p>
-<h3 id="深思"><a href="#深思" class="headerlink" title="深思"></a>深思</h3><p>我曾一度 以为 策略模式不过如此。以为代码优化到这已经可以了。</p>
-<p>但是还有一个恐怖的事情，if-else 依然存在 ：）</p>
-<p>我尝试翻阅了许多书籍，查看如何消除 策略模式中的 if-else</p>
-<p>书中大部分的方法是，使用简单工厂 + 策略模式。把 if - else 切换为 switch 创建一个工厂方法而已。</p>
-<p>但是这远远没有达到我想要的效果，打倒 if - else</p>
-<p>直到某一天夜里，我大佬在群里分享一个 Java8 小技巧时，从此打开新世界。</p>
-<h3 id="工厂-策略"><a href="#工厂-策略" class="headerlink" title="工厂 + 策略"></a>工厂 + 策略</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Strategy</span> <span class="token punctuation">{</span>
-
-    <span class="token keyword">double</span> <span class="token function">compute</span><span class="token punctuation">(</span><span class="token keyword">long</span> money<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token comment" spellcheck="true">// 返回 type</span>
-    <span class="token keyword">int</span> <span class="token function">getType</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">OrdinaryStrategy</span> <span class="token keyword">implements</span> <span class="token class-name">Strategy</span> <span class="token punctuation">{</span>
-
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">double</span> <span class="token function">compute</span><span class="token punctuation">(</span><span class="token keyword">long</span> money<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"普通会员 不打折"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> money<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token comment" spellcheck="true">// 添加 type 返回</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getType</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> UserType<span class="token punctuation">.</span>SILVER_VIP<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SilverStrategy</span> <span class="token keyword">implements</span> <span class="token class-name">Strategy</span> <span class="token punctuation">{</span>
-
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">double</span> <span class="token function">compute</span><span class="token punctuation">(</span><span class="token keyword">long</span> money<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"白银会员 优惠50元"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> money <span class="token operator">-</span> <span class="token number">50</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token comment" spellcheck="true">// type 返回</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getType</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> UserType<span class="token punctuation">.</span>SILVER_VIP<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-<span class="token comment" spellcheck="true">//....省略剩下 Strategy</span></code></pre>
-<p>我们先在 Strategy 新增一个 getType 方法，用来表示 该策略的 type 值。代码相对简单，这里就不过多介绍了</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">StrategyFactory</span> <span class="token punctuation">{</span>
-
-    <span class="token keyword">private</span> Map<span class="token operator">&lt;</span>Integer<span class="token punctuation">,</span> Strategy<span class="token operator">></span> map<span class="token punctuation">;</span>
-
-    <span class="token keyword">public</span> <span class="token function">StrategyFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-
-        List<span class="token operator">&lt;</span>Strategy<span class="token operator">></span> strategies <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        strategies<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">OrdinaryStrategy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        strategies<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">SilverStrategy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        strategies<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">GoldStrategy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        strategies<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">PlatinumStrategy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        <span class="token comment" spellcheck="true">// 看这里 看这里 看这里！</span>
-        map <span class="token operator">=</span> strategies<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span>Collectors<span class="token punctuation">.</span><span class="token function">toMap</span><span class="token punctuation">(</span>Strategy<span class="token operator">:</span><span class="token operator">:</span>getType<span class="token punctuation">,</span> strategy <span class="token operator">-</span><span class="token operator">></span> strategy<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        <span class="token comment" spellcheck="true">/* 等同上面
-        map = new HashMap&lt;>();
-        for (Strategy strategy : strategies) {
-            map.put(strategy.getType(), strategy);
-        }*/</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">Holder</span> <span class="token punctuation">{</span>
-        <span class="token keyword">public</span> <span class="token keyword">static</span> StrategyFactory instance <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">StrategyFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">public</span> <span class="token keyword">static</span> StrategyFactory <span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> Holder<span class="token punctuation">.</span>instance<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">public</span> Strategy <span class="token function">get</span><span class="token punctuation">(</span>Integer type<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> map<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>type<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
-<p>静态内部类单例，单例模式实现的一种，不是本文重点，如不了解，可以自行 google</p>
-<p>我们再着手创建一个 StrategyFactory 工厂类。StrategyFactory 这里我使用的是静态内部类单例，在构造方法的时候，初始化好 需要的 Strategy，并把 list 转化为 map。</p>
-<p>这里 转化就是“灵魂”所在。</p>
-<h3 id="toMap"><a href="#toMap" class="headerlink" title="toMap"></a>toMap</h3><p>我们先来看看 Java8 语法中的小技巧。通常情况下，我们遍历 List，手动put到 Map 中。</p>
-<pre class=" language-java"><code class="language-java"><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>  before <span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
-
-map <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashMap</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">for</span> <span class="token punctuation">(</span>Strategy strategy <span class="token operator">:</span> strategies<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    map<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>strategy<span class="token punctuation">.</span><span class="token function">getType</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> strategy<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>  after Java8 <span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
-
-map <span class="token operator">=</span> strategies<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span>Collectors<span class="token punctuation">.</span><span class="token function">toMap</span><span class="token punctuation">(</span>Strategy<span class="token operator">:</span><span class="token operator">:</span>getType<span class="token punctuation">,</span> strategy <span class="token operator">-</span><span class="token operator">></span> strategy<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<p>toMap 第一个参数是一个Function，对应 Map 中的 key，第二个参数也是一个Function，strategy -&gt; strategy， 左边strategy 是遍历 strategies 中的每一个strategy，右边strategy则是 Map 对应 value 值。</p>
-<p>若是不了解 Java8 语法的朋友，强烈建议看 《Java8 实战》，书中详细的介绍了 Lambda表达式、Stream等语法。</p>
-<h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">double</span> <span class="token function">getResult</span><span class="token punctuation">(</span><span class="token keyword">long</span> money<span class="token punctuation">,</span> <span class="token keyword">int</span> type<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>money <span class="token operator">&lt;</span> <span class="token number">1000</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> money<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    Strategy strategy <span class="token operator">=</span> StrategyFactory<span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>type<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>strategy <span class="token operator">==</span> null<span class="token punctuation">)</span><span class="token punctuation">{</span>
-        <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">IllegalArgumentException</span><span class="token punctuation">(</span><span class="token string">"please input right type"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">return</span> strategy<span class="token punctuation">.</span><span class="token function">compute</span><span class="token punctuation">(</span>money<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span></code></pre>
-<p>至此，通过一个工厂类，在我们在 getResult（）调用的时候，根据传入 type，即可获取到 对应 Strategy</p>
-<p>再也没有可怕的 if-else 语句。</p>
-<p>完结撒花撒花 : )</p>
-<h3 id="后续"><a href="#后续" class="headerlink" title="后续"></a>后续</h3><p>后续代码优化上，若是 Java 项目，可以尝试使用自定义注解，注解 Strategy 实现类。</p>
-<p>这样可以简化原来需在工厂类 List 添加一个 Stratey 策略。</p>
+$ SELECT * FROM tb1_from;
++-------+-------------------+------+
+| empid | name              | age  |
++-------+-------------------+------+
+| A101  | 主任·佐腾         |   40 |
+| A102  | 高桥              |   28 |
+| A103  | 中川              |   20 |
+| A104  | 渡边              |   23 |
+| A105  | 西泽              |   35 |
+| NULL  | 临时工·石田       |   18 |
++-------+-------------------+------+
+6 rows in set (0.00 sec)</code></pre>
+<p>和我们预想的一样，删除的记录插入带了表 tb1_from 中了。</p>
+<h4 id="触发器的内容"><a href="#触发器的内容" class="headerlink" title="触发器的内容"></a>触发器的内容</h4><pre class=" language-mysql"><code class="language-mysql">CREATE TRIGGER tr1 BEFORE DELETE ON tb1 FOR EACH ROW
+BEGIN
+    INSERT INTO tb1_from VALUES(OLD.empid, OLD.name, OLD.age);
+END</code></pre>
+<p>首先为表 tb1 的 DELETE 命令设置触发器 tr1。因为要对删除之前 (BEFORE) 的值进行 INSERT，所以 CREATE TRIGGER 的部分需要编写成下面这样：</p>
+<pre class=" language-mysql"><code class="language-mysql">$ CREATE TRIGGER tr1 BEFORE DELETE ON tb1 FOR EACH ROW;</code></pre>
+<p>提出删除前（BEFORE）的列值（OLD.列名），并将其插入表 tb1_from 中。表 tb1_from 由列 empid、列 name 和 列 age 组成，所以删除前的列值分别为 OLD.empid、OLD.name 和 OLD.age。</p>
+<p>因为要使用 INSERT 命令将这些列值插入到表 tb1_from 中，所以触发器需要描述成下面这样：</p>
+<pre class=" language-mysql"><code class="language-mysql">$ INSERT INTO tb1_from VALUES(OLD.empid, OLD.name, OLD.age);</code></pre>
+<p>该触发器的主体部分用 BEGIN 和 END 括了起来。</p>
+<h3 id="确认和删除触发器"><a href="#确认和删除触发器" class="headerlink" title="确认和删除触发器"></a>确认和删除触发器</h3><p>触发器是自动启动的。为了避免无意间执行相关处理，我们需要在管理上多加注意。必须对当前设置的触发器及其内容有充分的了解。</p>
+<p>我们可以使用 SHOW TRIGGERS 命令确认当前设置的触发器。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SHOW TRIGGERS;</code></pre>
+<h4 id="删除触发器"><a href="#删除触发器" class="headerlink" title="删除触发器"></a>删除触发器</h4><pre class=" language-mysql"><code class="language-mysql">$ DROP TRIGGER 触发器名;</code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -3975,13 +3967,6 @@ map <span class="token operator">=</span> strategies<span class="token punctuati
             document.body.appendChild(img);
           });
       </script>]]></content>
-      <categories>
-        <category>设计模式</category>
-      </categories>
-      <tags>
-        <tag>策略</tag>
-        <tag>工厂</tag>
-      </tags>
   </entry>
   <entry>
     <title>熟练使用视图</title>
@@ -4306,6 +4291,315 @@ $ CREATE TABLE t_stock_new SELECT * FROM t_stock WHERE c > NOW() - INTERVAL 5 YE
       </script>]]></content>
       <tags>
         <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>探讨复杂的 if-else 语句“优雅处理”的思路</title>
+    <url>/posts/afc9.html</url>
+    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在实际开发中，往往不是简单 if-else 结构，我们通常会不经意间写下如下代码：</p>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// -------------------- 理想中的 if-else  --------------------</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">today</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isWeekend</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"玩游戏"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"上班!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">// -------------------- 现实中的 if-else  --------------------</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>money <span class="token operator">>=</span> <span class="token number">1000</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>type <span class="token operator">==</span> UserType<span class="token punctuation">.</span>SILVER_VIP<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"白银会员 优惠50元"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        result <span class="token operator">=</span> money <span class="token operator">-</span> <span class="token number">50</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>type <span class="token operator">==</span> UserType<span class="token punctuation">.</span>GOLD_VIP<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"黄金会员 8折"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        result <span class="token operator">=</span> money <span class="token operator">*</span> <span class="token number">0.8</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>type <span class="token operator">==</span> UserType<span class="token punctuation">.</span>PLATINUM_VIP<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"白金会员 优惠50元，再打7折"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        result <span class="token operator">=</span> <span class="token punctuation">(</span>money <span class="token operator">-</span> <span class="token number">50</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">0.7</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"普通会员 不打折"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        result <span class="token operator">=</span> money<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">//省略 n 个 if-else ......</span></code></pre>
+<p>毫不夸张的说，我们都写过类似的代码，回想起被 if-else 支配的恐惧，我们常常无所下手，甚至不了了之。</p>
+<p>下面分享一下我遇到复杂的 if-else 语句“优雅处理”思路。如有不妥，欢迎大家一起交流学习。</p>
+<h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><p>假设有这么一个需求：</p>
+<p>一个电商系统，当用户消费满1000 金额，可以根据用户VIP等级，享受打折优惠。根据用户VIP等级，计算出用户最终的费用。</p>
+<ul>
+<li>普通会员 不打折</li>
+<li>白银会员 优惠50元</li>
+<li>黄金会员 8折</li>
+<li>白金会员 优惠50元，再打7折</li>
+</ul>
+<h3 id="编码实现"><a href="#编码实现" class="headerlink" title="编码实现"></a>编码实现</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">double</span> <span class="token function">getResult</span><span class="token punctuation">(</span><span class="token keyword">long</span> money<span class="token punctuation">,</span> <span class="token keyword">int</span> type<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">double</span> result <span class="token operator">=</span> money<span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>money <span class="token operator">>=</span> <span class="token number">1000</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>type <span class="token operator">==</span> UserType<span class="token punctuation">.</span>SILVER_VIP<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"白银会员 优惠50元"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            result <span class="token operator">=</span> money <span class="token operator">-</span> <span class="token number">50</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>type <span class="token operator">==</span> UserType<span class="token punctuation">.</span>GOLD_VIP<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"黄金会员 8折"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            result <span class="token operator">=</span> money <span class="token operator">*</span> <span class="token number">0.8</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>type <span class="token operator">==</span> UserType<span class="token punctuation">.</span>PLATINUM_VIP<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"白金会员 优惠50元，再打7折"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            result <span class="token operator">=</span> <span class="token punctuation">(</span>money <span class="token operator">-</span> <span class="token number">50</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">0.7</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"普通会员 不打折"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            result <span class="token operator">=</span> money<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">return</span> result<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>为了方便演示，代码上我进行了简单实现，但实际上 if - else 会进行复杂的逻辑计费。从功能上来说，基本完成，但是对于我这种有代码洁癖的人来说，代码质量上不忍直视。我们开始着手 优化一下我们的第一版代码吧。</p>
+<h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><p>看到如上代码，聪明的朋友首先想到的是，这不是典型的策略模式吗？</p>
+<p>你可真是个机灵鬼，我们先尝试用策略模式来优化一下代码吧。</p>
+<h3 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h3><blockquote>
+<p>可能有的朋友还不清楚，什么是策略模式。策略模式是定义一系列的算法,把它们一个个封装起来, 并且使它们可相互替换。</p>
+<p>比如上述需求，有返利、有打折、有折上折等等。这些算法本身就是一种策略。并且这些算法可以相互替换的，比如今天我想让 白银会员优惠50，明天可以替换为 白银会员打9折。</p>
+<p>说了那么多，不如编码来得实在。</p>
+</blockquote>
+<h3 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Strategy</span> <span class="token punctuation">{</span>
+
+    <span class="token comment" spellcheck="true">// 计费方法</span>
+    <span class="token keyword">double</span> <span class="token function">compute</span><span class="token punctuation">(</span><span class="token keyword">long</span> money<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">// 普通会员策略</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">OrdinaryStrategy</span> <span class="token keyword">implements</span> <span class="token class-name">Strategy</span> <span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">double</span> <span class="token function">compute</span><span class="token punctuation">(</span><span class="token keyword">long</span> money<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"普通会员 不打折"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> money<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">// 白银会员策略</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SilverStrategy</span> <span class="token keyword">implements</span> <span class="token class-name">Strategy</span> <span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">double</span> <span class="token function">compute</span><span class="token punctuation">(</span><span class="token keyword">long</span> money<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"白银会员 优惠50元"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> money <span class="token operator">-</span> <span class="token number">50</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">// 黄金会员策略</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">GoldStrategy</span> <span class="token keyword">implements</span> <span class="token class-name">Strategy</span><span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">double</span> <span class="token function">compute</span><span class="token punctuation">(</span><span class="token keyword">long</span> money<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"黄金会员 8折"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> money <span class="token operator">*</span> <span class="token number">0.8</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">// 白金会员策略</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">PlatinumStrategy</span> <span class="token keyword">implements</span> <span class="token class-name">Strategy</span> <span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">double</span> <span class="token function">compute</span><span class="token punctuation">(</span><span class="token keyword">long</span> money<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"白金会员 优惠50元，再打7折"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token punctuation">(</span>money <span class="token operator">-</span> <span class="token number">50</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">0.7</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>我们定义来一个 Strategy 接口，并且定义 四个子类，实现接口。在对应的 compute方法 实现自身策略的计费逻辑。</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">double</span> <span class="token function">getResult</span><span class="token punctuation">(</span><span class="token keyword">long</span> money<span class="token punctuation">,</span> <span class="token keyword">int</span> type<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">double</span> result <span class="token operator">=</span> money<span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>money <span class="token operator">>=</span> <span class="token number">1000</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>type <span class="token operator">==</span> UserType<span class="token punctuation">.</span>SILVER_VIP<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+            result <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SilverStrategy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">compute</span><span class="token punctuation">(</span>money<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>type <span class="token operator">==</span> UserType<span class="token punctuation">.</span>GOLD_VIP<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+            result <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">GoldStrategy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">compute</span><span class="token punctuation">(</span>money<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>type <span class="token operator">==</span> UserType<span class="token punctuation">.</span>PLATINUM_VIP<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+            result <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">PlatinumStrategy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">compute</span><span class="token punctuation">(</span>money<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            result <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">OrdinaryStrategy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">compute</span><span class="token punctuation">(</span>money<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">return</span> result<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>然后对应 getResult 方法，根据 type 替换为对应的 用户VIP 策略。这里代码上出现了重复的调用 compute ，我们可以尝试进一步优化</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">double</span> <span class="token function">getResult</span><span class="token punctuation">(</span><span class="token keyword">long</span> money<span class="token punctuation">,</span> <span class="token keyword">int</span> type<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>money <span class="token operator">&lt;</span> <span class="token number">1000</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> money<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    Strategy strategy<span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>type <span class="token operator">==</span> UserType<span class="token punctuation">.</span>SILVER_VIP<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        strategy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SilverStrategy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>type <span class="token operator">==</span> UserType<span class="token punctuation">.</span>GOLD_VIP<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        strategy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">GoldStrategy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>type <span class="token operator">==</span> UserType<span class="token punctuation">.</span>PLATINUM_VIP<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        strategy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">PlatinumStrategy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        strategy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">OrdinaryStrategy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">return</span> strategy<span class="token punctuation">.</span><span class="token function">compute</span><span class="token punctuation">(</span>money<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>我们在这里把 money &lt; 1000 的情况提前 return。更关注于满1000逻辑 ,也可以减少不必要的缩进。</p>
+<h3 id="深思"><a href="#深思" class="headerlink" title="深思"></a>深思</h3><p>我曾一度 以为 策略模式不过如此。以为代码优化到这已经可以了。</p>
+<p>但是还有一个恐怖的事情，if-else 依然存在 ：）</p>
+<p>我尝试翻阅了许多书籍，查看如何消除 策略模式中的 if-else</p>
+<p>书中大部分的方法是，使用简单工厂 + 策略模式。把 if - else 切换为 switch 创建一个工厂方法而已。</p>
+<p>但是这远远没有达到我想要的效果，打倒 if - else</p>
+<p>直到某一天夜里，我大佬在群里分享一个 Java8 小技巧时，从此打开新世界。</p>
+<h3 id="工厂-策略"><a href="#工厂-策略" class="headerlink" title="工厂 + 策略"></a>工厂 + 策略</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Strategy</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">double</span> <span class="token function">compute</span><span class="token punctuation">(</span><span class="token keyword">long</span> money<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// 返回 type</span>
+    <span class="token keyword">int</span> <span class="token function">getType</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">OrdinaryStrategy</span> <span class="token keyword">implements</span> <span class="token class-name">Strategy</span> <span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">double</span> <span class="token function">compute</span><span class="token punctuation">(</span><span class="token keyword">long</span> money<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"普通会员 不打折"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> money<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">// 添加 type 返回</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getType</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> UserType<span class="token punctuation">.</span>SILVER_VIP<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SilverStrategy</span> <span class="token keyword">implements</span> <span class="token class-name">Strategy</span> <span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">double</span> <span class="token function">compute</span><span class="token punctuation">(</span><span class="token keyword">long</span> money<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"白银会员 优惠50元"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> money <span class="token operator">-</span> <span class="token number">50</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">// type 返回</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getType</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> UserType<span class="token punctuation">.</span>SILVER_VIP<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">//....省略剩下 Strategy</span></code></pre>
+<p>我们先在 Strategy 新增一个 getType 方法，用来表示 该策略的 type 值。代码相对简单，这里就不过多介绍了</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">StrategyFactory</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">private</span> Map<span class="token operator">&lt;</span>Integer<span class="token punctuation">,</span> Strategy<span class="token operator">></span> map<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token function">StrategyFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+        List<span class="token operator">&lt;</span>Strategy<span class="token operator">></span> strategies <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        strategies<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">OrdinaryStrategy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        strategies<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">SilverStrategy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        strategies<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">GoldStrategy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        strategies<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">PlatinumStrategy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment" spellcheck="true">// 看这里 看这里 看这里！</span>
+        map <span class="token operator">=</span> strategies<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span>Collectors<span class="token punctuation">.</span><span class="token function">toMap</span><span class="token punctuation">(</span>Strategy<span class="token operator">:</span><span class="token operator">:</span>getType<span class="token punctuation">,</span> strategy <span class="token operator">-</span><span class="token operator">></span> strategy<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment" spellcheck="true">/* 等同上面
+        map = new HashMap&lt;>();
+        for (Strategy strategy : strategies) {
+            map.put(strategy.getType(), strategy);
+        }*/</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">Holder</span> <span class="token punctuation">{</span>
+        <span class="token keyword">public</span> <span class="token keyword">static</span> StrategyFactory instance <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">StrategyFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> StrategyFactory <span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> Holder<span class="token punctuation">.</span>instance<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> Strategy <span class="token function">get</span><span class="token punctuation">(</span>Integer type<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> map<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>type<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>静态内部类单例，单例模式实现的一种，不是本文重点，如不了解，可以自行 google</p>
+<p>我们再着手创建一个 StrategyFactory 工厂类。StrategyFactory 这里我使用的是静态内部类单例，在构造方法的时候，初始化好 需要的 Strategy，并把 list 转化为 map。</p>
+<p>这里 转化就是“灵魂”所在。</p>
+<h3 id="toMap"><a href="#toMap" class="headerlink" title="toMap"></a>toMap</h3><p>我们先来看看 Java8 语法中的小技巧。通常情况下，我们遍历 List，手动put到 Map 中。</p>
+<pre class=" language-java"><code class="language-java"><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>  before <span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+
+map <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashMap</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span>Strategy strategy <span class="token operator">:</span> strategies<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    map<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>strategy<span class="token punctuation">.</span><span class="token function">getType</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> strategy<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span>  after Java8 <span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">--</span><span class="token operator">-</span>
+
+map <span class="token operator">=</span> strategies<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span>Collectors<span class="token punctuation">.</span><span class="token function">toMap</span><span class="token punctuation">(</span>Strategy<span class="token operator">:</span><span class="token operator">:</span>getType<span class="token punctuation">,</span> strategy <span class="token operator">-</span><span class="token operator">></span> strategy<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>toMap 第一个参数是一个Function，对应 Map 中的 key，第二个参数也是一个Function，strategy -&gt; strategy， 左边strategy 是遍历 strategies 中的每一个strategy，右边strategy则是 Map 对应 value 值。</p>
+<p>若是不了解 Java8 语法的朋友，强烈建议看 《Java8 实战》，书中详细的介绍了 Lambda表达式、Stream等语法。</p>
+<h3 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">double</span> <span class="token function">getResult</span><span class="token punctuation">(</span><span class="token keyword">long</span> money<span class="token punctuation">,</span> <span class="token keyword">int</span> type<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>money <span class="token operator">&lt;</span> <span class="token number">1000</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> money<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    Strategy strategy <span class="token operator">=</span> StrategyFactory<span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>type<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>strategy <span class="token operator">==</span> null<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">IllegalArgumentException</span><span class="token punctuation">(</span><span class="token string">"please input right type"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">return</span> strategy<span class="token punctuation">.</span><span class="token function">compute</span><span class="token punctuation">(</span>money<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>至此，通过一个工厂类，在我们在 getResult（）调用的时候，根据传入 type，即可获取到 对应 Strategy</p>
+<p>再也没有可怕的 if-else 语句。</p>
+<p>完结撒花撒花 : )</p>
+<h3 id="后续"><a href="#后续" class="headerlink" title="后续"></a>后续</h3><p>后续代码优化上，若是 Java 项目，可以尝试使用自定义注解，注解 Strategy 实现类。</p>
+<p>这样可以简化原来需在工厂类 List 添加一个 Stratey 策略。</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <categories>
+        <category>设计模式</category>
+      </categories>
+      <tags>
+        <tag>策略</tag>
+        <tag>工厂</tag>
       </tags>
   </entry>
   <entry>
@@ -5452,171 +5746,6 @@ min-replicas-max-lag 10</code></pre>
       </tags>
   </entry>
   <entry>
-    <title>Redis哨兵</title>
-    <url>/posts/c807.html</url>
-    <content><![CDATA[<h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>在一个典型的一主多从的Redis系统中，从数据库在整个系统中起到了数据冗余备份和读写分离的作用。当主数据库遇到异常中断服务后，开发者可以通过手动的方式选择一个从数据库来升级为主数据库，以使得系统能够继续提供服务。然而整个过程相对麻烦且需要人工介入，难以实现自动化。</p>
-<p>为此，Redis 2.8 中提供了哨兵工具来实现自动化的系统监控和故障恢复功能。</p>
-<h4 id="什么是哨兵"><a href="#什么是哨兵" class="headerlink" title="什么是哨兵"></a>什么是哨兵</h4><p>顾名思义，哨兵的作用就是监控 Redis 系统的运行状况。它的功能包括以下两个。</p>
-<ul>
-<li>监控主数据库和从数据库是否正常运行。</li>
-<li>主数据库出现故障时自动将从数据库转换为主数据库。</li>
-</ul>
-<p>哨兵是一个独立的进程，使用哨兵的一个典型架构如下所示：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/15971611207217_.pic_hd.jpg"></p>
-<p>在一个一主多从的 Redis 系统中，可以使用多个哨兵进行监控任务以保证系统足够稳健。注意，此时不仅哨兵会同时监控主数据库和从数据库，哨兵之间也会互相监控。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/15981611207382_.pic_hd.jpg"></p>
-<h3 id="马上上手"><a href="#马上上手" class="headerlink" title="马上上手"></a>马上上手</h3><p>在理解哨兵的原理前，我们首先实际使用一下哨兵，来了解哨兵是如何工作的。首先建立起 3 个 Redis 实例，其中包括一个主数据库和两个从数据库。主数据库的端口为 6379，两个从数据库的端口分别为 6380 和 6381。我们使用 Redis 命令行客户端来获取复制状态，以保证复制配置正确。</p>
-<p>首先是主数据库：</p>
-<pre class=" language-bash"><code class="language-bash">redis 6379<span class="token operator">></span> info replication
-<span class="token comment" spellcheck="true"># Replication</span>
-role:master
-connected_slaves:2
-slave0:ip<span class="token operator">=</span>127.0.0.1,port<span class="token operator">=</span>6380,state<span class="token operator">=</span>online,offset<span class="token operator">=</span>56,lag<span class="token operator">=</span>0
-slave1:ip<span class="token operator">=</span>127.0.0.1,port<span class="token operator">=</span>6381,state<span class="token operator">=</span>online,offset<span class="token operator">=</span>56,lag<span class="token operator">=</span>0</code></pre>
-<p>可见其连接了两个从数据库，配置正确。然后用同样的方法查看两个从数据库的配置：</p>
-<pre class=" language-bash"><code class="language-bash">redis 6380<span class="token operator">></span> INFO replication
-<span class="token comment" spellcheck="true"># Replication</span>
-role:slave
-master_host:127.0.0.1
-
-redis 6381<span class="token operator">></span> info replication
-<span class="token comment" spellcheck="true"># Replication</span>
-role:slave
-master_host:127.0.0.1
-master_port:6379</code></pre>
-<p>当出现的信息如上时，即证明一主而从配置已经成功了。</p>
-<p>接下来开始配置哨兵。建立一个配置文件，如 <code>sentinel.conf</code>，内容为：</p>
-<pre class=" language-shell"><code class="language-shell">sentinel monitor mymaster 127.0.0.1 6379 1</code></pre>
-<p>其中 <code>mymaster</code> 表示要监视的主数据库名字，可以自己定义一个。这个名字必须仅由大小写字母、数字 和 “.-_”这3个字符组成。后两个参数表示主数据库的地址和端口号，这里我们要监控的主数据库 6379。最后的 1 表示最低通过票数，后面会介绍。接下来启动 sentinel 进程，并将上述配置文件的路径传递给哨兵：</p>
-<pre class=" language-bash"><code class="language-bash">$ redis-sentinel /path/to/sentinel.conf</code></pre>
-<p> 需要注意的是，配置哨兵监控一个系统时，只需要配置其监控主数据库即可，哨兵会自动发现所有复制该主数据库的从数据库。</p>
-<p>启动哨兵后，哨兵输出一下内容：</p>
-<pre class=" language-bash"><code class="language-bash">3839:X 21 Jan 2021 01:02:39.668 <span class="token comment" spellcheck="true"># Sentinel ID is 34e43f99b8460c86a0061c0e3325c5a5d94602b2</span>
-3839:X 21 Jan 2021 01:02:39.668 <span class="token comment" spellcheck="true"># +monitor master mymaster 127.0.0.1 6379 quorum 1</span>
-3839:X 21 Jan 2021 01:02:39.669 * +slave slave 127.0.0.1:6380 127.0.0.1 6380 @ mymaster 127.0.0.1 6379
-3839:X 21 Jan 2021 01:02:39.670 * +slave slave 127.0.0.1:6381 127.0.0.1 6381 @ mymaster 127.0.0.1 6379</code></pre>
-<p>其中 +slave 表示新发现了从数据库，可见哨兵成功地发现了两个从数据库。现在哨兵已经在监控 3 个 Redis 实例了，这时我们将主数据库关闭（即运行在 639 端口上的 Redis 实例，杀死进程或使用 SHUTDOWN 命令）,等待指定时间后（可以配置，默认为 30 秒），哨兵会输出一下内容：</p>
-<pre class=" language-shell"><code class="language-shell">3839:X 21 Jan 2021 01:10:29.111 # +sdown master mymaster 127.0.0.1 6379
-3839:X 21 Jan 2021 01:10:29.111 # +odown master mymaster 127.0.0.1 6379 #quorum 1/1</code></pre>
-<p>其中 <code>+sdown</code> 表示哨兵主观认为主数据库停止服务了，而 <code>+odown</code> 则表示哨兵客观认为主数据库停止服务了，关于客观和主管的区别后文会详细介绍。此时哨兵开始执行故障恢复，即挑选一个从数据库，将其升格为主数据库。同时输出以下内容：</p>
-<pre class=" language-shell"><code class="language-shell">3839:X 21 Jan 2021 01:10:29.111 # +try-failover master mymaster 127.0.0.1 6379
-...
-3839:X 21 Jan 2021 01:10:30.561 # +failover-end master mymaster 127.0.0.1 6379
-3839:X 21 Jan 2021 01:10:30.561 # +switch-master mymaster 127.0.0.1 6379 127.0.0.1 6380</code></pre>
-<p><code>+try-failover</code> 表示哨兵开始进行故障恢复，<code>+failover-end</code> 表示哨兵完成故障恢复，期间设计的内容比较复杂，包括领头哨兵的选举、备选从数据库的选择等。<code>+switch-master</code> 表示主数据库从 6379 端口迁移到 6380 端口，即 6380 端口的从数据库被升格为主数据库，同时两个 <code>+slave</code> 则列出了2个新的从数据库，端口分别为 6381 和 6379。</p>
-<pre class=" language-shell"><code class="language-shell">3839:X 21 Jan 2021 01:10:30.561 * +slave slave 127.0.0.1:6381 127.0.0.1 6381 @ mymaster 127.0.0.1 6380
-3839:X 21 Jan 2021 01:10:30.561 * +slave slave 127.0.0.1:6379 127.0.0.1 6379 @ mymaster 127.0.0.1 6380
-3839:X 21 Jan 2021 01:11:00.587 # +sdown slave 127.0.0.1:6379 127.0.0.1 6379 @ mymaster 127.0.0.1 6380</code></pre>
-<p>其中 6379 就是之前停止服务的主数据库，可见哨兵并没有彻底清除停止服务的实例的信息，这时因为停止服务的实例有可能会在之后的某个时间恢复服务，这时哨兵会让其重新加入进来，所以当实例停止服务后，哨兵会更新该实例的信息，使得当其重新重新加入后可以按照当时信息继续对外提供服务。此例中 6379 端口的主数据库实例停止服务了，而 6380 端口的从数据已经升格为主数据库，当 6379 端口的实例恢复服务后，会转变成 6380 端口实例的从数据库来运行，所以哨兵将 6379 端口实例的信息改成了 6380 端口实例的从数据库。</p>
-<p>故障恢复完成后，可以使用 Redis 命令行客户端重新检查 6380 和 6381 两个端口上的实例的复制信息：</p>
-<pre class=" language-bash"><code class="language-bash">redis 6380<span class="token operator">></span> INFO replication
-<span class="token comment" spellcheck="true"># Replication</span>
-role:master
-connected_slaves:1
-slave0:ip<span class="token operator">=</span>127.0.0.1,port<span class="token operator">=</span>6381,state<span class="token operator">=</span>online,offset<span class="token operator">=</span>59364,lag<span class="token operator">=</span>1
-
-redis 6381<span class="token operator">></span> INFO replication
-<span class="token comment" spellcheck="true"># Replication</span>
-role:slave
-master_host:127.0.0.1
-master_port:6380</code></pre>
-<p>可以看到 6380 端口上的实例已经确实升格为主数据库了，同时 6381 端口上的实例是其从数据库。整个故障恢复过程就此完成。</p>
-<p>那么此时我们将 6379 端口上的实例重新启动，会发生什么情况呢？首先哨兵会监控到这一变化，并输出：</p>
-<pre class=" language-bash"><code class="language-bash">3839:X 21 Jan 2021 01:37:10.815 <span class="token comment" spellcheck="true"># -sdown slave 127.0.0.1:6379 127.0.0.1 6379 @ mymaster 127.0.0.1 6380</span>
-3839:X 21 Jan 2021 01:37:20.745 * +convert-to-slave slave 127.0.0.1:6379 127.0.0.1 6379 @ mymaster 127.0.0.1 6380</code></pre>
-<p><code>sdown</code> 表示实例 6379 已经恢复服务了（与 <code>+sdown</code> 相反），同时 <code>+convert-to-slave</code> 表示将 6379 端口的实例设置为 6380 端口实例的从数据库。这时使用 Redis 命令行客户端查看 6379 端口实例的复制信息为：</p>
-<pre class=" language-bash"><code class="language-bash">redis 6379<span class="token operator">></span> INFO replication
-<span class="token comment" spellcheck="true"># Replication</span>
-role:slave
-master_host:127.0.0.1
-master_port:6380</code></pre>
-<p>同时 6380 端口实例的复制信息为：</p>
-<pre class=" language-bash"><code class="language-bash">127.0.0.1:6380<span class="token operator">></span> INFO replication
-<span class="token comment" spellcheck="true"># Replication</span>
-role:master
-connected_slaves:2
-slave0:ip<span class="token operator">=</span>127.0.0.1,port<span class="token operator">=</span>6381,state<span class="token operator">=</span>online,offset<span class="token operator">=</span>153516,lag<span class="token operator">=</span>1
-slave1:ip<span class="token operator">=</span>127.0.0.1,port<span class="token operator">=</span>6379,state<span class="token operator">=</span>online,offset<span class="token operator">=</span>153516,lag<span class="token operator">=</span>0</code></pre>
-<p>正如预期一样，6380 端口实例的从数据库变味了两个，6379 成功恢复服务。</p>
-<h3 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h3><p>一个哨兵进程启动时会读取配置文件的内容，通过如下的配置找出需要监控的主数据库：</p>
-<pre class=" language-bash"><code class="language-bash">sentinel monitor master-name ip redis-port quorum</code></pre>
-<p>其中 master-name 是一个由大小写字母、数字和 “.-_” 组成的主数据库的名字，因为考虑到故障恢复后当前监控的系统的主数据库的地址和端口会产生变化，所以哨兵提供了命令可以通过主数据库的名字获取当前系统的主数据库地址和端口号。</p>
-<p><code>ip</code> 表示当前系统中主数据库的地址，而 <code>redis-port</code> 则表示端口号。</p>
-<p><code>quorum</code> 用来表示执行故障恢复操作前至少需要几个哨兵节点同意。一个哨兵节点可以同时监控多个 Redis 主从系统，只需要提供多个 <code>sentinel monitor</code> 配置即可，例如：</p>
-<pre class=" language-bash"><code class="language-bash">sentinel monitor mymaster 127.0.0.0.1 6379 2
-sentinel monitor othermaster 192.168.1.1 6380 4</code></pre>
-<p>同时多个哨兵节点也可以同时监控一个 Redis 主从系统，从而形成网状结构。</p>
-<p>配置文件中还可以定义其它监控相关的参数，每个配置选项都包含主数据库的名字使得监控不同主数据库时可以使用不同的配置参数。例如：</p>
-<pre class=" language-bash"><code class="language-bash">sentinel down-after-milliseconds mymaster 60000
-sentinel down-after-milliseconds othermaster 10000</code></pre>
-<p>上面的两行配置分别配置了 <code>mymaster</code> 和 <code>othermaster</code> 的 down-after-milliseconds 选项分别为 60000 和 10000。</p>
-<p>哨兵启动后，会与要监控的主数据库建立两条连接，这两个连接的建立方式与普通的 Redis 客户端无异。其中一条连接用来订阅该主数据库的 <code>_sentinel_:hello</code> 频道以获取其它同样监控该数据库的哨兵节点信息，另外哨兵也需要定期向主数据发送 INO 等命令来获取主数据库本身的信息。因为当客户端进入订阅模式时就不能再执行其它命令了，所以这时哨兵会使用另外一条连接来发送这些命令。</p>
-<p>和主数据库的连接建立完成后，哨兵会定时执行下面 3 个操作：</p>
-<ol>
-<li>每 10 秒哨兵会向主数据库和从数据库发送 INFO 命令。</li>
-<li>每 2 秒哨兵会向主数据库和从数据库的 <code>_sentinel_:hello</code> 频道发送自己的信息。</li>
-<li>每 1 秒会向主数据库、从数据库和其它哨兵节点发送 PING 命令。</li>
-</ol>
-<p>这 3 个操作贯穿哨兵进程的整个生命周期中，非常重要，可以说了解了这 3 个操作的意义就能够了解哨兵工作原理的一般内容了。下面分别详细介绍。</p>
-<p>首先，发送 INFO 命令使得哨兵可以获得当前数据库的相关信息（包括运行 ID 、复制信息等）从而实现新节点的自动发现。前面说配置哨兵监控 Redis 主从系统时只需要指定主数据库的信息即可，因为哨兵正是借助 INFO 命令来获取所有复制该主数据库的从数据库信息的。启动后，哨兵向主数据库发送 INFO 命令，通过解析返回结果来得知从数据库列表，而后对每个从数据库同样建立两个连接，两个连接的作用和刚刚介绍的与主数据库建立的两个连接完全一致。在此之后，哨兵会每 10 秒定时向已知的所有主从数据库发送 INFO 命令来获取信息并进行相应的更新操作，比如对新增的从数据库建立连接并加入监控列表，对主从数据库的角色变化（由故障恢复操作引起）进行信息更新等。</p>
-<p>接下来哨兵向主从数据库的<code>_sentinel_:hello</code> 频道发送消息来与同样监控该数据库的哨兵分享自己的信息。发送的消息内容为：</p>
-<pre class=" language-bash"><code class="language-bash"><span class="token operator">&lt;</span>哨兵的地址<span class="token operator">></span>，<span class="token operator">&lt;</span>哨兵的端口<span class="token operator">></span>，<span class="token operator">&lt;</span>哨兵的运行ID<span class="token operator">></span>，<span class="token operator">&lt;</span>哨兵的配置版本<span class="token operator">></span>，<span class="token operator">&lt;</span>主数据库的名字<span class="token operator">></span>，<span class="token operator">&lt;</span>主数据库的地址<span class="token operator">></span>，<span class="token operator">&lt;</span>主数据库的端口<span class="token operator">></span>，<span class="token operator">&lt;</span>主数据库的配置版本<span class="token operator">></span></code></pre>
-<p>可以看到消息包括哨兵的基本信息，以及其监控的主数据库的信息。刚刚介绍过，哨兵会订阅每个监控的数据库<code>_sentinel_:hello</code> 频道，所以当其它哨兵收到消息后，会判断发消息的哨兵是不是新发现的哨兵。如果是则将其加入已发现的哨兵列表中并创建一个到其的连接（与数据库不同，哨兵与哨兵之间只会创建一条连接用来发送 PING 命令，而不需要创建另外一条连接来订阅频道，因为哨兵只需要订阅数据库的频道即可实现自动发现其它哨兵）。同时哨兵会判断信息中主数据库的配置版本，如果该版本比当前记录的主数据库的版本高，则更新主数据库中的数据。</p>
-<p>实现了自动发现从数据库和其它哨兵节点后，哨兵要做的就是定时监控这些数据库和节点有没有停止服务。这是通过每隔一定时间向这些节点发送 PING 命令实现的。时间间隔与 <code>down-after-milliseconds</code> 选项有关，当  <code>down-after-milliseconds</code>  的值小于 1 秒时，哨兵会每隔  <code>down-after-milliseconds</code>  指定的时间发送一次 PING 命令，当  <code>down-after-milliseconds</code> 的值大于 1 秒时，哨兵会每隔 1 秒发送一次 PING 命令。例如：</p>
-<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 每隔 1 秒发送一次 PING 命令</span>
-sentinel down-after-milliseconds mymaster 60000
-<span class="token comment" spellcheck="true"># 每隔 600 毫秒发送一次 PING 命令</span>
-sentinel down-after-milliseconds othermaster 500</code></pre>
-<p>当超过 <code>down-after-milliseconds</code> 选项指定时间后，如果被 PING 的数据库或节点仍然未进行回复，则哨兵认为其<strong>主观下线（subjectively down）</strong>。主观下线表示从当前的哨兵进程看来，该节点已经下线。如果该节点是主数据库，则哨兵会进一步判断是否需要对其进行故障恢复：哨兵发送 <code>SENTINEL is-master-down-by-addr</code> 命令询问其它哨兵节点以了解它们是否也认为该主数据库主观下线，如果达到指定数量时，哨兵会认为其<strong>客观下线（objectively down）</strong>，并选举领头的哨兵节点对主从系统发起故障恢复。这个指定数量即为前文介绍的 quorum 参数。例如，下面的配置：</p>
-<pre class=" language-bash"><code class="language-bash">sentinel monitor mymaster 127.0.0.1 6379 2</code></pre>
-<p>该配置表示只有当至少两个 Sentinel 节点（包括当前节点）认为该主数据库主观下线时，当前哨兵节点才会认为该主数据库客观下线。进行接下来的选举领头哨兵步骤。</p>
-<p>虽然当前哨兵节点发现了主数据库客观下线，需要故障恢复，但是故障恢复需要由领头的哨兵来完成，这样可以保证同一时间只有一个哨兵节点来执行故障恢复。选举领头哨兵的过程使用了 Raft 算法，具体过程如下：</p>
-<ol>
-<li>发现主数据库客观下线的哨兵节点（下面称作 A）向每个哨兵节点发送命令，要求对方选自己为领头哨兵。</li>
-<li>如果目标哨兵节点没有选过其它人，则会同意将 A 设置成领头哨兵。</li>
-<li>如果 A 发现有超过半数且超过 quorum 参数值的哨兵节点同意选自己成为领头哨兵，则 A 成功成为领头哨兵。</li>
-<li>当有多个哨兵节点同时参选领头哨兵，则会出现没有任何节点当选的可能。此时每个参选节点将等待一个随机时间重新发起参数请求，进行下一轮选举，直到选举成功。</li>
-</ol>
-<p>因为要成为领头哨兵必须有超过半数的哨兵节点支持，所以每次选举最多只会选出一个领头哨兵。选出领头哨兵后，领头哨兵将会开始对主数据库进行故障恢复。故障恢复的过程相对简单，具体如下：</p>
-<p>首先领头哨兵将从停止服务的主数据库的从数据库中挑选一个来充当新的主数据库。挑选的依据如下：</p>
-<ol>
-<li>所有在线的从数据库中，选择优先级别最高的从数据库。优先级可以通过 <code>slave-priority</code> 选项来设置。</li>
-<li>如果有多个最高优先级的从数据库，则复制的命令偏移量越大（即复制越完成）越优先，</li>
-<li>如果以上条件都一样，则选择运行 ID 较小的从数据库。</li>
-</ol>
-<p>选出一个从数据库后，领头哨兵将向从数据库发送 <code>SLAVE NO ONE</code> 命令使其升格为主数据库。而后领头哨兵向其它从数据库发送 <code>SLAVEOF</code> 命令来使其成为新主数据库的从数据库。最后一步则是更新内部的记录，将已经停止服务的旧的主数据库更新为新的主数据库的从数据库，使得当其恢复服务时自动以从数据库的身份继续服务。</p>
-<h3 id="哨兵的部署"><a href="#哨兵的部署" class="headerlink" title="哨兵的部署"></a>哨兵的部署</h3><p>哨兵以独立进程的方式对一个主从系统进行监控，监控效果的好坏与否取决于哨兵的视角是否有代表性。如果一个主从系统中配置的哨兵较少，哨兵对整个系统的判断的可靠性就会降低。极端情况下，当只有一个哨兵时，哨兵本身就很有可能发生单点故障。整体来讲，相对稳妥的哨兵部署方案是使得哨兵的视角尽可能地与每个节点的视角一致，即：</p>
-<ul>
-<li>为每个节点（无论是主数据库还是从数据库）部署一个哨兵</li>
-<li>使每个哨兵与其对应的节点的网络环境相同或相近</li>
-</ul>
-<p>这样的部署方案可以保证哨兵的视角拥有较高的代表性和可靠性。举一个例子：当网络分区后，如果哨兵认为某个分区是主要分区，即意味着从每个节点观察，该分区均为主分区。</p>
-<p>同时设置 quorum 的值为 <code>N / 2 + 1</code> (其中 N 为哨兵节点数量)，这样使得只有大部分哨兵节点同意后才会进行故障恢复。</p>
-<p>当系统中的节点较多时，考虑到每个哨兵都会和系统中的所有节点建立连接，为每个节点分配一个哨兵会产生较多连接，尤其当进行客户端分片时使用多个哨兵节点监控多个主数据库会因为 Redis 不支持连接复用而产生大量冗余连接，同时如果 Redis  节点负载较高，会在一定程度上影响其对哨兵的回复和同机的哨兵与其它节点的通信。所以配置哨兵时还需根据实际的生产环境进行选择。</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>Redis</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Redis常用数据类型</title>
     <url>/posts/f08d.html</url>
     <content><![CDATA[<h3 id="String"><a href="#String" class="headerlink" title="String"></a>String</h3><p>字符串类型是 Redis 中最基本的数据类型，它能存储任何形式的字符串，包括二进制数据。你可以用其存储用户的邮箱、JSON化的对象甚至是一张图片。一个字符串类型键允许村塾的数据的最大容量是521MB。</p>
@@ -6213,6 +6342,171 @@ $ ZRANGE sortedSetsResult 0 -1 WITHSCORES
 3<span class="token punctuation">)</span> <span class="token string">"b"</span>
 4<span class="token punctuation">)</span> <span class="token string">"4"</span></code></pre>
 <p>另外还有一个命令与 <code>ZINTERSTORE </code>命令的用法一样，名为 <code>ZUNIONSTORE</code>，它的作用是计算集合间的并集，这里不再赘述。</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis哨兵</title>
+    <url>/posts/c807.html</url>
+    <content><![CDATA[<h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>在一个典型的一主多从的Redis系统中，从数据库在整个系统中起到了数据冗余备份和读写分离的作用。当主数据库遇到异常中断服务后，开发者可以通过手动的方式选择一个从数据库来升级为主数据库，以使得系统能够继续提供服务。然而整个过程相对麻烦且需要人工介入，难以实现自动化。</p>
+<p>为此，Redis 2.8 中提供了哨兵工具来实现自动化的系统监控和故障恢复功能。</p>
+<h4 id="什么是哨兵"><a href="#什么是哨兵" class="headerlink" title="什么是哨兵"></a>什么是哨兵</h4><p>顾名思义，哨兵的作用就是监控 Redis 系统的运行状况。它的功能包括以下两个。</p>
+<ul>
+<li>监控主数据库和从数据库是否正常运行。</li>
+<li>主数据库出现故障时自动将从数据库转换为主数据库。</li>
+</ul>
+<p>哨兵是一个独立的进程，使用哨兵的一个典型架构如下所示：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/15971611207217_.pic_hd.jpg"></p>
+<p>在一个一主多从的 Redis 系统中，可以使用多个哨兵进行监控任务以保证系统足够稳健。注意，此时不仅哨兵会同时监控主数据库和从数据库，哨兵之间也会互相监控。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/15981611207382_.pic_hd.jpg"></p>
+<h3 id="马上上手"><a href="#马上上手" class="headerlink" title="马上上手"></a>马上上手</h3><p>在理解哨兵的原理前，我们首先实际使用一下哨兵，来了解哨兵是如何工作的。首先建立起 3 个 Redis 实例，其中包括一个主数据库和两个从数据库。主数据库的端口为 6379，两个从数据库的端口分别为 6380 和 6381。我们使用 Redis 命令行客户端来获取复制状态，以保证复制配置正确。</p>
+<p>首先是主数据库：</p>
+<pre class=" language-bash"><code class="language-bash">redis 6379<span class="token operator">></span> info replication
+<span class="token comment" spellcheck="true"># Replication</span>
+role:master
+connected_slaves:2
+slave0:ip<span class="token operator">=</span>127.0.0.1,port<span class="token operator">=</span>6380,state<span class="token operator">=</span>online,offset<span class="token operator">=</span>56,lag<span class="token operator">=</span>0
+slave1:ip<span class="token operator">=</span>127.0.0.1,port<span class="token operator">=</span>6381,state<span class="token operator">=</span>online,offset<span class="token operator">=</span>56,lag<span class="token operator">=</span>0</code></pre>
+<p>可见其连接了两个从数据库，配置正确。然后用同样的方法查看两个从数据库的配置：</p>
+<pre class=" language-bash"><code class="language-bash">redis 6380<span class="token operator">></span> INFO replication
+<span class="token comment" spellcheck="true"># Replication</span>
+role:slave
+master_host:127.0.0.1
+
+redis 6381<span class="token operator">></span> info replication
+<span class="token comment" spellcheck="true"># Replication</span>
+role:slave
+master_host:127.0.0.1
+master_port:6379</code></pre>
+<p>当出现的信息如上时，即证明一主而从配置已经成功了。</p>
+<p>接下来开始配置哨兵。建立一个配置文件，如 <code>sentinel.conf</code>，内容为：</p>
+<pre class=" language-shell"><code class="language-shell">sentinel monitor mymaster 127.0.0.1 6379 1</code></pre>
+<p>其中 <code>mymaster</code> 表示要监视的主数据库名字，可以自己定义一个。这个名字必须仅由大小写字母、数字 和 “.-_”这3个字符组成。后两个参数表示主数据库的地址和端口号，这里我们要监控的主数据库 6379。最后的 1 表示最低通过票数，后面会介绍。接下来启动 sentinel 进程，并将上述配置文件的路径传递给哨兵：</p>
+<pre class=" language-bash"><code class="language-bash">$ redis-sentinel /path/to/sentinel.conf</code></pre>
+<p> 需要注意的是，配置哨兵监控一个系统时，只需要配置其监控主数据库即可，哨兵会自动发现所有复制该主数据库的从数据库。</p>
+<p>启动哨兵后，哨兵输出一下内容：</p>
+<pre class=" language-bash"><code class="language-bash">3839:X 21 Jan 2021 01:02:39.668 <span class="token comment" spellcheck="true"># Sentinel ID is 34e43f99b8460c86a0061c0e3325c5a5d94602b2</span>
+3839:X 21 Jan 2021 01:02:39.668 <span class="token comment" spellcheck="true"># +monitor master mymaster 127.0.0.1 6379 quorum 1</span>
+3839:X 21 Jan 2021 01:02:39.669 * +slave slave 127.0.0.1:6380 127.0.0.1 6380 @ mymaster 127.0.0.1 6379
+3839:X 21 Jan 2021 01:02:39.670 * +slave slave 127.0.0.1:6381 127.0.0.1 6381 @ mymaster 127.0.0.1 6379</code></pre>
+<p>其中 +slave 表示新发现了从数据库，可见哨兵成功地发现了两个从数据库。现在哨兵已经在监控 3 个 Redis 实例了，这时我们将主数据库关闭（即运行在 639 端口上的 Redis 实例，杀死进程或使用 SHUTDOWN 命令）,等待指定时间后（可以配置，默认为 30 秒），哨兵会输出一下内容：</p>
+<pre class=" language-shell"><code class="language-shell">3839:X 21 Jan 2021 01:10:29.111 # +sdown master mymaster 127.0.0.1 6379
+3839:X 21 Jan 2021 01:10:29.111 # +odown master mymaster 127.0.0.1 6379 #quorum 1/1</code></pre>
+<p>其中 <code>+sdown</code> 表示哨兵主观认为主数据库停止服务了，而 <code>+odown</code> 则表示哨兵客观认为主数据库停止服务了，关于客观和主管的区别后文会详细介绍。此时哨兵开始执行故障恢复，即挑选一个从数据库，将其升格为主数据库。同时输出以下内容：</p>
+<pre class=" language-shell"><code class="language-shell">3839:X 21 Jan 2021 01:10:29.111 # +try-failover master mymaster 127.0.0.1 6379
+...
+3839:X 21 Jan 2021 01:10:30.561 # +failover-end master mymaster 127.0.0.1 6379
+3839:X 21 Jan 2021 01:10:30.561 # +switch-master mymaster 127.0.0.1 6379 127.0.0.1 6380</code></pre>
+<p><code>+try-failover</code> 表示哨兵开始进行故障恢复，<code>+failover-end</code> 表示哨兵完成故障恢复，期间设计的内容比较复杂，包括领头哨兵的选举、备选从数据库的选择等。<code>+switch-master</code> 表示主数据库从 6379 端口迁移到 6380 端口，即 6380 端口的从数据库被升格为主数据库，同时两个 <code>+slave</code> 则列出了2个新的从数据库，端口分别为 6381 和 6379。</p>
+<pre class=" language-shell"><code class="language-shell">3839:X 21 Jan 2021 01:10:30.561 * +slave slave 127.0.0.1:6381 127.0.0.1 6381 @ mymaster 127.0.0.1 6380
+3839:X 21 Jan 2021 01:10:30.561 * +slave slave 127.0.0.1:6379 127.0.0.1 6379 @ mymaster 127.0.0.1 6380
+3839:X 21 Jan 2021 01:11:00.587 # +sdown slave 127.0.0.1:6379 127.0.0.1 6379 @ mymaster 127.0.0.1 6380</code></pre>
+<p>其中 6379 就是之前停止服务的主数据库，可见哨兵并没有彻底清除停止服务的实例的信息，这时因为停止服务的实例有可能会在之后的某个时间恢复服务，这时哨兵会让其重新加入进来，所以当实例停止服务后，哨兵会更新该实例的信息，使得当其重新重新加入后可以按照当时信息继续对外提供服务。此例中 6379 端口的主数据库实例停止服务了，而 6380 端口的从数据已经升格为主数据库，当 6379 端口的实例恢复服务后，会转变成 6380 端口实例的从数据库来运行，所以哨兵将 6379 端口实例的信息改成了 6380 端口实例的从数据库。</p>
+<p>故障恢复完成后，可以使用 Redis 命令行客户端重新检查 6380 和 6381 两个端口上的实例的复制信息：</p>
+<pre class=" language-bash"><code class="language-bash">redis 6380<span class="token operator">></span> INFO replication
+<span class="token comment" spellcheck="true"># Replication</span>
+role:master
+connected_slaves:1
+slave0:ip<span class="token operator">=</span>127.0.0.1,port<span class="token operator">=</span>6381,state<span class="token operator">=</span>online,offset<span class="token operator">=</span>59364,lag<span class="token operator">=</span>1
+
+redis 6381<span class="token operator">></span> INFO replication
+<span class="token comment" spellcheck="true"># Replication</span>
+role:slave
+master_host:127.0.0.1
+master_port:6380</code></pre>
+<p>可以看到 6380 端口上的实例已经确实升格为主数据库了，同时 6381 端口上的实例是其从数据库。整个故障恢复过程就此完成。</p>
+<p>那么此时我们将 6379 端口上的实例重新启动，会发生什么情况呢？首先哨兵会监控到这一变化，并输出：</p>
+<pre class=" language-bash"><code class="language-bash">3839:X 21 Jan 2021 01:37:10.815 <span class="token comment" spellcheck="true"># -sdown slave 127.0.0.1:6379 127.0.0.1 6379 @ mymaster 127.0.0.1 6380</span>
+3839:X 21 Jan 2021 01:37:20.745 * +convert-to-slave slave 127.0.0.1:6379 127.0.0.1 6379 @ mymaster 127.0.0.1 6380</code></pre>
+<p><code>sdown</code> 表示实例 6379 已经恢复服务了（与 <code>+sdown</code> 相反），同时 <code>+convert-to-slave</code> 表示将 6379 端口的实例设置为 6380 端口实例的从数据库。这时使用 Redis 命令行客户端查看 6379 端口实例的复制信息为：</p>
+<pre class=" language-bash"><code class="language-bash">redis 6379<span class="token operator">></span> INFO replication
+<span class="token comment" spellcheck="true"># Replication</span>
+role:slave
+master_host:127.0.0.1
+master_port:6380</code></pre>
+<p>同时 6380 端口实例的复制信息为：</p>
+<pre class=" language-bash"><code class="language-bash">127.0.0.1:6380<span class="token operator">></span> INFO replication
+<span class="token comment" spellcheck="true"># Replication</span>
+role:master
+connected_slaves:2
+slave0:ip<span class="token operator">=</span>127.0.0.1,port<span class="token operator">=</span>6381,state<span class="token operator">=</span>online,offset<span class="token operator">=</span>153516,lag<span class="token operator">=</span>1
+slave1:ip<span class="token operator">=</span>127.0.0.1,port<span class="token operator">=</span>6379,state<span class="token operator">=</span>online,offset<span class="token operator">=</span>153516,lag<span class="token operator">=</span>0</code></pre>
+<p>正如预期一样，6380 端口实例的从数据库变味了两个，6379 成功恢复服务。</p>
+<h3 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h3><p>一个哨兵进程启动时会读取配置文件的内容，通过如下的配置找出需要监控的主数据库：</p>
+<pre class=" language-bash"><code class="language-bash">sentinel monitor master-name ip redis-port quorum</code></pre>
+<p>其中 master-name 是一个由大小写字母、数字和 “.-_” 组成的主数据库的名字，因为考虑到故障恢复后当前监控的系统的主数据库的地址和端口会产生变化，所以哨兵提供了命令可以通过主数据库的名字获取当前系统的主数据库地址和端口号。</p>
+<p><code>ip</code> 表示当前系统中主数据库的地址，而 <code>redis-port</code> 则表示端口号。</p>
+<p><code>quorum</code> 用来表示执行故障恢复操作前至少需要几个哨兵节点同意。一个哨兵节点可以同时监控多个 Redis 主从系统，只需要提供多个 <code>sentinel monitor</code> 配置即可，例如：</p>
+<pre class=" language-bash"><code class="language-bash">sentinel monitor mymaster 127.0.0.0.1 6379 2
+sentinel monitor othermaster 192.168.1.1 6380 4</code></pre>
+<p>同时多个哨兵节点也可以同时监控一个 Redis 主从系统，从而形成网状结构。</p>
+<p>配置文件中还可以定义其它监控相关的参数，每个配置选项都包含主数据库的名字使得监控不同主数据库时可以使用不同的配置参数。例如：</p>
+<pre class=" language-bash"><code class="language-bash">sentinel down-after-milliseconds mymaster 60000
+sentinel down-after-milliseconds othermaster 10000</code></pre>
+<p>上面的两行配置分别配置了 <code>mymaster</code> 和 <code>othermaster</code> 的 down-after-milliseconds 选项分别为 60000 和 10000。</p>
+<p>哨兵启动后，会与要监控的主数据库建立两条连接，这两个连接的建立方式与普通的 Redis 客户端无异。其中一条连接用来订阅该主数据库的 <code>_sentinel_:hello</code> 频道以获取其它同样监控该数据库的哨兵节点信息，另外哨兵也需要定期向主数据发送 INO 等命令来获取主数据库本身的信息。因为当客户端进入订阅模式时就不能再执行其它命令了，所以这时哨兵会使用另外一条连接来发送这些命令。</p>
+<p>和主数据库的连接建立完成后，哨兵会定时执行下面 3 个操作：</p>
+<ol>
+<li>每 10 秒哨兵会向主数据库和从数据库发送 INFO 命令。</li>
+<li>每 2 秒哨兵会向主数据库和从数据库的 <code>_sentinel_:hello</code> 频道发送自己的信息。</li>
+<li>每 1 秒会向主数据库、从数据库和其它哨兵节点发送 PING 命令。</li>
+</ol>
+<p>这 3 个操作贯穿哨兵进程的整个生命周期中，非常重要，可以说了解了这 3 个操作的意义就能够了解哨兵工作原理的一般内容了。下面分别详细介绍。</p>
+<p>首先，发送 INFO 命令使得哨兵可以获得当前数据库的相关信息（包括运行 ID 、复制信息等）从而实现新节点的自动发现。前面说配置哨兵监控 Redis 主从系统时只需要指定主数据库的信息即可，因为哨兵正是借助 INFO 命令来获取所有复制该主数据库的从数据库信息的。启动后，哨兵向主数据库发送 INFO 命令，通过解析返回结果来得知从数据库列表，而后对每个从数据库同样建立两个连接，两个连接的作用和刚刚介绍的与主数据库建立的两个连接完全一致。在此之后，哨兵会每 10 秒定时向已知的所有主从数据库发送 INFO 命令来获取信息并进行相应的更新操作，比如对新增的从数据库建立连接并加入监控列表，对主从数据库的角色变化（由故障恢复操作引起）进行信息更新等。</p>
+<p>接下来哨兵向主从数据库的<code>_sentinel_:hello</code> 频道发送消息来与同样监控该数据库的哨兵分享自己的信息。发送的消息内容为：</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token operator">&lt;</span>哨兵的地址<span class="token operator">></span>，<span class="token operator">&lt;</span>哨兵的端口<span class="token operator">></span>，<span class="token operator">&lt;</span>哨兵的运行ID<span class="token operator">></span>，<span class="token operator">&lt;</span>哨兵的配置版本<span class="token operator">></span>，<span class="token operator">&lt;</span>主数据库的名字<span class="token operator">></span>，<span class="token operator">&lt;</span>主数据库的地址<span class="token operator">></span>，<span class="token operator">&lt;</span>主数据库的端口<span class="token operator">></span>，<span class="token operator">&lt;</span>主数据库的配置版本<span class="token operator">></span></code></pre>
+<p>可以看到消息包括哨兵的基本信息，以及其监控的主数据库的信息。刚刚介绍过，哨兵会订阅每个监控的数据库<code>_sentinel_:hello</code> 频道，所以当其它哨兵收到消息后，会判断发消息的哨兵是不是新发现的哨兵。如果是则将其加入已发现的哨兵列表中并创建一个到其的连接（与数据库不同，哨兵与哨兵之间只会创建一条连接用来发送 PING 命令，而不需要创建另外一条连接来订阅频道，因为哨兵只需要订阅数据库的频道即可实现自动发现其它哨兵）。同时哨兵会判断信息中主数据库的配置版本，如果该版本比当前记录的主数据库的版本高，则更新主数据库中的数据。</p>
+<p>实现了自动发现从数据库和其它哨兵节点后，哨兵要做的就是定时监控这些数据库和节点有没有停止服务。这是通过每隔一定时间向这些节点发送 PING 命令实现的。时间间隔与 <code>down-after-milliseconds</code> 选项有关，当  <code>down-after-milliseconds</code>  的值小于 1 秒时，哨兵会每隔  <code>down-after-milliseconds</code>  指定的时间发送一次 PING 命令，当  <code>down-after-milliseconds</code> 的值大于 1 秒时，哨兵会每隔 1 秒发送一次 PING 命令。例如：</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 每隔 1 秒发送一次 PING 命令</span>
+sentinel down-after-milliseconds mymaster 60000
+<span class="token comment" spellcheck="true"># 每隔 600 毫秒发送一次 PING 命令</span>
+sentinel down-after-milliseconds othermaster 500</code></pre>
+<p>当超过 <code>down-after-milliseconds</code> 选项指定时间后，如果被 PING 的数据库或节点仍然未进行回复，则哨兵认为其<strong>主观下线（subjectively down）</strong>。主观下线表示从当前的哨兵进程看来，该节点已经下线。如果该节点是主数据库，则哨兵会进一步判断是否需要对其进行故障恢复：哨兵发送 <code>SENTINEL is-master-down-by-addr</code> 命令询问其它哨兵节点以了解它们是否也认为该主数据库主观下线，如果达到指定数量时，哨兵会认为其<strong>客观下线（objectively down）</strong>，并选举领头的哨兵节点对主从系统发起故障恢复。这个指定数量即为前文介绍的 quorum 参数。例如，下面的配置：</p>
+<pre class=" language-bash"><code class="language-bash">sentinel monitor mymaster 127.0.0.1 6379 2</code></pre>
+<p>该配置表示只有当至少两个 Sentinel 节点（包括当前节点）认为该主数据库主观下线时，当前哨兵节点才会认为该主数据库客观下线。进行接下来的选举领头哨兵步骤。</p>
+<p>虽然当前哨兵节点发现了主数据库客观下线，需要故障恢复，但是故障恢复需要由领头的哨兵来完成，这样可以保证同一时间只有一个哨兵节点来执行故障恢复。选举领头哨兵的过程使用了 Raft 算法，具体过程如下：</p>
+<ol>
+<li>发现主数据库客观下线的哨兵节点（下面称作 A）向每个哨兵节点发送命令，要求对方选自己为领头哨兵。</li>
+<li>如果目标哨兵节点没有选过其它人，则会同意将 A 设置成领头哨兵。</li>
+<li>如果 A 发现有超过半数且超过 quorum 参数值的哨兵节点同意选自己成为领头哨兵，则 A 成功成为领头哨兵。</li>
+<li>当有多个哨兵节点同时参选领头哨兵，则会出现没有任何节点当选的可能。此时每个参选节点将等待一个随机时间重新发起参数请求，进行下一轮选举，直到选举成功。</li>
+</ol>
+<p>因为要成为领头哨兵必须有超过半数的哨兵节点支持，所以每次选举最多只会选出一个领头哨兵。选出领头哨兵后，领头哨兵将会开始对主数据库进行故障恢复。故障恢复的过程相对简单，具体如下：</p>
+<p>首先领头哨兵将从停止服务的主数据库的从数据库中挑选一个来充当新的主数据库。挑选的依据如下：</p>
+<ol>
+<li>所有在线的从数据库中，选择优先级别最高的从数据库。优先级可以通过 <code>slave-priority</code> 选项来设置。</li>
+<li>如果有多个最高优先级的从数据库，则复制的命令偏移量越大（即复制越完成）越优先，</li>
+<li>如果以上条件都一样，则选择运行 ID 较小的从数据库。</li>
+</ol>
+<p>选出一个从数据库后，领头哨兵将向从数据库发送 <code>SLAVE NO ONE</code> 命令使其升格为主数据库。而后领头哨兵向其它从数据库发送 <code>SLAVEOF</code> 命令来使其成为新主数据库的从数据库。最后一步则是更新内部的记录，将已经停止服务的旧的主数据库更新为新的主数据库的从数据库，使得当其恢复服务时自动以从数据库的身份继续服务。</p>
+<h3 id="哨兵的部署"><a href="#哨兵的部署" class="headerlink" title="哨兵的部署"></a>哨兵的部署</h3><p>哨兵以独立进程的方式对一个主从系统进行监控，监控效果的好坏与否取决于哨兵的视角是否有代表性。如果一个主从系统中配置的哨兵较少，哨兵对整个系统的判断的可靠性就会降低。极端情况下，当只有一个哨兵时，哨兵本身就很有可能发生单点故障。整体来讲，相对稳妥的哨兵部署方案是使得哨兵的视角尽可能地与每个节点的视角一致，即：</p>
+<ul>
+<li>为每个节点（无论是主数据库还是从数据库）部署一个哨兵</li>
+<li>使每个哨兵与其对应的节点的网络环境相同或相近</li>
+</ul>
+<p>这样的部署方案可以保证哨兵的视角拥有较高的代表性和可靠性。举一个例子：当网络分区后，如果哨兵认为某个分区是主要分区，即意味着从每个节点观察，该分区均为主分区。</p>
+<p>同时设置 quorum 的值为 <code>N / 2 + 1</code> (其中 N 为哨兵节点数量)，这样使得只有大部分哨兵节点同意后才会进行故障恢复。</p>
+<p>当系统中的节点较多时，考虑到每个哨兵都会和系统中的所有节点建立连接，为每个节点分配一个哨兵会产生较多连接，尤其当进行客户端分片时使用多个哨兵节点监控多个主数据库会因为 Redis 不支持连接复用而产生大量冗余连接，同时如果 Redis  节点负载较高，会在一定程度上影响其对哨兵的回复和同机的哨兵与其它节点的通信。所以配置哨兵时还需根据实际的生产环境进行选择。</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
