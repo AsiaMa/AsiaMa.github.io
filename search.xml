@@ -262,6 +262,42 @@
       </tags>
   </entry>
   <entry>
+    <title>Java的不足</title>
+    <url>/posts/26f4.html</url>
+    <content><![CDATA[<h3 id="检查异常"><a href="#检查异常" class="headerlink" title="检查异常"></a>检查异常</h3><p>检查异常会在编译时强制执行try catch处理，同时还需要进行某种排序处理。检查异常是一个失败的实践，几乎所有的主要API提供者都返回可检查异常。Kotlin中摒弃了检查异常。</p>
+<h3 id="基本类型和数组"><a href="#基本类型和数组" class="headerlink" title="基本类型和数组"></a>基本类型和数组</h3><p>Java的这个设计保留了字节码的底层细节，违反了“凡事皆为对象”的原则，如泛型无法包容基本类型就是一个例子。这也使得Java的类型系统显得不是那么地简单统一。比较好的方案是，源代码不用直接使用基本类型和数组，由编译器（或者JVM）来决定是否可以帮你对其优化，而Kotlin正是这么做的。</p>
+<h3 id="静态变量"><a href="#静态变量" class="headerlink" title="静态变量"></a>静态变量</h3><p>静态方法经常会导致需要显式的定义接口，从而使得API更加复杂。一个更好的办法就是采用单例对象，单例对象在大多数情况下表现得与静态对象差不多，但是可以像一个对象被传递。Kotlin中提供了object单例对象。</p>
+<h3 id="空指针异常"><a href="#空指针异常" class="headerlink" title="空指针异常"></a>空指针异常</h3><p>在Java中我们不得不写一堆防御代码来避免令人头疼的NPE。Kotlin中引入可空类型与安全调用符、Elvis操作符等特性来实现空安全。</p>
+<h3 id="一堆getter-setter单调冗长的样板代码"><a href="#一堆getter-setter单调冗长的样板代码" class="headerlink" title="一堆getter/setter单调冗长的样板代码"></a>一堆getter/setter单调冗长的样板代码</h3><p>在Kotlin中，我们可以使用数据类：</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">Person</span><span class="token punctuation">(</span><span class="token keyword">val</span> id<span class="token operator">:</span> Int<span class="token punctuation">,</span> <span class="token keyword">val</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span></code></pre>
+<h3 id="不容易传递函数"><a href="#不容易传递函数" class="headerlink" title="不容易传递函数"></a>不容易传递函数</h3><p>Java中没有一等函数类型，函数式（FP）编程只能通过使用接口类型以及多态特性“曲线”来实现。Java会将每一个算法（方法）都放入类中，这种限制会出现这样的“荒唐事”：我们只想实现一个函数算法，而这个时候必须还要给出一个类来放置这个方法；同样，如果在其它地方调用这个方法，必须通过创建该类来实现调用。在Kotlin中直接提供了一等函数（First-Class Function Type）类型，其跟普通类型一样，函数类型可以作为值来传递，也可以作为返回值。</p>
+<blockquote>
+<p>不可否认的是，C、C++和Java语言都是非常优秀的编程语言。但是事物总是不断发展变化的。就像C++语言是对C语言的继承与发展，Java语言是对C++语言的继承与改造，而Kotlin语言也是对Java语言的继承与变革。</p>
+</blockquote>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Kotin介绍</title>
     <url>/posts/5487.html</url>
     <content><![CDATA[<h3 id="Kotlin的主要特征"><a href="#Kotlin的主要特征" class="headerlink" title="Kotlin的主要特征"></a>Kotlin的主要特征</h3><h4 id="静态类型"><a href="#静态类型" class="headerlink" title="静态类型"></a>静态类型</h4><p>Kotlin和Java一样是一种静态类型的编程语言。这意味着<code>所有表达式的类型在编译器已经确定了，而编译器就能验证对象是否包含了你想访问的方法或者字段</code>。</p>
@@ -328,18 +364,81 @@ b<span class="token operator">?</span><span class="token punctuation">.</span>le
       </tags>
   </entry>
   <entry>
-    <title>Java的不足</title>
-    <url>/posts/26f4.html</url>
-    <content><![CDATA[<h3 id="检查异常"><a href="#检查异常" class="headerlink" title="检查异常"></a>检查异常</h3><p>检查异常会在编译时强制执行try catch处理，同时还需要进行某种排序处理。检查异常是一个失败的实践，几乎所有的主要API提供者都返回可检查异常。Kotlin中摒弃了检查异常。</p>
-<h3 id="基本类型和数组"><a href="#基本类型和数组" class="headerlink" title="基本类型和数组"></a>基本类型和数组</h3><p>Java的这个设计保留了字节码的底层细节，违反了“凡事皆为对象”的原则，如泛型无法包容基本类型就是一个例子。这也使得Java的类型系统显得不是那么地简单统一。比较好的方案是，源代码不用直接使用基本类型和数组，由编译器（或者JVM）来决定是否可以帮你对其优化，而Kotlin正是这么做的。</p>
-<h3 id="静态变量"><a href="#静态变量" class="headerlink" title="静态变量"></a>静态变量</h3><p>静态方法经常会导致需要显式的定义接口，从而使得API更加复杂。一个更好的办法就是采用单例对象，单例对象在大多数情况下表现得与静态对象差不多，但是可以像一个对象被传递。Kotlin中提供了object单例对象。</p>
-<h3 id="空指针异常"><a href="#空指针异常" class="headerlink" title="空指针异常"></a>空指针异常</h3><p>在Java中我们不得不写一堆防御代码来避免令人头疼的NPE。Kotlin中引入可空类型与安全调用符、Elvis操作符等特性来实现空安全。</p>
-<h3 id="一堆getter-setter单调冗长的样板代码"><a href="#一堆getter-setter单调冗长的样板代码" class="headerlink" title="一堆getter/setter单调冗长的样板代码"></a>一堆getter/setter单调冗长的样板代码</h3><p>在Kotlin中，我们可以使用数据类：</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">Person</span><span class="token punctuation">(</span><span class="token keyword">val</span> id<span class="token operator">:</span> Int<span class="token punctuation">,</span> <span class="token keyword">val</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span></code></pre>
-<h3 id="不容易传递函数"><a href="#不容易传递函数" class="headerlink" title="不容易传递函数"></a>不容易传递函数</h3><p>Java中没有一等函数类型，函数式（FP）编程只能通过使用接口类型以及多态特性“曲线”来实现。Java会将每一个算法（方法）都放入类中，这种限制会出现这样的“荒唐事”：我们只想实现一个函数算法，而这个时候必须还要给出一个类来放置这个方法；同样，如果在其它地方调用这个方法，必须通过创建该类来实现调用。在Kotlin中直接提供了一等函数（First-Class Function Type）类型，其跟普通类型一样，函数类型可以作为值来传递，也可以作为返回值。</p>
-<blockquote>
-<p>不可否认的是，C、C++和Java语言都是非常优秀的编程语言。但是事物总是不断发展变化的。就像C++语言是对C语言的继承与发展，Java语言是对C++语言的继承与改造，而Kotlin语言也是对Java语言的继承与变革。</p>
-</blockquote>
+    <title>Kotlin内联:noinline与crossinline</title>
+    <url>/posts/11c5.html</url>
+    <content><![CDATA[<p>在Kotlin中，内部Lambda是不允许中断外部函数执行的。</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    test1<span class="token punctuation">{</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"hello"</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span><span class="token label symbol">@test1</span>    <span class="token comment" spellcheck="true">//如果直接return（不带@test1）就会报错，内部Lambda是不允许中断外部函数执行的</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"hello"</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+
+<span class="token keyword">fun</span> <span class="token function">test1</span><span class="token punctuation">(</span>l<span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-></span> Unit<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    l<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/** 输出结果：
+            hello 
+            hello */</span></code></pre>
+<p>inline的Lambda可以中断外部函数调用:</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    test1<span class="token punctuation">{</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"hello"</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"hello"</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+
+<span class="token keyword">inline</span> <span class="token keyword">fun</span> <span class="token function">test1</span><span class="token punctuation">(</span>l<span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-></span> Unit<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    l<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">/** 输出结果：hello */</span></code></pre>
+<p>crossinline不允许inline的Lambda中断外部函数执行。</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    test1 <span class="token punctuation">{</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"hello"</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span><span class="token label symbol">@test1</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"hello1"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"hello2"</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+
+<span class="token keyword">inline</span> <span class="token keyword">fun</span> <span class="token function">test1</span><span class="token punctuation">(</span><span class="token keyword">crossinline</span> l<span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-></span> Unit<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    l<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">/** 输出结果：
+            hello
+            hello2 */</span></code></pre>
+<p>noinline拒绝内联。</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">val</span> runnable <span class="token operator">=</span> Runnable <span class="token punctuation">{</span>
+    <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"runnable"</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">val</span> test2 <span class="token operator">=</span> <span class="token function">test2</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"hello"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span> runnable<span class="token operator">::</span>run<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment" spellcheck="true">// 如果函数返回值是一个lambda表达式的话，我需要对这个lambda表达式加上 noinline 关键字</span>
+<span class="token keyword">inline</span> <span class="token keyword">fun</span> <span class="token function">test2</span><span class="token punctuation">(</span>l0<span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-></span> Unit<span class="token punctuation">,</span> <span class="token keyword">noinline</span> l1<span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-></span> Unit<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-></span> Unit <span class="token punctuation">{</span>
+    l0<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    l1<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"test2"</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> l1
+<span class="token punctuation">}</span></code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -865,105 +964,6 @@ $ db1:localhost<span class="token operator">></span></code></pre>
       </script>]]></content>
       <tags>
         <tag>MySQL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Kotlin内联:noinline与crossinline</title>
-    <url>/posts/11c5.html</url>
-    <content><![CDATA[<p>在Kotlin中，内部Lambda是不允许中断外部函数执行的。</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-    test1<span class="token punctuation">{</span>
-        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"hello"</span><span class="token punctuation">)</span>
-        <span class="token keyword">return</span><span class="token label symbol">@test1</span>    <span class="token comment" spellcheck="true">//如果直接return（不带@test1）就会报错，内部Lambda是不允许中断外部函数执行的</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"hello"</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-
-
-<span class="token keyword">fun</span> <span class="token function">test1</span><span class="token punctuation">(</span>l<span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-></span> Unit<span class="token punctuation">)</span><span class="token punctuation">{</span>
-    l<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token keyword">return</span>
-<span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">/** 输出结果：
-            hello 
-            hello */</span></code></pre>
-<p>inline的Lambda可以中断外部函数调用:</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-    test1<span class="token punctuation">{</span>
-        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"hello"</span><span class="token punctuation">)</span>
-        <span class="token keyword">return</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"hello"</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-
-
-<span class="token keyword">inline</span> <span class="token keyword">fun</span> <span class="token function">test1</span><span class="token punctuation">(</span>l<span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-></span> Unit<span class="token punctuation">)</span><span class="token punctuation">{</span>
-    l<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token keyword">return</span>
-<span class="token punctuation">}</span>
-
-<span class="token comment" spellcheck="true">/** 输出结果：hello */</span></code></pre>
-<p>crossinline不允许inline的Lambda中断外部函数执行。</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    test1 <span class="token punctuation">{</span>
-        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"hello"</span><span class="token punctuation">)</span>
-        <span class="token keyword">return</span><span class="token label symbol">@test1</span>
-        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"hello1"</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"hello2"</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-
-
-<span class="token keyword">inline</span> <span class="token keyword">fun</span> <span class="token function">test1</span><span class="token punctuation">(</span><span class="token keyword">crossinline</span> l<span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-></span> Unit<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    l<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token keyword">return</span>
-<span class="token punctuation">}</span>
-
-<span class="token comment" spellcheck="true">/** 输出结果：
-            hello
-            hello2 */</span></code></pre>
-<p>noinline拒绝内联。</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">val</span> runnable <span class="token operator">=</span> Runnable <span class="token punctuation">{</span>
-    <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"runnable"</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">val</span> test2 <span class="token operator">=</span> <span class="token function">test2</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
-        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"hello"</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span><span class="token punctuation">,</span> runnable<span class="token operator">::</span>run<span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-
-<span class="token comment" spellcheck="true">// 如果函数返回值是一个lambda表达式的话，我需要对这个lambda表达式加上 noinline 关键字</span>
-<span class="token keyword">inline</span> <span class="token keyword">fun</span> <span class="token function">test2</span><span class="token punctuation">(</span>l0<span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-></span> Unit<span class="token punctuation">,</span> <span class="token keyword">noinline</span> l1<span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-></span> Unit<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-></span> Unit <span class="token punctuation">{</span>
-    l0<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    l1<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"test2"</span><span class="token punctuation">)</span>
-    <span class="token keyword">return</span> l1
-<span class="token punctuation">}</span></code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>Kotlin</tag>
       </tags>
   </entry>
   <entry>
@@ -1732,130 +1732,6 @@ $ SORT myzset ALPHA
       </tags>
   </entry>
   <entry>
-    <title>Redis管理</title>
-    <url>/posts/3687.html</url>
-    <content><![CDATA[<h3 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h3><p>Redis 的作者 <code>Salvatore Sanfilippo</code> 曾经发表过 Redis 宣言，其中提到 Redis 以简洁为美。同样在安全层面 Redis 也没有做太多的工作。 </p>
-<h3 id="可信的环境"><a href="#可信的环境" class="headerlink" title="可信的环境"></a>可信的环境</h3><p>Redis 的安全设计是在 “ Redis 运行在可信环境” 这个前提下做出的。在生产环境运行时不能允许外界直接连接到 Redis 服务器上，而应该通过应用程序中转，运行在可信的环境中是保证 Redis 安全的最重要方法。</p>
-<p>如只允许本机应用连接 Redis ，可以将 bind 参数改成：</p>
-<pre class=" language-bash"><code class="language-bash">bind 127.0.0.1</code></pre>
-<p>bind 参数只能绑定一个地址，如果想更自由的设置绑定规则需要通过防火墙来完成。</p>
-<h3 id="数据库密码"><a href="#数据库密码" class="headerlink" title="数据库密码"></a>数据库密码</h3><p>可以通过配置文件中的 <code>requirepass</code> 参数为 Redis 设置一个密码。例如：</p>
-<pre class=" language-shell"><code class="language-shell">requirepass 123456</code></pre>
-<p>客户端每次连接到 Redis 时都需要发送密码，否则 Redis 会拒绝执行客户端发来的命令。</p>
-<p>例如：</p>
-<pre class=" language-bash"><code class="language-bash">$ GET foo
-<span class="token punctuation">(</span>error<span class="token punctuation">)</span> ERR operation not permitted.</code></pre>
-<p>发送密码需要使用 AUTH 命令，就像这样：</p>
-<pre class=" language-bash"><code class="language-bash">$ AUTH 123456
-OK</code></pre>
-<p>之后就可以执行任何命令了。</p>
-<p>由于 Redis 的性能极高，并且输入错误密码后 Redis 并不会进行主动延迟（考虑到 Redis 的单线程模型），所以攻击者可以通过穷举法破解 Redis 的密码（ 1 秒内能够尝试十几万个密码 ），因此在设置时一定要选择负责的密码。</p>
-<blockquote>
-<p><strong>提示</strong>    配置 Redis 复制的时候如果主数据库设置了密码，需要在从数据库的配置文件中通过 <code>masterauth</code> 参数设置主数据库的密码，以使从数据库连接主数据库时自动使用 AUTH 命令认证。</p>
-</blockquote>
-<h3 id="命名命令"><a href="#命名命令" class="headerlink" title="命名命令"></a>命名命令</h3><p>Redis 支持在配置文件中将命令重命名，比如将 <code>FLUASHALL</code> 命令重命名成一个比较复杂的名字，以保证自己的应用可以使用该命令。就像这样：</p>
-<pre><code>rename-command FLUSHALL oyfekmjumwar5a8c0it2k</code></pre>
-<p>如果希望直接禁用某个命令可以将命令重命名成空字符串：</p>
-<pre class=" language-bash"><code class="language-bash">rename-command FLUSHALL <span class="token string">""</span></code></pre>
-<blockquote>
-<p><strong>注意</strong>    无论设置密码还是重命名命令，都需要保证配置文件的安全性，否则就没有任何意义了。</p>
-</blockquote>
-<h3 id="Redis-cli"><a href="#Redis-cli" class="headerlink" title="Redis-cli"></a>Redis-cli</h3><h4 id="耗时命令日志"><a href="#耗时命令日志" class="headerlink" title="耗时命令日志"></a>耗时命令日志</h4><p>当一条命令执行时间超过限制时，Redis 会将该命令的执行时间等信息加入耗时命令日志（show log）以供开发者查看。可以通过配置文件的 <code>slowlog-log-slower-than</code> 参数设置这一限制，要注意单位是微秒（1000000微妙相当于 1 秒），默认值是 10 000。耗时命令日志存储在内存中，可以通过配置文件的 <code>slowlog-max-len</code>参数来限制记录的条数。</p>
-<p>使用 SLOWLOG GET 命令来获得当前的耗时命令日志，如：</p>
-<pre class=" language-bash"><code class="language-bash">redis<span class="token operator">></span> SLOWLOG GET
-   1<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 2
-   2<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1611295121
-   3<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 5
-   4<span class="token punctuation">)</span> 1<span class="token punctuation">)</span> <span class="token string">"set"</span>
-      2<span class="token punctuation">)</span> <span class="token string">"foo"</span>
-      3<span class="token punctuation">)</span> <span class="token string">"bar"</span></code></pre>
-<p>每条日志都由以下 4  个部分组成：</p>
-<ul>
-<li>该日志唯一 ID</li>
-<li>该命令执行的 Unix 时间</li>
-<li>该命令的耗时时间，单位是微秒</li>
-<li>命令及其参数。</li>
-</ul>
-<blockquote>
-<p><strong>提示</strong>    为了产生一些耗时命令日志作为演示，这里将 <code>slowlog-log-slower-than</code> 参数设置为 0，即记录所有命令。如果设置为负数则会关闭耗时命令日志。</p>
-</blockquote>
-<h4 id="命令监控"><a href="#命令监控" class="headerlink" title="命令监控"></a>命令监控</h4><p>Redis 提供了 MONITOR 命令来监控 Redis 执行的所有命令，redis-cli 同样支持这个命令，如在 redis-cli 中执行 MONITOR：</p>
-<pre class=" language-bash"><code class="language-bash">$ MONITOR
-OK</code></pre>
-<p>这时 Redis 执行的任何命令都会在 redis-cli 中打印出来，如我们打开另一个 redis-cli 执行 <code>SET foo bar</code> 命令，在之前的 redis-cli 中会输出以下内容：</p>
-<pre class=" language-bash"><code class="language-bash">1611295421.146357 <span class="token punctuation">[</span>0 127.0.0.1:37122<span class="token punctuation">]</span> <span class="token string">"keys"</span> <span class="token string">"*"</span></code></pre>
-<p>MONITOR 命令非常影响 Redis 的性能，一个客户端使用 MONITOR 命令会降低 Redis 将近一半的负载能力。所以 MONITOR 命令只适合用来调试和纠错。</p>
-<h3 id="Rdbtools"><a href="#Rdbtools" class="headerlink" title="Rdbtools"></a>Rdbtools</h3><p>Rdbtools 是一个 Redis 的快照文件解析器，它可以根据快照文件导出 JSON 数据文件、分析 Redis 中每个键的占用空间情况等。</p>
-<h4 id="安装-Rdbtools"><a href="#安装-Rdbtools" class="headerlink" title="安装 Rdbtools"></a>安装 Rdbtools</h4><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> clone https://github.com/sripathikrishnan/redis-rdb-tools
-<span class="token function">cd</span> redis-rdb-tools
-<span class="token function">sudo</span> python3 setup.py <span class="token function">install</span></code></pre>
-<h4 id="生成快照文件"><a href="#生成快照文件" class="headerlink" title="生成快照文件"></a>生成快照文件</h4><p>如果没有启用 RDB 持久化，可以使用 SAVE 命令手动使 Redis 生成快照文件。</p>
-<h4 id="将快照导出为-JSON-格式"><a href="#将快照导出为-JSON-格式" class="headerlink" title="将快照导出为 JSON 格式"></a>将快照导出为 JSON 格式</h4><p>快照文件时二进制格式，不利于查看，可以使用 Rdbtools 来将其导出为 JSON 格式，命令如下：</p>
-<pre class=" language-bash"><code class="language-bash">$ rdb --command json /path/to/dump.rdb <span class="token operator">></span> output_filename.json</code></pre>
-<p>其中 <code>/path/to/dump.rdb</code> 是快照文件的路径，<code>output_filename.json</code> 为要导出的文件路径。</p>
-<h4 id="生成空间使用情况报告"><a href="#生成空间使用情况报告" class="headerlink" title="生成空间使用情况报告"></a>生成空间使用情况报告</h4><p>Rdbtools 能够将快照文件中记录的每个键的存储情况导出为 CSV 文件，可以将该 CSV 文件导入到 Excel 等数据分析工具中分析来了解 Redis 的使用情况。命令如下：</p>
-<pre class=" language-bash"><code class="language-bash">$ rdb -c memory /path/to/dump.rdb --bytes 128 -f memory.csv</code></pre>
-<p>导出的 CSV 文件的字段如下所示：</p>
-<table>
-<thead>
-<tr>
-<th>字段</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>database</td>
-<td>存储该键的数据库索引</td>
-</tr>
-<tr>
-<td>type</td>
-<td>键类型（使用 TYPE 命令获得）</td>
-</tr>
-<tr>
-<td>key</td>
-<td>键名</td>
-</tr>
-<tr>
-<td>size_in_bytes</td>
-<td>键大小（字节）</td>
-</tr>
-<tr>
-<td>encoding</td>
-<td>内部编码（使用 OBJECTENCODING 命令获得）</td>
-</tr>
-<tr>
-<td>num_elements</td>
-<td>键的元素数</td>
-</tr>
-<tr>
-<td>len_largest_element</td>
-<td>最大元素的长度</td>
-</tr>
-</tbody></table>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>Redis</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Redis的安装与启动</title>
     <url>/posts/dc55.html</url>
     <content><![CDATA[<h3 id="Redis-安装"><a href="#Redis-安装" class="headerlink" title="Redis 安装"></a>Redis 安装</h3><pre class=" language-bash"><code class="language-bash">$ <span class="token function">wget</span> https://download.redis.io/releases/redis-6.0.10.tar.gz
@@ -2033,6 +1909,130 @@ esac</code></pre>
 <pre class=" language-bash"><code class="language-bash">$ redis-cli SHUTDOWN</code></pre>
 <p>当 Redis 收到 <code>SHUTDOWN</code> 命令后，会先断开所有客户端连接，然后根据配置执行持久化，最后完成退出。</p>
 <p>Redis 可以妥善处理 SIGTERM （signal termination） 信号，所以使用 kill Redis 进行的 PID 也可以正常结束 Redis，效果与发送 SHTUDOWN 命令一样。</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis管理</title>
+    <url>/posts/3687.html</url>
+    <content><![CDATA[<h3 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h3><p>Redis 的作者 <code>Salvatore Sanfilippo</code> 曾经发表过 Redis 宣言，其中提到 Redis 以简洁为美。同样在安全层面 Redis 也没有做太多的工作。 </p>
+<h3 id="可信的环境"><a href="#可信的环境" class="headerlink" title="可信的环境"></a>可信的环境</h3><p>Redis 的安全设计是在 “ Redis 运行在可信环境” 这个前提下做出的。在生产环境运行时不能允许外界直接连接到 Redis 服务器上，而应该通过应用程序中转，运行在可信的环境中是保证 Redis 安全的最重要方法。</p>
+<p>如只允许本机应用连接 Redis ，可以将 bind 参数改成：</p>
+<pre class=" language-bash"><code class="language-bash">bind 127.0.0.1</code></pre>
+<p>bind 参数只能绑定一个地址，如果想更自由的设置绑定规则需要通过防火墙来完成。</p>
+<h3 id="数据库密码"><a href="#数据库密码" class="headerlink" title="数据库密码"></a>数据库密码</h3><p>可以通过配置文件中的 <code>requirepass</code> 参数为 Redis 设置一个密码。例如：</p>
+<pre class=" language-shell"><code class="language-shell">requirepass 123456</code></pre>
+<p>客户端每次连接到 Redis 时都需要发送密码，否则 Redis 会拒绝执行客户端发来的命令。</p>
+<p>例如：</p>
+<pre class=" language-bash"><code class="language-bash">$ GET foo
+<span class="token punctuation">(</span>error<span class="token punctuation">)</span> ERR operation not permitted.</code></pre>
+<p>发送密码需要使用 AUTH 命令，就像这样：</p>
+<pre class=" language-bash"><code class="language-bash">$ AUTH 123456
+OK</code></pre>
+<p>之后就可以执行任何命令了。</p>
+<p>由于 Redis 的性能极高，并且输入错误密码后 Redis 并不会进行主动延迟（考虑到 Redis 的单线程模型），所以攻击者可以通过穷举法破解 Redis 的密码（ 1 秒内能够尝试十几万个密码 ），因此在设置时一定要选择负责的密码。</p>
+<blockquote>
+<p><strong>提示</strong>    配置 Redis 复制的时候如果主数据库设置了密码，需要在从数据库的配置文件中通过 <code>masterauth</code> 参数设置主数据库的密码，以使从数据库连接主数据库时自动使用 AUTH 命令认证。</p>
+</blockquote>
+<h3 id="命名命令"><a href="#命名命令" class="headerlink" title="命名命令"></a>命名命令</h3><p>Redis 支持在配置文件中将命令重命名，比如将 <code>FLUASHALL</code> 命令重命名成一个比较复杂的名字，以保证自己的应用可以使用该命令。就像这样：</p>
+<pre><code>rename-command FLUSHALL oyfekmjumwar5a8c0it2k</code></pre>
+<p>如果希望直接禁用某个命令可以将命令重命名成空字符串：</p>
+<pre class=" language-bash"><code class="language-bash">rename-command FLUSHALL <span class="token string">""</span></code></pre>
+<blockquote>
+<p><strong>注意</strong>    无论设置密码还是重命名命令，都需要保证配置文件的安全性，否则就没有任何意义了。</p>
+</blockquote>
+<h3 id="Redis-cli"><a href="#Redis-cli" class="headerlink" title="Redis-cli"></a>Redis-cli</h3><h4 id="耗时命令日志"><a href="#耗时命令日志" class="headerlink" title="耗时命令日志"></a>耗时命令日志</h4><p>当一条命令执行时间超过限制时，Redis 会将该命令的执行时间等信息加入耗时命令日志（show log）以供开发者查看。可以通过配置文件的 <code>slowlog-log-slower-than</code> 参数设置这一限制，要注意单位是微秒（1000000微妙相当于 1 秒），默认值是 10 000。耗时命令日志存储在内存中，可以通过配置文件的 <code>slowlog-max-len</code>参数来限制记录的条数。</p>
+<p>使用 SLOWLOG GET 命令来获得当前的耗时命令日志，如：</p>
+<pre class=" language-bash"><code class="language-bash">redis<span class="token operator">></span> SLOWLOG GET
+   1<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 2
+   2<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1611295121
+   3<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 5
+   4<span class="token punctuation">)</span> 1<span class="token punctuation">)</span> <span class="token string">"set"</span>
+      2<span class="token punctuation">)</span> <span class="token string">"foo"</span>
+      3<span class="token punctuation">)</span> <span class="token string">"bar"</span></code></pre>
+<p>每条日志都由以下 4  个部分组成：</p>
+<ul>
+<li>该日志唯一 ID</li>
+<li>该命令执行的 Unix 时间</li>
+<li>该命令的耗时时间，单位是微秒</li>
+<li>命令及其参数。</li>
+</ul>
+<blockquote>
+<p><strong>提示</strong>    为了产生一些耗时命令日志作为演示，这里将 <code>slowlog-log-slower-than</code> 参数设置为 0，即记录所有命令。如果设置为负数则会关闭耗时命令日志。</p>
+</blockquote>
+<h4 id="命令监控"><a href="#命令监控" class="headerlink" title="命令监控"></a>命令监控</h4><p>Redis 提供了 MONITOR 命令来监控 Redis 执行的所有命令，redis-cli 同样支持这个命令，如在 redis-cli 中执行 MONITOR：</p>
+<pre class=" language-bash"><code class="language-bash">$ MONITOR
+OK</code></pre>
+<p>这时 Redis 执行的任何命令都会在 redis-cli 中打印出来，如我们打开另一个 redis-cli 执行 <code>SET foo bar</code> 命令，在之前的 redis-cli 中会输出以下内容：</p>
+<pre class=" language-bash"><code class="language-bash">1611295421.146357 <span class="token punctuation">[</span>0 127.0.0.1:37122<span class="token punctuation">]</span> <span class="token string">"keys"</span> <span class="token string">"*"</span></code></pre>
+<p>MONITOR 命令非常影响 Redis 的性能，一个客户端使用 MONITOR 命令会降低 Redis 将近一半的负载能力。所以 MONITOR 命令只适合用来调试和纠错。</p>
+<h3 id="Rdbtools"><a href="#Rdbtools" class="headerlink" title="Rdbtools"></a>Rdbtools</h3><p>Rdbtools 是一个 Redis 的快照文件解析器，它可以根据快照文件导出 JSON 数据文件、分析 Redis 中每个键的占用空间情况等。</p>
+<h4 id="安装-Rdbtools"><a href="#安装-Rdbtools" class="headerlink" title="安装 Rdbtools"></a>安装 Rdbtools</h4><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> clone https://github.com/sripathikrishnan/redis-rdb-tools
+<span class="token function">cd</span> redis-rdb-tools
+<span class="token function">sudo</span> python3 setup.py <span class="token function">install</span></code></pre>
+<h4 id="生成快照文件"><a href="#生成快照文件" class="headerlink" title="生成快照文件"></a>生成快照文件</h4><p>如果没有启用 RDB 持久化，可以使用 SAVE 命令手动使 Redis 生成快照文件。</p>
+<h4 id="将快照导出为-JSON-格式"><a href="#将快照导出为-JSON-格式" class="headerlink" title="将快照导出为 JSON 格式"></a>将快照导出为 JSON 格式</h4><p>快照文件时二进制格式，不利于查看，可以使用 Rdbtools 来将其导出为 JSON 格式，命令如下：</p>
+<pre class=" language-bash"><code class="language-bash">$ rdb --command json /path/to/dump.rdb <span class="token operator">></span> output_filename.json</code></pre>
+<p>其中 <code>/path/to/dump.rdb</code> 是快照文件的路径，<code>output_filename.json</code> 为要导出的文件路径。</p>
+<h4 id="生成空间使用情况报告"><a href="#生成空间使用情况报告" class="headerlink" title="生成空间使用情况报告"></a>生成空间使用情况报告</h4><p>Rdbtools 能够将快照文件中记录的每个键的存储情况导出为 CSV 文件，可以将该 CSV 文件导入到 Excel 等数据分析工具中分析来了解 Redis 的使用情况。命令如下：</p>
+<pre class=" language-bash"><code class="language-bash">$ rdb -c memory /path/to/dump.rdb --bytes 128 -f memory.csv</code></pre>
+<p>导出的 CSV 文件的字段如下所示：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>database</td>
+<td>存储该键的数据库索引</td>
+</tr>
+<tr>
+<td>type</td>
+<td>键类型（使用 TYPE 命令获得）</td>
+</tr>
+<tr>
+<td>key</td>
+<td>键名</td>
+</tr>
+<tr>
+<td>size_in_bytes</td>
+<td>键大小（字节）</td>
+</tr>
+<tr>
+<td>encoding</td>
+<td>内部编码（使用 OBJECTENCODING 命令获得）</td>
+</tr>
+<tr>
+<td>num_elements</td>
+<td>键的元素数</td>
+</tr>
+<tr>
+<td>len_largest_element</td>
+<td>最大元素的长度</td>
+</tr>
+</tbody></table>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -2289,68 +2289,6 @@ System<span class="token punctuation">.</span>out<span class="token punctuation"
       </tags>
   </entry>
   <entry>
-    <title>kotlin泛型</title>
-    <url>/posts/3e59.html</url>
-    <content><![CDATA[<p>通过<code>where</code>关键字，对泛型参数限定满足所有条件</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">class</span> Test<span class="token operator">&lt;</span>T<span class="token operator">></span> <span class="token keyword">where</span> T <span class="token operator">:</span> Callback<span class="token punctuation">,</span> T <span class="token operator">:</span> Runnable <span class="token punctuation">{</span>
-    <span class="token keyword">fun</span> <span class="token function">add</span><span class="token punctuation">(</span>t<span class="token operator">:</span> T<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        t<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-        t<span class="token punctuation">.</span><span class="token function">callback</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">open</span> <span class="token keyword">class</span> A <span class="token operator">:</span> Runnable <span class="token punctuation">{</span>
-    <span class="token keyword">override</span> <span class="token keyword">fun</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"run"</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">class</span> B<span class="token operator">:</span> Callback<span class="token punctuation">,</span> <span class="token function">A</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">override</span> <span class="token keyword">fun</span> <span class="token function">callback</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"callback"</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-
-<span class="token punctuation">}</span>
-
-
-<span class="token keyword">interface</span> Callback <span class="token punctuation">{</span>
-    <span class="token keyword">fun</span> <span class="token function">callback</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">val</span> test <span class="token operator">=</span> Test<span class="token operator">&lt;</span>B<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    test<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token function">B</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-
-      <span class="token comment" spellcheck="true">// val test2 = Test&lt;A>() Type argument is not within its bounds. Expected: Callback</span>
-<span class="token punctuation">}</span></code></pre>
-<p>kotlin的真泛型</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">inline</span>  <span class="token keyword">fun</span>  <span class="token operator">&lt;</span><span class="token keyword">reified</span> T<span class="token operator">></span> Gson<span class="token punctuation">.</span><span class="token function">fromJson</span><span class="token punctuation">(</span>json<span class="token operator">:</span> String<span class="token punctuation">)</span><span class="token operator">:</span> T<span class="token punctuation">{</span>
-   <span class="token keyword">return</span> <span class="token function">fromJson</span><span class="token punctuation">(</span>json<span class="token punctuation">,</span> T<span class="token operator">::</span><span class="token keyword">class</span><span class="token punctuation">.</span>java<span class="token punctuation">)</span>
-<span class="token punctuation">}</span></code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>Kotlin</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>kotlin如何实现空安全</title>
     <url>/posts/b698.html</url>
     <content><![CDATA[<ol>
@@ -2518,6 +2456,68 @@ object Perfect<span class="token punctuation">{</span>
 
 <span class="token comment" spellcheck="true">// top-level</span>
 <span class="token keyword">const</span> val TOP <span class="token operator">=</span> <span class="token number">1</span>    <span class="token comment" spellcheck="true">// OK</span></code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>kotlin泛型</title>
+    <url>/posts/3e59.html</url>
+    <content><![CDATA[<p>通过<code>where</code>关键字，对泛型参数限定满足所有条件</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">class</span> Test<span class="token operator">&lt;</span>T<span class="token operator">></span> <span class="token keyword">where</span> T <span class="token operator">:</span> Callback<span class="token punctuation">,</span> T <span class="token operator">:</span> Runnable <span class="token punctuation">{</span>
+    <span class="token keyword">fun</span> <span class="token function">add</span><span class="token punctuation">(</span>t<span class="token operator">:</span> T<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        t<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        t<span class="token punctuation">.</span><span class="token function">callback</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">open</span> <span class="token keyword">class</span> A <span class="token operator">:</span> Runnable <span class="token punctuation">{</span>
+    <span class="token keyword">override</span> <span class="token keyword">fun</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"run"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> B<span class="token operator">:</span> Callback<span class="token punctuation">,</span> <span class="token function">A</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">override</span> <span class="token keyword">fun</span> <span class="token function">callback</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"callback"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+
+
+<span class="token keyword">interface</span> Callback <span class="token punctuation">{</span>
+    <span class="token keyword">fun</span> <span class="token function">callback</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">val</span> test <span class="token operator">=</span> Test<span class="token operator">&lt;</span>B<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    test<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token function">B</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+      <span class="token comment" spellcheck="true">// val test2 = Test&lt;A>() Type argument is not within its bounds. Expected: Callback</span>
+<span class="token punctuation">}</span></code></pre>
+<p>kotlin的真泛型</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">inline</span>  <span class="token keyword">fun</span>  <span class="token operator">&lt;</span><span class="token keyword">reified</span> T<span class="token operator">></span> Gson<span class="token punctuation">.</span><span class="token function">fromJson</span><span class="token punctuation">(</span>json<span class="token operator">:</span> String<span class="token punctuation">)</span><span class="token operator">:</span> T<span class="token punctuation">{</span>
+   <span class="token keyword">return</span> <span class="token function">fromJson</span><span class="token punctuation">(</span>json<span class="token punctuation">,</span> T<span class="token operator">::</span><span class="token keyword">class</span><span class="token punctuation">.</span>java<span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -2739,6 +2739,168 @@ $ RPUSH queue:3 task2
       </script>]]></content>
       <tags>
         <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用文件进行交互</title>
+    <url>/posts/ee67.html</url>
+    <content><![CDATA[<h3 id="从文本文件中读取数据（导入）"><a href="#从文本文件中读取数据（导入）" class="headerlink" title="从文本文件中读取数据（导入）"></a>从文本文件中读取数据（导入）</h3><p>当把大量数据输入到表中时，如果打开 MySQL 监视器用键盘手动输入所有数据，就会耗费非常多的时间和精力。</p>
+<p>在需要输入成千上万条数据的情况下，我们可以使用 CSV（Comma Separated Values，逗号分隔值）格式的文本文件进行输入，这种读取文件的方式称为<strong>导入</strong>。</p>
+<h4 id="CSV-文件"><a href="#CSV-文件" class="headerlink" title="CSV 文件"></a>CSV 文件</h4><p>正如逗号分隔值这个名字所表达的那样，在 CSV 文件中，数据使用逗号隔开的，文件内容仅包含文本。</p>
+<img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/Snipaste_2021-01-28_12-38-37.png" style="zoom:50%;">
+
+<p>每行记录都通过换行符用单独的一行表示</p>
+<img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/Snipaste_2021-01-28_12-41-02.png" style="zoom:50%;">
+
+<h4 id="导入文件"><a href="#导入文件" class="headerlink" title="导入文件"></a>导入文件</h4><pre class=" language-mysql"><code class="language-mysql">LOAD DATA INFILE '文件名' INTO table 表名 选项的描述;</code></pre>
+<p>除了 CSV 格式的文件以外，不用逗号分隔的文本文件也能被读取。我们可以指定读取的数据的格式，比如指定数据之间的分隔符、换行符，以及从第几行开始读取等。</p>
+<p>在这种情况下，“选项的描述” 部分需要按照下面的格式编写。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ FIELDS TERMINATED BY 分隔符 (默认是 '\t': TAB)
+$ LINES TERMINATED BY 换行符 (默认是 '\b': 换行)
+$ IGNORE 最开始跳过的行 LINES (默认是 0)</code></pre>
+<h4 id="CSV-文件导入"><a href="#CSV-文件导入" class="headerlink" title="CSV 文件导入"></a>CSV 文件导入</h4><p>CSV 文件内容如下：</p>
+<pre><code>A107,87,6
+A103,12,6
+A104,93,5
+A102,205,6
+A101,300,5
+A103,17,5
+A101,184,4
+A104,181,4
+A102,54,5
+A103,101,4</code></pre>
+<p>执行下面的命令：</p>
+<pre class=" language-mysql"><code class="language-mysql">$ LOAD DATA INFILE '/Users/asiama/tb_202101281251.csv' INTO TABLE tb1k FIELDS TERMINATED BY ',';</code></pre>
+<blockquote>
+<p><strong>提示</strong>    即使在 Windows 的情况下也不要使用 “\”，而要使用 “/”。例如: <code>C:\data\t.csv -&gt; C:/data/t.csv</code></p>
+</blockquote>
+<h4 id="将数据写入文本文件（导出）"><a href="#将数据写入文本文件（导出）" class="headerlink" title="将数据写入文本文件（导出）"></a>将数据写入文本文件（导出）</h4><p>与导入相反，我们可以将表中的数据提取到 CSV 文件等文本文件中。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT * INTO OUTFILE '文件名' 选项的描述 FROM 表名</code></pre>
+<p>执行下面的命令：</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT * INTO OUTFILE '/Users/asiama/out.csv' FIELDS TERMINATED BY ',' FROM tb1;</code></pre>
+<h3 id="从文本中读取并执行-SQL-命令"><a href="#从文本中读取并执行-SQL-命令" class="headerlink" title="从文本中读取并执行 SQL 命令"></a>从文本中读取并执行 SQL 命令</h3><p>当执行复杂且冗余的 SQL 语句时，如果每次都在 MySQL 监视器上编写就会很麻烦。在执行复杂的 SQL 语句的情况下，我们可以将其创建为文本文件，然后执行保存的文件。这种方法可以进一步提高工作效率，还可以显示创建成文本的 SQL 语句，并将其复制、粘贴到 MySQL 监视器上执行。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SOURCE 文本文件名</code></pre>
+<blockquote>
+<p><strong>将常用表的内容保存到文件中</strong>    使用 MySQL 监视器创建 “需要多次创建的表” 或者 “复杂的表” 效率会很低。在这种情况下，建议在文本中编写处理步骤，然后执行 SOURCE 命令来创建表。</p>
+<pre class=" language-mysql"><code class="language-mysql">DROP TABLE IF EXISTS tb1;
+CREATE TABLE tb1(empid VARCHAR(10), name VARCHAR(10), age INT);
+INSERT INTO tb1 VALUES('A101', '佐腾', 40);
+INSERT INTO tb1 VALUES('A102', '时间', 20);
+INSERT INTO tb1 VALUES('A103', '舒服', 30);</code></pre>
+<p>使用文本编辑器创建好文件后，将其保存到 data 文件夹中。执行下面的命令：</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SOURCE /data/tb1_make.txt</code></pre>
+</blockquote>
+<h4 id="通过命令提示符执行编写在文件中的-SQL-命令"><a href="#通过命令提示符执行编写在文件中的-SQL-命令" class="headerlink" title="通过命令提示符执行编写在文件中的 SQL 命令"></a>通过命令提示符执行编写在文件中的 SQL 命令</h4><pre class=" language-mysql"><code class="language-mysql">$ mysql 数据库名 -u 用户名 -p密码 -e "MySQL 监视器的命令"</code></pre>
+<p>例如：</p>
+<pre class=" language-mysql"><code class="language-mysql">$ mysql db1 -u root -proot -e "SOURCE /data/tb1_make.txt"</code></pre>
+<p>即使不启动 MySQL 监视器，也可以通过命令提示符直接执行文本文件中编写的 SQL 命令。</p>
+<h3 id="将-SQL-的执行结果保存到文件中"><a href="#将-SQL-的执行结果保存到文件中" class="headerlink" title="将 SQL 的执行结果保存到文件中"></a>将 SQL 的执行结果保存到文件中</h3><p>在 MySQL 监视器上输入的命令会显示在屏幕上，执行结果也会显示在屏幕上。用户可以通过查看屏幕上显示的执行结果来获取信息，也可以将这些执行结果作为数据使用。</p>
+<p>那么，如何将 SQL 的执行结果保存到文件中呢？这里我们将介绍 “在 MySQL 监视器上执行 tee 命令” 和 ”使用重定向将结果输出到标准输出“ 这两种方法。</p>
+<h4 id="通过重定向将-SQL-语句的执行结果输出到文本文件中"><a href="#通过重定向将-SQL-语句的执行结果输出到文本文件中" class="headerlink" title="通过重定向将 SQL 语句的执行结果输出到文本文件中"></a>通过重定向将 SQL 语句的执行结果输出到文本文件中</h4><p>我们可以在计算机上输入一些数据并让计算机输出处理结果。这时通常会使用键盘进行 “输入”，然后把结果 “输出” 到显示器上。像键盘这种一开始就配备好的输入设备称为 “标准输入”，像显示器这种一开始就配备好的输出设备称为 “标准输出”。</p>
+<p>“标准输入” 和 “标准输出” 可以更改。这种更改操作称为 “重定向 (redirect) ”。当进行重定向操作，也就是更改输入、输出目标时，需要使用 “&gt;” 等符号。</p>
+<h4 id="通过命令提示符进行重定向"><a href="#通过命令提示符进行重定向" class="headerlink" title="通过命令提示符进行重定向"></a>通过命令提示符进行重定向</h4><pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># Windnows</span>
+$ <span class="token function">dir</span> <span class="token operator">></span> abc.txt
+<span class="token comment" spellcheck="true"># MacOS 或 Linux</span>
+$ <span class="token function">ls</span> <span class="token operator">></span> abc.txt</code></pre>
+<h4 id="通过-mysql-命令使用重定向"><a href="#通过-mysql-命令使用重定向" class="headerlink" title="通过 mysql 命令使用重定向"></a>通过 mysql 命令使用重定向</h4><pre class=" language-mysql"><code class="language-mysql">$ mysql -u root -proot > log.txt</code></pre>
+<p>如果按照这种方式启动 MySQL 监视器，SQL 语句的执行结果将不会显示在屏幕上，而是会输入到重定向指定的 log.txt 中。</p>
+<p>从命令提示符上执行 SQL 语句文本文件 sql.txt，然后使用重定向将结果直接写入文件文件 log.txt 中：</p>
+<pre class=" language-mysql"><code class="language-mysql">$ mysql -u root -proot -e "SOURCE /data/sql.txt" > log.txt</code></pre>
+<blockquote>
+<p><strong>使用重定向输入 SQL 语句，并通过重定向将结果输出到文件</strong></p>
+<p>使用重定向输入文件时需要使用 “&lt;”。这样就可以使用重定向输入并执行文本文件的 SQL 语句 (sql.txt)，然后再通过重定向将结果输出到文本文件中（log2.txt）。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ mysql -u root -proot < /data/sql.txt > /data/log2.txt</code></pre>
+<p>即使看不到过程也没有问题。但是，在使用这种方法的情况下，就算 SQL 语句报错，我们也只能通过查看输出的文本文件得知。</p>
+</blockquote>
+<h4 id="使用-tee-命令将-SQL-语句的执行结果保存到文件中"><a href="#使用-tee-命令将-SQL-语句的执行结果保存到文件中" class="headerlink" title="使用 tee 命令将 SQL 语句的执行结果保存到文件中"></a>使用 tee 命令将 SQL 语句的执行结果保存到文件中</h4><p>在 MySQL 监视器上使用 tee 命令，可以与重定向一样将结果写入文件。如果在 MySQL 监视器上按照如下方式执行 tee 命令，执行结果就会保存在执行的文件中。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ tee 输出文件名称</code></pre>
+<h4 id="将执行结果保存到文件中"><a href="#将执行结果保存到文件中" class="headerlink" title="将执行结果保存到文件中"></a>将执行结果保存到文件中</h4><p>当把执行结果导出到文件 log3.txt 时：</p>
+<pre class=" language-mysql"><code class="language-mysql">$ tee /Users/asiama/log3.txt
+Logging to file '/Users/asiama/log3.txt'</code></pre>
+<p>这样就创建出了一个空的文本文件 log3.txt，以后输出结果不仅会显示在屏幕上，还会写入 log3.txt 中。</p>
+<h4 id="停止向文件中输出执行结果"><a href="#停止向文件中输出执行结果" class="headerlink" title="停止向文件中输出执行结果"></a>停止向文件中输出执行结果</h4><pre class=" language-mysql"><code class="language-mysql">$ notee
+Outfile disabled.</code></pre>
+<h3 id="备份和恢复数据库"><a href="#备份和恢复数据库" class="headerlink" title="备份和恢复数据库"></a>备份和恢复数据库</h3><h4 id="备份和恢复的方法"><a href="#备份和恢复的方法" class="headerlink" title="备份和恢复的方法"></a>备份和恢复的方法</h4><p>我们可以将数据库的设置、表和列的定义、数据等数据库的所有信息作为文件导出。</p>
+<ul>
+<li>转储</li>
+</ul>
+<p>对数据库的所有内容执行导出的操作称为 转储（dump）。如果使用转储文件，就可以在其它服务器上创建内容相同的数据库，也可以备份以应对紧急情况的发生。</p>
+<p>我们可以在命令提示符上执行 mysqldump 命令来转储 MySQL 数据库。</p>
+<p>mysqldump 命令会将数据库的配置和数据本身作为 SQL 语句写出来，也就是通过 “CREATE TABLE …” 创建表，然后写出 “INSERT INTO …” 这样的 SQL 语句。</p>
+<p>通过转储导出的信息是由 SQL 语句生成的文本。通过这些文本，我们可以读到数据库的所有信息，可以说 “转储输出就是数据库本身”。从安全层面考虑，我们需要谨慎对待这些信息。</p>
+<ul>
+<li>恢复</li>
+</ul>
+<p>把通过 mysqldump 命令导出的数据还原到数据库中的操作称为 <strong>恢复</strong>。恢复意味着从头创建数据库，其实就是将包含 SQL 语句集合的文本文件用 MySQL 命令进行重定向。</p>
+<h4 id="使用-mysqldump-导出"><a href="#使用-mysqldump-导出" class="headerlink" title="使用 mysqldump 导出"></a>使用 mysqldump 导出</h4><pre class=" language-bash"><code class="language-bash">$ mysqldump -u 用户名 -p密码 数据库名 <span class="token operator">></span> 输出文件名称</code></pre>
+<blockquote>
+<p><strong>恢复作业失败的情况</strong>    如果在之后的操作中恢复作业失败了，试着在转储时加上 –default-character-set=utf8 之类的字符编码的选项，执行 <code>mysqldump -u root -proot db1 &gt; /Users/asiama/db1_out.txt --default-character-set=utf8</code>。</p>
+</blockquote>
+<h4 id="恢复转储文件"><a href="#恢复转储文件" class="headerlink" title="恢复转储文件"></a>恢复转储文件</h4><p>当恢复数据库时，我们必须提前准备一个用于填充的数据库。如果没有数据库，就需要提前创建一个。</p>
+<pre class=" language-bash"><code class="language-bash">$ mysqladmin -u root -proot CREATE db2<span class="token punctuation">;</span>
+
+$ mysql -u root -proot db2 <span class="token operator">&lt;</span> /Users/asiama/db1_out.txt</code></pre>
+<h4 id="字符编码问题"><a href="#字符编码问题" class="headerlink" title="字符编码问题"></a>字符编码问题</h4><p>在大部分情况下，以上操作能顺利执行。不过，在使用 MySQL 的过程中，我们经常会收到字符编码问题的困扰。</p>
+<p>我们可以执行字符编码进行转储或者恢复：</p>
+<pre class=" language-mysql"><code class="language-mysql">$ mysqldump -u root -proot db1 > db3_out.txt --default-character-set=utf8
+$ mysql -u root -p root db3 < db3_out.txt --default-character-set=utf8</code></pre>
+<blockquote>
+<p><strong>锁表</strong>    给表加锁来限制表的操作的 LOCK 命令</p>
+<ul>
+<li>锁表</li>
+</ul>
+<pre class=" language-mysql"><code class="language-mysql">LOCK TABLES 表名 锁的类型</code></pre>
+<p>LOCK 命令通过给指定的表加上某种类型的锁来限制对表的操作。锁的类型主要有以下几种：</p>
+<table>
+<thead>
+<tr>
+<th>锁的类型</th>
+<th>限制内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>READ</td>
+<td>所有客户端都只需允许执行 SELECT。只读锁</td>
+</tr>
+<tr>
+<td>READ LOCAL</td>
+<td>对于 InnoDB 以外的存储引擎，允许加锁以外的客户端仅执行非冲突性 INSERT 语句，但是不允许执行 UPDATE。如果是InnoDB存储引擎，则和 READ 相同。本地只读锁。</td>
+</tr>
+<tr>
+<td>WRITE</td>
+<td>没有加锁的客户端不能执行任何操作，拥有锁的客户端可以执行操作。</td>
+</tr>
+</tbody></table>
+<p>给表 my_table 设置 READ 锁需要执行如下命令：</p>
+<pre class=" language-mysql"><code class="language-mysql">$ LOCK TABLES my_table READ;</code></pre>
+<p>释放锁：</p>
+<pre class=" language-mysql"><code class="language-mysql"># 解锁当前所有表
+$ UNLOCK TABLES;</code></pre>
+</blockquote>
+<h4 id="表的备份"><a href="#表的备份" class="headerlink" title="表的备份"></a>表的备份</h4><pre class=" language-bash"><code class="language-bash">$ mysqldump -u 用户名 -p密码 数据库名 表名 <span class="token operator">></span> 输出文件的名称</code></pre>
+<p>恢复表和恢复数据库一样，不用指定表名，直接读取文件即可。如：</p>
+<pre class=" language-bash"><code class="language-bash">$ mysql -u root -proot db3 <span class="token operator">&lt;</span> /Users/asiama/tb1_out.txt</code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>MySQL</tag>
       </tags>
   </entry>
   <entry>
@@ -5324,111 +5486,6 @@ infix <span class="token keyword">fun</span> Int<span class="token punctuation">
       </tags>
   </entry>
   <entry>
-    <title>通过外部单体对象来注册 Spring Bean</title>
-    <url>/posts/de54.html</url>
-    <content><![CDATA[<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Employee</span> <span class="token keyword">implements</span> <span class="token class-name">InitializingBean</span><span class="token punctuation">,</span> DisposableBean <span class="token punctuation">{</span>
-  <span class="token keyword">private</span> String name<span class="token punctuation">;</span>
-  <span class="token keyword">private</span> Integer age<span class="token punctuation">;</span>
-
-  <span class="token comment" spellcheck="true">// 省略setter getter</span>
-<span class="token punctuation">}</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SingletonBeanRegistrationDemo</span> <span class="token punctuation">{</span>
-  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token comment" spellcheck="true">// 创建 BeanFactory 容器</span>
-    AnnotationConfigApplicationContext applicationContext <span class="token operator">=</span>
-        <span class="token keyword">new</span> <span class="token class-name">AnnotationConfigApplicationContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">// 创建一个外部 Employee 对象</span>
-    Employee employee <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Employee</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    ConfigurableListableBeanFactory beanFactory <span class="token operator">=</span> applicationContext<span class="token punctuation">.</span><span class="token function">getBeanFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">// 注册外部的单例对象</span>
-    beanFactory<span class="token punctuation">.</span><span class="token function">registerSingleton</span><span class="token punctuation">(</span><span class="token string">"employee"</span><span class="token punctuation">,</span> employee<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">// 启动 Spring 应用上下文</span>
-    applicationContext<span class="token punctuation">.</span><span class="token function">refresh</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token comment" spellcheck="true">// 通过依赖查找的方式来获取 Employee</span>
-    Employee employeeByLookup <span class="token operator">=</span> beanFactory<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token string">"employee"</span><span class="token punctuation">,</span> Employee<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"employee == employeeLookup : "</span> <span class="token operator">+</span> <span class="token punctuation">(</span>employee <span class="token operator">==</span> employeeByLookup<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <categories>
-        <category>JAVA</category>
-      </categories>
-      <tags>
-        <tag>Spring</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>kotlin集合常用操作符</title>
-    <url>/posts/fb3b.html</url>
-    <content><![CDATA[<h3 id="元素操作类"><a href="#元素操作类" class="headerlink" title="元素操作类"></a>元素操作类</h3><p>contanis        ——     判断是否有指定元素</p>
-<p>elementAt     ——     返回对应的元素，越界会抛出IndexOutOfBoundsException</p>
-<p>firstOrNull     ——     返回符合条件的第一个元素，没有返回null</p>
-<p>lastOrNull     ——     返回符合条件的最后一个元素，没有返回null</p>
-<p>indexOf         ——     返回指定元素的下标，没有返回-1</p>
-<p>singleOrNull ——     返回符合条件的单个元素，如果没有符合或超过一个，返回null</p>
-<h3 id="判断类"><a href="#判断类" class="headerlink" title="判断类"></a>判断类</h3><p>any        ——     判断集合中是否有满足条件的元素</p>
-<p>all          ——     判断集合中的元素是否都满足条件</p>
-<p>none     ——     判断集合中是否都不满足条件，是则返回true</p>
-<p>count    ——     查询集合中满足条件的元素个数 </p>
-<h3 id="过滤类"><a href="#过滤类" class="headerlink" title="过滤类"></a>过滤类</h3><p>filter                    ——     过滤出所有满足条件的元素</p>
-<p>filterNot             ——     过滤出所有不满足条件的元素</p>
-<p>filterNotNull      ——     过滤NULL</p>
-<p>take                     ——     返回前n个元素</p>
-<h3 id="转换类"><a href="#转换类" class="headerlink" title="转换类"></a>转换类</h3><p>map                     ——     转换成另一个集合</p>
-<p>mapIndexed      ——     除了转换成另一个集合，还可以拿到Index(下标)</p>
-<p>mapNotNull       ——     执行转换钱过滤掉为NULL的元素</p>
-<p>flatMap               ——     自定义逻辑合并两个集合</p>
-<p>groupBy              ——     按照某个条件分组，返回Map</p>
-<h3 id="排序类"><a href="#排序类" class="headerlink" title="排序类"></a>排序类</h3><p>reversed                     ——     反序</p>
-<p>sorted                         ——     升序</p>
-<p>sortedBy                     ——    自定义排序</p>
-<p>sortedDescending     ——     降序</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <categories>
-        <category>函数式编程</category>
-      </categories>
-      <tags>
-        <tag>Kotlin</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>设置Redis中的key过期时间</title>
     <url>/posts/ae5.html</url>
     <content><![CDATA[<h3 id="命令介绍"><a href="#命令介绍" class="headerlink" title="命令介绍"></a>命令介绍</h3><p>在实际的开发中经常会遇到一些有时效的数据，比如现实优惠活动、缓存或验证码等，过了一定的时间就需要删除这些数据。在关系数据库中一般需要额外一个字段来记录到期时间，然后定期检测删除过期数据。而在 Redis 中可以使用 <code>EXPIRE</code> 命令来设置一个键的过期时间，到时间后，Redis 会自动删除它。</p>
@@ -5533,6 +5590,59 @@ $ TTL foo
       </script>]]></content>
       <tags>
         <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>通过外部单体对象来注册 Spring Bean</title>
+    <url>/posts/de54.html</url>
+    <content><![CDATA[<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Employee</span> <span class="token keyword">implements</span> <span class="token class-name">InitializingBean</span><span class="token punctuation">,</span> DisposableBean <span class="token punctuation">{</span>
+  <span class="token keyword">private</span> String name<span class="token punctuation">;</span>
+  <span class="token keyword">private</span> Integer age<span class="token punctuation">;</span>
+
+  <span class="token comment" spellcheck="true">// 省略setter getter</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SingletonBeanRegistrationDemo</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 创建 BeanFactory 容器</span>
+    AnnotationConfigApplicationContext applicationContext <span class="token operator">=</span>
+        <span class="token keyword">new</span> <span class="token class-name">AnnotationConfigApplicationContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 创建一个外部 Employee 对象</span>
+    Employee employee <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Employee</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ConfigurableListableBeanFactory beanFactory <span class="token operator">=</span> applicationContext<span class="token punctuation">.</span><span class="token function">getBeanFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 注册外部的单例对象</span>
+    beanFactory<span class="token punctuation">.</span><span class="token function">registerSingleton</span><span class="token punctuation">(</span><span class="token string">"employee"</span><span class="token punctuation">,</span> employee<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 启动 Spring 应用上下文</span>
+    applicationContext<span class="token punctuation">.</span><span class="token function">refresh</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// 通过依赖查找的方式来获取 Employee</span>
+    Employee employeeByLookup <span class="token operator">=</span> beanFactory<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span><span class="token string">"employee"</span><span class="token punctuation">,</span> Employee<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"employee == employeeLookup : "</span> <span class="token operator">+</span> <span class="token punctuation">(</span>employee <span class="token operator">==</span> employeeByLookup<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <categories>
+        <category>JAVA</category>
+      </categories>
+      <tags>
+        <tag>Spring</tag>
       </tags>
   </entry>
   <entry>
@@ -5747,6 +5857,58 @@ $ TTL foo
       </categories>
       <tags>
         <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>kotlin集合常用操作符</title>
+    <url>/posts/fb3b.html</url>
+    <content><![CDATA[<h3 id="元素操作类"><a href="#元素操作类" class="headerlink" title="元素操作类"></a>元素操作类</h3><p>contanis        ——     判断是否有指定元素</p>
+<p>elementAt     ——     返回对应的元素，越界会抛出IndexOutOfBoundsException</p>
+<p>firstOrNull     ——     返回符合条件的第一个元素，没有返回null</p>
+<p>lastOrNull     ——     返回符合条件的最后一个元素，没有返回null</p>
+<p>indexOf         ——     返回指定元素的下标，没有返回-1</p>
+<p>singleOrNull ——     返回符合条件的单个元素，如果没有符合或超过一个，返回null</p>
+<h3 id="判断类"><a href="#判断类" class="headerlink" title="判断类"></a>判断类</h3><p>any        ——     判断集合中是否有满足条件的元素</p>
+<p>all          ——     判断集合中的元素是否都满足条件</p>
+<p>none     ——     判断集合中是否都不满足条件，是则返回true</p>
+<p>count    ——     查询集合中满足条件的元素个数 </p>
+<h3 id="过滤类"><a href="#过滤类" class="headerlink" title="过滤类"></a>过滤类</h3><p>filter                    ——     过滤出所有满足条件的元素</p>
+<p>filterNot             ——     过滤出所有不满足条件的元素</p>
+<p>filterNotNull      ——     过滤NULL</p>
+<p>take                     ——     返回前n个元素</p>
+<h3 id="转换类"><a href="#转换类" class="headerlink" title="转换类"></a>转换类</h3><p>map                     ——     转换成另一个集合</p>
+<p>mapIndexed      ——     除了转换成另一个集合，还可以拿到Index(下标)</p>
+<p>mapNotNull       ——     执行转换钱过滤掉为NULL的元素</p>
+<p>flatMap               ——     自定义逻辑合并两个集合</p>
+<p>groupBy              ——     按照某个条件分组，返回Map</p>
+<h3 id="排序类"><a href="#排序类" class="headerlink" title="排序类"></a>排序类</h3><p>reversed                     ——     反序</p>
+<p>sorted                         ——     升序</p>
+<p>sortedBy                     ——    自定义排序</p>
+<p>sortedDescending     ——     降序</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <categories>
+        <category>函数式编程</category>
+      </categories>
+      <tags>
+        <tag>Kotlin</tag>
       </tags>
   </entry>
   <entry>
