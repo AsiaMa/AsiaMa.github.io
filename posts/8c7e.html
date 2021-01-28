@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="熟练使用存储过程, Java,Git,SpringBoot,SpringCloud,SpringCloud Alibaba等">
+    <meta name="keywords" content="熟练使用事务, Java,Git,SpringBoot,SpringCloud,SpringCloud Alibaba等">
     <meta name="description" content="专注WJava后端,大数据,分享知识,分享生活">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>熟练使用存储过程 | 三十二道街</title>
+    <title>熟练使用事务 | 三十二道街</title>
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/awesome/css/all.css">
@@ -287,12 +287,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/23.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/3.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">熟练使用存储过程</h1>
+                    <h1 class="description center-align post-title">熟练使用事务</h1>
                 </div>
             </div>
         </div>
@@ -439,14 +439,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.7k
+                    1.6k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    10 分
+                    6 分
                 </div>
                 
 
@@ -461,277 +461,147 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="什么是存储过程"><a href="#什么是存储过程" class="headerlink" title="什么是存储过程"></a>什么是存储过程</h3><p>将多个 SQL 语句组合成一个只需要使用命令 “CALL xx” 就能执行的集合，该集合就称为 <strong>存储过程（stored procedure）</strong>。“存储（store）表示保存，“过程” 表示步骤。也就是说，存储过程是将一系列步骤归纳并存储起来的集合。</p>
-<img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/Snipaste_2021-01-27_21-42-17.png" style="zoom:50%;">
+                <h3 id="什么是存储引擎"><a href="#什么是存储引擎" class="headerlink" title="什么是存储引擎"></a>什么是存储引擎</h3><p>在学习事务之前，我们需要了解一下 MySQL 中的<strong>存储引擎</strong>。</p>
+<p>MySQL 的功能大致分为两种。</p>
+<p>一个是连接客户端和提前检查 SQL 语句内容的功能，即数据库处理的 “前台” 部分。另一个是根据前台部分指示，完成查询和文件操作等工作的功能，即 “后台” 部分。这个后台部分称为存储引擎。</p>
+<img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/Snipaste_2021-01-28_11-39-03.png" style="zoom:67%;">
 
-<p>由于可以自动执行许多实现准备好的命令，所以处理效率很高。但是，在存储了重要数据的数据库中，执行没有经过充分验证的存储过程是非常危险的，这一点需要牢记。</p>
-<p>存储过程乍一看让人觉得难以理解，但只要学会了它的使用方法，用起来就非常方便。</p>
-<h3 id="使用存储过程"><a href="#使用存储过程" class="headerlink" title="使用存储过程"></a>使用存储过程</h3><p>当创建存储过程时，我们需要像下面这样执行 CREATE PROCEDURE 命令。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ CREATE PROCEDURE 存储过程名
-    BEGIN
-        SQL 语句1
-        SQL 语句2
-    END</code></pre>
-<p>从 BEGIN 到 END 为止的内容是存储过程的主体。</p>
-<p>在开头加上 BEGIN，在结尾加上 END，这么做可以明确表示 “这这里到这里是存储过程的命令”。</p>
-<p>因为存储过程的内容是 “普通的 SQL 语句”，所以需要在命令的末尾添加分隔符 “;”。主体部分像下面这样：</p>
-<pre class=" language-mysql"><code class="language-mysql">BEGIN
-SELECT * FROM tb;
-SELECT * FROM tb1;
-END</code></pre>
-<h4 id="修改分隔符的设置"><a href="#修改分隔符的设置" class="headerlink" title="修改分隔符的设置"></a>修改分隔符的设置</h4><pre class=" language-mysql"><code class="language-mysql">$ delimiter //</code></pre>
-<p>执行下面的命令：</p>
-<pre class=" language-mysql"><code class="language-mysql">$ delimiter //
-$ CREATE PROCEDURE pr1()
-    BEGIN
-    SELECT * FROM tb;
-    SELECT * FROM tb1;
-    END
-    //
-$ delimiter ;</code></pre>
-<h4 id="执行存储过程"><a href="#执行存储过程" class="headerlink" title="执行存储过程"></a>执行存储过程</h4><pre class=" language-mysql"><code class="language-mysql">$ CALL pr1();
-+-------+-------------------+------+
-| empid | name              | age  |
-+-------+-------------------+------+
-| A101  | 主任·佐腾         |   40 |
-| A102  | 高桥              |   28 |
-| A103  | 中川              |   20 |
-| A104  | 渡边              |   23 |
-| A105  | 西泽              |   35 |
-| NULL  | 临时工·石田       |   18 |
-+-------+-------------------+------+
-6 rows in set (0.01 sec)
+<h4 id="存储引擎的种类"><a href="#存储引擎的种类" class="headerlink" title="存储引擎的种类"></a>存储引擎的种类</h4><p>MySQL 中预置了多个存储引擎，用户可以根据使用目的和个人喜好进行选择。另外每个表都可以单独执行存储引擎。</p>
+<p>目前 MySQL 中可以使用的存储引擎主要有以下几张：</p>
+<table>
+<thead>
+<tr>
+<th>存储引擎</th>
+<th>特征</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MyISAM</td>
+<td>以前版本中的默认存储引擎。虽然能够高速运行，但不支持事务和外键。</td>
+</tr>
+<tr>
+<td>InnoDB</td>
+<td>MySQL 5.5 或更高版本的默认存储引擎。是唯一一个支持事务的存储引擎。</td>
+</tr>
+<tr>
+<td>BLACKHOME</td>
+<td>写入的任何数据都会消失，查询始终返回空结果。主要用于复制。</td>
+</tr>
+<tr>
+<td>MERGE</td>
+<td>将多个 MyISAM 表作为一个表处理，也称为 MRG_MyISAM。</td>
+</tr>
+<tr>
+<td>CSV</td>
+<td>将数据的实体保存为CSV(逗号分隔) 格式的文本文件。该文件可以通过 Excel 等打开。</td>
+</tr>
+<tr>
+<td>MEMORY</td>
+<td>因为数据全部存储了内存中，所以处理速度非常快。主要作为从临时工作区和其它表中提取的数据的读取专用缓存使用。不支持事务。</td>
+</tr>
+<tr>
+<td>ARCHIVE</td>
+<td>虽然可以通过压缩来存储大量数据，但是仅支持 INSERT 和 SELECT。</td>
+</tr>
+</tbody></table>
+<p>到 MySQL 5.4 为止的版本中，默认存储引擎是 MyISAM。虽然 MyISAM 比当时的 InnoDB 的处理速度快，但遗憾的是它不支持事务。因此，当时也出现了 “不使用事务的话就选 MyISAM，使用事务的话就选 InnoDB” 这样的使用方式。但现在 InnoDB 的处理速度也变的很快了，所以我们不需要考虑 MyISAM。</p>
+<p>如果使用方法比较复杂，就需要对每一个存储引擎进行更为细致的调优，同时还有研究新的存储引擎。</p>
+<h3 id="设置存储引擎"><a href="#设置存储引擎" class="headerlink" title="设置存储引擎"></a>设置存储引擎</h3><h4 id="确认存储引擎"><a href="#确认存储引擎" class="headerlink" title="确认存储引擎"></a>确认存储引擎</h4><pre class=" language-mysql"><code class="language-mysql">$ SHOW CREATE TABLE 表名;</code></pre>
+<h4 id="显示当前可用的存储引擎"><a href="#显示当前可用的存储引擎" class="headerlink" title="显示当前可用的存储引擎"></a>显示当前可用的存储引擎</h4><pre class=" language-mysql"><code class="language-mysql">$ SHOW ENGINES \G</code></pre>
+<h4 id="修改存储引擎"><a href="#修改存储引擎" class="headerlink" title="修改存储引擎"></a>修改存储引擎</h4><pre class=" language-mysql"><code class="language-mysql">$ ALTER TABLE 表名 ENGINE = MyISAM;</code></pre>
+<h3 id="什么是事务"><a href="#什么是事务" class="headerlink" title="什么是事务"></a>什么是事务</h3><p>将多个操作作为单个逻辑工作单元的处理的功能称为<strong>事务（transaction）</strong>。将事务开始之后的处理结果反映到数据库中的操作称为<strong>提交（commit）</strong>，不反映到数据库而是恢复为原来状态的操作称为<strong>回滚（rollback）</strong>。</p>
+<h3 id="使用事务"><a href="#使用事务" class="headerlink" title="使用事务"></a>使用事务</h3><h4 id="开启事务"><a href="#开启事务" class="headerlink" title="开启事务"></a>开启事务</h4><pre class=" language-mysql"><code class="language-mysql">$ START TRANSACTION;
+Query OK, 0 rows affected (0.00 sec)</code></pre>
+<p>下面试着删除表 tb 中所有的记录</p>
+<pre class=" language-mysql"><code class="language-mysql">$ DELETE FROM tb;
+Query OK, 12 rows affected (0.00 sec)</code></pre>
+<p>因为没有加上 WHERE 等条件，所以表 tb 中的所有记录都会被删除。</p>
+<p>此时表的一部分会加锁（lock）。因此，在其它会话中不能对该表执行 INSERT 等操作。假设这时我们再启动一个命令提示符，并在 MySQL 监视器上对表 tb 执行 INSERT。在这种情况下，只有在开启了事务的监视器执行了 “COMMIT;” 或 “ROLLBACK;”，才能进行其它的会话处理。</p>
+<h4 id="确认表的内容"><a href="#确认表的内容" class="headerlink" title="确认表的内容"></a>确认表的内容</h4><pre class=" language-mysql"><code class="language-mysql">$ SELECT * FROM tb;
+Empty set (0.00 sec)</code></pre>
+<h4 id="回滚复原"><a href="#回滚复原" class="headerlink" title="回滚复原"></a>回滚复原</h4><pre class=" language-mysql"><code class="language-mysql">$ ROLLBACK;
 
-+--------------+-------+-------+
-| empid        | sales | month |
-+--------------+-------+-------+
-| A103         |   101 |     4 |
-| A102         |    54 |     5 |
-| A104         |   181 |     4 |
-| A101         |   184 |     4 |
-| A103         |    17 |     5 |
-| A101         |   300 |     5 |
-| A102         |   205 |     6 |
-| A104         |    93 |     5 |
-| A103         |    12 |     6 |
-| A107         |    87 |     6 |
-| 恶意刁难     |    50 |  NULL |
-| 恶意刁难     |    50 |  NULL |
-+--------------+-------+-------+
-12 rows in set (0.01 sec)
-
-Query OK, 0 rows affected (0.01 sec)</code></pre>
-<h4 id="创建只显示大于等于指定值的记录的存储过程"><a href="#创建只显示大于等于指定值的记录的存储过程" class="headerlink" title="创建只显示大于等于指定值的记录的存储过程"></a>创建只显示大于等于指定值的记录的存储过程</h4><pre class=" language-mysql"><code class="language-mysql">$ CREATE PROCEDURE 存储过程名 (参数名 数据类型);</code></pre>
-<p>这里，我们来创建一个 “显示销售额大于等于指定值的记录” 的基本存储过程。</p>
-<p>例如，当向存储过程 pr 中指定整数类型参数 d 时，存储过程就可以编写 PROCEDURE pr(d INT)。参数 d 在 SQL 语句中的编写方式与数值相同。</p>
-<ul>
-<li>显示表 tb 中 sales 大于等于参数 d 的记录</li>
-</ul>
-<pre class=" language-mysql"><code class="language-mysql">$ SELECT * FROM tb WHERE sales >= d;</code></pre>
-<p>下面试着创建存储过程 pr2。如果指定整数类型的参数 d 的值执行该存储过程，表 tb 中销售额大于等于 d 的记录就会显示出来。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ delimiter //
-$ CREATE PROCEDURE pr2(d INT)
-    BEGIN
-    SELECT * FROM tb WHERE sales >= d
-    END
-    //
-$ delimiter ;</code></pre>
-<p>下面我们试着把数值 200 指定为参数来执行存储过程 pr2。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ CALL pr2(200);
+$ SELECT * FROM tb;
 +-------+-------+-------+
 | empid | sales | month |
 +-------+-------+-------+
-| A101  |   300 |     5 |
+| A107  |    87 |     6 |
+| A103  |    12 |     6 |
+| A104  |    93 |     5 |
 | A102  |   205 |     6 |
+| A101  |   300 |     5 |
+| A103  |    17 |     5 |
+| A101  |   184 |     4 |
+| A104  |   181 |     4 |
+| A102  |    54 |     5 |
+| A103  |   101 |     4 |
 +-------+-------+-------+
-2 rows in set (0.01 sec)
-
-Query OK, 0 rows affected (0.01 sec)</code></pre>
+10 rows in set (0.00 sec)</code></pre>
+<p>在上面的示例中，如果执行 “COMMIT;”  代替 “ROLLBACK;”，删除记录的结果就会提交（反映）到数据库中， 所有的记录都会被永久删除。</p>
 <blockquote>
-<p><strong>在参数中加上 IN 的例子</strong></p>
-<p>在参数的前面加上 IN 也会得到相同的结果 （IN d INT）。相反，如果想将处理结果传给参数，则需要加上 OUT。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ delimiter //
-$ CREATE PROCEDURE pr2(IN d INT)
-    BEGIN
-    SELECT * FROM tb WHERE sales >= d
-    END
-    //
-$ delimiter ;</code></pre>
+<p><strong>提示</strong>    DROP 等命令是不能执行回滚操作的（无法复原）。这一点需要大家注意。</p>
 </blockquote>
-<h3 id="显示、删除存储过程"><a href="#显示、删除存储过程" class="headerlink" title="显示、删除存储过程"></a>显示、删除存储过程</h3><pre class=" language-mysql"><code class="language-mysql">$ SHOW CREATE PROCEDURE 存储过程名;
+<h3 id="自动提交功能"><a href="#自动提交功能" class="headerlink" title="自动提交功能"></a>自动提交功能</h3><p>在 MySQL 中执行命令，处理通常会直接提交。也就是说，所有命令都会自动 COMMIT。特别是在 MySQL 5.5 之前默认使用的 MyISAM 中，由于没有事务这项功能，所有命令都会被提交。这种自动提交的功能，称为 “自动提交功能”。</p>
+<p>在默认状态下，自动提价功能处于开启状态。但是，当存储引擎为 InnoDB 时，如果执行了 START TRANSACTION（或 BEGIN），在执行 COMMIT 命令之前就不会提交。多亏了这个功能，回滚操作（ROLLBACK） 才得以执行。</p>
+<p>用户也可以强制将自动提交功能设置为关闭。如果关闭了自动提交功能，即使执行 SQL 语句也不会自动提交，必须通过 COMMIT 进行提交，或者通过 ROLLBACK 进行复原。</p>
+<h4 id="关闭自动提交功能"><a href="#关闭自动提交功能" class="headerlink" title="关闭自动提交功能"></a>关闭自动提交功能</h4><pre class=" language-mysql"><code class="language-mysql">$ SET AUTOCOMMIT = 0;</code></pre>
+<p>执行下面命令：</p>
+<pre class=" language-mysql"><code class="language-mysql">$ INSERT INTO tb VALUES('test', 555, 555);
+Query OK, 1 row affected (0.00 sec)
 
-$ SHOW CREATE PROCEDURE pr2;
-+-----------+-----------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------+----------------------+----------------------+--------------------+
-| Procedure | sql_mode                                                                                                              | Create Procedure                                                                              | character_set_client | collation_connection | Database Collation |
-+-----------+-----------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------+----------------------+----------------------+--------------------+
-| pr2       | ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION | CREATE DEFINER=`root`@`%` PROCEDURE `pr2`(d INT)
-BEGIN
-SELECT * FROM tb WHERE sales >= d;
-END | utf8mb4              | utf8mb4_0900_ai_ci   | utf8mb4_0900_ai_ci |
-+-----------+-----------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------+----------------------+----------------------+--------------------+
-1 row in set (0.00 sec)</code></pre>
-<h4 id="删除存储过程"><a href="#删除存储过程" class="headerlink" title="删除存储过程"></a>删除存储过程</h4><pre class=" language-mysql"><code class="language-mysql">$ DROP PROCEDURE 存储过程名;</code></pre>
-<h3 id="什么是存储函数"><a href="#什么是存储函数" class="headerlink" title="什么是存储函数"></a>什么是存储函数</h3><p><strong>存储函数（stored function）</strong> 的思考方式和操作方法与存储过程基本相同。与存储过程唯一不同的一点是，存储函数在执行后会返回一个值。</p>
-<img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/Snipaste_2021-01-27_22-18-32.png" style="zoom:67%;">
+$ SELECT * FROM tb;
++-------+-------+-------+
+| empid | sales | month |
++-------+-------+-------+
+| A107  |    87 |     6 |
+| A103  |    12 |     6 |
+| A104  |    93 |     5 |
+| A102  |   205 |     6 |
+| A101  |   300 |     5 |
+| A103  |    17 |     5 |
+| A101  |   184 |     4 |
+| A104  |   181 |     4 |
+| A102  |    54 |     5 |
+| A103  |   101 |     4 |
+| test  |   555 |   555 |
++-------+-------+-------+
+11 rows in set (0.00 sec)</code></pre>
+<p>接下来进行 ROLLBACK，刚刚 INSERT 的记录就不会显示出来了。</p>
+<pre class=" language-mysql"><code class="language-mysql">mysql> ROLLBACK;
+Query OK, 0 rows affected (0.00 sec)
 
-<p>正如它的名字所表达的那样，存储函数可以作为函数工作。MySQL 中有许多函数，但使用存储函数可以创建自定义的函数。所以存储函数也称为<strong>用户自定义函数</strong>。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ CREATE FUNCTION 存储函数名(参数 数据类型) RETURNS 返回值的数据类型
-    BEGIN
-            SQL 语句 ...
-            RETURN 返回值·表达式
-  END</code></pre>
-<p>和存储过程一样，我们可以在 （）内指定参数。即使没有指定参数，也必须加上（）。例如，当创建了名为 fu 的存储函数时，fu() 本身将返回存储函数中 RETURN xx 的 xx 部分。</p>
-<h3 id="使用存储函数"><a href="#使用存储函数" class="headerlink" title="使用存储函数"></a>使用存储函数</h3><p>存储函数有可能对复制 和 数据的恢复产生影响。因此，参数 log_bin_trust_function_creators 的初始值被设置为 0，这样就不能使用存储函数了。要想使用存储函数，就需要执行下面的操作修改此设置。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ SET GLOBAL log_bin_trust_function_creators = 1;
-# 确认设置是否已正确修改
-$ SHOW VARIABLES LIKE 'log_bin_trust_function_creators';</code></pre>
-<p>如果 log_bin_trust_function_creators 被设置成了 ON，就可以使用存储函数。另外使用存储函数还需要相应的权限。大家使用的 root 用户已经包含了这个权限（Super 权限），但是普通用户就需要额外添加权限了。</p>
-<h4 id="使用存储函数计算标准体重"><a href="#使用存储函数计算标准体重" class="headerlink" title="使用存储函数计算标准体重"></a>使用存储函数计算标准体重</h4><ul>
-<li>标准体重 = 身高(cm) x 身高(cm) x 22/10000</li>
+mysql> SELECT * FROM tb;
++-------+-------+-------+
+| empid | sales | month |
++-------+-------+-------+
+| A107  |    87 |     6 |
+| A103  |    12 |     6 |
+| A104  |    93 |     5 |
+| A102  |   205 |     6 |
+| A101  |   300 |     5 |
+| A103  |    17 |     5 |
+| A101  |   184 |     4 |
+| A104  |   181 |     4 |
+| A102  |    54 |     5 |
+| A103  |   101 |     4 |
++-------+-------+-------+
+10 rows in set (0.00 sec)</code></pre>
+<p>可以看到数据没有自动提交。要想提交实际修改的数据，必须执行 “COMMIT”。</p>
+<h4 id="启动已关闭的自动提交功能"><a href="#启动已关闭的自动提交功能" class="headerlink" title="启动已关闭的自动提交功能"></a>启动已关闭的自动提交功能</h4><pre class=" language-mysql"><code class="language-mysql">$ SET AUTOCOMMIT = 1;</code></pre>
+<blockquote>
+<p><strong>如何确认当前自动提交功能的模式</strong>    我们可以通过 SELECT @@AUTOCOMMIT 确认当前自动提价功能的模式。如果是开启状态，则显示为 “1”；如果是关闭状态，则显示为 “0”。</p>
+</blockquote>
+<h4 id="事务的使用范围"><a href="#事务的使用范围" class="headerlink" title="事务的使用范围"></a>事务的使用范围</h4><p>启用事务之后，并不是所有操作都可以通过回滚复原。例如，下面这些命令就会被自动提交。</p>
+<ul>
+<li>DROP DATABSE</li>
+<li>DROP TABLE</li>
+<li>DROP VIEW</li>
+<li>ALTER TABLE</li>
 </ul>
-<pre class=" language-mysql"><code class="language-mysql">$ delimiter //
-$ CREATE FUNCTION fu1(height INT) RETURNS DOUBLE
-    BEGIN
-    RETURN height * height * 22/10000; #这里一定要有分号
-    END
-    //
-$ delimiter ;</code></pre>
-<p>执行下面的命令</p>
-<pre class=" language-mysql"><code class="language-mysql">SELECT fu1(174);
-+----------+
-| fu1(174) |
-+----------+
-|  66.6072 |
-+----------+
-1 row in set (0.00 sec)</code></pre>
-<h4 id="返回记录平均值的存储函数"><a href="#返回记录平均值的存储函数" class="headerlink" title="返回记录平均值的存储函数"></a>返回记录平均值的存储函数</h4><pre class=" language-mysql"><code class="language-mysql">$ CREATE FUNCTION fu2() RETURNS DOUBLE
-    BEGIN
-    DECLARE r DOUBLE;
-    SELECT AVG(sales) INTO r FROM tb;
-    RETURN r;
-    END</code></pre>
-<p>平均值需要通过 SELECT AVG 来计算。这个值必须赋给变量。我们可以把变量理解为 “保管值的箱子”。要想使用变量，就需要通过 DECLARE 定义变量。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ DECLARE 变量名 变量类型</code></pre>
-<p>我们把变量名设置成了 r 。平均值会输入到变量 r 中。为了能够处理小数部分，我们数据类型指定为 DOUBLE 类型。下面的 SQL 语句用于从表 tb 中提取列 sales 的平均值。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ SELECT AVG(sales) FROM tb;</code></pre>
-<p>把 AVG(sales) 赋给 DECLARE 中定义的变量 r 时需要使用 INTO。于是 SQL 语句就变成了</p>
-<pre class=" language-mysql"><code class="language-mysql">$ SELECT AVG(sales) INTO r FROM tb;</code></pre>
-<p>这样，平均值就输入了变量 r 中。我们可以使用 RETURN 让这个平均值作为存储函数的值返回。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ SELECT fu2();
-+---------------+
-| fu2()         |
-+---------------+
-| 111.166666666 |
-+---------------+
-1 row in set (0.01 sec)</code></pre>
-<h3 id="显示和删除存储函数"><a href="#显示和删除存储函数" class="headerlink" title="显示和删除存储函数"></a>显示和删除存储函数</h3><pre class=" language-mysql"><code class="language-mysql"># 删除存储函数
-$ DROP FUNCTION 存储函数名;
-# 显示存储函数
-$ SHOW CREATE FUNCTION 存储函数名;</code></pre>
-<h3 id="什么是触发器"><a href="#什么是触发器" class="headerlink" title="什么是触发器"></a>什么是触发器</h3><p><strong>触发器( trigger )</strong> 是一种对表执行某种操作后会出发执行其它命令的机制。</p>
-<p>当执行 INSERT、UPDATE 和 DELETE 等命令时，作为触发器提前设置好的操作也会被执行。例如，创建一个触发器，当某表的记录发生更新时，就以此为契机将更新的内容记录到另一个表中。</p>
-<img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/Snipaste_2021-01-28_09-33-39.png" style="zoom:50%;">
-
-<p>触发器也常作为处理的记录或者处理失败时的备份使用。</p>
-<p>触发器是一个非常强大的功能，只听过文字介绍很难了解到这个功能有哪些优点。我们先创建一个触发器来体验一下。</p>
-<p>这里我们来创建一个 “如果删除了表中的记录，被删除的记录就会复制到其它表中” 的触发器。也就是说对表 tb1 执行 “DELETE FROM tb1 …; ” 命令，被删除的记录就会全部插入到表 tb1_from 中。这样一来，我们就可以随时恢复已删除的记录了。</p>
-<p>请事先创建一个空表 tb1_from 用于插入表 tb1 中删除的记录。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ CREATE TABLE tb1_from LIKE tb1;</code></pre>
-<h3 id="创建触发器"><a href="#创建触发器" class="headerlink" title="创建触发器"></a>创建触发器</h3><p>触发器会对表执行 INSERT、UPDATE 和 DELETE 等命令之前（Before）或之后（After）被调用和执行。</p>
-<h4 id="触发器被触发的时机"><a href="#触发器被触发的时机" class="headerlink" title="触发器被触发的时机"></a>触发器被触发的时机</h4><table>
-<thead>
-<tr>
-<th>BEFORE</th>
-<th>在对表进行处理之前触发</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>AFTER</td>
-<td>在对表进行处理之后触发</td>
-</tr>
-</tbody></table>
-<p>另外，对表进行处理之前的列值和对表进行处理之后的列值，可以向下面这样通过 “OLD.列名” “NEW.列名” 获得。</p>
-<table>
-<thead>
-<tr>
-<th>OLD.列名</th>
-<th>对表进行处理之前的列值</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>NEW.列名</td>
-<td>对表进行处理之后的列值</td>
-</tr>
-</tbody></table>
-<p>也就是说，执行 INSERT、UPDATE 和 DELETE 命令之前的列值可以通过 “OLD.列名” 获得，执行这些命令之后的列值可以通过 “NEW.列名” 获得。</p>
-<p>但是，根据命令的不同，有的列值可以取出来，有的列值不能取出来。</p>
-<table>
-<thead>
-<tr>
-<th>命令</th>
-<th>执行前（OLD.列名）使用BEFORE</th>
-<th>执行后（NEW.列名）使用AFTER</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>INSERT</td>
-<td>NO</td>
-<td>YES</td>
-</tr>
-<tr>
-<td>DELETE</td>
-<td>YES</td>
-<td>NO</td>
-</tr>
-<tr>
-<td>UPDATE</td>
-<td>YES</td>
-<td>YES</td>
-</tr>
-</tbody></table>
-<h4 id="创建触发器-1"><a href="#创建触发器-1" class="headerlink" title="创建触发器"></a>创建触发器</h4><pre class=" language-mysql"><code class="language-mysql">$ CREATE TRIGGER 触发器名 BEFORE (或者 AFTER) DELETE 等命令
-    ON 表名 FOR EACH ROW
-    BEGIN
-            使用更新前(OLD.列名) 或者更新后(NEW.列名) 的处理
-    END</code></pre>
-<p>在触发器主体的描述中，各个命令的末尾要加上分号 “;”。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ delimiter //
-$ CREATE TRIGGER tr1 BEFORE DELETE ON tb1 FOR EACH ROW
-    BEGIN
-    INSERT INTO tb1_from VALUES(OLD.empid, OLD.name, OLD.age);
-    END
-    //
-$ delimiter ;</code></pre>
-<p>触发器创建成功了。现在，表 tb1 删除的记录应该能够插入到表 tb1_form 中了。不管是 1 条记录还是 2 条记录，触发器都会进行处理，所以我们干脆把所有记录都删掉。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ DELETE FROM tb1;
-
-$ SELECT * FROM tb1_from;
-+-------+-------------------+------+
-| empid | name              | age  |
-+-------+-------------------+------+
-| A101  | 主任·佐腾         |   40 |
-| A102  | 高桥              |   28 |
-| A103  | 中川              |   20 |
-| A104  | 渡边              |   23 |
-| A105  | 西泽              |   35 |
-| NULL  | 临时工·石田       |   18 |
-+-------+-------------------+------+
-6 rows in set (0.00 sec)</code></pre>
-<p>和我们预想的一样，删除的记录插入带了表 tb1_from 中了。</p>
-<h4 id="触发器的内容"><a href="#触发器的内容" class="headerlink" title="触发器的内容"></a>触发器的内容</h4><pre class=" language-mysql"><code class="language-mysql">CREATE TRIGGER tr1 BEFORE DELETE ON tb1 FOR EACH ROW
-BEGIN
-    INSERT INTO tb1_from VALUES(OLD.empid, OLD.name, OLD.age);
-END</code></pre>
-<p>首先为表 tb1 的 DELETE 命令设置触发器 tr1。因为要对删除之前 (BEFORE) 的值进行 INSERT，所以 CREATE TRIGGER 的部分需要编写成下面这样：</p>
-<pre class=" language-mysql"><code class="language-mysql">$ CREATE TRIGGER tr1 BEFORE DELETE ON tb1 FOR EACH ROW;</code></pre>
-<p>提出删除前（BEFORE）的列值（OLD.列名），并将其插入表 tb1_from 中。表 tb1_from 由列 empid、列 name 和 列 age 组成，所以删除前的列值分别为 OLD.empid、OLD.name 和 OLD.age。</p>
-<p>因为要使用 INSERT 命令将这些列值插入到表 tb1_from 中，所以触发器需要描述成下面这样：</p>
-<pre class=" language-mysql"><code class="language-mysql">$ INSERT INTO tb1_from VALUES(OLD.empid, OLD.name, OLD.age);</code></pre>
-<p>该触发器的主体部分用 BEGIN 和 END 括了起来。</p>
-<h3 id="确认和删除触发器"><a href="#确认和删除触发器" class="headerlink" title="确认和删除触发器"></a>确认和删除触发器</h3><p>触发器是自动启动的。为了避免无意间执行相关处理，我们需要在管理上多加注意。必须对当前设置的触发器及其内容有充分的了解。</p>
-<p>我们可以使用 SHOW TRIGGERS 命令确认当前设置的触发器。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ SHOW TRIGGERS;</code></pre>
-<h4 id="删除触发器"><a href="#删除触发器" class="headerlink" title="删除触发器"></a>删除触发器</h4><pre class=" language-mysql"><code class="language-mysql">$ DROP TRIGGER 触发器名;</code></pre>
+<p>即使开启了事务也有不能复原的情况，这一点需要注意。</p>
+<blockquote>
+<p><strong>提示</strong>    如果没有提交事务就退出 MySQL 监视器，修改的内容就会作废。也就是说，如果在未提交事务的情况下关闭连接，事务将自动回滚。</p>
+</blockquote>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -775,7 +645,7 @@ END</code></pre>
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://blog.asiama.top/posts/5d64.html">https://blog.asiama.top/posts/5d64.html</a>
+                    <a href="https://blog.asiama.top/posts/8c7e.html">https://blog.asiama.top/posts/8c7e.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -985,7 +855,7 @@ END</code></pre>
         repo: 'asiama.github.io',
         owner: 'asiama',
         admin: "asiama",
-        id: '2021-01-28T10-27-12',
+        id: '2021-01-28T10-29-05',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -1009,9 +879,10 @@ END</code></pre>
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/posts/8c7e.html">
                     <div class="card-image">
@@ -1029,9 +900,9 @@ END</code></pre>
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-01-28
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-28
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -1040,6 +911,7 @@ END</code></pre>
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -1058,13 +930,13 @@ END</code></pre>
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/posts/76dd.html">
+                <a href="/posts/5d64.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/5.jpg" class="responsive-img" alt="熟练使用视图">
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/23.jpg" class="responsive-img" alt="熟练使用存储过程">
                         
-                        <span class="card-title">熟练使用视图</span>
+                        <span class="card-title">熟练使用存储过程</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1075,7 +947,7 @@ END</code></pre>
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-27
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-28
                             </span>
                         <span class="publish-author">
                             
