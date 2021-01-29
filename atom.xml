@@ -6,7 +6,7 @@
   <link href="https://blog.asiama.top/atom.xml" rel="self"/>
   
   <link href="https://blog.asiama.top/"/>
-  <updated>2021-01-28T10:05:32.370Z</updated>
+  <updated>2021-01-29T03:12:12.577Z</updated>
   <id>https://blog.asiama.top/</id>
   
   <author>
@@ -17,11 +17,36 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>JAVA并发编程简介</title>
+    <link href="https://blog.asiama.top/posts/93c4.html"/>
+    <id>https://blog.asiama.top/posts/93c4.html</id>
+    <published>2021-01-28T10:54:54.000Z</published>
+    <updated>2021-01-29T03:12:12.577Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;编写正确的程序很难，而编写正确的并发程序则难上加难。与串行程序相比，在并发程序中存在更多容易出错的地方。那么，为什么还要编写并发成程序？线程是 JAVA</summary>
+        
+      
+    
+    
+    
+    <category term="JAVA" scheme="https://blog.asiama.top/categories/JAVA/"/>
+    
+    
+    <category term="并发编程" scheme="https://blog.asiama.top/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
     <title>使用文件进行交互</title>
     <link href="https://blog.asiama.top/posts/ee67.html"/>
     <id>https://blog.asiama.top/posts/ee67.html</id>
     <published>2021-01-28T04:33:36.000Z</published>
-    <updated>2021-01-28T10:05:32.370Z</updated>
+    <updated>2021-01-28T10:06:08.902Z</updated>
     
     
       
@@ -447,29 +472,6 @@
         
     <summary type="html">&lt;blockquote&gt;
 &lt;p&gt;在微博中，用户之间是 “关注” 和 “被关注”的关系。如果要使用 Redis 存储这样的关系可以使用集合类型。思路是对每个用户使用两个集合类型键，分别名为 &lt;code&gt;user:用户ID:followers&lt;/code&gt; 和</summary>
-        
-      
-    
-    
-    
-    
-    <category term="Redis" scheme="https://blog.asiama.top/tags/Redis/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Redis哨兵</title>
-    <link href="https://blog.asiama.top/posts/c807.html"/>
-    <id>https://blog.asiama.top/posts/c807.html</id>
-    <published>2021-01-21T13:19:49.000Z</published>
-    <updated>2021-01-21T13:37:08.144Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;headerlink&quot;</summary>
         
       
     
