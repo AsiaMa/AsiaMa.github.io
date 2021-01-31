@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="JAVA并发编程简介, Java,Git,SpringBoot,SpringCloud,SpringCloud Alibaba等">
+    <meta name="keywords" content="测试多线程上下文切换, Java,Git,SpringBoot,SpringCloud,SpringCloud Alibaba等">
     <meta name="description" content="专注WJava后端,大数据,分享知识,分享生活">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>JAVA并发编程简介 | 三十二道街</title>
+    <title>测试多线程上下文切换 | 三十二道街</title>
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/awesome/css/all.css">
@@ -287,12 +287,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/3.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/19.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">JAVA并发编程简介</h1>
+                    <h1 class="description center-align post-title">测试多线程上下文切换</h1>
                 </div>
             </div>
         </div>
@@ -409,8 +409,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/">
-                                <span class="chip bg-color">并发编程</span>
+                            <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">
+                                <span class="chip bg-color">多线程</span>
                             </a>
                         
                     </div>
@@ -434,28 +434,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-01-28
+                    2021-01-31
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-01-29
+                    2021-01-31
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    7.7k
+                    1.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    26 分
+                    4 分
                 </div>
                 
 
@@ -470,94 +470,122 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>编写正确的程序很难，而编写正确的并发程序则难上加难。与串行程序相比，在并发程序中存在更多容易出错的地方。那么，为什么还要编写并发成程序？线程是 JAVA 语言中不可或缺的重要功能，它们能使复杂的异步代码变得更简单，从而极大地简化了复杂系统的开发。此外，要想充分发挥多处理器系统的强大的计算能力，最简单的方式就是使用线程。随着处理器数量的持续增长，如何高效地使用并发正变得越来越重要。</p>
-<h3 id="并发简史"><a href="#并发简史" class="headerlink" title="并发简史"></a>并发简史</h3><p>在早期的计算机中不包含操作系统，它们从头到尾只执行一个程序，并且这个程序能访问计算机中的所有资源。在这种裸机环境中，不仅很难编写和运行程序，而且每次只能运行一个程序，这对于昂贵并且稀有的计算机资源来说也是一种浪费。</p>
-<p><strong>操作系统的出现使得计算机每次能运行多个程序，并且不同的程序都在单独的进程中运行：操作系统为各个独立执行的进程分配各种资源，包括内存、文件句柄以及安全证书等。如果需要的话，在不同的进程之间可以通过粗粒度的通信机制来交换数据，包括：套接字、信号处理器、共享内存、信号量以及文件等。</strong></p>
-<p>之所以在计算机中加入操作系统来实现多个程序的同时执行，主要是基于以下原因：</p>
-<ul>
-<li>资源利用率</li>
-</ul>
-<p>在某些情况下，程序必须等待某个外部操作执行完成，例如输入操作或输出操作等，而在等待时程序无法执行其它任何工作。因此，如果在等待的同时可以运行另一个程序，那么无疑将提高资源的利用率。</p>
-<ul>
-<li>公平性</li>
-</ul>
-<p>不同的用户和程序对于计算机上的资源有着同等的使用权。一种高效的运行方式是通过粗粒度的时间分片（Time Slicing） 使这些用户和程序能共享计算机资源，而不是由一个程序从头运行到尾，然后再启动下一个程序。</p>
-<ul>
-<li>便利性</li>
-</ul>
-<p>通常来说，在计算多个任务时，应该编写多个程序，每个程序执行一个任务并在必要时相互通信，这比只编写一个程序来计算所有任务更容易实现。</p>
-<p>在早期的分时系统中，每个进程相当于一台虚拟的冯·诺伊曼计算机，它拥有存储指令和数据的内存空间，根据机器语言的语义以串行方式执行指令，并通过一组 I/O 指令与外部设备通信。对每条被执行的指令，都有相应的 “下一条指令”，程序中的控制流是按照指令集的规则来确定的。当前，几乎所有的主流编程语言都遵循这种串行编程模型。并且在这些语言的规范中也都清晰地定义了在某个动作完成之后需要执行的 “下一步动作”。</p>
-<p>串行编程模型的优势在于其直观性和简单性，因为它模仿了人类的工作方式：每次只做一件事情，做完之后再做另一件。例如，首先起床，穿上睡衣，然后下楼，喝早茶。在编程语言中，这些现实世界中的动作可以被进一步抽象为一组粒度更细的动作。例如，喝早茶的动作可以被进一步细化为：打开橱柜，挑选喜欢的茶叶，将一些茶叶倒入杯中，看看茶壶中是否有足够的水，如果没有的话加些水，将茶壶放到火炉上，点燃火炉，然后等水烧开等等。在最后一步等水烧开的过程中包含了一定程度的异步性。当正在烧水时，你可以干等着，也可以做些其它事情，例如开始烤面包（这是另一个异步任务）或者看报纸，同时留意茶壶水是否烧开。茶壶和面包机的生产商都很清楚：用户通常会使用异步方式来使用他们的产品，因此当这些机器完成任务时都会发出声音提示。但凡做事高效的人，总能在串行性和异步性之间找到合理的平衡，对于程序来说同样如此。</p>
-<p>这些促使进程出现的因素（资源利用率、公平性以及便利性等）同样也促使这线程出现。<strong>线程允许在同一个进程中同时存在多个程序控制流。线程会共享进程范围内的资源，例如内存句柄和文件句柄，但每个线程都有各自的程序计数器（Program Counter）、栈以及局部变量等。</strong>线程还提供了一种直观的分解模式来充分利用多处理器系统中的硬件并行性，而在同一个程序中的多个线程也可以被同时调度到多个 CPU 上运行。</p>
-<p><strong>线程也被称为轻量级进程。</strong> 在大多数现代操作系统中，都是以线程为基本的调度单位，而不是进程。如果没有明确的协同机制，那么线程将彼此独立运行。由于同一个进程中的所有线程都将共享进程的内存地址空间，因此这些线程都能访问相同的变量并在同一堆上分配对象，这就需要实现一种比在进程间共享数据粒度更细的数据共享机制。如果没有明确的同步机制来协同对共享数据的访问，那么当一个线程正在使用某个变量时，另一个线程可能同时访问这个变量，这将造成不可预测的结果。</p>
-<h3 id="线程的优势"><a href="#线程的优势" class="headerlink" title="线程的优势"></a>线程的优势</h3><p>如果使用得当，线程可以有效地降低程序的开发和维护等成本，同时提升复杂应用程序的性能。线程能够将大部分的异步工作流转换成串行工作流，因此能更好地模拟人类的工作方式和交互方式。此外，线程还可以降低代码的复杂度，使代码更容易编写、阅读和维护。</p>
-<p>在 GUI (Graphic User Interface，图形用户界面) 应用程序中，线程可以提高用户界面的响应灵敏度，而在服务器应用程序中，可以提升资源利用率以及系统吞吐率。线程还可以简化 JVM 的实现，垃圾收集器通常在一个或多个专门的线程中运行。在许多重要的 JAVA 应用程序中，都在一定程度上用到了线程。</p>
-<h4 id="发挥多处理器的强大能力"><a href="#发挥多处理器的强大能力" class="headerlink" title="发挥多处理器的强大能力"></a>发挥多处理器的强大能力</h4><p>过去，多处理器系统是非常昂贵和稀少的，通常只有在大型数据中心和科学计算设备中才会使用多处理器系统。但现在，多处理器系统正日益普及，并且价格也在不断地降低，即使在低端服务器和中端桌面系统中，通常也会采用多个处理器。这种趋势还将进一步加快，因为通过采用时钟频率来提升性能已变得越来越困难，处理器生产厂商都开始转而在单个芯片上放置多个处理器核。所有的主流芯片制造商都开始了这种转变，而我们也已经看到了在一些机器上出现了更多的处理器。</p>
-<p>由于基本的调度单位是线程，因此如果在程序中只有一个线程，那么最多同时只能在一个处理器上运行。在双处理器系统上，单线程的程序只能使用一半的 CPU 资源，而在拥有 100 个处理器的系统上，将有 99% 的资源无法使用。另一方面，多线程程序可以同时在多个处理器上执行。如果设计正确，多线程程序可以通过提高处理器资源利用率来提升系统吞吐率。</p>
-<p>使用多个线程还有助于在单处理器系统上获得更高的吞吐率。如果程序是单线程的，那么当程序等待某个同步 I/O 操作完成时，处理器将处理空闲状态。而在多线程程序中，如果一个线程在等待 I/O 操作完成，另一个线程可以继续运行，是程序能够在 I/O 阻塞期间继续运行。（这就好比在等待水烧开的同时看报纸，而不是等水烧开之后在开始看报纸。）</p>
-<h4 id="建模的简单性"><a href="#建模的简单性" class="headerlink" title="建模的简单性"></a>建模的简单性</h4><p>通常，当只需要执行一种类型的任务（例如修改 12 个错误）时，在时间管理方面比执行多种类型的任务（例如，修复错误、面试系统管理员的接任者、完成团队的绩效考核，以及为下个星期的报告做幻灯片等）要简单。当只有一种类型的任务需要完成时，只需埋头工作，直到完成所有的任务（或者你已经筋疲力尽），你不需要花费任何精力来琢磨下一步该做什么。而另一方面，如果需要完成多种类型的任务，那么需要管理不同任务之间的优先级和执行时间，并在任务之间进行切换，这将带来额外的开销。</p>
-<p>对于软件来说同样如此：如果在程序中只包含一种类型的任务，那么比包含多种不同类型任务的程序要更易于编写，错误更少，也更容易测试。如果为模型中每种类型任务都分配一个专门的线程，那么可以形成一种串行执行的假象，并将程序的执行逻辑与调度机制的细节、交替执行的操作、异步 I/O 以及资源等待等问题分离开来。通过使用线程，可以将复杂并且异步的工作流进一步分解为一组简单并且同步的工作流，每个工作流在一个单独的线程中运行，并在特性的同步位置进行交互。</p>
-<p>我们可以通过一些现有的框架来实现上述目标，例如 Servlet 和 RMI（Remote Method Invocation，远程方法调用）。框架复杂解决一些细节问题，例如请求管理、线程创建、负载均衡，并在正确的时刻将请求分发给正确的应用程序组件。编写 Servlet 的开发人员不需要了解有多少请求在同一时刻要被处理，也不需要了解套接字的输入流和输出流是否被阻塞。当调用 Servlet 的 service 方法来响应 Web 请求时，可以以同步方式来处理这个请求，就好像它时一个单线程程序。这种方式可以简化组件的开发，并缩短掌握这种框架的时间。</p>
-<h4 id="异步事件的简化处理"><a href="#异步事件的简化处理" class="headerlink" title="异步事件的简化处理"></a>异步事件的简化处理</h4><p>服务器应用程序在接受来自多个远程客户端的套接字连接请求时，如果为每个连接都分配其各自的线程并且使用同步 I/O，那么就会降低这类程序的开发难度。</p>
-<p>如果某个应用程序对套接字执行读操作而此时数据还没有到来，那么这个读操作将一直阻塞，直到有数据到达。在单线程应用程序中，这不仅意味着在处理请求的过程中将停顿，而且还意味着在这个线程被阻塞期间，对所有的请求都将停顿。为了避免这个问题，单线程服务器应用程序必须使用非阻塞 I/O，这种 I/O 的复杂度远远高于同步 I/O，并且很容易出错。然而，如果每个请求都拥有自己的处理线程，那么在处理某个请求时发生的阻塞将不会影响其他请求的处理。</p>
-<p>早期的操作系统通常会将进程中可创建的线程数量限制在一个较低的阀值内，大约在数百个（甚至更少）左右。因此操作系统提供了一些高效的方法来实现多路 I/O，例如 Unix 的 select 和 poll 等系统调用，要调用这些方法，Java 类型需要获得一组非阻塞 I/O 的包（java.nio）。然而，在现代操作系统中，线程数量已得到极大的提升，这使得在某些平台上，即使有更多的客户端，为每个客户端分配一个线程也是可行的。</p>
-<blockquote>
-<p>NPTL 线程软件包是专门设计用于支持数十万个线程的，在大多数 Linux 发布版本中都包含了这个软件包。非阻塞 I/O 有其自身的优势，但如果操作系统能更好地支持线程，那么需要使用非阻塞 I/O 的情况将变得更少。</p>
-</blockquote>
-<h4 id="响应更灵敏的用户界面"><a href="#响应更灵敏的用户界面" class="headerlink" title="响应更灵敏的用户界面"></a>响应更灵敏的用户界面</h4><p>传统的 GUI 应用程序通常都是单线程的，从而在代码的各个位置都需要调用 poll 方法来获得输入事件（这种方式将给代码带来极大的混乱），或者通过一个 “主事件循环（Main Event Loop）” 来间接地执行应用程序的所有代码。如果在主事件循环中调用的代码需要很长时间才能执行完成，那么用户界面就会 “冻结”，直到代码执行完成。这是因为只有当执行控制权返回到主事件循环中，才能处理后续的用户界面事件。</p>
-<p>在现代 GUI 框架中，例如 AWT 和 Swing 等工具，都采用一个事件分发线程（Event Dispatch Thread，EDT）来替代主事件循环。当某个用户界面事件发生时（例如按一下按钮），在事件线程中将调用应用程序的事件处理器。由于大多数 GUI 框架都是单线程子系统，因此到目前为止仍然存在主事件循环，但它现在处于 GUI 工具的控制下并在其自己的线程中运行，而不是在应用程序的控制下。</p>
-<p>如果在事件线程中执行的任务都是短暂的，那么界面的响应灵敏度就较高，因为事件线程能够很快地处理用户的动作。然而，如果事件线程中的任务需要很长的执行时间，例如对一个大型文档进行拼写检查，获取从网络上获取一个资源，那么界面的响应灵敏度就会降低。如果用户在执行这类任务时触发了某个动作，那么必须等待很长的时间才能获得响应，因为事件线程要先执行完该任务。更糟糕的是，不仅界面失去响应，而且即使在界面上包含了 “取消” 按钮，也无法取消这个长时间执行的任务，因为事件线程只有在执行完该任务后才能响应“取消” 按钮的点击事件。然而，如果将这个长时间运行的任务放在一个单独的线程中运行，那么事件线程就能及时地处理界面事件，从而使用户界面具有更高的灵敏度。</p>
-<h3 id="线程带来的风险"><a href="#线程带来的风险" class="headerlink" title="线程带来的风险"></a>线程带来的风险</h3><p>Java 对线程的支持其实是一把双刃剑。虽然 Java 提供了相应的语言和库，以及一种明确的跨平台内存模型（该内存模型实现了在 Java 中开发 “编写一次，随处运行” 的并发应用程序），这些工具简化了并发应用程序的开发，但同时也提高了对并发人员的技术要求，因为在更多的程序中会使用线程。当线程还是一项鲜为人知的技术时，并发性是一个 “高深” 的主题，但现在，主流开发人员都必须了解线程方面的内容。</p>
-<h4 id="安全性问题"><a href="#安全性问题" class="headerlink" title="安全性问题"></a>安全性问题</h4><p>线程安全性可能是非常复杂的，在没有充足同步的情况下，多个线程中的操作执行顺序是不可预测的，甚至会产生奇怪的结果。</p>
-<p>在 UnsafeSequence 类中将产生一个整数值序列，该序列中每个值都是唯一的。在这个类中简要地说明了多个线程之间的交替操作将如何导致不可预料的结果。在单线程环境中，这个类能正确地工作，但在多线程环境中则不能。</p>
-<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@NotThreadSafe</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UnsafeSequence</span><span class="token punctuation">{</span>
-  <span class="token keyword">private</span> <span class="token keyword">int</span> value<span class="token punctuation">;</span>
+                <h3 id="上下文切换"><a href="#上下文切换" class="headerlink" title="上下文切换"></a>上下文切换</h3><p>即使是单核处理器也支持多线程执行代码，CPU 通过给每个线程分配 CPU 时间片来实现这个机制。时间片是 CPU 分配给各个线程的时间，因为时间片非常短，所以 CPU 通过不停地切换线程执行，让我们感觉多个线程是同时执行的，时间片一般是几十毫秒（ms）。</p>
+<p>CPU 通过时间片分配算法来循环执行任务，当前任务执行一个时间片后会切换到下一个任务。但是，在切换前会保存上一个任务的状态，以便下回切换回这个任务时，可以再加载这个任务的状态。所以任务从保存到再加载的过程就是一次上下文切换。</p>
+<p>这就像我们同时读两本书，当我们在读一本英文的技术书时，发现某个单词不认识，于是便打开中英文词典，但是在放下英文技术书之前，大脑必须先记住这本书读到了多少页的第多少行，等查完单词之后，能够继续读这本书。这样的切换是会影响读书效率的，同样上下文切换也会影响多线程的执行速度。</p>
+<h3 id="多线程一定快吗"><a href="#多线程一定快吗" class="headerlink" title="多线程一定快吗"></a>多线程一定快吗</h3><p>下面的代码演示串行和并发执行并累计操作的时间，请分析：下面的代码并发执行一定比串行快吗？</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ConcurrencyTest</span> <span class="token punctuation">{</span>
+  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">long</span> count <span class="token operator">=</span> 1000001L<span class="token punctuation">;</span>
 
-  <span class="token comment" spellcheck="true">/** 返回一个唯一的数值 */</span>
-  <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getNext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-    <span class="token keyword">return</span> value<span class="token operator">++</span><span class="token punctuation">;</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> InterruptedException <span class="token punctuation">{</span>
+    <span class="token function">concurrency</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">serial</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
-<p>UnsafeSequence 的问题在于，如果执行时机不对，那么两个线程在调用 getNext 时会得到相同的值。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/17911611843649_.pic.jpg"></p>
-<p>虽然递增运算符 someVariable++ 看上去是个单个操作，但事实上它包含三个独立的操作：读取 value，将 value + 1，并将计算结果写入 value。由于运行时可能将多个线程之间的操作交替执行，因此这两个线程可能同时执行读操作，从而使它们得到相同的值，并都将这个值加 1。结果就是，在不同线程的调用中返回了相同的数值。</p>
-<blockquote>
-<p>图中给出了不同线程之间的一种交替执行情况。在图中，执行时序按照从左到右的顺序递增，每行表示一个线程的动作。这行交替执行示意图给出的是最糟糕的执行情况（事实上，由于存在指令重排序的可能，因此实际情况可能会更糟糕），目的是为了说明：如果错误地假设程序中的操作是按照某种特定顺序来执行，那么会存在各种可能的危险。</p>
-</blockquote>
-<p><strong>在 UnsafeSequence 类中说明的是一种常见的并发安全问题，称为竞态条件（Race Condition）。</strong>在多线程环境下，getValue 是否会返回唯一的值，要取决于运行时对线程中操作的交替执行方式，这并不是我们希望看到的情况。</p>
-<p>由于多个线程要共享相同的内存地址空间，并且是并发运行，因此它们可能会访问或修改其它线程正在使用的变量。当然，这是一种极大的便利，因为这种方式比其它线程间通信机制更容易实现数据共享。但它同样也带来了巨大的风险：线程会由于无法预料的数据变化而发生错误。当多个线程同时访问和修改相同的变量时，将会在串行编程模型中引入非串行因素，而这种非串行性是很难分析的。要使多线程程序的行为可以预测，必须对共享变量的访问操作可以协同，这样才不会在线程之间发生彼此干扰。幸运的是，Java 提供了各种同步机制来协同这种访问。</p>
-<p>通过将 getNext 修改为一个同步方法，可以修复 UnsafeSequence 中的错误。</p>
-<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@ThreadSafe</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UnsafeSequence</span><span class="token punctuation">{</span>
-  <span class="token annotation punctuation">@GuardBy</span><span class="token punctuation">(</span><span class="token string">"this"</span><span class="token punctuation">)</span> <span class="token keyword">private</span> <span class="token keyword">int</span> value<span class="token punctuation">;</span>
 
-  <span class="token comment" spellcheck="true">/** 返回一个唯一的数值 */</span>
-  <span class="token keyword">public</span> <span class="token keyword">synchronized</span> <span class="token keyword">int</span> <span class="token function">getNext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-    <span class="token keyword">return</span> value<span class="token operator">++</span><span class="token punctuation">;</span>
+  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">concurrency</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> InterruptedException <span class="token punctuation">{</span>
+    <span class="token keyword">long</span> start <span class="token operator">=</span> System<span class="token punctuation">.</span><span class="token function">nanoTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Thread t <span class="token operator">=</span>
+        <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span>
+            <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">{</span>
+              <span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+              <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> count<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                a <span class="token operator">+=</span> <span class="token number">5</span><span class="token punctuation">;</span>
+              <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    t<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">int</span> b <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> count<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      b<span class="token operator">--</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    t<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">double</span> time <span class="token operator">=</span> <span class="token punctuation">(</span>System<span class="token punctuation">.</span><span class="token function">nanoTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> start<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">1E6</span><span class="token punctuation">;</span>
+
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"concurrency: "</span> <span class="token operator">+</span> time <span class="token operator">+</span> <span class="token string">"ms, b = "</span> <span class="token operator">+</span> b<span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
-<p>如果没有同步，那么无论是编译器、硬件还是运行时，都可以随意安排操作的执行时间和顺序，例如对寄存器或者处理器中的变量进行缓存，而这些被缓存的变量对其它线程来说是暂时（甚至永久）不可见的。虽然这些技术有助于实现更优的性能，并且通常也是值得采用的方法，但它们也为开发人员带来了负担，因为开发人员必须找出这些数据在哪些位置被多个线程共享，只有这样才能使这些优化措施不破坏线程安全性。</p>
-<h4 id="活跃性问题"><a href="#活跃性问题" class="headerlink" title="活跃性问题"></a>活跃性问题</h4><p>在开发并发代码时，一定要注意线程安全性是不可破坏的。安全性不仅对于多线程程序很重要，对于单线程程序同样重要。此外，线程还会导致一些在单线程程序中不会出现的问题，例如活跃性问题。<br>安全性的含义是 “永远不发生糟糕的事情”，而活跃性则关注与另一个目标，即 “某件正确的事情最终会发生”。当某个操作无法继续执行下去时，就会发生活跃性问题。在串行程序中，活跃性问题的形式之一就是无意中造成的无限循环，从而使循环之后的代码无法得到执行。线程将带来其它一些活跃性问题。例如，如果线程 A 在等待线程 B 释放其持有的资源，而线程 B 永远都不释放该资源，那么 A 就会永久地等待下去。与大多数并发性错误一样，导致活跃性问题的错误同样是难以分析的，因为它们依赖于不同线程的事件发生时许，因此在开发或者测试中并不总是能够重现。</p>
-<h4 id="性能问题"><a href="#性能问题" class="headerlink" title="性能问题"></a>性能问题</h4><p>与活跃性问题密切相关的是性能问题。活跃性意味着某件正确的事情最终会发生，但却不够好，因为我们通常希望正确的事情尽快发生。性能问题包括多个方面，例如服务时间过长，响应不灵敏，吞吐率过低，资源消耗过高，或者可伸缩性较低等。与安全性和活跃性一样，在多线程程序中不仅存在与单线程程序相同的性能问题，而且还存在由于使用线程而引入的其它性能问题。</p>
-<p>在设计良好的并发应用程序中，线程能提升程序的性能，但无论如何，线程总会带来某种程度的运行时开销。在多线程程序中，当线程调度器临时挂起活跃线程并转而运行另一个线程时，就会频繁地出现上下文切换操作（Context Switch），这种操作将带来极大的开销：保存和恢复执行上下文，丢失局部性，并且 CPU 时间将更多地花在线程调度而不是线程运行上。当线程共享数据时，必须使用同步机制，而这些机制往往会抑制某些编译器优化，使内存缓冲区的数据无效，以及增加共享内存总线的同步流量。所有这些因素都将带来额外的性能开销。</p>
-<h3 id="线程无处不在"><a href="#线程无处不在" class="headerlink" title="线程无处不在"></a>线程无处不在</h3><p>即使在程序中没有显式地创建线程，但在框架中仍可能会创建线程，因此在这些线程中调用的代码同样必须是线程安全的。这将给开发人员在设计和实现上带来沉重负担，因为开发线程安全的类比开发非线程安全的类要更加谨慎和细致。</p>
-<p>每个 Java 应用程序都会使用线程。当 JVM 启动时，它将为 JVM 的内部任务（例如，垃圾收集、终结操作等）创建后台线程，并创建一个主线程来运行 main 方法。AWT (Abstract Window Tookit，抽象窗口工具库) 和 Swing 的用户界面框架将创建线程来管理用户界面事件。Timer 将创建线程来执行延迟任务。一些组件框架，例如 Servlet 和 RMI，都会创建线程池并调用这些线程中的方法。</p>
-<p>如果要使用这些功能，那么就必须熟悉并发性和线程安全性，因为这些框架将创建线程并且在这些线程中调用程序中的代码。虽然将并发性认为是一种 “可选的” 或者 “高级的” 语言功能固然理想，但现实情况是，几乎所有的 Java 应用程序都是多线程的，因此在使用这些框架时仍然需要对应用程序状态的访问进行协同。</p>
-<p>当某个框架在应用程序中引入并发性时，通常不可能将并发性仅局限于框架代码，因为框架本身会回调（Callback）应用程序的代码，而这些代码将访问应用程序的状态。同样，对线程安全性的需求也不能局限于被调用的代码，而是要延伸到需要访问这些代码所访问的程序状态的所有代码路径。因此对线程安全性的需求将在程序中蔓延开来。</p>
-<blockquote>
-<p>框架通过在框架线程中调用应用程序代码将并发性引入到程序中。在代码中将不可避免地访问应用程序状态，因此所有访问这些状态的代码路径都必须是线程安全的。</p>
-</blockquote>
-<p>下面给出的模块都将在应用程序之外的线程中调用应用程序代码。尽管线程安全性需求可能源自这些模块，但却不会止步于它们，而是会延伸到整个应用程序。</p>
-<p><strong>Timer。</strong>    Timer类的作用是使任务在稍后的时刻运行，或者运行一次，或者周期性地运行。引入 Timer 可能会使串行程序变得复杂，因为 TimerTask 将在 Timer 管理的线程中执行，而不是由应用程序来管理。如果某个 TimerTask 访问了应用程序中其它线程访问的数据，那么不仅 TimerTask 需要以线程安全的方式来访问数据，其它类也必须采用线程安全的方式来访问该数据。通常，要实现这个目标，最简单的方式是确保 TimeTask 访问的对象本身是线程安全的，从而就把线程安全性封装在共享对象内部。</p>
-<p><strong>Servlet 和 JavaServer Page（JSP）。</strong>    Servlet 框架用于部署网页应用程序以及分发来自 HTTP 客户端的请求。到达服务器的请求可能会通过一个过滤器链被分发到正确的 Servlet 或 JSP。每个 Servlet 都表示一个程序逻辑组件，在高吞吐率的网站中，多个客户端可能同时请求同一个 Servlet 的服务。在 Servlet 规范中，Servlet 同样需要满足被多个线程同时调用，换句话说，Servlet 需要是线程安全的。</p>
-<p>即使你可确保每次只有一个线程调用某个 Servlet，但在构建网页应用程序时仍然必须注意线程安全性。Servlet 通常会访问与其它 Servlet 共享的信息，例如应用程序中的对象（这些对象保存在 ServletContext 中） 或者会话中的对象（这些对象保存在每个客户端的 HttpSession 中）。当一个 Servlet 访问在多个 Servlet 或者请求中共享的对象时，必须正确地协同对这些对象的访问，因为多个请求可能在不同的线程中同时访问这些对象。Servlet 和 JSP，以及在 ServletContext 和 HttpSession 等容器中保存的 Servlet 过滤器和对象等，都必须是线程安全的。</p>
-<p><strong>远程方法调用（Remote Method Invocation, RMI）。</strong>    RMI 使代码能够调用在其它 JVM 中运行的对象。当通过 RMI 调用某个远程方法时，传递给方法的参数必须被打包（也称为列集 [Marshaled]）到一个字节流中，通过网络传输给远程 JVM，然后由远程 JVM 拆包（或者称为散集（Unmarshaled） ）并传递给远程方法。</p>
-<p>当 RMI 代码调用远程对象时，这个调用将在哪个线程中执行？你并不知道，但肯定不会在你创建的线程中，而是将在一个由 RMI 管理的线程中调用对象。RMI 会创建多少个线程？同一个远程对象上的同一个远程方法会不会在多个 RMI 线程中被同时调用？</p>
-<p>远程对象必须注意两个线程安全性问题：正确地协同在多个对象中共享的状态，以及对远程对象本身状态的访问（由于同一个对象可能会在多个线程中被同时访问）。与 Servlet 相同，RMI 对象应该做好被多个线程同时调用的准备，并且必须确保它们自身的线程安全性。</p>
-<p><strong>Swing 和 SWT 。</strong>    GUI 应用程序的一个固有属性是异步性。用户可以选择在任意时刻选择一个菜单项或者按下一个按钮，应用程序就会及时响应，即使应用程序当时正在执行其它的任务。Swing 和 AWT 很好地解决了这个问题，它们创建了一个单独的线程来处理用户触发的事件，并对呈现给用户的图形界面进行更新。</p>
-<p>Swing 的一些组件并不是线程安全的，例如 JRebel。相反，Swing 程序通过将所有对 GUI 组件的访问权限在事件线程中以实现线程安全性。如果某个应用程序希望在事件线程之外控制 GUI，那么必须将控制 GUI 的代码放在事件线程中运行。</p>
-<p>当用户触发某个 UI 动作时，在事件线程中就会有一个事件处理器被调用以执行用户请求的操作。如果事件处理器需要访问由其它线程同时访问的应用程序状态（例如编辑某个文档），那么这个事件处理器，以及访问这个状态的所有其它代码，都必须采用一种线程安全的方式来访问该状态。</p>
+
+  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">serial</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">long</span> start <span class="token operator">=</span> System<span class="token punctuation">.</span><span class="token function">nanoTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> count<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      a <span class="token operator">+=</span> <span class="token number">5</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">int</span> b <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> count<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      b<span class="token operator">--</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">double</span> time <span class="token operator">=</span> <span class="token punctuation">(</span>System<span class="token punctuation">.</span><span class="token function">nanoTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> start<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">1E6</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"serial: "</span> <span class="token operator">+</span> time <span class="token operator">+</span> <span class="token string">"ms, b = "</span> <span class="token operator">+</span> b <span class="token operator">+</span> <span class="token string">", a = "</span> <span class="token operator">+</span> a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/** 输出结果：
+    concurrency: 68.555391ms, b = -1000001
+    serial: 5.589674ms, b = -1000001, a = 5000005 */</span></code></pre>
+<p>测试结果如下所示：</p>
+<table>
+<thead>
+<tr>
+<th>循环次数</th>
+<th>串行执行耗时 /ms</th>
+<th>并发执行耗时 /ms</th>
+<th>并发比串行快多少</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>10亿</td>
+<td>724.332455ms</td>
+<td>391.188627ms</td>
+<td>约 1 倍</td>
+</tr>
+<tr>
+<td>1亿</td>
+<td>71.894395ms</td>
+<td>87.138227ms</td>
+<td>差不多</td>
+</tr>
+<tr>
+<td>1千万</td>
+<td>10.201172ms</td>
+<td>48.001412ms</td>
+<td>慢</td>
+</tr>
+<tr>
+<td>1百万</td>
+<td>5.589674ms</td>
+<td>68.555391ms</td>
+<td>慢</td>
+</tr>
+<tr>
+<td>十万</td>
+<td>1.783637ms</td>
+<td>40.619798ms</td>
+<td>慢</td>
+</tr>
+</tbody></table>
+<h3 id="如何减少上下文切换"><a href="#如何减少上下文切换" class="headerlink" title="如何减少上下文切换"></a>如何减少上下文切换</h3><p>减少上下文切换的方法有无锁并发编程、CAS 算法、使用最少线程和使用协程。</p>
+<ul>
+<li>无锁并发编程。多线程竞争锁时，会引起上下文切换，所以多线程处理数据时，可以用一些办法来避免使用锁，如将数据的 ID 按照 Hash 算法取模分段，不同的线程处理不同段的数据。</li>
+<li>CAS 算法。Java 的 Atomic 包使用 CAS 算法来更新数据，而不需要加锁。</li>
+<li>使用最少的线程。避免创建不需要的线程，比如任务很少，但是创建了很多线程来处理，这样会造成大量线程都处理等待状态。</li>
+<li>协程：在单线程里实现多任务的调度，并在单线程里维持多个任务间的切换。</li>
+</ul>
+<h3 id="减少上下文切换实战"><a href="#减少上下文切换实战" class="headerlink" title="减少上下文切换实战"></a>减少上下文切换实战</h3><p>下面将通过减少线上大量的 WAITING 的线程，来减少上下文切换次数。</p>
+<p><strong>第一步</strong>：用 jstack 命令查看 dump 线程信息，看看 pid 为 37772 的进程里的线程都在做什么。</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">sudo</span> -u admin /usr/bin/jstack 37772 <span class="token operator">></span> /Users/asiama/dump17</code></pre>
+<p><strong>第二步</strong>：统计所有线程分别处于什么状态，发现 300 多个线程处理 WAITING (onobject-monitor) 状态</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">grep</span> java.lang.Thread.State /Users/asiama/dump17 <span class="token operator">|</span> <span class="token function">awk</span> <span class="token string">'{print <span class="token variable">$2</span><span class="token variable">$3</span><span class="token variable">$4</span><span class="token variable">$5</span>}'</span> <span class="token operator">|</span> <span class="token function">sort</span> <span class="token operator">|</span> <span class="token function">uniq</span> -c
+    39 RUNNABLE
+  21 TIMED_WAITING<span class="token punctuation">(</span>onobjectmonitor<span class="token punctuation">)</span>
+   6 TIMED_WAITING<span class="token punctuation">(</span>parking<span class="token punctuation">)</span>
+  51 TIMED_WAITING<span class="token punctuation">(</span>sleeping<span class="token punctuation">)</span>
+ 305 WAITING<span class="token punctuation">(</span>onobjectmonitor<span class="token punctuation">)</span>
+   3 WAITING<span class="token punctuation">(</span>parking<span class="token punctuation">)</span></code></pre>
+<p><strong>第三步</strong>：打开 dump 文件查看处于 WAITING (onobjectmonitor) 的线程在做什么。发现这些线程基本全是 JBOSS 的工作线程，在 await。说明 JBOSS 线程池里线程接收到的任务太少，大量线程都闲着。</p>
+<p><strong>第四步</strong>：减少 JBOSS 的工作线程数，找到 JBOSS 的线程池配置信息，将 maxThreads 降到 100。</p>
+<pre class=" language-xml"><code class="language-xml">&lt;maxThreads="250" maxHttpHeaderSize="8192" ... /></code></pre>
+<p><strong>第五步</strong>：重启 JBOSS，再 dump 线程信息，然后统计 WAITING （onobjectmonitor）的线程，发现减少了 175  个。WAITING 线程少了，系统上下文切换的次数就会少，因为每一次从 WAITING 到 RUNNABLE 都会进行一次上下文的切换。</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -601,7 +629,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://blog.asiama.top/posts/93c4.html">https://blog.asiama.top/posts/93c4.html</a>
+                    <a href="https://blog.asiama.top/posts/2067.html">https://blog.asiama.top/posts/2067.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -639,8 +667,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/">
-                                    <span class="chip bg-color">并发编程</span>
+                                <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">
+                                    <span class="chip bg-color">多线程</span>
                                 </a>
                             
                         </div>
@@ -811,7 +839,7 @@
         repo: 'asiama.github.io',
         owner: 'asiama',
         admin: "asiama",
-        id: '2021-01-28T18-54-54',
+        id: '2021-01-31T21-25-16',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -840,13 +868,13 @@
                 <i class="far fa-dot-circle"></i>&nbsp;本篇
             </div>
             <div class="card">
-                <a href="/posts/93c4.html">
+                <a href="/posts/2067.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/3.jpg" class="responsive-img" alt="JAVA并发编程简介">
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/19.jpg" class="responsive-img" alt="测试多线程上下文切换">
                         
-                        <span class="card-title">JAVA并发编程简介</span>
+                        <span class="card-title">测试多线程上下文切换</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -857,7 +885,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-28
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-31
                             </span>
                         <span class="publish-author">
                             
@@ -875,8 +903,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/">
-                        <span class="chip bg-color">并发编程</span>
+                    <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">
+                        <span class="chip bg-color">多线程</span>
                     </a>
                     
                 </div>
@@ -1074,7 +1102,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">92.5k</span>&nbsp;字
+                class="white-color">85.9k</span>&nbsp;字
             
             
             

@@ -6,7 +6,7 @@
   <link href="https://blog.asiama.top/atom.xml" rel="self"/>
   
   <link href="https://blog.asiama.top/"/>
-  <updated>2021-01-29T03:12:12.577Z</updated>
+  <updated>2021-01-31T15:04:35.473Z</updated>
   <id>https://blog.asiama.top/</id>
   
   <author>
@@ -17,18 +17,18 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>JAVA并发编程简介</title>
-    <link href="https://blog.asiama.top/posts/93c4.html"/>
-    <id>https://blog.asiama.top/posts/93c4.html</id>
-    <published>2021-01-28T10:54:54.000Z</published>
-    <updated>2021-01-29T03:12:12.577Z</updated>
+    <title>测试多线程上下文切换</title>
+    <link href="https://blog.asiama.top/posts/2067.html"/>
+    <id>https://blog.asiama.top/posts/2067.html</id>
+    <published>2021-01-31T13:25:16.000Z</published>
+    <updated>2021-01-31T15:04:35.473Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;p&gt;编写正确的程序很难，而编写正确的并发程序则难上加难。与串行程序相比，在并发程序中存在更多容易出错的地方。那么，为什么还要编写并发成程序？线程是 JAVA</summary>
+    <summary type="html">&lt;h3 id=&quot;上下文切换&quot;&gt;&lt;a href=&quot;#上下文切换&quot; class=&quot;headerlink&quot; title=&quot;上下文切换&quot;&gt;&lt;/a&gt;上下文切换&lt;/h3&gt;&lt;p&gt;即使是单核处理器也支持多线程执行代码，CPU 通过给每个线程分配 CPU 时间片来实现这个机制。时间片是 CPU</summary>
         
       
     
@@ -37,7 +37,7 @@
     <category term="JAVA" scheme="https://blog.asiama.top/categories/JAVA/"/>
     
     
-    <category term="并发编程" scheme="https://blog.asiama.top/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/"/>
+    <category term="多线程" scheme="https://blog.asiama.top/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
     
   </entry>
   
