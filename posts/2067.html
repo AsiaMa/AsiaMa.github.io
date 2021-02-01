@@ -441,21 +441,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-01-31
+                    2021-02-01
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.2k
+                    1.9k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    4 分
+                    7 分
                 </div>
                 
 
@@ -586,6 +586,26 @@
 <p><strong>第四步</strong>：减少 JBOSS 的工作线程数，找到 JBOSS 的线程池配置信息，将 maxThreads 降到 100。</p>
 <pre class=" language-xml"><code class="language-xml">&lt;maxThreads="250" maxHttpHeaderSize="8192" ... /></code></pre>
 <p><strong>第五步</strong>：重启 JBOSS，再 dump 线程信息，然后统计 WAITING （onobjectmonitor）的线程，发现减少了 175  个。WAITING 线程少了，系统上下文切换的次数就会少，因为每一次从 WAITING 到 RUNNABLE 都会进行一次上下文的切换。</p>
+<h3 id="资源限制的挑战"><a href="#资源限制的挑战" class="headerlink" title="资源限制的挑战"></a>资源限制的挑战</h3><ul>
+<li>什么是资源限制</li>
+</ul>
+<p>资源限制是指在进行并发编程时，程序的执行速度受限于计算机硬件资源或软件资源。例如，服务器的带宽只有 2MB/s，某个资源的下载速度只有 1mb/s，系统启动 10 个线程下载资源，下载速度不会变成 10mb/s，所以在进行并发编程时，要考虑这些资源的限制。硬件资源限制有带宽的上传/下载速度、硬盘读写速度和 CPU 的处理速度。软件资源限制有数据库的连接数和 socket 连接数等。</p>
+<ul>
+<li>资源限制引发的问题</li>
+</ul>
+<p>在并发编程中，将代码执行速度加快的原则是将代码中串行的部分变成并发执行，但是如果将某段串行的代码并发执行，因为受限于资源，仍然在串行执行，这时候程序不仅不会加快执行，反而会更慢，因为增加了上下文切换和资源调度的时间。例如，之前看到一段程序使用多线程在办公网并发地下载和处理数据时，导致 CPU 利用率达到 100%，几个小时都不能运行完成任务，后来改成单线程，一个小时就执行完成了。</p>
+<ul>
+<li>如何解决资源限制的问题</li>
+</ul>
+<p>对于硬件资源限制，可以考虑使用集群并行执行程序。既然单机的资源有限制，那么就让程序在多机上运行。比如使用 ODPS、Hadoop 或者自己搭建服务器集群，不同的机器处理不同的数据。可以通过 “数据ID%机器数”，计算机得到一个机器编号，然后由对应编号的机器处理这笔数据。</p>
+<p>对于软件资源的限制，可以考虑使用资源池将资源复用。比如使用连接池将数据库和 Socket 连接复用，或者在调用对方 webservice 接口获取数据时，只建立一个连接。</p>
+<ul>
+<li>在资源限制情况下进行并发编程</li>
+</ul>
+<p>如何在资源限制的情况下，让程序执行更快呢？方法就是，根据不同的资源限制调整程序的并发度，比如下载文件程序依赖于两个资源：带宽和硬盘读写速度。有数据库操作时，设计数据库连接数，如果 SQL 语句执行非常快，而线程的数量比数据库连接数大很多，则某些线程会被阻塞，等待数据库连接。</p>
+<blockquote>
+<p>有的并发程序写得不严谨，在并发下如果出现问题，定位起来会比较耗时和棘手。所以，对 Java 开发工程师而言，强烈建议多使用 JDK 并发包提供的并发容器和工具类来解决并发问题，因为这些类都已经通过了充分的测试和优化。</p>
+</blockquote>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -863,18 +883,17 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/posts/2067.html">
+                <a href="/posts/6ee0.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/19.jpg" class="responsive-img" alt="测试多线程上下文切换">
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/14.jpg" class="responsive-img" alt="死锁">
                         
-                        <span class="card-title">测试多线程上下文切换</span>
+                        <span class="card-title">死锁</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -884,9 +903,9 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-31
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-02-01
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -899,7 +918,6 @@
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
@@ -1102,7 +1120,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">85.9k</span>&nbsp;字
+                class="white-color">88.4k</span>&nbsp;字
             
             
             

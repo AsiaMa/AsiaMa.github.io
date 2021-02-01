@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Redis哨兵, Java,Git,SpringBoot,SpringCloud,SpringCloud Alibaba等">
+    <meta name="keywords" content="死锁, Java,Git,SpringBoot,SpringCloud,SpringCloud Alibaba等">
     <meta name="description" content="专注WJava后端,大数据,分享知识,分享生活">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Redis哨兵 | 三十二道街</title>
+    <title>死锁 | 三十二道街</title>
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/awesome/css/all.css">
@@ -287,12 +287,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/0.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/14.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Redis哨兵</h1>
+                    <h1 class="description center-align post-title">死锁</h1>
                 </div>
             </div>
         </div>
@@ -409,14 +409,23 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Redis/">
-                                <span class="chip bg-color">Redis</span>
+                            <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">
+                                <span class="chip bg-color">多线程</span>
                             </a>
                         
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/JAVA/" class="post-category">
+                                JAVA
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -425,28 +434,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-01-21
+                    2021-02-01
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-01-21
+                    2021-02-01
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    4.9k
+                    647
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    18 分
+                    2 分
                 </div>
                 
 
@@ -461,145 +470,67 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>在一个典型的一主多从的Redis系统中，从数据库在整个系统中起到了数据冗余备份和读写分离的作用。当主数据库遇到异常中断服务后，开发者可以通过手动的方式选择一个从数据库来升级为主数据库，以使得系统能够继续提供服务。然而整个过程相对麻烦且需要人工介入，难以实现自动化。</p>
-<p>为此，Redis 2.8 中提供了哨兵工具来实现自动化的系统监控和故障恢复功能。</p>
-<h4 id="什么是哨兵"><a href="#什么是哨兵" class="headerlink" title="什么是哨兵"></a>什么是哨兵</h4><p>顾名思义，哨兵的作用就是监控 Redis 系统的运行状况。它的功能包括以下两个。</p>
-<ul>
-<li>监控主数据库和从数据库是否正常运行。</li>
-<li>主数据库出现故障时自动将从数据库转换为主数据库。</li>
-</ul>
-<p>哨兵是一个独立的进程，使用哨兵的一个典型架构如下所示：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/15971611207217_.pic_hd.jpg"></p>
-<p>在一个一主多从的 Redis 系统中，可以使用多个哨兵进行监控任务以保证系统足够稳健。注意，此时不仅哨兵会同时监控主数据库和从数据库，哨兵之间也会互相监控。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/15981611207382_.pic_hd.jpg"></p>
-<h3 id="马上上手"><a href="#马上上手" class="headerlink" title="马上上手"></a>马上上手</h3><p>在理解哨兵的原理前，我们首先实际使用一下哨兵，来了解哨兵是如何工作的。首先建立起 3 个 Redis 实例，其中包括一个主数据库和两个从数据库。主数据库的端口为 6379，两个从数据库的端口分别为 6380 和 6381。我们使用 Redis 命令行客户端来获取复制状态，以保证复制配置正确。</p>
-<p>首先是主数据库：</p>
-<pre class=" language-bash"><code class="language-bash">redis 6379<span class="token operator">></span> info replication
-<span class="token comment" spellcheck="true"># Replication</span>
-role:master
-connected_slaves:2
-slave0:ip<span class="token operator">=</span>127.0.0.1,port<span class="token operator">=</span>6380,state<span class="token operator">=</span>online,offset<span class="token operator">=</span>56,lag<span class="token operator">=</span>0
-slave1:ip<span class="token operator">=</span>127.0.0.1,port<span class="token operator">=</span>6381,state<span class="token operator">=</span>online,offset<span class="token operator">=</span>56,lag<span class="token operator">=</span>0</code></pre>
-<p>可见其连接了两个从数据库，配置正确。然后用同样的方法查看两个从数据库的配置：</p>
-<pre class=" language-bash"><code class="language-bash">redis 6380<span class="token operator">></span> INFO replication
-<span class="token comment" spellcheck="true"># Replication</span>
-role:slave
-master_host:127.0.0.1
+                <h3 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h3><p>锁是个非常有用的工具，运用场景非常多，因为它使用起来非常简单，而且易于理解。但同时它也会带来一些困扰，那就是可能会引起死锁，一旦产生死锁，就会造成系统功能不可用。让我们来看一段代码，这段代码可能会引起死锁，使线程 t1 和线程 t2 互相等待对方释放锁。</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DeadLockDemo</span> <span class="token punctuation">{</span>
+  <span class="token keyword">private</span> <span class="token keyword">static</span> String A <span class="token operator">=</span> <span class="token string">"A"</span><span class="token punctuation">;</span>
+  <span class="token keyword">private</span> <span class="token keyword">static</span> String B <span class="token operator">=</span> <span class="token string">"B"</span><span class="token punctuation">;</span>
 
-redis 6381<span class="token operator">></span> info replication
-<span class="token comment" spellcheck="true"># Replication</span>
-role:slave
-master_host:127.0.0.1
-master_port:6379</code></pre>
-<p>当出现的信息如上时，即证明一主而从配置已经成功了。</p>
-<p>接下来开始配置哨兵。建立一个配置文件，如 <code>sentinel.conf</code>，内容为：</p>
-<pre class=" language-shell"><code class="language-shell">sentinel monitor mymaster 127.0.0.1 6379 1</code></pre>
-<p>其中 <code>mymaster</code> 表示要监视的主数据库名字，可以自己定义一个。这个名字必须仅由大小写字母、数字 和 “.-_”这3个字符组成。后两个参数表示主数据库的地址和端口号，这里我们要监控的主数据库 6379。最后的 1 表示最低通过票数，后面会介绍。接下来启动 sentinel 进程，并将上述配置文件的路径传递给哨兵：</p>
-<pre class=" language-bash"><code class="language-bash">$ redis-sentinel /path/to/sentinel.conf</code></pre>
-<p> 需要注意的是，配置哨兵监控一个系统时，只需要配置其监控主数据库即可，哨兵会自动发现所有复制该主数据库的从数据库。</p>
-<p>启动哨兵后，哨兵输出一下内容：</p>
-<pre class=" language-bash"><code class="language-bash">3839:X 21 Jan 2021 01:02:39.668 <span class="token comment" spellcheck="true"># Sentinel ID is 34e43f99b8460c86a0061c0e3325c5a5d94602b2</span>
-3839:X 21 Jan 2021 01:02:39.668 <span class="token comment" spellcheck="true"># +monitor master mymaster 127.0.0.1 6379 quorum 1</span>
-3839:X 21 Jan 2021 01:02:39.669 * +slave slave 127.0.0.1:6380 127.0.0.1 6380 @ mymaster 127.0.0.1 6379
-3839:X 21 Jan 2021 01:02:39.670 * +slave slave 127.0.0.1:6381 127.0.0.1 6381 @ mymaster 127.0.0.1 6379</code></pre>
-<p>其中 +slave 表示新发现了从数据库，可见哨兵成功地发现了两个从数据库。现在哨兵已经在监控 3 个 Redis 实例了，这时我们将主数据库关闭（即运行在 639 端口上的 Redis 实例，杀死进程或使用 SHUTDOWN 命令）,等待指定时间后（可以配置，默认为 30 秒），哨兵会输出一下内容：</p>
-<pre class=" language-shell"><code class="language-shell">3839:X 21 Jan 2021 01:10:29.111 # +sdown master mymaster 127.0.0.1 6379
-3839:X 21 Jan 2021 01:10:29.111 # +odown master mymaster 127.0.0.1 6379 #quorum 1/1</code></pre>
-<p>其中 <code>+sdown</code> 表示哨兵主观认为主数据库停止服务了，而 <code>+odown</code> 则表示哨兵客观认为主数据库停止服务了，关于客观和主管的区别后文会详细介绍。此时哨兵开始执行故障恢复，即挑选一个从数据库，将其升格为主数据库。同时输出以下内容：</p>
-<pre class=" language-shell"><code class="language-shell">3839:X 21 Jan 2021 01:10:29.111 # +try-failover master mymaster 127.0.0.1 6379
-...
-3839:X 21 Jan 2021 01:10:30.561 # +failover-end master mymaster 127.0.0.1 6379
-3839:X 21 Jan 2021 01:10:30.561 # +switch-master mymaster 127.0.0.1 6379 127.0.0.1 6380</code></pre>
-<p><code>+try-failover</code> 表示哨兵开始进行故障恢复，<code>+failover-end</code> 表示哨兵完成故障恢复，期间设计的内容比较复杂，包括领头哨兵的选举、备选从数据库的选择等。<code>+switch-master</code> 表示主数据库从 6379 端口迁移到 6380 端口，即 6380 端口的从数据库被升格为主数据库，同时两个 <code>+slave</code> 则列出了2个新的从数据库，端口分别为 6381 和 6379。</p>
-<pre class=" language-shell"><code class="language-shell">3839:X 21 Jan 2021 01:10:30.561 * +slave slave 127.0.0.1:6381 127.0.0.1 6381 @ mymaster 127.0.0.1 6380
-3839:X 21 Jan 2021 01:10:30.561 * +slave slave 127.0.0.1:6379 127.0.0.1 6379 @ mymaster 127.0.0.1 6380
-3839:X 21 Jan 2021 01:11:00.587 # +sdown slave 127.0.0.1:6379 127.0.0.1 6379 @ mymaster 127.0.0.1 6380</code></pre>
-<p>其中 6379 就是之前停止服务的主数据库，可见哨兵并没有彻底清除停止服务的实例的信息，这时因为停止服务的实例有可能会在之后的某个时间恢复服务，这时哨兵会让其重新加入进来，所以当实例停止服务后，哨兵会更新该实例的信息，使得当其重新重新加入后可以按照当时信息继续对外提供服务。此例中 6379 端口的主数据库实例停止服务了，而 6380 端口的从数据已经升格为主数据库，当 6379 端口的实例恢复服务后，会转变成 6380 端口实例的从数据库来运行，所以哨兵将 6379 端口实例的信息改成了 6380 端口实例的从数据库。</p>
-<p>故障恢复完成后，可以使用 Redis 命令行客户端重新检查 6380 和 6381 两个端口上的实例的复制信息：</p>
-<pre class=" language-bash"><code class="language-bash">redis 6380<span class="token operator">></span> INFO replication
-<span class="token comment" spellcheck="true"># Replication</span>
-role:master
-connected_slaves:1
-slave0:ip<span class="token operator">=</span>127.0.0.1,port<span class="token operator">=</span>6381,state<span class="token operator">=</span>online,offset<span class="token operator">=</span>59364,lag<span class="token operator">=</span>1
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">new</span> <span class="token class-name">DeadLockDemo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">deadLock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
 
-redis 6381<span class="token operator">></span> INFO replication
-<span class="token comment" spellcheck="true"># Replication</span>
-role:slave
-master_host:127.0.0.1
-master_port:6380</code></pre>
-<p>可以看到 6380 端口上的实例已经确实升格为主数据库了，同时 6381 端口上的实例是其从数据库。整个故障恢复过程就此完成。</p>
-<p>那么此时我们将 6379 端口上的实例重新启动，会发生什么情况呢？首先哨兵会监控到这一变化，并输出：</p>
-<pre class=" language-bash"><code class="language-bash">3839:X 21 Jan 2021 01:37:10.815 <span class="token comment" spellcheck="true"># -sdown slave 127.0.0.1:6379 127.0.0.1 6379 @ mymaster 127.0.0.1 6380</span>
-3839:X 21 Jan 2021 01:37:20.745 * +convert-to-slave slave 127.0.0.1:6379 127.0.0.1 6379 @ mymaster 127.0.0.1 6380</code></pre>
-<p><code>sdown</code> 表示实例 6379 已经恢复服务了（与 <code>+sdown</code> 相反），同时 <code>+convert-to-slave</code> 表示将 6379 端口的实例设置为 6380 端口实例的从数据库。这时使用 Redis 命令行客户端查看 6379 端口实例的复制信息为：</p>
-<pre class=" language-bash"><code class="language-bash">redis 6379<span class="token operator">></span> INFO replication
-<span class="token comment" spellcheck="true"># Replication</span>
-role:slave
-master_host:127.0.0.1
-master_port:6380</code></pre>
-<p>同时 6380 端口实例的复制信息为：</p>
-<pre class=" language-bash"><code class="language-bash">127.0.0.1:6380<span class="token operator">></span> INFO replication
-<span class="token comment" spellcheck="true"># Replication</span>
-role:master
-connected_slaves:2
-slave0:ip<span class="token operator">=</span>127.0.0.1,port<span class="token operator">=</span>6381,state<span class="token operator">=</span>online,offset<span class="token operator">=</span>153516,lag<span class="token operator">=</span>1
-slave1:ip<span class="token operator">=</span>127.0.0.1,port<span class="token operator">=</span>6379,state<span class="token operator">=</span>online,offset<span class="token operator">=</span>153516,lag<span class="token operator">=</span>0</code></pre>
-<p>正如预期一样，6380 端口实例的从数据库变味了两个，6379 成功恢复服务。</p>
-<h3 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h3><p>一个哨兵进程启动时会读取配置文件的内容，通过如下的配置找出需要监控的主数据库：</p>
-<pre class=" language-bash"><code class="language-bash">sentinel monitor master-name ip redis-port quorum</code></pre>
-<p>其中 master-name 是一个由大小写字母、数字和 “.-_” 组成的主数据库的名字，因为考虑到故障恢复后当前监控的系统的主数据库的地址和端口会产生变化，所以哨兵提供了命令可以通过主数据库的名字获取当前系统的主数据库地址和端口号。</p>
-<p><code>ip</code> 表示当前系统中主数据库的地址，而 <code>redis-port</code> 则表示端口号。</p>
-<p><code>quorum</code> 用来表示执行故障恢复操作前至少需要几个哨兵节点同意。一个哨兵节点可以同时监控多个 Redis 主从系统，只需要提供多个 <code>sentinel monitor</code> 配置即可，例如：</p>
-<pre class=" language-bash"><code class="language-bash">sentinel monitor mymaster 127.0.0.0.1 6379 2
-sentinel monitor othermaster 192.168.1.1 6380 4</code></pre>
-<p>同时多个哨兵节点也可以同时监控一个 Redis 主从系统，从而形成网状结构。</p>
-<p>配置文件中还可以定义其它监控相关的参数，每个配置选项都包含主数据库的名字使得监控不同主数据库时可以使用不同的配置参数。例如：</p>
-<pre class=" language-bash"><code class="language-bash">sentinel down-after-milliseconds mymaster 60000
-sentinel down-after-milliseconds othermaster 10000</code></pre>
-<p>上面的两行配置分别配置了 <code>mymaster</code> 和 <code>othermaster</code> 的 down-after-milliseconds 选项分别为 60000 和 10000。</p>
-<p>哨兵启动后，会与要监控的主数据库建立两条连接，这两个连接的建立方式与普通的 Redis 客户端无异。其中一条连接用来订阅该主数据库的 <code>_sentinel_:hello</code> 频道以获取其它同样监控该数据库的哨兵节点信息，另外哨兵也需要定期向主数据发送 INO 等命令来获取主数据库本身的信息。因为当客户端进入订阅模式时就不能再执行其它命令了，所以这时哨兵会使用另外一条连接来发送这些命令。</p>
-<p>和主数据库的连接建立完成后，哨兵会定时执行下面 3 个操作：</p>
-<ol>
-<li>每 10 秒哨兵会向主数据库和从数据库发送 INFO 命令。</li>
-<li>每 2 秒哨兵会向主数据库和从数据库的 <code>_sentinel_:hello</code> 频道发送自己的信息。</li>
-<li>每 1 秒会向主数据库、从数据库和其它哨兵节点发送 PING 命令。</li>
-</ol>
-<p>这 3 个操作贯穿哨兵进程的整个生命周期中，非常重要，可以说了解了这 3 个操作的意义就能够了解哨兵工作原理的一般内容了。下面分别详细介绍。</p>
-<p>首先，发送 INFO 命令使得哨兵可以获得当前数据库的相关信息（包括运行 ID 、复制信息等）从而实现新节点的自动发现。前面说配置哨兵监控 Redis 主从系统时只需要指定主数据库的信息即可，因为哨兵正是借助 INFO 命令来获取所有复制该主数据库的从数据库信息的。启动后，哨兵向主数据库发送 INFO 命令，通过解析返回结果来得知从数据库列表，而后对每个从数据库同样建立两个连接，两个连接的作用和刚刚介绍的与主数据库建立的两个连接完全一致。在此之后，哨兵会每 10 秒定时向已知的所有主从数据库发送 INFO 命令来获取信息并进行相应的更新操作，比如对新增的从数据库建立连接并加入监控列表，对主从数据库的角色变化（由故障恢复操作引起）进行信息更新等。</p>
-<p>接下来哨兵向主从数据库的<code>_sentinel_:hello</code> 频道发送消息来与同样监控该数据库的哨兵分享自己的信息。发送的消息内容为：</p>
-<pre class=" language-bash"><code class="language-bash"><span class="token operator">&lt;</span>哨兵的地址<span class="token operator">></span>，<span class="token operator">&lt;</span>哨兵的端口<span class="token operator">></span>，<span class="token operator">&lt;</span>哨兵的运行ID<span class="token operator">></span>，<span class="token operator">&lt;</span>哨兵的配置版本<span class="token operator">></span>，<span class="token operator">&lt;</span>主数据库的名字<span class="token operator">></span>，<span class="token operator">&lt;</span>主数据库的地址<span class="token operator">></span>，<span class="token operator">&lt;</span>主数据库的端口<span class="token operator">></span>，<span class="token operator">&lt;</span>主数据库的配置版本<span class="token operator">></span></code></pre>
-<p>可以看到消息包括哨兵的基本信息，以及其监控的主数据库的信息。刚刚介绍过，哨兵会订阅每个监控的数据库<code>_sentinel_:hello</code> 频道，所以当其它哨兵收到消息后，会判断发消息的哨兵是不是新发现的哨兵。如果是则将其加入已发现的哨兵列表中并创建一个到其的连接（与数据库不同，哨兵与哨兵之间只会创建一条连接用来发送 PING 命令，而不需要创建另外一条连接来订阅频道，因为哨兵只需要订阅数据库的频道即可实现自动发现其它哨兵）。同时哨兵会判断信息中主数据库的配置版本，如果该版本比当前记录的主数据库的版本高，则更新主数据库中的数据。</p>
-<p>实现了自动发现从数据库和其它哨兵节点后，哨兵要做的就是定时监控这些数据库和节点有没有停止服务。这是通过每隔一定时间向这些节点发送 PING 命令实现的。时间间隔与 <code>down-after-milliseconds</code> 选项有关，当  <code>down-after-milliseconds</code>  的值小于 1 秒时，哨兵会每隔  <code>down-after-milliseconds</code>  指定的时间发送一次 PING 命令，当  <code>down-after-milliseconds</code> 的值大于 1 秒时，哨兵会每隔 1 秒发送一次 PING 命令。例如：</p>
-<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 每隔 1 秒发送一次 PING 命令</span>
-sentinel down-after-milliseconds mymaster 60000
-<span class="token comment" spellcheck="true"># 每隔 600 毫秒发送一次 PING 命令</span>
-sentinel down-after-milliseconds othermaster 500</code></pre>
-<p>当超过 <code>down-after-milliseconds</code> 选项指定时间后，如果被 PING 的数据库或节点仍然未进行回复，则哨兵认为其<strong>主观下线（subjectively down）</strong>。主观下线表示从当前的哨兵进程看来，该节点已经下线。如果该节点是主数据库，则哨兵会进一步判断是否需要对其进行故障恢复：哨兵发送 <code>SENTINEL is-master-down-by-addr</code> 命令询问其它哨兵节点以了解它们是否也认为该主数据库主观下线，如果达到指定数量时，哨兵会认为其<strong>客观下线（objectively down）</strong>，并选举领头的哨兵节点对主从系统发起故障恢复。这个指定数量即为前文介绍的 quorum 参数。例如，下面的配置：</p>
-<pre class=" language-bash"><code class="language-bash">sentinel monitor mymaster 127.0.0.1 6379 2</code></pre>
-<p>该配置表示只有当至少两个 Sentinel 节点（包括当前节点）认为该主数据库主观下线时，当前哨兵节点才会认为该主数据库客观下线。进行接下来的选举领头哨兵步骤。</p>
-<p>虽然当前哨兵节点发现了主数据库客观下线，需要故障恢复，但是故障恢复需要由领头的哨兵来完成，这样可以保证同一时间只有一个哨兵节点来执行故障恢复。选举领头哨兵的过程使用了 Raft 算法，具体过程如下：</p>
-<ol>
-<li>发现主数据库客观下线的哨兵节点（下面称作 A）向每个哨兵节点发送命令，要求对方选自己为领头哨兵。</li>
-<li>如果目标哨兵节点没有选过其它人，则会同意将 A 设置成领头哨兵。</li>
-<li>如果 A 发现有超过半数且超过 quorum 参数值的哨兵节点同意选自己成为领头哨兵，则 A 成功成为领头哨兵。</li>
-<li>当有多个哨兵节点同时参选领头哨兵，则会出现没有任何节点当选的可能。此时每个参选节点将等待一个随机时间重新发起参数请求，进行下一轮选举，直到选举成功。</li>
-</ol>
-<p>因为要成为领头哨兵必须有超过半数的哨兵节点支持，所以每次选举最多只会选出一个领头哨兵。选出领头哨兵后，领头哨兵将会开始对主数据库进行故障恢复。故障恢复的过程相对简单，具体如下：</p>
-<p>首先领头哨兵将从停止服务的主数据库的从数据库中挑选一个来充当新的主数据库。挑选的依据如下：</p>
-<ol>
-<li>所有在线的从数据库中，选择优先级别最高的从数据库。优先级可以通过 <code>slave-priority</code> 选项来设置。</li>
-<li>如果有多个最高优先级的从数据库，则复制的命令偏移量越大（即复制越完成）越优先，</li>
-<li>如果以上条件都一样，则选择运行 ID 较小的从数据库。</li>
-</ol>
-<p>选出一个从数据库后，领头哨兵将向从数据库发送 <code>SLAVE NO ONE</code> 命令使其升格为主数据库。而后领头哨兵向其它从数据库发送 <code>SLAVEOF</code> 命令来使其成为新主数据库的从数据库。最后一步则是更新内部的记录，将已经停止服务的旧的主数据库更新为新的主数据库的从数据库，使得当其恢复服务时自动以从数据库的身份继续服务。</p>
-<h3 id="哨兵的部署"><a href="#哨兵的部署" class="headerlink" title="哨兵的部署"></a>哨兵的部署</h3><p>哨兵以独立进程的方式对一个主从系统进行监控，监控效果的好坏与否取决于哨兵的视角是否有代表性。如果一个主从系统中配置的哨兵较少，哨兵对整个系统的判断的可靠性就会降低。极端情况下，当只有一个哨兵时，哨兵本身就很有可能发生单点故障。整体来讲，相对稳妥的哨兵部署方案是使得哨兵的视角尽可能地与每个节点的视角一致，即：</p>
-<ul>
-<li>为每个节点（无论是主数据库还是从数据库）部署一个哨兵</li>
-<li>使每个哨兵与其对应的节点的网络环境相同或相近</li>
+  <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">deadLock</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    Thread t1 <span class="token operator">=</span>
+        <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span>
+            <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">{</span>
+              <span class="token keyword">synchronized</span> <span class="token punctuation">(</span>A<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">try</span> <span class="token punctuation">{</span>
+                  Thread<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">2000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                  e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+                <span class="token keyword">synchronized</span> <span class="token punctuation">(</span>B<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                  System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"1"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+              <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    Thread t2 <span class="token operator">=</span>
+        <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span>
+            <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">{</span>
+              <span class="token keyword">synchronized</span> <span class="token punctuation">(</span>B<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">synchronized</span> <span class="token punctuation">(</span>A<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                  System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"2"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+              <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    t1<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    t2<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>这段代码只是演示死锁的场景，在现实中你可能不会写出这样的代码。但是，在一些更复杂的场景中，你可能会遇到这样的问题，比如 t1 拿到锁之后，因为一些异常情况没有释放锁（死循环）。又或者 t1 拿到一个数据库锁，释放锁的时候抛出了异常，没释放掉。</p>
+<p>一旦出现死锁，业务是可感知的，因为不能继续提供服务了，那么只能通过 dump 线程查看到底是哪个线程出现了问题，以下线程信息告诉我们是 DeadLockDemo 类的第 33 行 和第 23 行引起的死锁。</p>
+<pre class=" language-java"><code class="language-java"><span class="token string">"Thread-1"</span> #<span class="token number">12</span> prio<span class="token operator">=</span><span class="token number">5</span> os_prio<span class="token operator">=</span><span class="token number">31</span> tid<span class="token operator">=</span><span class="token number">0x00007fa1a513d800</span> nid<span class="token operator">=</span><span class="token number">0x5a03</span> waiting <span class="token keyword">for</span> monitor entry <span class="token punctuation">[</span><span class="token number">0x000070000af59000</span><span class="token punctuation">]</span>
+   java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>Thread<span class="token punctuation">.</span>State<span class="token operator">:</span> <span class="token function">BLOCKED</span> <span class="token punctuation">(</span>on object monitor<span class="token punctuation">)</span>
+    at com<span class="token punctuation">.</span>asia<span class="token punctuation">.</span>DeadLockDemo<span class="token punctuation">.</span>lambda$deadLock$<span class="token function">1</span><span class="token punctuation">(</span>DeadLockDemo<span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">33</span><span class="token punctuation">)</span>
+    <span class="token operator">-</span> waiting to lock <span class="token operator">&lt;</span><span class="token number">0x000000076ac1d7d8</span><span class="token operator">></span> <span class="token punctuation">(</span>a java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>String<span class="token punctuation">)</span>
+    <span class="token operator">-</span> locked <span class="token operator">&lt;</span><span class="token number">0x000000076ac1d808</span><span class="token operator">></span> <span class="token punctuation">(</span>a java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>String<span class="token punctuation">)</span>
+    at com<span class="token punctuation">.</span>asia<span class="token punctuation">.</span>DeadLockDemo$$Lambda$<span class="token number">2</span><span class="token operator">/</span><span class="token number">764977973</span><span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span>Unknown Source<span class="token punctuation">)</span>
+    at java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>Thread<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span>Thread<span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">748</span><span class="token punctuation">)</span>
+
+<span class="token string">"Thread-0"</span> #<span class="token number">11</span> prio<span class="token operator">=</span><span class="token number">5</span> os_prio<span class="token operator">=</span><span class="token number">31</span> tid<span class="token operator">=</span><span class="token number">0x00007fa1a513c000</span> nid<span class="token operator">=</span><span class="token number">0x5803</span> waiting <span class="token keyword">for</span> monitor entry <span class="token punctuation">[</span><span class="token number">0x000070000ae56000</span><span class="token punctuation">]</span>
+   java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>Thread<span class="token punctuation">.</span>State<span class="token operator">:</span> <span class="token function">BLOCKED</span> <span class="token punctuation">(</span>on object monitor<span class="token punctuation">)</span>
+    at com<span class="token punctuation">.</span>asia<span class="token punctuation">.</span>DeadLockDemo<span class="token punctuation">.</span>lambda$deadLock$<span class="token function">0</span><span class="token punctuation">(</span>DeadLockDemo<span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">23</span><span class="token punctuation">)</span>
+    <span class="token operator">-</span> waiting to lock <span class="token operator">&lt;</span><span class="token number">0x000000076ac1d808</span><span class="token operator">></span> <span class="token punctuation">(</span>a java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>String<span class="token punctuation">)</span>
+    <span class="token operator">-</span> locked <span class="token operator">&lt;</span><span class="token number">0x000000076ac1d7d8</span><span class="token operator">></span> <span class="token punctuation">(</span>a java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>String<span class="token punctuation">)</span>
+    at com<span class="token punctuation">.</span>asia<span class="token punctuation">.</span>DeadLockDemo$$Lambda$<span class="token number">1</span><span class="token operator">/</span><span class="token number">1452126962</span><span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span>Unknown Source<span class="token punctuation">)</span>
+    at java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>Thread<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span>Thread<span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">748</span><span class="token punctuation">)</span></code></pre>
+<h3 id="避免死锁的常见方法"><a href="#避免死锁的常见方法" class="headerlink" title="避免死锁的常见方法"></a>避免死锁的常见方法</h3><ul>
+<li>避免一个线程同时获得多个锁。</li>
+<li>避免一个线程在锁内同时占用多个资源，尽量保证每个锁只占用一个资源。</li>
+<li>尝试使用定时锁，使用 lock.tryLock (timeout) 来替代使用内部锁机制。</li>
+<li>对于数据库锁，加锁和解锁必须在一个数据库连接里，否则会出现解锁失败的情况。</li>
 </ul>
-<p>这样的部署方案可以保证哨兵的视角拥有较高的代表性和可靠性。举一个例子：当网络分区后，如果哨兵认为某个分区是主要分区，即意味着从每个节点观察，该分区均为主分区。</p>
-<p>同时设置 quorum 的值为 <code>N / 2 + 1</code> (其中 N 为哨兵节点数量)，这样使得只有大部分哨兵节点同意后才会进行故障恢复。</p>
-<p>当系统中的节点较多时，考虑到每个哨兵都会和系统中的所有节点建立连接，为每个节点分配一个哨兵会产生较多连接，尤其当进行客户端分片时使用多个哨兵节点监控多个主数据库会因为 Redis 不支持连接复用而产生大量冗余连接，同时如果 Redis  节点负载较高，会在一定程度上影响其对哨兵的回复和同机的哨兵与其它节点的通信。所以配置哨兵时还需根据实际的生产环境进行选择。</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -643,7 +574,7 @@ sentinel down-after-milliseconds othermaster 500</code></pre>
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://blog.asiama.top/posts/c807.html">https://blog.asiama.top/posts/c807.html</a>
+                    <a href="https://blog.asiama.top/posts/6ee0.html">https://blog.asiama.top/posts/6ee0.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -681,8 +612,8 @@ sentinel down-after-milliseconds othermaster 500</code></pre>
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Redis/">
-                                    <span class="chip bg-color">Redis</span>
+                                <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">
+                                    <span class="chip bg-color">多线程</span>
                                 </a>
                             
                         </div>
@@ -853,7 +784,7 @@ sentinel down-after-milliseconds othermaster 500</code></pre>
         repo: 'asiama.github.io',
         owner: 'asiama',
         admin: "asiama",
-        id: '2021-01-21T21-19-49',
+        id: '2021-02-01T08-07-26',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -881,13 +812,13 @@ sentinel down-after-milliseconds othermaster 500</code></pre>
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/posts/a455.html">
+                <a href="/posts/acd5.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/15.jpg" class="responsive-img" alt="Redis事务">
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/3.jpg" class="responsive-img" alt="线程的状态">
                         
-                        <span class="card-title">Redis事务</span>
+                        <span class="card-title">线程的状态</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -898,12 +829,16 @@ sentinel down-after-milliseconds othermaster 500</code></pre>
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-01-21
+                            <i class="far fa-clock fa-fw icon-date"></i>2021-02-01
                         </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            AsiaMa
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/JAVA/" class="post-category">
+                                    JAVA
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -911,8 +846,8 @@ sentinel down-after-milliseconds othermaster 500</code></pre>
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Redis/">
-                        <span class="chip bg-color">Redis</span>
+                    <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">
+                        <span class="chip bg-color">多线程</span>
                     </a>
                     
                 </div>
@@ -926,13 +861,13 @@ sentinel down-after-milliseconds othermaster 500</code></pre>
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/posts/7886.html">
+                <a href="/posts/2067.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/22.jpg" class="responsive-img" alt="Redis的SORT命令">
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/19.jpg" class="responsive-img" alt="测试多线程上下文切换">
                         
-                        <span class="card-title">Redis的SORT命令</span>
+                        <span class="card-title">测试多线程上下文切换</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -943,12 +878,16 @@ sentinel down-after-milliseconds othermaster 500</code></pre>
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-21
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-31
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            AsiaMa
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/JAVA/" class="post-category">
+                                    JAVA
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -956,8 +895,8 @@ sentinel down-after-milliseconds othermaster 500</code></pre>
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Redis/">
-                        <span class="chip bg-color">Redis</span>
+                    <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">
+                        <span class="chip bg-color">多线程</span>
                     </a>
                     
                 </div>

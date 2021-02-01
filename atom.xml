@@ -6,7 +6,7 @@
   <link href="https://blog.asiama.top/atom.xml" rel="self"/>
   
   <link href="https://blog.asiama.top/"/>
-  <updated>2021-01-31T15:04:35.473Z</updated>
+  <updated>2021-02-01T10:52:20.987Z</updated>
   <id>https://blog.asiama.top/</id>
   
   <author>
@@ -17,11 +17,61 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>线程的状态</title>
+    <link href="https://blog.asiama.top/posts/acd5.html"/>
+    <id>https://blog.asiama.top/posts/acd5.html</id>
+    <published>2021-02-01T10:11:04.000Z</published>
+    <updated>2021-02-01T10:52:20.987Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;Java 线程在运行的生命周期中可能处于下面 6</summary>
+        
+      
+    
+    
+    
+    <category term="JAVA" scheme="https://blog.asiama.top/categories/JAVA/"/>
+    
+    
+    <category term="多线程" scheme="https://blog.asiama.top/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>死锁</title>
+    <link href="https://blog.asiama.top/posts/6ee0.html"/>
+    <id>https://blog.asiama.top/posts/6ee0.html</id>
+    <published>2021-02-01T00:07:26.000Z</published>
+    <updated>2021-02-01T00:35:02.213Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;死锁&quot;&gt;&lt;a href=&quot;#死锁&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="JAVA" scheme="https://blog.asiama.top/categories/JAVA/"/>
+    
+    
+    <category term="多线程" scheme="https://blog.asiama.top/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
     <title>测试多线程上下文切换</title>
     <link href="https://blog.asiama.top/posts/2067.html"/>
     <id>https://blog.asiama.top/posts/2067.html</id>
     <published>2021-01-31T13:25:16.000Z</published>
-    <updated>2021-01-31T15:04:35.473Z</updated>
+    <updated>2021-02-01T00:56:57.002Z</updated>
     
     
       
@@ -425,53 +475,6 @@
         
         
     <summary type="html">&lt;h3 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;headerlink&quot; title=&quot;介绍&quot;&gt;&lt;/a&gt;介绍&lt;/h3&gt;&lt;p&gt;如果是一个小型项目，使用一台 Redis 服务器就已经足够了，然而现实中的项目通常需要若干台Redis</summary>
-        
-      
-    
-    
-    
-    
-    <category term="Redis" scheme="https://blog.asiama.top/tags/Redis/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Redis之发布-订阅模式</title>
-    <link href="https://blog.asiama.top/posts/8649.html"/>
-    <id>https://blog.asiama.top/posts/8649.html</id>
-    <published>2021-01-21T13:28:00.000Z</published>
-    <updated>2021-01-21T13:37:08.132Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;发布-订阅-模式&quot;&gt;&lt;a href=&quot;#发布-订阅-模式&quot; class=&quot;headerlink&quot; title=&quot;发布/订阅 模式&quot;&gt;&lt;/a&gt;发布/订阅 模式&lt;/h3&gt;&lt;p&gt;Redis 提供了一组命令可以让开发者实现</summary>
-        
-      
-    
-    
-    
-    
-    <category term="Redis" scheme="https://blog.asiama.top/tags/Redis/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Redis事务</title>
-    <link href="https://blog.asiama.top/posts/a455.html"/>
-    <id>https://blog.asiama.top/posts/a455.html</id>
-    <published>2021-01-21T13:25:59.000Z</published>
-    <updated>2021-01-21T13:37:08.134Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;在微博中，用户之间是 “关注” 和 “被关注”的关系。如果要使用 Redis 存储这样的关系可以使用集合类型。思路是对每个用户使用两个集合类型键，分别名为 &lt;code&gt;user:用户ID:followers&lt;/code&gt; 和</summary>
         
       
     
