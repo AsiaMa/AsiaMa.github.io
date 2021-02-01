@@ -298,72 +298,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Kotin介绍</title>
-    <url>/posts/5487.html</url>
-    <content><![CDATA[<h3 id="Kotlin的主要特征"><a href="#Kotlin的主要特征" class="headerlink" title="Kotlin的主要特征"></a>Kotlin的主要特征</h3><h4 id="静态类型"><a href="#静态类型" class="headerlink" title="静态类型"></a>静态类型</h4><p>Kotlin和Java一样是一种静态类型的编程语言。这意味着<code>所有表达式的类型在编译器已经确定了，而编译器就能验证对象是否包含了你想访问的方法或者字段</code>。</p>
-<p>这与动态类型的编程语言形成了鲜明的对比，后者在JVM上的代表包括Grovvy和JRuby。这些语言<code>允许你定义可以存储任何数据类型的变量，或者返回任何数据类型的函数，并在运行时才解析方法和字段引用</code>。这会减少代码量并增加创建数据结构的灵活性。但它的缺点是，在编译期不能发现像名字拼写错误这样的问题，继而导致运行时的错误。</p>
-<h4 id="类型推导"><a href="#类型推导" class="headerlink" title="类型推导"></a>类型推导</h4><p>另一方面，与Java不同的是，<code>Kotin不需要你在源代码中显式地声明每个变量的类型。很多情况下，变量类型可以根据上下文来自动推断</code>，这样就可以省略类型声明。如</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">val</span> x <span class="token operator">=</span> <span class="token number">1</span></code></pre>
-<p>在声明这个变量时，由于变量初始化整型值，Kotin自动判断出它的类型是Int。<code>编译器这种从上下文推断变量类型的能力称作类型推导</code>。</p>
-<h4 id="扩展函数与扩展属性"><a href="#扩展函数与扩展属性" class="headerlink" title="扩展函数与扩展属性"></a>扩展函数与扩展属性</h4><p>扩展函数与扩展属性的“好玩”之处在于，可以在不修改原来类的条件下自定义函数和属性，是它们表现得就像是属于这个类一样。例如，我们给String类型扩展一个返回字符串首字母的firstChar()函数，代码如下：</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token comment" spellcheck="true">//调用我们自定义的扩展函数</span>
-    <span class="token keyword">val</span> firstChar <span class="token operator">=</span> <span class="token string">"abc"</span><span class="token punctuation">.</span><span class="token function">firstChar</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"this first char <span class="token interpolation variable">$firstChar</span>"</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">fun</span> String<span class="token punctuation">.</span><span class="token function">firstChar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> String <span class="token punctuation">{</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> <span class="token string">""</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span></code></pre>
-<h4 id="不可空类型与空安全"><a href="#不可空类型与空安全" class="headerlink" title="不可空类型与空安全"></a>不可空类型与空安全</h4><p>Kotlin中引入了不可空类型与可空类型来明确声明一个变量是否可能为null，同时在编译器通过类型是否匹配来检查空指针异常，大大降低了空指针异常出现的概率。</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">var</span> a <span class="token operator">=</span> <span class="token string">"abc"</span>  <span class="token comment" spellcheck="true">//声明一个字符串，编译器会默认推断变量a的类型为不可空的String</span>
-a <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//不可空类型不能赋值为null</span>
-error<span class="token operator">:</span> Null can not be a value of a non<span class="token operator">-</span><span class="token keyword">null</span> type String
-
-<span class="token keyword">var</span> b<span class="token operator">:</span> String<span class="token operator">?</span> <span class="token operator">=</span> <span class="token string">"abc"</span>
-b<span class="token punctuation">.</span>length <span class="token comment" spellcheck="true">//可空类型不能直接调用方法，需要使用安全调用符?.或者断言调用!!.</span>
-b<span class="token operator">?</span><span class="token punctuation">.</span>length <span class="token comment" spellcheck="true">//使用安全调用符，null对象使用安全调用符访问length属性，直接返回null</span></code></pre>
-<p>这个问号确实非常简洁易懂，同时能够时刻提醒我们：这个调用者有可能是null的。这个语言明显比Java8中引入的Optional&lt;String&gt;更加简单、直接。</p>
-<h4 id="一等函数支持"><a href="#一等函数支持" class="headerlink" title="一等函数支持"></a>一等函数支持</h4><p>在Kotlin中函数是第一等类型：我们可以将函数像值一样传递，函数可以作为另一个函数的返回值。我们通常称之为“一等函数”支持。</p>
-<p>下面是把一个函数作为参数传递给函数的Lambda表达式的例子：</p>
-<pre class=" language-kotlin"><code class="language-kotlin"> <span class="token keyword">val</span> list <span class="token operator">=</span> <span class="token function">listOf</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">)</span>
- <span class="token keyword">val</span> filterList <span class="token operator">=</span> list<span class="token punctuation">.</span><span class="token function">filter</span> <span class="token punctuation">{</span> it <span class="token operator">%</span> <span class="token number">3</span> <span class="token operator">!=</span> <span class="token number">0</span> <span class="token punctuation">}</span></code></pre>
-<h3 id="Kotin设计哲学"><a href="#Kotin设计哲学" class="headerlink" title="Kotin设计哲学"></a>Kotin设计哲学</h3><h4 id="务实"><a href="#务实" class="headerlink" title="务实"></a>务实</h4><p>JetBrains内部和社区的开发者已经使用Kotlin的早起版本很多年，Kotlin能够帮助解决实际项目的问题。</p>
-<h4 id="简洁"><a href="#简洁" class="headerlink" title="简洁"></a>简洁</h4><p>许多标准的Java样板代码，例如getter、setter以及将构造方法的参数赋值给字段的逻辑，在Kotlin中都是隐式的，并不会使你的源代码变得混乱。</p>
-<h4 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h4><p>Kotlin设计了一个“归一化”的类型系统（一切类型皆是引用类型），纯天然地设置了一道空指针的屏障，使得Kotin比Java更加安全可靠。Kotlin有助与避免的另一种异常类型就是ClassCastException。当你把一个对象转换成一种类型，而没有事先检查它是否是正确的类型时，就会发生这个异常。Kotlin中的检查和转换被组合成了一次操作：</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">if</span><span class="token punctuation">(</span>value <span class="token keyword">is</span> String<span class="token punctuation">)</span><span class="token punctuation">{</span>
-  <span class="token comment" spellcheck="true">//不需要额外的转换就能直接引用属于这个类型的成员</span>
-  <span class="token function">println</span><span class="token punctuation">(</span>value<span class="token punctuation">.</span><span class="token function">toUpperCase</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span></code></pre>
-<h4 id="互操作性"><a href="#互操作性" class="headerlink" title="互操作性"></a>互操作性</h4><p>Kotlin的优势是既有Java的完整生态（Kotlin完全无缝使用各类Java API框架库）,又有现代语言的高级特性（语法糖）。</p>
-<h3 id="编程哲学"><a href="#编程哲学" class="headerlink" title="编程哲学"></a>编程哲学</h3><p>编程的真正问题在于，如何把人类脑子里对问题的解决方案“具化”到机器世界，而这个“具化”过程正是编程语言所要表达的东西。如何富有表现力并且安全简洁的表达，这是所有编程语言所要解决的问题。</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>Kotlin</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Kotlin内联:noinline与crossinline</title>
     <url>/posts/11c5.html</url>
     <content><![CDATA[<p>在Kotlin中，内部Lambda是不允许中断外部函数执行的。</p>
@@ -439,6 +373,72 @@ b<span class="token operator">?</span><span class="token punctuation">.</span>le
     <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"test2"</span><span class="token punctuation">)</span>
     <span class="token keyword">return</span> l1
 <span class="token punctuation">}</span></code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Kotin介绍</title>
+    <url>/posts/5487.html</url>
+    <content><![CDATA[<h3 id="Kotlin的主要特征"><a href="#Kotlin的主要特征" class="headerlink" title="Kotlin的主要特征"></a>Kotlin的主要特征</h3><h4 id="静态类型"><a href="#静态类型" class="headerlink" title="静态类型"></a>静态类型</h4><p>Kotlin和Java一样是一种静态类型的编程语言。这意味着<code>所有表达式的类型在编译器已经确定了，而编译器就能验证对象是否包含了你想访问的方法或者字段</code>。</p>
+<p>这与动态类型的编程语言形成了鲜明的对比，后者在JVM上的代表包括Grovvy和JRuby。这些语言<code>允许你定义可以存储任何数据类型的变量，或者返回任何数据类型的函数，并在运行时才解析方法和字段引用</code>。这会减少代码量并增加创建数据结构的灵活性。但它的缺点是，在编译期不能发现像名字拼写错误这样的问题，继而导致运行时的错误。</p>
+<h4 id="类型推导"><a href="#类型推导" class="headerlink" title="类型推导"></a>类型推导</h4><p>另一方面，与Java不同的是，<code>Kotin不需要你在源代码中显式地声明每个变量的类型。很多情况下，变量类型可以根据上下文来自动推断</code>，这样就可以省略类型声明。如</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">val</span> x <span class="token operator">=</span> <span class="token number">1</span></code></pre>
+<p>在声明这个变量时，由于变量初始化整型值，Kotin自动判断出它的类型是Int。<code>编译器这种从上下文推断变量类型的能力称作类型推导</code>。</p>
+<h4 id="扩展函数与扩展属性"><a href="#扩展函数与扩展属性" class="headerlink" title="扩展函数与扩展属性"></a>扩展函数与扩展属性</h4><p>扩展函数与扩展属性的“好玩”之处在于，可以在不修改原来类的条件下自定义函数和属性，是它们表现得就像是属于这个类一样。例如，我们给String类型扩展一个返回字符串首字母的firstChar()函数，代码如下：</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">//调用我们自定义的扩展函数</span>
+    <span class="token keyword">val</span> firstChar <span class="token operator">=</span> <span class="token string">"abc"</span><span class="token punctuation">.</span><span class="token function">firstChar</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"this first char <span class="token interpolation variable">$firstChar</span>"</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">fun</span> String<span class="token punctuation">.</span><span class="token function">firstChar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> String <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token string">""</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<h4 id="不可空类型与空安全"><a href="#不可空类型与空安全" class="headerlink" title="不可空类型与空安全"></a>不可空类型与空安全</h4><p>Kotlin中引入了不可空类型与可空类型来明确声明一个变量是否可能为null，同时在编译器通过类型是否匹配来检查空指针异常，大大降低了空指针异常出现的概率。</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">var</span> a <span class="token operator">=</span> <span class="token string">"abc"</span>  <span class="token comment" spellcheck="true">//声明一个字符串，编译器会默认推断变量a的类型为不可空的String</span>
+a <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//不可空类型不能赋值为null</span>
+error<span class="token operator">:</span> Null can not be a value of a non<span class="token operator">-</span><span class="token keyword">null</span> type String
+
+<span class="token keyword">var</span> b<span class="token operator">:</span> String<span class="token operator">?</span> <span class="token operator">=</span> <span class="token string">"abc"</span>
+b<span class="token punctuation">.</span>length <span class="token comment" spellcheck="true">//可空类型不能直接调用方法，需要使用安全调用符?.或者断言调用!!.</span>
+b<span class="token operator">?</span><span class="token punctuation">.</span>length <span class="token comment" spellcheck="true">//使用安全调用符，null对象使用安全调用符访问length属性，直接返回null</span></code></pre>
+<p>这个问号确实非常简洁易懂，同时能够时刻提醒我们：这个调用者有可能是null的。这个语言明显比Java8中引入的Optional&lt;String&gt;更加简单、直接。</p>
+<h4 id="一等函数支持"><a href="#一等函数支持" class="headerlink" title="一等函数支持"></a>一等函数支持</h4><p>在Kotlin中函数是第一等类型：我们可以将函数像值一样传递，函数可以作为另一个函数的返回值。我们通常称之为“一等函数”支持。</p>
+<p>下面是把一个函数作为参数传递给函数的Lambda表达式的例子：</p>
+<pre class=" language-kotlin"><code class="language-kotlin"> <span class="token keyword">val</span> list <span class="token operator">=</span> <span class="token function">listOf</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">)</span>
+ <span class="token keyword">val</span> filterList <span class="token operator">=</span> list<span class="token punctuation">.</span><span class="token function">filter</span> <span class="token punctuation">{</span> it <span class="token operator">%</span> <span class="token number">3</span> <span class="token operator">!=</span> <span class="token number">0</span> <span class="token punctuation">}</span></code></pre>
+<h3 id="Kotin设计哲学"><a href="#Kotin设计哲学" class="headerlink" title="Kotin设计哲学"></a>Kotin设计哲学</h3><h4 id="务实"><a href="#务实" class="headerlink" title="务实"></a>务实</h4><p>JetBrains内部和社区的开发者已经使用Kotlin的早起版本很多年，Kotlin能够帮助解决实际项目的问题。</p>
+<h4 id="简洁"><a href="#简洁" class="headerlink" title="简洁"></a>简洁</h4><p>许多标准的Java样板代码，例如getter、setter以及将构造方法的参数赋值给字段的逻辑，在Kotlin中都是隐式的，并不会使你的源代码变得混乱。</p>
+<h4 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h4><p>Kotlin设计了一个“归一化”的类型系统（一切类型皆是引用类型），纯天然地设置了一道空指针的屏障，使得Kotin比Java更加安全可靠。Kotlin有助与避免的另一种异常类型就是ClassCastException。当你把一个对象转换成一种类型，而没有事先检查它是否是正确的类型时，就会发生这个异常。Kotlin中的检查和转换被组合成了一次操作：</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">if</span><span class="token punctuation">(</span>value <span class="token keyword">is</span> String<span class="token punctuation">)</span><span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">//不需要额外的转换就能直接引用属于这个类型的成员</span>
+  <span class="token function">println</span><span class="token punctuation">(</span>value<span class="token punctuation">.</span><span class="token function">toUpperCase</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre>
+<h4 id="互操作性"><a href="#互操作性" class="headerlink" title="互操作性"></a>互操作性</h4><p>Kotlin的优势是既有Java的完整生态（Kotlin完全无缝使用各类Java API框架库）,又有现代语言的高级特性（语法糖）。</p>
+<h3 id="编程哲学"><a href="#编程哲学" class="headerlink" title="编程哲学"></a>编程哲学</h3><p>编程的真正问题在于，如何把人类脑子里对问题的解决方案“具化”到机器世界，而这个“具化”过程正是编程语言所要表达的东西。如何富有表现力并且安全简洁的表达，这是所有编程语言所要解决的问题。</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -1258,89 +1258,6 @@ PONG</code></pre>
       </tags>
   </entry>
   <entry>
-    <title>Redis之发布-订阅模式</title>
-    <url>/posts/8649.html</url>
-    <content><![CDATA[<h3 id="发布-订阅-模式"><a href="#发布-订阅-模式" class="headerlink" title="发布/订阅 模式"></a>发布/订阅 模式</h3><p>Redis 提供了一组命令可以让开发者实现 “发布/订阅”（publish/subscribe）模式。“发布/订阅” 模式同样可以实现进程间的消息传递，其原理是这样的：</p>
-<p>“发布/订阅” 模式中包含两种角色，分别是发布者和订阅者。订阅者可以订阅一个或若干个频道（channel），而发布者可以向指定的频道发布消息，所有订阅此频道的订阅者都可以收到此消息。</p>
-<p>发布者发布消息的命令是 <code>PUBLISH</code>，用法是 <code>PUBLISH channel message</code>，如向 <code>channel.1</code> 说一声 “hi”：</p>
-<pre class=" language-bash"><code class="language-bash">$ PUBLISH channel.1 hi
-<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 0</code></pre>
-<p>这样消息就发出去了。<code>PUBLISH</code> 命令的返回值表示接收到这条消息的订阅者数量。因为此时没有客户端订阅 <code>channel.1</code>，所以返回 0。发出去的消息不会被持久化，也就是说当有客户端订阅  <code>channel.1</code> 后只能收到后续发布到该频道的消息，之前发送的就收不到了。</p>
-<p>订阅频道的命令是 <code>SUBSCRIBE</code>，可以同时订阅多个频道，用法是：</p>
-<pre class=" language-bash"><code class="language-bash">$ SUBSCRIBE channel <span class="token punctuation">[</span>channel <span class="token punctuation">..</span>.<span class="token punctuation">]</span></code></pre>
-<p>现在新开一个 redis-cli 实例 A，用来订阅 <code>channel.1</code> ：</p>
-<pre class=" language-bash"><code class="language-bash">$ SUBSCRIBE channel.1
-Reading messages<span class="token punctuation">..</span>. <span class="token punctuation">(</span>press Ctrl-C to quit<span class="token punctuation">)</span>
-1<span class="token punctuation">)</span> <span class="token string">"subscribe"</span>
-2<span class="token punctuation">)</span> <span class="token string">"channel.1"</span>
-3<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1</code></pre>
-<p>执行 <code>SUBSCRIBE</code> 命令后，客户端会进入订阅状态，处于此状态下客户端不能使用除<code>SUBSRCIBE</code> 、<code>UNSUBSRCIBE</code> 、<code>PSUBSCRIBE</code> 、<code>PUNSUBSCRIBE</code> 这4个属于“发布/订阅”模式的命令之外的命令，否则会报错。</p>
-<p>进入订阅状态后客户端可能收到三种类型的回复。每种类型的回复都包含3个值，第一个值是消息的类型，根据消息类型的不同，第二、第三个值的含义也不同。</p>
-<p>消息类型的取值可能有一下3个：</p>
-<ul>
-<li><code>subscribe</code>。表示订阅成功的反馈信息。第二个值是订阅成功的频道名称，第三个值是当前客户端订阅的频道数量。</li>
-<li><code>message</code>。这个类型的回复是我们最关心的，它表示接收到的消息。第二个值表示产生消息的频道名称，第三个值是消息的内容。</li>
-<li><code>unsubscribe</code>。表示成功取消订阅某个频道。第二个值是对应的频道名称，第三个值是当前客户端订阅的频道数量。当此值为 0 时，客户端会退出订阅状态，之后就可以执行其它非 “发布/订阅” 模式的命令了。</li>
-</ul>
-<p>上例中当实例 A 订阅了 <code>channel.1</code>，进入订阅状态后收到一条 <code>subscribe</code> 类型的回复，这是我们打开另一个 redis-cli 实例 B，并向 <code>channel.1</code> 发送一条消息：</p>
-<pre class=" language-bash"><code class="language-bash">$ PUBLISH channel.1 good
-<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1</code></pre>
-<p>返回值为 1 表示有一个客户端订阅了 <code>channel.1</code>，此时实例 A 收到了类型为 <code>message</code> 的回复：</p>
-<pre class=" language-bash"><code class="language-bash">1<span class="token punctuation">)</span> <span class="token string">"message"</span>
-2<span class="token punctuation">)</span> <span class="token string">"channel.1"</span>
-3<span class="token punctuation">)</span> <span class="token string">"good"</span></code></pre>
-<p>使用 UNSUBSCRIBE 命令可以取消订阅者指定的频道，用法为 </p>
-<pre class=" language-bash"><code class="language-bash">UNSUBSCRIBE channel <span class="token punctuation">[</span>channel <span class="token punctuation">..</span>.<span class="token punctuation">]</span></code></pre>
-<p>如果不指定频道，则会取消订阅所有频道。</p>
-<h3 id="按照规则订阅"><a href="#按照规则订阅" class="headerlink" title="按照规则订阅"></a>按照规则订阅</h3><p>除了可以使用 <code>SUBSCRIBE</code> 命令订阅指定的频道外，还可以使用 <code>PSUBSCRIBE</code> 命令订阅指定的规则。规则支持 <code>glob</code> 风格通配符格式。</p>
-<pre class=" language-bash"><code class="language-bash">$ PSUBSCRIBE channel.?*
-Reading messages<span class="token punctuation">..</span>. <span class="token punctuation">(</span>press Ctrl-C to quit<span class="token punctuation">)</span>
-1<span class="token punctuation">)</span> <span class="token string">"psubscribe"</span>
-2<span class="token punctuation">)</span> <span class="token string">"channel.?*"</span>
-3<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1</code></pre>
-<p>规则 <code>channel.1?*</code> 可以匹配 <code>channel.1</code> 和 <code>channel.10</code>。 但不会匹配 <code>channel.</code>。</p>
-<p>这时在实例 B 中发布消息：</p>
-<pre class=" language-bash"><code class="language-bash">$ PUBLISH channel.1 hi
-<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 2</code></pre>
-<p>返回结果为 2 是因为实例 A 和 实例 C 两个客户端都订阅了 <code>channel.1</code> 频道。实例 C 收到的回复是：</p>
-<pre class=" language-bash"><code class="language-bash">1<span class="token punctuation">)</span> <span class="token string">"pmessage"</span>
-2<span class="token punctuation">)</span> <span class="token string">"channel.?*"</span>
-3<span class="token punctuation">)</span> <span class="token string">"channel.1"</span>
-4<span class="token punctuation">)</span> <span class="token string">"hi"</span></code></pre>
-<p>第一个值表示这条消息是通过 <code>PSUBSCRIBE</code> 命令订阅频道收到的，第二个值表示订阅时使用的通配符，第三个值表示产生消息的频道命令，第四个值则是消息内容。</p>
-<blockquote>
-<p><strong>提示</strong>    使用 <code>PSUBSCRIBE</code> 命令可以重复订阅一个频道，如某客户端执行了 <code>PUBSCRIBE  channel.?  channel.?*</code> ，这是向 <code>channel.2</code> 发布消息后该客户端会收到两条消息，而同时 <code>PUBLISH</code> 命令的返回值也是 2 不是 1。同样的，如果有两一个客户端执行了 <code>SUBSCRIBE channel.10</code> 和 <code>PSUBSCRIBE channel.?*</code> 的话，向 <code>channel.10</code> 发送命令该客服端也会收到两条消息（但是是两种类型：<code>message</code> 和 <code>pmessage</code>），同时 <code>PUBLISH</code> 命令会返回 2。</p>
-</blockquote>
-<p><code>PUNSUBSCRIBE</code> 命令可以退订指定的规则，用法是 ：</p>
-<pre class=" language-bash"><code class="language-bash">$ PUNSUBSCRIBE pattern <span class="token punctuation">[</span>pattern <span class="token punctuation">..</span>.<span class="token punctuation">]</span></code></pre>
-<p>如果没有参数则会退订所有规则。</p>
-<blockquote>
-<p><strong>注意</strong>    使用 <code>PUNSUBSCRIBE</code> 命令只会退订通过 <code>PSUBSCIBE</code> 命令订阅的规则，不会影响直接通过 <code>SUBSCRIBE</code> 命令订阅的频道；同样 <code>UNSUBSCRIBE</code> 命令也不会影响通过 <code>PSUBSCRIBE</code> 命令订阅的规则。另外容易出错的一点是使用 <code>PUNSUBSCIBE</code> 命令退订某个规则时，不会将其中的通配符展开，而是进行严格的字符串匹配，所有 <code>PUNSUBSCRIBE *</code> 无法退订 <code>channel.*</code> 规则，而是必须使用 <code>PUNSUBSCRIBE channel.*</code> 才能退订。</p>
-</blockquote>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>Redis</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Redis事务</title>
     <url>/posts/a455.html</url>
     <content><![CDATA[<blockquote>
@@ -1420,6 +1337,89 @@ $ GET key
 </blockquote>
 <p>执行 EXEC 命令会取消对所有键的监控。</p>
 <p>可以使用 UNWATCH 命令来保证下一个事务的执行不会收到影响。</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis之发布-订阅模式</title>
+    <url>/posts/8649.html</url>
+    <content><![CDATA[<h3 id="发布-订阅-模式"><a href="#发布-订阅-模式" class="headerlink" title="发布/订阅 模式"></a>发布/订阅 模式</h3><p>Redis 提供了一组命令可以让开发者实现 “发布/订阅”（publish/subscribe）模式。“发布/订阅” 模式同样可以实现进程间的消息传递，其原理是这样的：</p>
+<p>“发布/订阅” 模式中包含两种角色，分别是发布者和订阅者。订阅者可以订阅一个或若干个频道（channel），而发布者可以向指定的频道发布消息，所有订阅此频道的订阅者都可以收到此消息。</p>
+<p>发布者发布消息的命令是 <code>PUBLISH</code>，用法是 <code>PUBLISH channel message</code>，如向 <code>channel.1</code> 说一声 “hi”：</p>
+<pre class=" language-bash"><code class="language-bash">$ PUBLISH channel.1 hi
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 0</code></pre>
+<p>这样消息就发出去了。<code>PUBLISH</code> 命令的返回值表示接收到这条消息的订阅者数量。因为此时没有客户端订阅 <code>channel.1</code>，所以返回 0。发出去的消息不会被持久化，也就是说当有客户端订阅  <code>channel.1</code> 后只能收到后续发布到该频道的消息，之前发送的就收不到了。</p>
+<p>订阅频道的命令是 <code>SUBSCRIBE</code>，可以同时订阅多个频道，用法是：</p>
+<pre class=" language-bash"><code class="language-bash">$ SUBSCRIBE channel <span class="token punctuation">[</span>channel <span class="token punctuation">..</span>.<span class="token punctuation">]</span></code></pre>
+<p>现在新开一个 redis-cli 实例 A，用来订阅 <code>channel.1</code> ：</p>
+<pre class=" language-bash"><code class="language-bash">$ SUBSCRIBE channel.1
+Reading messages<span class="token punctuation">..</span>. <span class="token punctuation">(</span>press Ctrl-C to quit<span class="token punctuation">)</span>
+1<span class="token punctuation">)</span> <span class="token string">"subscribe"</span>
+2<span class="token punctuation">)</span> <span class="token string">"channel.1"</span>
+3<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1</code></pre>
+<p>执行 <code>SUBSCRIBE</code> 命令后，客户端会进入订阅状态，处于此状态下客户端不能使用除<code>SUBSRCIBE</code> 、<code>UNSUBSRCIBE</code> 、<code>PSUBSCRIBE</code> 、<code>PUNSUBSCRIBE</code> 这4个属于“发布/订阅”模式的命令之外的命令，否则会报错。</p>
+<p>进入订阅状态后客户端可能收到三种类型的回复。每种类型的回复都包含3个值，第一个值是消息的类型，根据消息类型的不同，第二、第三个值的含义也不同。</p>
+<p>消息类型的取值可能有一下3个：</p>
+<ul>
+<li><code>subscribe</code>。表示订阅成功的反馈信息。第二个值是订阅成功的频道名称，第三个值是当前客户端订阅的频道数量。</li>
+<li><code>message</code>。这个类型的回复是我们最关心的，它表示接收到的消息。第二个值表示产生消息的频道名称，第三个值是消息的内容。</li>
+<li><code>unsubscribe</code>。表示成功取消订阅某个频道。第二个值是对应的频道名称，第三个值是当前客户端订阅的频道数量。当此值为 0 时，客户端会退出订阅状态，之后就可以执行其它非 “发布/订阅” 模式的命令了。</li>
+</ul>
+<p>上例中当实例 A 订阅了 <code>channel.1</code>，进入订阅状态后收到一条 <code>subscribe</code> 类型的回复，这是我们打开另一个 redis-cli 实例 B，并向 <code>channel.1</code> 发送一条消息：</p>
+<pre class=" language-bash"><code class="language-bash">$ PUBLISH channel.1 good
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1</code></pre>
+<p>返回值为 1 表示有一个客户端订阅了 <code>channel.1</code>，此时实例 A 收到了类型为 <code>message</code> 的回复：</p>
+<pre class=" language-bash"><code class="language-bash">1<span class="token punctuation">)</span> <span class="token string">"message"</span>
+2<span class="token punctuation">)</span> <span class="token string">"channel.1"</span>
+3<span class="token punctuation">)</span> <span class="token string">"good"</span></code></pre>
+<p>使用 UNSUBSCRIBE 命令可以取消订阅者指定的频道，用法为 </p>
+<pre class=" language-bash"><code class="language-bash">UNSUBSCRIBE channel <span class="token punctuation">[</span>channel <span class="token punctuation">..</span>.<span class="token punctuation">]</span></code></pre>
+<p>如果不指定频道，则会取消订阅所有频道。</p>
+<h3 id="按照规则订阅"><a href="#按照规则订阅" class="headerlink" title="按照规则订阅"></a>按照规则订阅</h3><p>除了可以使用 <code>SUBSCRIBE</code> 命令订阅指定的频道外，还可以使用 <code>PSUBSCRIBE</code> 命令订阅指定的规则。规则支持 <code>glob</code> 风格通配符格式。</p>
+<pre class=" language-bash"><code class="language-bash">$ PSUBSCRIBE channel.?*
+Reading messages<span class="token punctuation">..</span>. <span class="token punctuation">(</span>press Ctrl-C to quit<span class="token punctuation">)</span>
+1<span class="token punctuation">)</span> <span class="token string">"psubscribe"</span>
+2<span class="token punctuation">)</span> <span class="token string">"channel.?*"</span>
+3<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1</code></pre>
+<p>规则 <code>channel.1?*</code> 可以匹配 <code>channel.1</code> 和 <code>channel.10</code>。 但不会匹配 <code>channel.</code>。</p>
+<p>这时在实例 B 中发布消息：</p>
+<pre class=" language-bash"><code class="language-bash">$ PUBLISH channel.1 hi
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 2</code></pre>
+<p>返回结果为 2 是因为实例 A 和 实例 C 两个客户端都订阅了 <code>channel.1</code> 频道。实例 C 收到的回复是：</p>
+<pre class=" language-bash"><code class="language-bash">1<span class="token punctuation">)</span> <span class="token string">"pmessage"</span>
+2<span class="token punctuation">)</span> <span class="token string">"channel.?*"</span>
+3<span class="token punctuation">)</span> <span class="token string">"channel.1"</span>
+4<span class="token punctuation">)</span> <span class="token string">"hi"</span></code></pre>
+<p>第一个值表示这条消息是通过 <code>PSUBSCRIBE</code> 命令订阅频道收到的，第二个值表示订阅时使用的通配符，第三个值表示产生消息的频道命令，第四个值则是消息内容。</p>
+<blockquote>
+<p><strong>提示</strong>    使用 <code>PSUBSCRIBE</code> 命令可以重复订阅一个频道，如某客户端执行了 <code>PUBSCRIBE  channel.?  channel.?*</code> ，这是向 <code>channel.2</code> 发布消息后该客户端会收到两条消息，而同时 <code>PUBLISH</code> 命令的返回值也是 2 不是 1。同样的，如果有两一个客户端执行了 <code>SUBSCRIBE channel.10</code> 和 <code>PSUBSCRIBE channel.?*</code> 的话，向 <code>channel.10</code> 发送命令该客服端也会收到两条消息（但是是两种类型：<code>message</code> 和 <code>pmessage</code>），同时 <code>PUBLISH</code> 命令会返回 2。</p>
+</blockquote>
+<p><code>PUNSUBSCRIBE</code> 命令可以退订指定的规则，用法是 ：</p>
+<pre class=" language-bash"><code class="language-bash">$ PUNSUBSCRIBE pattern <span class="token punctuation">[</span>pattern <span class="token punctuation">..</span>.<span class="token punctuation">]</span></code></pre>
+<p>如果没有参数则会退订所有规则。</p>
+<blockquote>
+<p><strong>注意</strong>    使用 <code>PUNSUBSCRIBE</code> 命令只会退订通过 <code>PSUBSCIBE</code> 命令订阅的规则，不会影响直接通过 <code>SUBSCRIBE</code> 命令订阅的频道；同样 <code>UNSUBSCRIBE</code> 命令也不会影响通过 <code>PSUBSCRIBE</code> 命令订阅的规则。另外容易出错的一点是使用 <code>PUNSUBSCIBE</code> 命令退订某个规则时，不会将其中的通配符展开，而是进行严格的字符串匹配，所有 <code>PUNSUBSCRIBE *</code> 无法退订 <code>channel.*</code> 规则，而是必须使用 <code>PUNSUBSCRIBE channel.*</code> 才能退订。</p>
+</blockquote>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -2439,6 +2439,121 @@ System<span class="token punctuation">.</span>out<span class="token punctuation"
       </tags>
   </entry>
   <entry>
+    <title>使用Git之前需要做的最小配置</title>
+    <url>/posts/5174.html</url>
+    <content><![CDATA[<h3 id="配置user-name-和-user-email"><a href="#配置user-name-和-user-email" class="headerlink" title="配置user.name 和 user.email"></a>配置user.name 和 user.email</h3><p>全局配置「对当前用户所有仓库有效」</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --global user.name <span class="token string">"your_name"</span>
+$ <span class="token function">git</span> config --global user.email <span class="token string">"your_email"</span></code></pre>
+<p>缺省等同于local「只对某个仓库有效」</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --local user.name <span class="token string">"your_name"</span>
+$ <span class="token function">git</span> config --local user.email <span class="token string">"your_email"</span></code></pre>
+<p>系统配置「对系统所有登录的用户有效」</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --system user.name <span class="token string">"your_name"</span>
+$ <span class="token function">git</span> config --system user.email <span class="token string">"your_email"</span></code></pre>
+<h3 id="显示config的配置"><a href="#显示config的配置" class="headerlink" title="显示config的配置"></a>显示config的配置</h3><pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --list --local
+$ <span class="token function">git</span> config --list --global
+$ <span class="token function">git</span> config --list --system</code></pre>
+<h3 id="查看某一个属性"><a href="#查看某一个属性" class="headerlink" title="查看某一个属性"></a>查看某一个属性</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --global user.name</code></pre>
+<h3 id="移除设置"><a href="#移除设置" class="headerlink" title="移除设置"></a>移除设置</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --unset --global user.email</code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用Docker安装YApi</title>
+    <url>/posts/b5f9.html</url>
+    <content><![CDATA[<h3 id="启动MongoDB"><a href="#启动MongoDB" class="headerlink" title="启动MongoDB"></a>启动MongoDB</h3><ol>
+<li>默认安装mongo</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">docker run -d --name mongo-yapi mongo</code></pre>
+<ol start="2">
+<li>挂载宿主目录安装mongo</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 创建挂载目录</span>
+<span class="token function">mkdir</span> -p /data/yapi/mongodata </code></pre>
+<ol start="3">
+<li>运行mongo映射主机目录/data/yapi/mongodata</li>
+</ol>
+<pre><code>docker run --restart always -v /data/yapi/mongodata:/data/db  -d --name mongo-yapi mongo</code></pre>
+<h3 id="获取YApi镜像"><a href="#获取YApi镜像" class="headerlink" title="获取YApi镜像"></a>获取YApi镜像</h3><ol>
+<li>从阿里云镜像仓库拉取</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">docker pull registry.cn-hangzhou.aliyuncs.com/anoy/yapi</code></pre>
+<ol start="2">
+<li>初始化 Yapi 数据库索引及管理员账号</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">docker run -it --rm --link mongo-yapi:mongo   --entrypoint <span class="token function">npm</span>  --workdir /api/vendors  registry.cn-hangzhou.aliyuncs.com/anoy/yapi   run install-server</code></pre>
+<blockquote>
+<p>自定义配置文件挂载到目录 <code>/api/config.json</code>，官方自定义配置文件 -&gt; <a href="https://github.com/YMFE/yapi/blob/master/config_example.json">传送门</a></p>
+</blockquote>
+<ol start="3">
+<li>启动 Yapi 服务</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">docker run -d   --name yapi  --link mongo-yapi:mongo  --workdir /api/vendors   -p 3000:3000   registry.cn-hangzhou.aliyuncs.com/anoy/yapi   server/app.js</code></pre>
+<h3 id="使用YApi"><a href="#使用YApi" class="headerlink" title="使用YApi"></a>使用YApi</h3><p>访问 <code>http://localhost:3000</code> 登录账号 <code>admin@admin.com</code>，密码 <code>ymfe.org</code></p>
+<p>至此，帅气的 Yapi 就可以轻松使用啦！</p>
+<h3 id="其它相关操作"><a href="#其它相关操作" class="headerlink" title="其它相关操作"></a>其它相关操作</h3><ol>
+<li>关闭yapi</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash">docker stop yapi</code></pre>
+<ol start="2">
+<li>开启yapi</li>
+</ol>
+<pre><code>docker start yapi</code></pre>
+<ol start="3">
+<li>升级yapi</li>
+</ol>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 1、停止并删除旧版容器</span>
+docker <span class="token function">rm</span> -f yapi
+
+<span class="token comment" spellcheck="true"># 2、获取最新镜像</span>
+docker pull registry.cn-hangzhou.aliyuncs.com/anoy/yapi
+
+<span class="token comment" spellcheck="true"># 3、启动新容器</span>
+docker run -d  --name yapi  --link mongo-yapi:mongo  --workdir /api/vendors  -p 3000:3000   registry.cn-hangzhou.aliyuncs.com/anoy/yapi   server/app.js</code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>YApi</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>var与val</title>
     <url>/posts/318f.html</url>
     <content><![CDATA[<h3 id="声明一个变量的完整语法"><a href="#声明一个变量的完整语法" class="headerlink" title="声明一个变量的完整语法"></a>声明一个变量的完整语法</h3><p>var &lt;propertyName&gt;[:&lt;PropertyType&gt;]  [= &lt;property_initializer&gt;]</p>
@@ -2542,121 +2657,6 @@ object Perfect<span class="token punctuation">{</span>
       </tags>
   </entry>
   <entry>
-    <title>使用Docker安装YApi</title>
-    <url>/posts/b5f9.html</url>
-    <content><![CDATA[<h3 id="启动MongoDB"><a href="#启动MongoDB" class="headerlink" title="启动MongoDB"></a>启动MongoDB</h3><ol>
-<li>默认安装mongo</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash">docker run -d --name mongo-yapi mongo</code></pre>
-<ol start="2">
-<li>挂载宿主目录安装mongo</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 创建挂载目录</span>
-<span class="token function">mkdir</span> -p /data/yapi/mongodata </code></pre>
-<ol start="3">
-<li>运行mongo映射主机目录/data/yapi/mongodata</li>
-</ol>
-<pre><code>docker run --restart always -v /data/yapi/mongodata:/data/db  -d --name mongo-yapi mongo</code></pre>
-<h3 id="获取YApi镜像"><a href="#获取YApi镜像" class="headerlink" title="获取YApi镜像"></a>获取YApi镜像</h3><ol>
-<li>从阿里云镜像仓库拉取</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash">docker pull registry.cn-hangzhou.aliyuncs.com/anoy/yapi</code></pre>
-<ol start="2">
-<li>初始化 Yapi 数据库索引及管理员账号</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash">docker run -it --rm --link mongo-yapi:mongo   --entrypoint <span class="token function">npm</span>  --workdir /api/vendors  registry.cn-hangzhou.aliyuncs.com/anoy/yapi   run install-server</code></pre>
-<blockquote>
-<p>自定义配置文件挂载到目录 <code>/api/config.json</code>，官方自定义配置文件 -&gt; <a href="https://github.com/YMFE/yapi/blob/master/config_example.json">传送门</a></p>
-</blockquote>
-<ol start="3">
-<li>启动 Yapi 服务</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash">docker run -d   --name yapi  --link mongo-yapi:mongo  --workdir /api/vendors   -p 3000:3000   registry.cn-hangzhou.aliyuncs.com/anoy/yapi   server/app.js</code></pre>
-<h3 id="使用YApi"><a href="#使用YApi" class="headerlink" title="使用YApi"></a>使用YApi</h3><p>访问 <code>http://localhost:3000</code> 登录账号 <code>admin@admin.com</code>，密码 <code>ymfe.org</code></p>
-<p>至此，帅气的 Yapi 就可以轻松使用啦！</p>
-<h3 id="其它相关操作"><a href="#其它相关操作" class="headerlink" title="其它相关操作"></a>其它相关操作</h3><ol>
-<li>关闭yapi</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash">docker stop yapi</code></pre>
-<ol start="2">
-<li>开启yapi</li>
-</ol>
-<pre><code>docker start yapi</code></pre>
-<ol start="3">
-<li>升级yapi</li>
-</ol>
-<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 1、停止并删除旧版容器</span>
-docker <span class="token function">rm</span> -f yapi
-
-<span class="token comment" spellcheck="true"># 2、获取最新镜像</span>
-docker pull registry.cn-hangzhou.aliyuncs.com/anoy/yapi
-
-<span class="token comment" spellcheck="true"># 3、启动新容器</span>
-docker run -d  --name yapi  --link mongo-yapi:mongo  --workdir /api/vendors  -p 3000:3000   registry.cn-hangzhou.aliyuncs.com/anoy/yapi   server/app.js</code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>YApi</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用Git之前需要做的最小配置</title>
-    <url>/posts/5174.html</url>
-    <content><![CDATA[<h3 id="配置user-name-和-user-email"><a href="#配置user-name-和-user-email" class="headerlink" title="配置user.name 和 user.email"></a>配置user.name 和 user.email</h3><p>全局配置「对当前用户所有仓库有效」</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --global user.name <span class="token string">"your_name"</span>
-$ <span class="token function">git</span> config --global user.email <span class="token string">"your_email"</span></code></pre>
-<p>缺省等同于local「只对某个仓库有效」</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --local user.name <span class="token string">"your_name"</span>
-$ <span class="token function">git</span> config --local user.email <span class="token string">"your_email"</span></code></pre>
-<p>系统配置「对系统所有登录的用户有效」</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --system user.name <span class="token string">"your_name"</span>
-$ <span class="token function">git</span> config --system user.email <span class="token string">"your_email"</span></code></pre>
-<h3 id="显示config的配置"><a href="#显示config的配置" class="headerlink" title="显示config的配置"></a>显示config的配置</h3><pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span> config --list --local
-$ <span class="token function">git</span> config --list --global
-$ <span class="token function">git</span> config --list --system</code></pre>
-<h3 id="查看某一个属性"><a href="#查看某一个属性" class="headerlink" title="查看某一个属性"></a>查看某一个属性</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --global user.name</code></pre>
-<h3 id="移除设置"><a href="#移除设置" class="headerlink" title="移除设置"></a>移除设置</h3><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> config --unset --global user.email</code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>使用Redis实现任务队列</title>
     <url>/posts/4c47.html</url>
     <content><![CDATA[<h3 id="普通队列"><a href="#普通队列" class="headerlink" title="普通队列"></a>普通队列</h3><p>说到队列很自然就能想到 Redis 的列表类型。如果要实现任务队列，只需要让生产者将任务使用 LPUSH 命令加入到某个键中，另一边让消费者不断地使用 RPOP 命令从该键中取出任务即可。</p>
@@ -2739,6 +2739,51 @@ $ RPUSH queue:3 task2
       </script>]]></content>
       <tags>
         <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>函数式编程</title>
+    <url>/posts/f609.html</url>
+    <content><![CDATA[<p>函数式编程的核心概念如下：</p>
+<ul>
+<li>头等函数：把函数（一小段行为）当作值使用，可以用变量保存它，把它当作参数传递，或者当作其它函数的返回值。</li>
+<li>不可变性：使用不可变对象，这保证了它们的状态在其创建之后不能再变化。</li>
+<li>无副作用：使用的是纯函数。此类函数在输入相同时会产生同样的结果，并且不会修改其它对象的状态，也不会和外面的世界交互。</li>
+</ul>
+<p>优点：</p>
+<ol>
+<li>简洁</li>
+</ol>
+<p>函数式风格的代码比相应的命令式风格的代码更优雅、更简练，因为把函数当作值可以让你获得更强大的抽象能力，从而避免重复代码。假设你有两段类似的代码，实现相似的任务（例如，在集合中寻找一个匹配的元素），但具体细节略有不同（如何判断元素式匹配的）。可以轻易地将这段逻辑公共部分提取到一个函数中，并将其它不同的部分作为参数传递给它。这些参数本身也是函数，但你可以使用一种简洁的语法来表示这些匿名函数，它被称作lambda表达式。</p>
+<ol start="2">
+<li>多线程安全</li>
+</ol>
+<p>多线程程序中最大的错误来源之一就是，在没有采取适当同步机制的情况下，在不同的线程上修改同一份数据。如果你使用的是不可变数据结构和纯函数，就能保证这样不安全的修改根本不会发生，也就不需要考虑为其设计股灾的同步方案。</p>
+<ol start="3">
+<li>易测试性</li>
+</ol>
+<p>没有副作用的函数可以独立地进行测试，因为不需要写大量的设置代码来构造它们所依赖的整个环境。</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>编程范式</tag>
       </tags>
   </entry>
   <entry>
@@ -2901,51 +2946,6 @@ $ UNLOCK TABLES;</code></pre>
       </script>]]></content>
       <tags>
         <tag>MySQL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>函数式编程</title>
-    <url>/posts/f609.html</url>
-    <content><![CDATA[<p>函数式编程的核心概念如下：</p>
-<ul>
-<li>头等函数：把函数（一小段行为）当作值使用，可以用变量保存它，把它当作参数传递，或者当作其它函数的返回值。</li>
-<li>不可变性：使用不可变对象，这保证了它们的状态在其创建之后不能再变化。</li>
-<li>无副作用：使用的是纯函数。此类函数在输入相同时会产生同样的结果，并且不会修改其它对象的状态，也不会和外面的世界交互。</li>
-</ul>
-<p>优点：</p>
-<ol>
-<li>简洁</li>
-</ol>
-<p>函数式风格的代码比相应的命令式风格的代码更优雅、更简练，因为把函数当作值可以让你获得更强大的抽象能力，从而避免重复代码。假设你有两段类似的代码，实现相似的任务（例如，在集合中寻找一个匹配的元素），但具体细节略有不同（如何判断元素式匹配的）。可以轻易地将这段逻辑公共部分提取到一个函数中，并将其它不同的部分作为参数传递给它。这些参数本身也是函数，但你可以使用一种简洁的语法来表示这些匿名函数，它被称作lambda表达式。</p>
-<ol start="2">
-<li>多线程安全</li>
-</ol>
-<p>多线程程序中最大的错误来源之一就是，在没有采取适当同步机制的情况下，在不同的线程上修改同一份数据。如果你使用的是不可变数据结构和纯函数，就能保证这样不安全的修改根本不会发生，也就不需要考虑为其设计股灾的同步方案。</p>
-<ol start="3">
-<li>易测试性</li>
-</ol>
-<p>没有副作用的函数可以独立地进行测试，因为不需要写大量的设置代码来构造它们所依赖的整个环境。</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>编程范式</tag>
       </tags>
   </entry>
   <entry>
@@ -3157,6 +3157,82 @@ $mysql db1 -u root -p123456 -e "SELECT * FROM tb1"</code></pre>
       </script>]]></content>
       <tags>
         <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>安全地终止线程</title>
+    <url>/posts/e2c5.html</url>
+    <content><![CDATA[<p>中断状态是线程的一个标识位，而中断操作是一种简便的线程间交互方式，而这种交互方式最适合用来取消或停止任务。除了中断以外，还可以利用一个 boolean 变量来控制是否需要停止任务并终止线程。</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Shutdown</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    Runner one <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Runner</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Thread countThread <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span>one<span class="token punctuation">,</span> <span class="token string">"CountThread"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    countThread<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 睡眠 1 秒，main 线程对 CountThread 进行中断，使 CountThread 能够感知中断而结束</span>
+    <span class="token keyword">try</span> <span class="token punctuation">{</span>
+      TimeUnit<span class="token punctuation">.</span>SECONDS<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    countThread<span class="token punctuation">.</span><span class="token function">interrupt</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    Runner two <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Runner</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    countThread <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span>two<span class="token punctuation">,</span> <span class="token string">"CountThread"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    countThread<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// 睡眠 1 秒，main 线程对 Runner two 进行取消，是 CountThread 能够感知 on 为 false 而结束</span>
+    <span class="token keyword">try</span> <span class="token punctuation">{</span>
+      TimeUnit<span class="token punctuation">.</span>SECONDS<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    two<span class="token punctuation">.</span><span class="token function">cancel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">Runner</span> <span class="token keyword">implements</span> <span class="token class-name">Runnable</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">long</span> i<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">volatile</span> <span class="token keyword">boolean</span> on <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">while</span> <span class="token punctuation">(</span>on <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>Thread<span class="token punctuation">.</span><span class="token function">currentThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">isInterrupted</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        i<span class="token operator">++</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+      System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Count i = "</span> <span class="token operator">+</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">cancel</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      on <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>在执行过程中，main 线程通过中断操作和 cancel() 方法均可使 CountThread 得以终止。这种通过标识位或者中断操作的方式能够使线程终止时有机会去清理资源，而不是武断地将线程停止，因此这种终止线程的做法显得更加安全和优雅。</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <categories>
+        <category>JAVA</category>
+      </categories>
+      <tags>
+        <tag>多线程</tag>
       </tags>
   </entry>
   <entry>
@@ -5110,6 +5186,153 @@ $ DROP VIEW IF EXISTS v1;</code></pre>
       </tags>
   </entry>
   <entry>
+    <title>编辑数据</title>
+    <url>/posts/3065.html</url>
+    <content><![CDATA[<h3 id="瞬间更新列中所有的记录"><a href="#瞬间更新列中所有的记录" class="headerlink" title="瞬间更新列中所有的记录"></a>瞬间更新列中所有的记录</h3><p>首先是修改记录的方法。修改记录时需要使用 UPDATE 命令。</p>
+<pre class=" language-mysql"><code class="language-mysql">UPDATE 表名 SET 列名 = 设置的值;</code></pre>
+<p>上面的命令会给指定的列设置值。如果执行这个命令，不管有几千条还是几万条记录，列中的所有记录都会被瞬间替换掉。 UPDATE 命令通常在通过 WHERE 设置条件之后，以特定的记录为对象执行。</p>
+<p>现在销售信息表 tb 中只有员工号 empid、销售额 sales 和 月份 month 这 3 个列，我们再添加一个数据类型为 VARCHAR(100) 的列 remark 来表示 “备注”。使用 UPDATE 命令将列 remark 的所有记录更新为 “无特殊记录”，然后显示所有记录。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ ALTER TABLE tb ADD remark VARCHAR(100);
+$ UPDATE tb SET remark = '无特殊记录';
+$ SELECT * FROM tb;</code></pre>
+<blockquote>
+<p><strong>防止意外执行 UPDATE 和 DELETE</strong>    当我们在工作中使用 MySQL 时，虽然有时候需要一次性更新列的所有内容，但这只是偶尔的事情。如果不慎将所有的列都更新成相同的值就麻烦了。所以为了防止这种情况发生，在启动 MySQL 监视器的时候可以加上 –safe-updates 选项。在使用此选项的情况下，如果列上没有 WHERE 条件就无法执行 UPDATE 或 DELETE。</p>
+</blockquote>
+<h3 id="只修改符合条件的记录"><a href="#只修改符合条件的记录" class="headerlink" title="只修改符合条件的记录"></a>只修改符合条件的记录</h3><p>很多时候我们只修改符合 WHERE 条件的记录。具体的命令如下所示：</p>
+<pre class=" language-mysql"><code class="language-mysql">UPDATE 表名 SET 列名 = 设置的值 WHERE 条件;</code></pre>
+<p>当然，我们也可以使用 ORDER BY、LIMIT 来设置条件。</p>
+<p>我们以列 sales 大于等于100的记录为对象，向备注（remark） 中输入 “优秀”。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ UPDATE tb SET remark = '优秀' WHERE sales >= 100;</code></pre>
+<h4 id="将销售额最低的-3-条记录的备注修改为加油"><a href="#将销售额最低的-3-条记录的备注修改为加油" class="headerlink" title="将销售额最低的 3 条记录的备注修改为加油"></a>将销售额最低的 3 条记录的备注修改为加油</h4><pre class=" language-mysql"><code class="language-mysql">$ UPDATE tb SET remark = '加油' ORDER BY sales LIMIT 3;</code></pre>
+<p>删除 remark 列，恢复成原来的表。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ ALTER TABLE tb DROP remark;</code></pre>
+<h3 id="复制符合条件的记录"><a href="#复制符合条件的记录" class="headerlink" title="复制符合条件的记录"></a>复制符合条件的记录</h3><p>执行下面的命令：</p>
+<pre class=" language-mysql"><code class="language-mysql">$ CREATE TABLE tb_A101 SELECT * FROM tb WHERE empid LIKE 'A101';
+$ SELECT * FROM tb_A101;
++-------+-------+-------+
+| empid | sales | month |
++-------+-------+-------+
+| A101  |   184 |     4 |
+| A101  |   300 |     5 |
++-------+-------+-------+
+2 rows in set (0.00 sec)</code></pre>
+<p>如果要将记录插入到已存在的表中：</p>
+<pre class=" language-mysql"><code class="language-mysql">$ INSERT INTO 已存在的表 SELECT * FROM tb WHERE empid LIKE 'A101';</code></pre>
+<h4 id="排序后复制"><a href="#排序后复制" class="headerlink" title="排序后复制"></a>排序后复制</h4><p>“只复制值最小的3条记录” ，“复制从第 5 条到第 10 条的记录” 这种按照列值的顺序复制记录的方法。使用 ORDER BY 排序，然后使用 LIMIT 和 OFFSET 指定要复制的记录数和开始复制记录的位置。</p>
+<p>复制表 tb 的列结构以及按照列 sales 的值从高到低的顺序复制排在第 2 名到第 5 名的 4 条记录。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ CREATE TABLE tb_2to5 SELECT * FROM tb ORDER BY sales DESC LIMIT 4 OFFSET 1;</code></pre>
+<h3 id="删除符合条件的记录"><a href="#删除符合条件的记录" class="headerlink" title="删除符合条件的记录"></a>删除符合条件的记录</h3><p>删除所有记录的方法是：</p>
+<pre class=" language-mysql"><code class="language-mysql">$ DELETE FROM 表名;</code></pre>
+<h4 id="删除指定的记录"><a href="#删除指定的记录" class="headerlink" title="删除指定的记录"></a>删除指定的记录</h4><pre class=" language-mysql"><code class="language-mysql">$ DELETE FROM 表名 WHERE 条件;</code></pre>
+<p>删除 tb1 中列 age 的值小于 30 的记录。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ DELETE FROM tb1 WHERE age < 30;</code></pre>
+<h4 id="排序后删除"><a href="#排序后删除" class="headerlink" title="排序后删除"></a>排序后删除</h4><p>删除列 sales 中值最大的 4 条记录。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ DELETE FROM tb1 ORDER BY sales LIMIT 4;</code></pre>
+<h3 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h3><p>提取表 t_stock 的列 c 中除距今 5 年前以外的值的记录并创建 t_stock_new;</p>
+<pre class=" language-mysql"><code class="language-mysql"># 5年前的时间    NOW() - INTERVAL 5 YEAR 
+$ SELECT NOW() - INTERVAL 5 YEAR;
++-------------------------+
+| NOW() - INTERVAL 5 YEAR |
++-------------------------+
+| 2016-01-26 20:53:51     |
++-------------------------+
+1 row in set (0.00 sec)
+
+$ CREATE TABLE t_stock_new SELECT * FROM t_stock WHERE c > NOW() - INTERVAL 5 YEAR;</code></pre>
+<blockquote>
+<p>请记住 INTERVAL XX YEAR 这个便利的用法。</p>
+</blockquote>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>自定义中缀表达式</title>
+    <url>/posts/8a52.html</url>
+    <content><![CDATA[<p>一个函数只有用与两个角色类似的对象时才将其声明为中缀函数。</p>
+<p>推荐示例：and、to、zip        反例：add</p>
+<p>如果一个方法会改动其接受者，那么不要声明为中缀形式。</p>
+<p>定义自己的中缀表达式：</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">sealed</span> <span class="token keyword">class</span> CompareResult <span class="token punctuation">{</span>
+    <span class="token keyword">object</span> LESS <span class="token operator">:</span> <span class="token function">CompareResult</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">override</span> <span class="token keyword">fun</span> <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> String <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token string">"小于"</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">object</span> MORE <span class="token operator">:</span> <span class="token function">CompareResult</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">override</span> <span class="token keyword">fun</span> <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> String <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token string">"大于"</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">object</span> EQUAL <span class="token operator">:</span> <span class="token function">CompareResult</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">override</span> <span class="token keyword">fun</span> <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> String <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token string">"等于"</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+infix <span class="token keyword">fun</span> Int<span class="token punctuation">.</span><span class="token function">vs</span><span class="token punctuation">(</span>num<span class="token operator">:</span> Int<span class="token punctuation">)</span><span class="token operator">:</span> CompareResult <span class="token operator">=</span>
+    <span class="token keyword">when</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span> <span class="token operator">-</span> num <span class="token operator">></span> <span class="token number">0</span> <span class="token operator">-></span> <span class="token punctuation">{</span>
+            CompareResult<span class="token punctuation">.</span>MORE
+        <span class="token punctuation">}</span>
+        <span class="token keyword">this</span> <span class="token operator">-</span> num <span class="token operator">&lt;</span> <span class="token number">0</span> <span class="token operator">-></span> <span class="token punctuation">{</span>
+            CompareResult<span class="token punctuation">.</span>LESS
+        <span class="token punctuation">}</span>
+        <span class="token keyword">else</span> <span class="token operator">-></span> <span class="token punctuation">{</span>
+            CompareResult<span class="token punctuation">.</span>EQUAL
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">println</span><span class="token punctuation">(</span><span class="token number">5</span> vs <span class="token number">6</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/** 输出结果：小于 */</span></code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>线程的状态</title>
     <url>/posts/acd5.html</url>
     <content><![CDATA[<p>Java 线程在运行的生命周期中可能处于下面 6 种不同的状态，在给定的一个时刻，线程只能处于其中一个状态：</p>
@@ -5273,153 +5496,6 @@ $ DROP VIEW IF EXISTS v1;</code></pre>
       </categories>
       <tags>
         <tag>多线程</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>编辑数据</title>
-    <url>/posts/3065.html</url>
-    <content><![CDATA[<h3 id="瞬间更新列中所有的记录"><a href="#瞬间更新列中所有的记录" class="headerlink" title="瞬间更新列中所有的记录"></a>瞬间更新列中所有的记录</h3><p>首先是修改记录的方法。修改记录时需要使用 UPDATE 命令。</p>
-<pre class=" language-mysql"><code class="language-mysql">UPDATE 表名 SET 列名 = 设置的值;</code></pre>
-<p>上面的命令会给指定的列设置值。如果执行这个命令，不管有几千条还是几万条记录，列中的所有记录都会被瞬间替换掉。 UPDATE 命令通常在通过 WHERE 设置条件之后，以特定的记录为对象执行。</p>
-<p>现在销售信息表 tb 中只有员工号 empid、销售额 sales 和 月份 month 这 3 个列，我们再添加一个数据类型为 VARCHAR(100) 的列 remark 来表示 “备注”。使用 UPDATE 命令将列 remark 的所有记录更新为 “无特殊记录”，然后显示所有记录。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ ALTER TABLE tb ADD remark VARCHAR(100);
-$ UPDATE tb SET remark = '无特殊记录';
-$ SELECT * FROM tb;</code></pre>
-<blockquote>
-<p><strong>防止意外执行 UPDATE 和 DELETE</strong>    当我们在工作中使用 MySQL 时，虽然有时候需要一次性更新列的所有内容，但这只是偶尔的事情。如果不慎将所有的列都更新成相同的值就麻烦了。所以为了防止这种情况发生，在启动 MySQL 监视器的时候可以加上 –safe-updates 选项。在使用此选项的情况下，如果列上没有 WHERE 条件就无法执行 UPDATE 或 DELETE。</p>
-</blockquote>
-<h3 id="只修改符合条件的记录"><a href="#只修改符合条件的记录" class="headerlink" title="只修改符合条件的记录"></a>只修改符合条件的记录</h3><p>很多时候我们只修改符合 WHERE 条件的记录。具体的命令如下所示：</p>
-<pre class=" language-mysql"><code class="language-mysql">UPDATE 表名 SET 列名 = 设置的值 WHERE 条件;</code></pre>
-<p>当然，我们也可以使用 ORDER BY、LIMIT 来设置条件。</p>
-<p>我们以列 sales 大于等于100的记录为对象，向备注（remark） 中输入 “优秀”。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ UPDATE tb SET remark = '优秀' WHERE sales >= 100;</code></pre>
-<h4 id="将销售额最低的-3-条记录的备注修改为加油"><a href="#将销售额最低的-3-条记录的备注修改为加油" class="headerlink" title="将销售额最低的 3 条记录的备注修改为加油"></a>将销售额最低的 3 条记录的备注修改为加油</h4><pre class=" language-mysql"><code class="language-mysql">$ UPDATE tb SET remark = '加油' ORDER BY sales LIMIT 3;</code></pre>
-<p>删除 remark 列，恢复成原来的表。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ ALTER TABLE tb DROP remark;</code></pre>
-<h3 id="复制符合条件的记录"><a href="#复制符合条件的记录" class="headerlink" title="复制符合条件的记录"></a>复制符合条件的记录</h3><p>执行下面的命令：</p>
-<pre class=" language-mysql"><code class="language-mysql">$ CREATE TABLE tb_A101 SELECT * FROM tb WHERE empid LIKE 'A101';
-$ SELECT * FROM tb_A101;
-+-------+-------+-------+
-| empid | sales | month |
-+-------+-------+-------+
-| A101  |   184 |     4 |
-| A101  |   300 |     5 |
-+-------+-------+-------+
-2 rows in set (0.00 sec)</code></pre>
-<p>如果要将记录插入到已存在的表中：</p>
-<pre class=" language-mysql"><code class="language-mysql">$ INSERT INTO 已存在的表 SELECT * FROM tb WHERE empid LIKE 'A101';</code></pre>
-<h4 id="排序后复制"><a href="#排序后复制" class="headerlink" title="排序后复制"></a>排序后复制</h4><p>“只复制值最小的3条记录” ，“复制从第 5 条到第 10 条的记录” 这种按照列值的顺序复制记录的方法。使用 ORDER BY 排序，然后使用 LIMIT 和 OFFSET 指定要复制的记录数和开始复制记录的位置。</p>
-<p>复制表 tb 的列结构以及按照列 sales 的值从高到低的顺序复制排在第 2 名到第 5 名的 4 条记录。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ CREATE TABLE tb_2to5 SELECT * FROM tb ORDER BY sales DESC LIMIT 4 OFFSET 1;</code></pre>
-<h3 id="删除符合条件的记录"><a href="#删除符合条件的记录" class="headerlink" title="删除符合条件的记录"></a>删除符合条件的记录</h3><p>删除所有记录的方法是：</p>
-<pre class=" language-mysql"><code class="language-mysql">$ DELETE FROM 表名;</code></pre>
-<h4 id="删除指定的记录"><a href="#删除指定的记录" class="headerlink" title="删除指定的记录"></a>删除指定的记录</h4><pre class=" language-mysql"><code class="language-mysql">$ DELETE FROM 表名 WHERE 条件;</code></pre>
-<p>删除 tb1 中列 age 的值小于 30 的记录。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ DELETE FROM tb1 WHERE age < 30;</code></pre>
-<h4 id="排序后删除"><a href="#排序后删除" class="headerlink" title="排序后删除"></a>排序后删除</h4><p>删除列 sales 中值最大的 4 条记录。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ DELETE FROM tb1 ORDER BY sales LIMIT 4;</code></pre>
-<h3 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h3><p>提取表 t_stock 的列 c 中除距今 5 年前以外的值的记录并创建 t_stock_new;</p>
-<pre class=" language-mysql"><code class="language-mysql"># 5年前的时间    NOW() - INTERVAL 5 YEAR 
-$ SELECT NOW() - INTERVAL 5 YEAR;
-+-------------------------+
-| NOW() - INTERVAL 5 YEAR |
-+-------------------------+
-| 2016-01-26 20:53:51     |
-+-------------------------+
-1 row in set (0.00 sec)
-
-$ CREATE TABLE t_stock_new SELECT * FROM t_stock WHERE c > NOW() - INTERVAL 5 YEAR;</code></pre>
-<blockquote>
-<p>请记住 INTERVAL XX YEAR 这个便利的用法。</p>
-</blockquote>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>MySQL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>自定义中缀表达式</title>
-    <url>/posts/8a52.html</url>
-    <content><![CDATA[<p>一个函数只有用与两个角色类似的对象时才将其声明为中缀函数。</p>
-<p>推荐示例：and、to、zip        反例：add</p>
-<p>如果一个方法会改动其接受者，那么不要声明为中缀形式。</p>
-<p>定义自己的中缀表达式：</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">sealed</span> <span class="token keyword">class</span> CompareResult <span class="token punctuation">{</span>
-    <span class="token keyword">object</span> LESS <span class="token operator">:</span> <span class="token function">CompareResult</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">override</span> <span class="token keyword">fun</span> <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> String <span class="token punctuation">{</span>
-            <span class="token keyword">return</span> <span class="token string">"小于"</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">object</span> MORE <span class="token operator">:</span> <span class="token function">CompareResult</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">override</span> <span class="token keyword">fun</span> <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> String <span class="token punctuation">{</span>
-            <span class="token keyword">return</span> <span class="token string">"大于"</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">object</span> EQUAL <span class="token operator">:</span> <span class="token function">CompareResult</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">override</span> <span class="token keyword">fun</span> <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> String <span class="token punctuation">{</span>
-            <span class="token keyword">return</span> <span class="token string">"等于"</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-infix <span class="token keyword">fun</span> Int<span class="token punctuation">.</span><span class="token function">vs</span><span class="token punctuation">(</span>num<span class="token operator">:</span> Int<span class="token punctuation">)</span><span class="token operator">:</span> CompareResult <span class="token operator">=</span>
-    <span class="token keyword">when</span> <span class="token punctuation">{</span>
-        <span class="token keyword">this</span> <span class="token operator">-</span> num <span class="token operator">></span> <span class="token number">0</span> <span class="token operator">-></span> <span class="token punctuation">{</span>
-            CompareResult<span class="token punctuation">.</span>MORE
-        <span class="token punctuation">}</span>
-        <span class="token keyword">this</span> <span class="token operator">-</span> num <span class="token operator">&lt;</span> <span class="token number">0</span> <span class="token operator">-></span> <span class="token punctuation">{</span>
-            CompareResult<span class="token punctuation">.</span>LESS
-        <span class="token punctuation">}</span>
-        <span class="token keyword">else</span> <span class="token operator">-></span> <span class="token punctuation">{</span>
-            CompareResult<span class="token punctuation">.</span>EQUAL
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-
-<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token function">println</span><span class="token punctuation">(</span><span class="token number">5</span> vs <span class="token number">6</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">/** 输出结果：小于 */</span></code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>Kotlin</tag>
       </tags>
   </entry>
   <entry>
@@ -5627,51 +5703,6 @@ infix <span class="token keyword">fun</span> Int<span class="token punctuation">
       </tags>
   </entry>
   <entry>
-    <title>英语学习第三天</title>
-    <url>/posts/9968.html</url>
-    <content><![CDATA[<h3 id="动名词作主语"><a href="#动名词作主语" class="headerlink" title="动名词作主语"></a>动名词作主语</h3><ul>
-<li>Eating an apple a day keeps you healthy.</li>
-<li>Running five miles is the first thing he does in the morning.</li>
-</ul>
-<h3 id="不定式作主语"><a href="#不定式作主语" class="headerlink" title="不定式作主语"></a>不定式作主语</h3><ul>
-<li>To study abroad is my greatest desire.</li>
-<li>To travel around the world is my plan for this year.</li>
-</ul>
-<p>动名词作主语不讨论这件事做或没做。不定式做主语，这件事情还没有做。</p>
-<p>动词要做主语，不能用原词。可以用动名词，也可以用不定式。如果是不定式，这个动作要没做才可以。</p>
-<blockquote>
-<p>不定式和动名词作主语时，常出现主语过长的情况，可以用代词it代替，作形式主语放在句首，而把真正的主语，即不定式或动名词短语放在句尾。动名词移至句尾时，常改为不定式。</p>
-</blockquote>
-<p>Collecting stamps is one of his hobbies.</p>
-<p><code>It</code> is one of his hobbies <code>to collect stamps</code>.</p>
-<p>Eating an apple a day keeps you healthy.</p>
-<p><code>It</code> keeps you healthy <code>to eat an appale</code>.</p>
-<h3 id="单词"><a href="#单词" class="headerlink" title="单词"></a>单词</h3><p>hear from 收到….的信</p>
-<p>hear sb do sth 听见某人做某事 </p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>English</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>英语学习第二天</title>
     <url>/posts/9511.html</url>
     <content><![CDATA[<h3 id="为什么会有五种句型"><a href="#为什么会有五种句型" class="headerlink" title="为什么会有五种句型"></a>为什么会有五种句型</h3><p>这个句子有没有动词，没有动作就一般是主系表。如果有一个动作，我们把这个动作视为核心动词「谓语动词」。根据这个动词的种类不一样，这个动作涉及到别的对象呢，还是自己就能完成。涉及到别人是涉及到一个对象还是两个对象呢？这样子会划分为四种不同的类型。</p>
@@ -5739,51 +5770,27 @@ infix <span class="token keyword">fun</span> Int<span class="token punctuation">
       </tags>
   </entry>
   <entry>
-    <title>英语学习第五天</title>
-    <url>/posts/3517.html</url>
-    <content><![CDATA[<h3 id="名词作宾语"><a href="#名词作宾语" class="headerlink" title="名词作宾语"></a>名词作宾语</h3><p>When you’re the bos s, you can make up your own rules.</p>
-<p>She loves her Snow White costume.</p>
-<p>她喜欢她的白雪公主戏服。</p>
-<h3 id="代词作宾语"><a href="#代词作宾语" class="headerlink" title="代词作宾语"></a>代词作宾语</h3><p>I didn’t notice him.</p>
-<p>Thomas brags about this every single day.</p>
-<p>I forgive you.</p>
-<h3 id="动名词作宾语"><a href="#动名词作宾语" class="headerlink" title="动名词作宾语"></a>动名词作宾语</h3><p>I hate riding bicycle.</p>
-<p>I can’t imagine going on a date with him.</p>
-<h3 id="不定式作宾语"><a href="#不定式作宾语" class="headerlink" title="不定式作宾语"></a>不定式作宾语</h3><p>I want to see him now.</p>
-<p>I like to go swimming on a hot day like this.</p>
-<h3 id="it-作形式宾语"><a href="#it-作形式宾语" class="headerlink" title="it 作形式宾语"></a>it 作形式宾语</h3><p>She found it difficult to convince him.</p>
-<p>He made it a rule to do an hour’s work in the garden every day.</p>
-<h3 id="宾语从句"><a href="#宾语从句" class="headerlink" title="宾语从句"></a>宾语从句</h3><ul>
-<li>that</li>
+    <title>英语学习第三天</title>
+    <url>/posts/9968.html</url>
+    <content><![CDATA[<h3 id="动名词作主语"><a href="#动名词作主语" class="headerlink" title="动名词作主语"></a>动名词作主语</h3><ul>
+<li>Eating an apple a day keeps you healthy.</li>
+<li>Running five miles is the first thing he does in the morning.</li>
 </ul>
-<p>I think that we should cooperate.</p>
-<p>They feel that it’s impossible to win the game.</p>
-<ul>
-<li>whether</li>
+<h3 id="不定式作主语"><a href="#不定式作主语" class="headerlink" title="不定式作主语"></a>不定式作主语</h3><ul>
+<li>To study abroad is my greatest desire.</li>
+<li>To travel around the world is my plan for this year.</li>
 </ul>
-<p>I wonder whether he can do it.</p>
-<p>I don’t know whether the typhoon will come.</p>
-<ul>
-<li>特殊疑问词</li>
-</ul>
-<p>I don’t believe what he said.</p>
-<p>I forget where he lives.</p>
-<h3 id="单词"><a href="#单词" class="headerlink" title="单词"></a>单词</h3><p>forbid [fərˈbɪd]] 禁止</p>
-<p>ban [bæn] 禁止</p>
-<p>dessert [dɪˈzɜːrt] 餐后甜点</p>
-<p>costume [ˈkɑːstuːm] 服装</p>
-<p>cooperate [koʊˈɑːpəreɪt] 合作</p>
-<p>typhoon [aɪˈfuːn] 台风</p>
-<p>act [ækt] 行动</p>
-<p>argue [ˈɑːrɡjuː] 争论</p>
-<p>Competent [ˈkɑːmpɪtənt] 胜任</p>
-<p>brags about 吹牛</p>
-<p>going on date with sb 与某人约会</p>
-<p>take it for granted 理所当然的</p>
+<p>动名词作主语不讨论这件事做或没做。不定式做主语，这件事情还没有做。</p>
+<p>动词要做主语，不能用原词。可以用动名词，也可以用不定式。如果是不定式，这个动作要没做才可以。</p>
 <blockquote>
-<p>the + 形容词 = 名词</p>
-<p>The rick should help the poor.</p>
+<p>不定式和动名词作主语时，常出现主语过长的情况，可以用代词it代替，作形式主语放在句首，而把真正的主语，即不定式或动名词短语放在句尾。动名词移至句尾时，常改为不定式。</p>
 </blockquote>
+<p>Collecting stamps is one of his hobbies.</p>
+<p><code>It</code> is one of his hobbies <code>to collect stamps</code>.</p>
+<p>Eating an apple a day keeps you healthy.</p>
+<p><code>It</code> keeps you healthy <code>to eat an appale</code>.</p>
+<h3 id="单词"><a href="#单词" class="headerlink" title="单词"></a>单词</h3><p>hear from 收到….的信</p>
+<p>hear sb do sth 听见某人做某事 </p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -5883,6 +5890,75 @@ infix <span class="token keyword">fun</span> Int<span class="token punctuation">
 <p>president [ˈprezɪdənt] 总统</p>
 <p>debate [dɪˈbeɪt] 讨论</p>
 <p>car crash 车祸</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>English</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>英语学习第五天</title>
+    <url>/posts/3517.html</url>
+    <content><![CDATA[<h3 id="名词作宾语"><a href="#名词作宾语" class="headerlink" title="名词作宾语"></a>名词作宾语</h3><p>When you’re the bos s, you can make up your own rules.</p>
+<p>She loves her Snow White costume.</p>
+<p>她喜欢她的白雪公主戏服。</p>
+<h3 id="代词作宾语"><a href="#代词作宾语" class="headerlink" title="代词作宾语"></a>代词作宾语</h3><p>I didn’t notice him.</p>
+<p>Thomas brags about this every single day.</p>
+<p>I forgive you.</p>
+<h3 id="动名词作宾语"><a href="#动名词作宾语" class="headerlink" title="动名词作宾语"></a>动名词作宾语</h3><p>I hate riding bicycle.</p>
+<p>I can’t imagine going on a date with him.</p>
+<h3 id="不定式作宾语"><a href="#不定式作宾语" class="headerlink" title="不定式作宾语"></a>不定式作宾语</h3><p>I want to see him now.</p>
+<p>I like to go swimming on a hot day like this.</p>
+<h3 id="it-作形式宾语"><a href="#it-作形式宾语" class="headerlink" title="it 作形式宾语"></a>it 作形式宾语</h3><p>She found it difficult to convince him.</p>
+<p>He made it a rule to do an hour’s work in the garden every day.</p>
+<h3 id="宾语从句"><a href="#宾语从句" class="headerlink" title="宾语从句"></a>宾语从句</h3><ul>
+<li>that</li>
+</ul>
+<p>I think that we should cooperate.</p>
+<p>They feel that it’s impossible to win the game.</p>
+<ul>
+<li>whether</li>
+</ul>
+<p>I wonder whether he can do it.</p>
+<p>I don’t know whether the typhoon will come.</p>
+<ul>
+<li>特殊疑问词</li>
+</ul>
+<p>I don’t believe what he said.</p>
+<p>I forget where he lives.</p>
+<h3 id="单词"><a href="#单词" class="headerlink" title="单词"></a>单词</h3><p>forbid [fərˈbɪd]] 禁止</p>
+<p>ban [bæn] 禁止</p>
+<p>dessert [dɪˈzɜːrt] 餐后甜点</p>
+<p>costume [ˈkɑːstuːm] 服装</p>
+<p>cooperate [koʊˈɑːpəreɪt] 合作</p>
+<p>typhoon [aɪˈfuːn] 台风</p>
+<p>act [ækt] 行动</p>
+<p>argue [ˈɑːrɡjuː] 争论</p>
+<p>Competent [ˈkɑːmpɪtənt] 胜任</p>
+<p>brags about 吹牛</p>
+<p>going on date with sb 与某人约会</p>
+<p>take it for granted 理所当然的</p>
+<blockquote>
+<p>the + 形容词 = 名词</p>
+<p>The rick should help the poor.</p>
+</blockquote>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -6475,6 +6551,171 @@ min-replicas-max-lag 10</code></pre>
 <p>很容易理解的是，积压队列越大，其允许的主从数据库断线的时间就越长。根据主从数据库之间的网络状态，设置一个合理的积压队列很重要。因为积压队列存储的内容是命令本身，如 <code>SET foo bar</code>，所以估算计算队列的大小只需要估计主从数据库断线的时间中主数据库可能执行的命令大小即可。</p>
 <p>与积压队列相关的另一个配置选项是 <code>repl-backlog-ttl</code>，即当所有从数据库与主数据库断开连接后，经过多久时间可以释放挤压队列的内存空间。默认时间是 1 小时。</p>
 <pre class=" language-bash"><code class="language-bash">$ repl-backlog-ttl 3600</code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis哨兵</title>
+    <url>/posts/c807.html</url>
+    <content><![CDATA[<h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>在一个典型的一主多从的Redis系统中，从数据库在整个系统中起到了数据冗余备份和读写分离的作用。当主数据库遇到异常中断服务后，开发者可以通过手动的方式选择一个从数据库来升级为主数据库，以使得系统能够继续提供服务。然而整个过程相对麻烦且需要人工介入，难以实现自动化。</p>
+<p>为此，Redis 2.8 中提供了哨兵工具来实现自动化的系统监控和故障恢复功能。</p>
+<h4 id="什么是哨兵"><a href="#什么是哨兵" class="headerlink" title="什么是哨兵"></a>什么是哨兵</h4><p>顾名思义，哨兵的作用就是监控 Redis 系统的运行状况。它的功能包括以下两个。</p>
+<ul>
+<li>监控主数据库和从数据库是否正常运行。</li>
+<li>主数据库出现故障时自动将从数据库转换为主数据库。</li>
+</ul>
+<p>哨兵是一个独立的进程，使用哨兵的一个典型架构如下所示：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/15971611207217_.pic_hd.jpg"></p>
+<p>在一个一主多从的 Redis 系统中，可以使用多个哨兵进行监控任务以保证系统足够稳健。注意，此时不仅哨兵会同时监控主数据库和从数据库，哨兵之间也会互相监控。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/15981611207382_.pic_hd.jpg"></p>
+<h3 id="马上上手"><a href="#马上上手" class="headerlink" title="马上上手"></a>马上上手</h3><p>在理解哨兵的原理前，我们首先实际使用一下哨兵，来了解哨兵是如何工作的。首先建立起 3 个 Redis 实例，其中包括一个主数据库和两个从数据库。主数据库的端口为 6379，两个从数据库的端口分别为 6380 和 6381。我们使用 Redis 命令行客户端来获取复制状态，以保证复制配置正确。</p>
+<p>首先是主数据库：</p>
+<pre class=" language-bash"><code class="language-bash">redis 6379<span class="token operator">></span> info replication
+<span class="token comment" spellcheck="true"># Replication</span>
+role:master
+connected_slaves:2
+slave0:ip<span class="token operator">=</span>127.0.0.1,port<span class="token operator">=</span>6380,state<span class="token operator">=</span>online,offset<span class="token operator">=</span>56,lag<span class="token operator">=</span>0
+slave1:ip<span class="token operator">=</span>127.0.0.1,port<span class="token operator">=</span>6381,state<span class="token operator">=</span>online,offset<span class="token operator">=</span>56,lag<span class="token operator">=</span>0</code></pre>
+<p>可见其连接了两个从数据库，配置正确。然后用同样的方法查看两个从数据库的配置：</p>
+<pre class=" language-bash"><code class="language-bash">redis 6380<span class="token operator">></span> INFO replication
+<span class="token comment" spellcheck="true"># Replication</span>
+role:slave
+master_host:127.0.0.1
+
+redis 6381<span class="token operator">></span> info replication
+<span class="token comment" spellcheck="true"># Replication</span>
+role:slave
+master_host:127.0.0.1
+master_port:6379</code></pre>
+<p>当出现的信息如上时，即证明一主而从配置已经成功了。</p>
+<p>接下来开始配置哨兵。建立一个配置文件，如 <code>sentinel.conf</code>，内容为：</p>
+<pre class=" language-shell"><code class="language-shell">sentinel monitor mymaster 127.0.0.1 6379 1</code></pre>
+<p>其中 <code>mymaster</code> 表示要监视的主数据库名字，可以自己定义一个。这个名字必须仅由大小写字母、数字 和 “.-_”这3个字符组成。后两个参数表示主数据库的地址和端口号，这里我们要监控的主数据库 6379。最后的 1 表示最低通过票数，后面会介绍。接下来启动 sentinel 进程，并将上述配置文件的路径传递给哨兵：</p>
+<pre class=" language-bash"><code class="language-bash">$ redis-sentinel /path/to/sentinel.conf</code></pre>
+<p> 需要注意的是，配置哨兵监控一个系统时，只需要配置其监控主数据库即可，哨兵会自动发现所有复制该主数据库的从数据库。</p>
+<p>启动哨兵后，哨兵输出一下内容：</p>
+<pre class=" language-bash"><code class="language-bash">3839:X 21 Jan 2021 01:02:39.668 <span class="token comment" spellcheck="true"># Sentinel ID is 34e43f99b8460c86a0061c0e3325c5a5d94602b2</span>
+3839:X 21 Jan 2021 01:02:39.668 <span class="token comment" spellcheck="true"># +monitor master mymaster 127.0.0.1 6379 quorum 1</span>
+3839:X 21 Jan 2021 01:02:39.669 * +slave slave 127.0.0.1:6380 127.0.0.1 6380 @ mymaster 127.0.0.1 6379
+3839:X 21 Jan 2021 01:02:39.670 * +slave slave 127.0.0.1:6381 127.0.0.1 6381 @ mymaster 127.0.0.1 6379</code></pre>
+<p>其中 +slave 表示新发现了从数据库，可见哨兵成功地发现了两个从数据库。现在哨兵已经在监控 3 个 Redis 实例了，这时我们将主数据库关闭（即运行在 639 端口上的 Redis 实例，杀死进程或使用 SHUTDOWN 命令）,等待指定时间后（可以配置，默认为 30 秒），哨兵会输出一下内容：</p>
+<pre class=" language-shell"><code class="language-shell">3839:X 21 Jan 2021 01:10:29.111 # +sdown master mymaster 127.0.0.1 6379
+3839:X 21 Jan 2021 01:10:29.111 # +odown master mymaster 127.0.0.1 6379 #quorum 1/1</code></pre>
+<p>其中 <code>+sdown</code> 表示哨兵主观认为主数据库停止服务了，而 <code>+odown</code> 则表示哨兵客观认为主数据库停止服务了，关于客观和主管的区别后文会详细介绍。此时哨兵开始执行故障恢复，即挑选一个从数据库，将其升格为主数据库。同时输出以下内容：</p>
+<pre class=" language-shell"><code class="language-shell">3839:X 21 Jan 2021 01:10:29.111 # +try-failover master mymaster 127.0.0.1 6379
+...
+3839:X 21 Jan 2021 01:10:30.561 # +failover-end master mymaster 127.0.0.1 6379
+3839:X 21 Jan 2021 01:10:30.561 # +switch-master mymaster 127.0.0.1 6379 127.0.0.1 6380</code></pre>
+<p><code>+try-failover</code> 表示哨兵开始进行故障恢复，<code>+failover-end</code> 表示哨兵完成故障恢复，期间设计的内容比较复杂，包括领头哨兵的选举、备选从数据库的选择等。<code>+switch-master</code> 表示主数据库从 6379 端口迁移到 6380 端口，即 6380 端口的从数据库被升格为主数据库，同时两个 <code>+slave</code> 则列出了2个新的从数据库，端口分别为 6381 和 6379。</p>
+<pre class=" language-shell"><code class="language-shell">3839:X 21 Jan 2021 01:10:30.561 * +slave slave 127.0.0.1:6381 127.0.0.1 6381 @ mymaster 127.0.0.1 6380
+3839:X 21 Jan 2021 01:10:30.561 * +slave slave 127.0.0.1:6379 127.0.0.1 6379 @ mymaster 127.0.0.1 6380
+3839:X 21 Jan 2021 01:11:00.587 # +sdown slave 127.0.0.1:6379 127.0.0.1 6379 @ mymaster 127.0.0.1 6380</code></pre>
+<p>其中 6379 就是之前停止服务的主数据库，可见哨兵并没有彻底清除停止服务的实例的信息，这时因为停止服务的实例有可能会在之后的某个时间恢复服务，这时哨兵会让其重新加入进来，所以当实例停止服务后，哨兵会更新该实例的信息，使得当其重新重新加入后可以按照当时信息继续对外提供服务。此例中 6379 端口的主数据库实例停止服务了，而 6380 端口的从数据已经升格为主数据库，当 6379 端口的实例恢复服务后，会转变成 6380 端口实例的从数据库来运行，所以哨兵将 6379 端口实例的信息改成了 6380 端口实例的从数据库。</p>
+<p>故障恢复完成后，可以使用 Redis 命令行客户端重新检查 6380 和 6381 两个端口上的实例的复制信息：</p>
+<pre class=" language-bash"><code class="language-bash">redis 6380<span class="token operator">></span> INFO replication
+<span class="token comment" spellcheck="true"># Replication</span>
+role:master
+connected_slaves:1
+slave0:ip<span class="token operator">=</span>127.0.0.1,port<span class="token operator">=</span>6381,state<span class="token operator">=</span>online,offset<span class="token operator">=</span>59364,lag<span class="token operator">=</span>1
+
+redis 6381<span class="token operator">></span> INFO replication
+<span class="token comment" spellcheck="true"># Replication</span>
+role:slave
+master_host:127.0.0.1
+master_port:6380</code></pre>
+<p>可以看到 6380 端口上的实例已经确实升格为主数据库了，同时 6381 端口上的实例是其从数据库。整个故障恢复过程就此完成。</p>
+<p>那么此时我们将 6379 端口上的实例重新启动，会发生什么情况呢？首先哨兵会监控到这一变化，并输出：</p>
+<pre class=" language-bash"><code class="language-bash">3839:X 21 Jan 2021 01:37:10.815 <span class="token comment" spellcheck="true"># -sdown slave 127.0.0.1:6379 127.0.0.1 6379 @ mymaster 127.0.0.1 6380</span>
+3839:X 21 Jan 2021 01:37:20.745 * +convert-to-slave slave 127.0.0.1:6379 127.0.0.1 6379 @ mymaster 127.0.0.1 6380</code></pre>
+<p><code>sdown</code> 表示实例 6379 已经恢复服务了（与 <code>+sdown</code> 相反），同时 <code>+convert-to-slave</code> 表示将 6379 端口的实例设置为 6380 端口实例的从数据库。这时使用 Redis 命令行客户端查看 6379 端口实例的复制信息为：</p>
+<pre class=" language-bash"><code class="language-bash">redis 6379<span class="token operator">></span> INFO replication
+<span class="token comment" spellcheck="true"># Replication</span>
+role:slave
+master_host:127.0.0.1
+master_port:6380</code></pre>
+<p>同时 6380 端口实例的复制信息为：</p>
+<pre class=" language-bash"><code class="language-bash">127.0.0.1:6380<span class="token operator">></span> INFO replication
+<span class="token comment" spellcheck="true"># Replication</span>
+role:master
+connected_slaves:2
+slave0:ip<span class="token operator">=</span>127.0.0.1,port<span class="token operator">=</span>6381,state<span class="token operator">=</span>online,offset<span class="token operator">=</span>153516,lag<span class="token operator">=</span>1
+slave1:ip<span class="token operator">=</span>127.0.0.1,port<span class="token operator">=</span>6379,state<span class="token operator">=</span>online,offset<span class="token operator">=</span>153516,lag<span class="token operator">=</span>0</code></pre>
+<p>正如预期一样，6380 端口实例的从数据库变味了两个，6379 成功恢复服务。</p>
+<h3 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h3><p>一个哨兵进程启动时会读取配置文件的内容，通过如下的配置找出需要监控的主数据库：</p>
+<pre class=" language-bash"><code class="language-bash">sentinel monitor master-name ip redis-port quorum</code></pre>
+<p>其中 master-name 是一个由大小写字母、数字和 “.-_” 组成的主数据库的名字，因为考虑到故障恢复后当前监控的系统的主数据库的地址和端口会产生变化，所以哨兵提供了命令可以通过主数据库的名字获取当前系统的主数据库地址和端口号。</p>
+<p><code>ip</code> 表示当前系统中主数据库的地址，而 <code>redis-port</code> 则表示端口号。</p>
+<p><code>quorum</code> 用来表示执行故障恢复操作前至少需要几个哨兵节点同意。一个哨兵节点可以同时监控多个 Redis 主从系统，只需要提供多个 <code>sentinel monitor</code> 配置即可，例如：</p>
+<pre class=" language-bash"><code class="language-bash">sentinel monitor mymaster 127.0.0.0.1 6379 2
+sentinel monitor othermaster 192.168.1.1 6380 4</code></pre>
+<p>同时多个哨兵节点也可以同时监控一个 Redis 主从系统，从而形成网状结构。</p>
+<p>配置文件中还可以定义其它监控相关的参数，每个配置选项都包含主数据库的名字使得监控不同主数据库时可以使用不同的配置参数。例如：</p>
+<pre class=" language-bash"><code class="language-bash">sentinel down-after-milliseconds mymaster 60000
+sentinel down-after-milliseconds othermaster 10000</code></pre>
+<p>上面的两行配置分别配置了 <code>mymaster</code> 和 <code>othermaster</code> 的 down-after-milliseconds 选项分别为 60000 和 10000。</p>
+<p>哨兵启动后，会与要监控的主数据库建立两条连接，这两个连接的建立方式与普通的 Redis 客户端无异。其中一条连接用来订阅该主数据库的 <code>_sentinel_:hello</code> 频道以获取其它同样监控该数据库的哨兵节点信息，另外哨兵也需要定期向主数据发送 INO 等命令来获取主数据库本身的信息。因为当客户端进入订阅模式时就不能再执行其它命令了，所以这时哨兵会使用另外一条连接来发送这些命令。</p>
+<p>和主数据库的连接建立完成后，哨兵会定时执行下面 3 个操作：</p>
+<ol>
+<li>每 10 秒哨兵会向主数据库和从数据库发送 INFO 命令。</li>
+<li>每 2 秒哨兵会向主数据库和从数据库的 <code>_sentinel_:hello</code> 频道发送自己的信息。</li>
+<li>每 1 秒会向主数据库、从数据库和其它哨兵节点发送 PING 命令。</li>
+</ol>
+<p>这 3 个操作贯穿哨兵进程的整个生命周期中，非常重要，可以说了解了这 3 个操作的意义就能够了解哨兵工作原理的一般内容了。下面分别详细介绍。</p>
+<p>首先，发送 INFO 命令使得哨兵可以获得当前数据库的相关信息（包括运行 ID 、复制信息等）从而实现新节点的自动发现。前面说配置哨兵监控 Redis 主从系统时只需要指定主数据库的信息即可，因为哨兵正是借助 INFO 命令来获取所有复制该主数据库的从数据库信息的。启动后，哨兵向主数据库发送 INFO 命令，通过解析返回结果来得知从数据库列表，而后对每个从数据库同样建立两个连接，两个连接的作用和刚刚介绍的与主数据库建立的两个连接完全一致。在此之后，哨兵会每 10 秒定时向已知的所有主从数据库发送 INFO 命令来获取信息并进行相应的更新操作，比如对新增的从数据库建立连接并加入监控列表，对主从数据库的角色变化（由故障恢复操作引起）进行信息更新等。</p>
+<p>接下来哨兵向主从数据库的<code>_sentinel_:hello</code> 频道发送消息来与同样监控该数据库的哨兵分享自己的信息。发送的消息内容为：</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token operator">&lt;</span>哨兵的地址<span class="token operator">></span>，<span class="token operator">&lt;</span>哨兵的端口<span class="token operator">></span>，<span class="token operator">&lt;</span>哨兵的运行ID<span class="token operator">></span>，<span class="token operator">&lt;</span>哨兵的配置版本<span class="token operator">></span>，<span class="token operator">&lt;</span>主数据库的名字<span class="token operator">></span>，<span class="token operator">&lt;</span>主数据库的地址<span class="token operator">></span>，<span class="token operator">&lt;</span>主数据库的端口<span class="token operator">></span>，<span class="token operator">&lt;</span>主数据库的配置版本<span class="token operator">></span></code></pre>
+<p>可以看到消息包括哨兵的基本信息，以及其监控的主数据库的信息。刚刚介绍过，哨兵会订阅每个监控的数据库<code>_sentinel_:hello</code> 频道，所以当其它哨兵收到消息后，会判断发消息的哨兵是不是新发现的哨兵。如果是则将其加入已发现的哨兵列表中并创建一个到其的连接（与数据库不同，哨兵与哨兵之间只会创建一条连接用来发送 PING 命令，而不需要创建另外一条连接来订阅频道，因为哨兵只需要订阅数据库的频道即可实现自动发现其它哨兵）。同时哨兵会判断信息中主数据库的配置版本，如果该版本比当前记录的主数据库的版本高，则更新主数据库中的数据。</p>
+<p>实现了自动发现从数据库和其它哨兵节点后，哨兵要做的就是定时监控这些数据库和节点有没有停止服务。这是通过每隔一定时间向这些节点发送 PING 命令实现的。时间间隔与 <code>down-after-milliseconds</code> 选项有关，当  <code>down-after-milliseconds</code>  的值小于 1 秒时，哨兵会每隔  <code>down-after-milliseconds</code>  指定的时间发送一次 PING 命令，当  <code>down-after-milliseconds</code> 的值大于 1 秒时，哨兵会每隔 1 秒发送一次 PING 命令。例如：</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 每隔 1 秒发送一次 PING 命令</span>
+sentinel down-after-milliseconds mymaster 60000
+<span class="token comment" spellcheck="true"># 每隔 600 毫秒发送一次 PING 命令</span>
+sentinel down-after-milliseconds othermaster 500</code></pre>
+<p>当超过 <code>down-after-milliseconds</code> 选项指定时间后，如果被 PING 的数据库或节点仍然未进行回复，则哨兵认为其<strong>主观下线（subjectively down）</strong>。主观下线表示从当前的哨兵进程看来，该节点已经下线。如果该节点是主数据库，则哨兵会进一步判断是否需要对其进行故障恢复：哨兵发送 <code>SENTINEL is-master-down-by-addr</code> 命令询问其它哨兵节点以了解它们是否也认为该主数据库主观下线，如果达到指定数量时，哨兵会认为其<strong>客观下线（objectively down）</strong>，并选举领头的哨兵节点对主从系统发起故障恢复。这个指定数量即为前文介绍的 quorum 参数。例如，下面的配置：</p>
+<pre class=" language-bash"><code class="language-bash">sentinel monitor mymaster 127.0.0.1 6379 2</code></pre>
+<p>该配置表示只有当至少两个 Sentinel 节点（包括当前节点）认为该主数据库主观下线时，当前哨兵节点才会认为该主数据库客观下线。进行接下来的选举领头哨兵步骤。</p>
+<p>虽然当前哨兵节点发现了主数据库客观下线，需要故障恢复，但是故障恢复需要由领头的哨兵来完成，这样可以保证同一时间只有一个哨兵节点来执行故障恢复。选举领头哨兵的过程使用了 Raft 算法，具体过程如下：</p>
+<ol>
+<li>发现主数据库客观下线的哨兵节点（下面称作 A）向每个哨兵节点发送命令，要求对方选自己为领头哨兵。</li>
+<li>如果目标哨兵节点没有选过其它人，则会同意将 A 设置成领头哨兵。</li>
+<li>如果 A 发现有超过半数且超过 quorum 参数值的哨兵节点同意选自己成为领头哨兵，则 A 成功成为领头哨兵。</li>
+<li>当有多个哨兵节点同时参选领头哨兵，则会出现没有任何节点当选的可能。此时每个参选节点将等待一个随机时间重新发起参数请求，进行下一轮选举，直到选举成功。</li>
+</ol>
+<p>因为要成为领头哨兵必须有超过半数的哨兵节点支持，所以每次选举最多只会选出一个领头哨兵。选出领头哨兵后，领头哨兵将会开始对主数据库进行故障恢复。故障恢复的过程相对简单，具体如下：</p>
+<p>首先领头哨兵将从停止服务的主数据库的从数据库中挑选一个来充当新的主数据库。挑选的依据如下：</p>
+<ol>
+<li>所有在线的从数据库中，选择优先级别最高的从数据库。优先级可以通过 <code>slave-priority</code> 选项来设置。</li>
+<li>如果有多个最高优先级的从数据库，则复制的命令偏移量越大（即复制越完成）越优先，</li>
+<li>如果以上条件都一样，则选择运行 ID 较小的从数据库。</li>
+</ol>
+<p>选出一个从数据库后，领头哨兵将向从数据库发送 <code>SLAVE NO ONE</code> 命令使其升格为主数据库。而后领头哨兵向其它从数据库发送 <code>SLAVEOF</code> 命令来使其成为新主数据库的从数据库。最后一步则是更新内部的记录，将已经停止服务的旧的主数据库更新为新的主数据库的从数据库，使得当其恢复服务时自动以从数据库的身份继续服务。</p>
+<h3 id="哨兵的部署"><a href="#哨兵的部署" class="headerlink" title="哨兵的部署"></a>哨兵的部署</h3><p>哨兵以独立进程的方式对一个主从系统进行监控，监控效果的好坏与否取决于哨兵的视角是否有代表性。如果一个主从系统中配置的哨兵较少，哨兵对整个系统的判断的可靠性就会降低。极端情况下，当只有一个哨兵时，哨兵本身就很有可能发生单点故障。整体来讲，相对稳妥的哨兵部署方案是使得哨兵的视角尽可能地与每个节点的视角一致，即：</p>
+<ul>
+<li>为每个节点（无论是主数据库还是从数据库）部署一个哨兵</li>
+<li>使每个哨兵与其对应的节点的网络环境相同或相近</li>
+</ul>
+<p>这样的部署方案可以保证哨兵的视角拥有较高的代表性和可靠性。举一个例子：当网络分区后，如果哨兵认为某个分区是主要分区，即意味着从每个节点观察，该分区均为主分区。</p>
+<p>同时设置 quorum 的值为 <code>N / 2 + 1</code> (其中 N 为哨兵节点数量)，这样使得只有大部分哨兵节点同意后才会进行故障恢复。</p>
+<p>当系统中的节点较多时，考虑到每个哨兵都会和系统中的所有节点建立连接，为每个节点分配一个哨兵会产生较多连接，尤其当进行客户端分片时使用多个哨兵节点监控多个主数据库会因为 Redis 不支持连接复用而产生大量冗余连接，同时如果 Redis  节点负载较高，会在一定程度上影响其对哨兵的回复和同机的哨兵与其它节点的通信。所以配置哨兵时还需根据实际的生产环境进行选择。</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -7095,171 +7336,6 @@ $ ZRANGE sortedSetsResult 0 -1 WITHSCORES
 3<span class="token punctuation">)</span> <span class="token string">"b"</span>
 4<span class="token punctuation">)</span> <span class="token string">"4"</span></code></pre>
 <p>另外还有一个命令与 <code>ZINTERSTORE </code>命令的用法一样，名为 <code>ZUNIONSTORE</code>，它的作用是计算集合间的并集，这里不再赘述。</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>Redis</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Redis哨兵</title>
-    <url>/posts/c807.html</url>
-    <content><![CDATA[<h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>在一个典型的一主多从的Redis系统中，从数据库在整个系统中起到了数据冗余备份和读写分离的作用。当主数据库遇到异常中断服务后，开发者可以通过手动的方式选择一个从数据库来升级为主数据库，以使得系统能够继续提供服务。然而整个过程相对麻烦且需要人工介入，难以实现自动化。</p>
-<p>为此，Redis 2.8 中提供了哨兵工具来实现自动化的系统监控和故障恢复功能。</p>
-<h4 id="什么是哨兵"><a href="#什么是哨兵" class="headerlink" title="什么是哨兵"></a>什么是哨兵</h4><p>顾名思义，哨兵的作用就是监控 Redis 系统的运行状况。它的功能包括以下两个。</p>
-<ul>
-<li>监控主数据库和从数据库是否正常运行。</li>
-<li>主数据库出现故障时自动将从数据库转换为主数据库。</li>
-</ul>
-<p>哨兵是一个独立的进程，使用哨兵的一个典型架构如下所示：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/15971611207217_.pic_hd.jpg"></p>
-<p>在一个一主多从的 Redis 系统中，可以使用多个哨兵进行监控任务以保证系统足够稳健。注意，此时不仅哨兵会同时监控主数据库和从数据库，哨兵之间也会互相监控。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/15981611207382_.pic_hd.jpg"></p>
-<h3 id="马上上手"><a href="#马上上手" class="headerlink" title="马上上手"></a>马上上手</h3><p>在理解哨兵的原理前，我们首先实际使用一下哨兵，来了解哨兵是如何工作的。首先建立起 3 个 Redis 实例，其中包括一个主数据库和两个从数据库。主数据库的端口为 6379，两个从数据库的端口分别为 6380 和 6381。我们使用 Redis 命令行客户端来获取复制状态，以保证复制配置正确。</p>
-<p>首先是主数据库：</p>
-<pre class=" language-bash"><code class="language-bash">redis 6379<span class="token operator">></span> info replication
-<span class="token comment" spellcheck="true"># Replication</span>
-role:master
-connected_slaves:2
-slave0:ip<span class="token operator">=</span>127.0.0.1,port<span class="token operator">=</span>6380,state<span class="token operator">=</span>online,offset<span class="token operator">=</span>56,lag<span class="token operator">=</span>0
-slave1:ip<span class="token operator">=</span>127.0.0.1,port<span class="token operator">=</span>6381,state<span class="token operator">=</span>online,offset<span class="token operator">=</span>56,lag<span class="token operator">=</span>0</code></pre>
-<p>可见其连接了两个从数据库，配置正确。然后用同样的方法查看两个从数据库的配置：</p>
-<pre class=" language-bash"><code class="language-bash">redis 6380<span class="token operator">></span> INFO replication
-<span class="token comment" spellcheck="true"># Replication</span>
-role:slave
-master_host:127.0.0.1
-
-redis 6381<span class="token operator">></span> info replication
-<span class="token comment" spellcheck="true"># Replication</span>
-role:slave
-master_host:127.0.0.1
-master_port:6379</code></pre>
-<p>当出现的信息如上时，即证明一主而从配置已经成功了。</p>
-<p>接下来开始配置哨兵。建立一个配置文件，如 <code>sentinel.conf</code>，内容为：</p>
-<pre class=" language-shell"><code class="language-shell">sentinel monitor mymaster 127.0.0.1 6379 1</code></pre>
-<p>其中 <code>mymaster</code> 表示要监视的主数据库名字，可以自己定义一个。这个名字必须仅由大小写字母、数字 和 “.-_”这3个字符组成。后两个参数表示主数据库的地址和端口号，这里我们要监控的主数据库 6379。最后的 1 表示最低通过票数，后面会介绍。接下来启动 sentinel 进程，并将上述配置文件的路径传递给哨兵：</p>
-<pre class=" language-bash"><code class="language-bash">$ redis-sentinel /path/to/sentinel.conf</code></pre>
-<p> 需要注意的是，配置哨兵监控一个系统时，只需要配置其监控主数据库即可，哨兵会自动发现所有复制该主数据库的从数据库。</p>
-<p>启动哨兵后，哨兵输出一下内容：</p>
-<pre class=" language-bash"><code class="language-bash">3839:X 21 Jan 2021 01:02:39.668 <span class="token comment" spellcheck="true"># Sentinel ID is 34e43f99b8460c86a0061c0e3325c5a5d94602b2</span>
-3839:X 21 Jan 2021 01:02:39.668 <span class="token comment" spellcheck="true"># +monitor master mymaster 127.0.0.1 6379 quorum 1</span>
-3839:X 21 Jan 2021 01:02:39.669 * +slave slave 127.0.0.1:6380 127.0.0.1 6380 @ mymaster 127.0.0.1 6379
-3839:X 21 Jan 2021 01:02:39.670 * +slave slave 127.0.0.1:6381 127.0.0.1 6381 @ mymaster 127.0.0.1 6379</code></pre>
-<p>其中 +slave 表示新发现了从数据库，可见哨兵成功地发现了两个从数据库。现在哨兵已经在监控 3 个 Redis 实例了，这时我们将主数据库关闭（即运行在 639 端口上的 Redis 实例，杀死进程或使用 SHUTDOWN 命令）,等待指定时间后（可以配置，默认为 30 秒），哨兵会输出一下内容：</p>
-<pre class=" language-shell"><code class="language-shell">3839:X 21 Jan 2021 01:10:29.111 # +sdown master mymaster 127.0.0.1 6379
-3839:X 21 Jan 2021 01:10:29.111 # +odown master mymaster 127.0.0.1 6379 #quorum 1/1</code></pre>
-<p>其中 <code>+sdown</code> 表示哨兵主观认为主数据库停止服务了，而 <code>+odown</code> 则表示哨兵客观认为主数据库停止服务了，关于客观和主管的区别后文会详细介绍。此时哨兵开始执行故障恢复，即挑选一个从数据库，将其升格为主数据库。同时输出以下内容：</p>
-<pre class=" language-shell"><code class="language-shell">3839:X 21 Jan 2021 01:10:29.111 # +try-failover master mymaster 127.0.0.1 6379
-...
-3839:X 21 Jan 2021 01:10:30.561 # +failover-end master mymaster 127.0.0.1 6379
-3839:X 21 Jan 2021 01:10:30.561 # +switch-master mymaster 127.0.0.1 6379 127.0.0.1 6380</code></pre>
-<p><code>+try-failover</code> 表示哨兵开始进行故障恢复，<code>+failover-end</code> 表示哨兵完成故障恢复，期间设计的内容比较复杂，包括领头哨兵的选举、备选从数据库的选择等。<code>+switch-master</code> 表示主数据库从 6379 端口迁移到 6380 端口，即 6380 端口的从数据库被升格为主数据库，同时两个 <code>+slave</code> 则列出了2个新的从数据库，端口分别为 6381 和 6379。</p>
-<pre class=" language-shell"><code class="language-shell">3839:X 21 Jan 2021 01:10:30.561 * +slave slave 127.0.0.1:6381 127.0.0.1 6381 @ mymaster 127.0.0.1 6380
-3839:X 21 Jan 2021 01:10:30.561 * +slave slave 127.0.0.1:6379 127.0.0.1 6379 @ mymaster 127.0.0.1 6380
-3839:X 21 Jan 2021 01:11:00.587 # +sdown slave 127.0.0.1:6379 127.0.0.1 6379 @ mymaster 127.0.0.1 6380</code></pre>
-<p>其中 6379 就是之前停止服务的主数据库，可见哨兵并没有彻底清除停止服务的实例的信息，这时因为停止服务的实例有可能会在之后的某个时间恢复服务，这时哨兵会让其重新加入进来，所以当实例停止服务后，哨兵会更新该实例的信息，使得当其重新重新加入后可以按照当时信息继续对外提供服务。此例中 6379 端口的主数据库实例停止服务了，而 6380 端口的从数据已经升格为主数据库，当 6379 端口的实例恢复服务后，会转变成 6380 端口实例的从数据库来运行，所以哨兵将 6379 端口实例的信息改成了 6380 端口实例的从数据库。</p>
-<p>故障恢复完成后，可以使用 Redis 命令行客户端重新检查 6380 和 6381 两个端口上的实例的复制信息：</p>
-<pre class=" language-bash"><code class="language-bash">redis 6380<span class="token operator">></span> INFO replication
-<span class="token comment" spellcheck="true"># Replication</span>
-role:master
-connected_slaves:1
-slave0:ip<span class="token operator">=</span>127.0.0.1,port<span class="token operator">=</span>6381,state<span class="token operator">=</span>online,offset<span class="token operator">=</span>59364,lag<span class="token operator">=</span>1
-
-redis 6381<span class="token operator">></span> INFO replication
-<span class="token comment" spellcheck="true"># Replication</span>
-role:slave
-master_host:127.0.0.1
-master_port:6380</code></pre>
-<p>可以看到 6380 端口上的实例已经确实升格为主数据库了，同时 6381 端口上的实例是其从数据库。整个故障恢复过程就此完成。</p>
-<p>那么此时我们将 6379 端口上的实例重新启动，会发生什么情况呢？首先哨兵会监控到这一变化，并输出：</p>
-<pre class=" language-bash"><code class="language-bash">3839:X 21 Jan 2021 01:37:10.815 <span class="token comment" spellcheck="true"># -sdown slave 127.0.0.1:6379 127.0.0.1 6379 @ mymaster 127.0.0.1 6380</span>
-3839:X 21 Jan 2021 01:37:20.745 * +convert-to-slave slave 127.0.0.1:6379 127.0.0.1 6379 @ mymaster 127.0.0.1 6380</code></pre>
-<p><code>sdown</code> 表示实例 6379 已经恢复服务了（与 <code>+sdown</code> 相反），同时 <code>+convert-to-slave</code> 表示将 6379 端口的实例设置为 6380 端口实例的从数据库。这时使用 Redis 命令行客户端查看 6379 端口实例的复制信息为：</p>
-<pre class=" language-bash"><code class="language-bash">redis 6379<span class="token operator">></span> INFO replication
-<span class="token comment" spellcheck="true"># Replication</span>
-role:slave
-master_host:127.0.0.1
-master_port:6380</code></pre>
-<p>同时 6380 端口实例的复制信息为：</p>
-<pre class=" language-bash"><code class="language-bash">127.0.0.1:6380<span class="token operator">></span> INFO replication
-<span class="token comment" spellcheck="true"># Replication</span>
-role:master
-connected_slaves:2
-slave0:ip<span class="token operator">=</span>127.0.0.1,port<span class="token operator">=</span>6381,state<span class="token operator">=</span>online,offset<span class="token operator">=</span>153516,lag<span class="token operator">=</span>1
-slave1:ip<span class="token operator">=</span>127.0.0.1,port<span class="token operator">=</span>6379,state<span class="token operator">=</span>online,offset<span class="token operator">=</span>153516,lag<span class="token operator">=</span>0</code></pre>
-<p>正如预期一样，6380 端口实例的从数据库变味了两个，6379 成功恢复服务。</p>
-<h3 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h3><p>一个哨兵进程启动时会读取配置文件的内容，通过如下的配置找出需要监控的主数据库：</p>
-<pre class=" language-bash"><code class="language-bash">sentinel monitor master-name ip redis-port quorum</code></pre>
-<p>其中 master-name 是一个由大小写字母、数字和 “.-_” 组成的主数据库的名字，因为考虑到故障恢复后当前监控的系统的主数据库的地址和端口会产生变化，所以哨兵提供了命令可以通过主数据库的名字获取当前系统的主数据库地址和端口号。</p>
-<p><code>ip</code> 表示当前系统中主数据库的地址，而 <code>redis-port</code> 则表示端口号。</p>
-<p><code>quorum</code> 用来表示执行故障恢复操作前至少需要几个哨兵节点同意。一个哨兵节点可以同时监控多个 Redis 主从系统，只需要提供多个 <code>sentinel monitor</code> 配置即可，例如：</p>
-<pre class=" language-bash"><code class="language-bash">sentinel monitor mymaster 127.0.0.0.1 6379 2
-sentinel monitor othermaster 192.168.1.1 6380 4</code></pre>
-<p>同时多个哨兵节点也可以同时监控一个 Redis 主从系统，从而形成网状结构。</p>
-<p>配置文件中还可以定义其它监控相关的参数，每个配置选项都包含主数据库的名字使得监控不同主数据库时可以使用不同的配置参数。例如：</p>
-<pre class=" language-bash"><code class="language-bash">sentinel down-after-milliseconds mymaster 60000
-sentinel down-after-milliseconds othermaster 10000</code></pre>
-<p>上面的两行配置分别配置了 <code>mymaster</code> 和 <code>othermaster</code> 的 down-after-milliseconds 选项分别为 60000 和 10000。</p>
-<p>哨兵启动后，会与要监控的主数据库建立两条连接，这两个连接的建立方式与普通的 Redis 客户端无异。其中一条连接用来订阅该主数据库的 <code>_sentinel_:hello</code> 频道以获取其它同样监控该数据库的哨兵节点信息，另外哨兵也需要定期向主数据发送 INO 等命令来获取主数据库本身的信息。因为当客户端进入订阅模式时就不能再执行其它命令了，所以这时哨兵会使用另外一条连接来发送这些命令。</p>
-<p>和主数据库的连接建立完成后，哨兵会定时执行下面 3 个操作：</p>
-<ol>
-<li>每 10 秒哨兵会向主数据库和从数据库发送 INFO 命令。</li>
-<li>每 2 秒哨兵会向主数据库和从数据库的 <code>_sentinel_:hello</code> 频道发送自己的信息。</li>
-<li>每 1 秒会向主数据库、从数据库和其它哨兵节点发送 PING 命令。</li>
-</ol>
-<p>这 3 个操作贯穿哨兵进程的整个生命周期中，非常重要，可以说了解了这 3 个操作的意义就能够了解哨兵工作原理的一般内容了。下面分别详细介绍。</p>
-<p>首先，发送 INFO 命令使得哨兵可以获得当前数据库的相关信息（包括运行 ID 、复制信息等）从而实现新节点的自动发现。前面说配置哨兵监控 Redis 主从系统时只需要指定主数据库的信息即可，因为哨兵正是借助 INFO 命令来获取所有复制该主数据库的从数据库信息的。启动后，哨兵向主数据库发送 INFO 命令，通过解析返回结果来得知从数据库列表，而后对每个从数据库同样建立两个连接，两个连接的作用和刚刚介绍的与主数据库建立的两个连接完全一致。在此之后，哨兵会每 10 秒定时向已知的所有主从数据库发送 INFO 命令来获取信息并进行相应的更新操作，比如对新增的从数据库建立连接并加入监控列表，对主从数据库的角色变化（由故障恢复操作引起）进行信息更新等。</p>
-<p>接下来哨兵向主从数据库的<code>_sentinel_:hello</code> 频道发送消息来与同样监控该数据库的哨兵分享自己的信息。发送的消息内容为：</p>
-<pre class=" language-bash"><code class="language-bash"><span class="token operator">&lt;</span>哨兵的地址<span class="token operator">></span>，<span class="token operator">&lt;</span>哨兵的端口<span class="token operator">></span>，<span class="token operator">&lt;</span>哨兵的运行ID<span class="token operator">></span>，<span class="token operator">&lt;</span>哨兵的配置版本<span class="token operator">></span>，<span class="token operator">&lt;</span>主数据库的名字<span class="token operator">></span>，<span class="token operator">&lt;</span>主数据库的地址<span class="token operator">></span>，<span class="token operator">&lt;</span>主数据库的端口<span class="token operator">></span>，<span class="token operator">&lt;</span>主数据库的配置版本<span class="token operator">></span></code></pre>
-<p>可以看到消息包括哨兵的基本信息，以及其监控的主数据库的信息。刚刚介绍过，哨兵会订阅每个监控的数据库<code>_sentinel_:hello</code> 频道，所以当其它哨兵收到消息后，会判断发消息的哨兵是不是新发现的哨兵。如果是则将其加入已发现的哨兵列表中并创建一个到其的连接（与数据库不同，哨兵与哨兵之间只会创建一条连接用来发送 PING 命令，而不需要创建另外一条连接来订阅频道，因为哨兵只需要订阅数据库的频道即可实现自动发现其它哨兵）。同时哨兵会判断信息中主数据库的配置版本，如果该版本比当前记录的主数据库的版本高，则更新主数据库中的数据。</p>
-<p>实现了自动发现从数据库和其它哨兵节点后，哨兵要做的就是定时监控这些数据库和节点有没有停止服务。这是通过每隔一定时间向这些节点发送 PING 命令实现的。时间间隔与 <code>down-after-milliseconds</code> 选项有关，当  <code>down-after-milliseconds</code>  的值小于 1 秒时，哨兵会每隔  <code>down-after-milliseconds</code>  指定的时间发送一次 PING 命令，当  <code>down-after-milliseconds</code> 的值大于 1 秒时，哨兵会每隔 1 秒发送一次 PING 命令。例如：</p>
-<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># 每隔 1 秒发送一次 PING 命令</span>
-sentinel down-after-milliseconds mymaster 60000
-<span class="token comment" spellcheck="true"># 每隔 600 毫秒发送一次 PING 命令</span>
-sentinel down-after-milliseconds othermaster 500</code></pre>
-<p>当超过 <code>down-after-milliseconds</code> 选项指定时间后，如果被 PING 的数据库或节点仍然未进行回复，则哨兵认为其<strong>主观下线（subjectively down）</strong>。主观下线表示从当前的哨兵进程看来，该节点已经下线。如果该节点是主数据库，则哨兵会进一步判断是否需要对其进行故障恢复：哨兵发送 <code>SENTINEL is-master-down-by-addr</code> 命令询问其它哨兵节点以了解它们是否也认为该主数据库主观下线，如果达到指定数量时，哨兵会认为其<strong>客观下线（objectively down）</strong>，并选举领头的哨兵节点对主从系统发起故障恢复。这个指定数量即为前文介绍的 quorum 参数。例如，下面的配置：</p>
-<pre class=" language-bash"><code class="language-bash">sentinel monitor mymaster 127.0.0.1 6379 2</code></pre>
-<p>该配置表示只有当至少两个 Sentinel 节点（包括当前节点）认为该主数据库主观下线时，当前哨兵节点才会认为该主数据库客观下线。进行接下来的选举领头哨兵步骤。</p>
-<p>虽然当前哨兵节点发现了主数据库客观下线，需要故障恢复，但是故障恢复需要由领头的哨兵来完成，这样可以保证同一时间只有一个哨兵节点来执行故障恢复。选举领头哨兵的过程使用了 Raft 算法，具体过程如下：</p>
-<ol>
-<li>发现主数据库客观下线的哨兵节点（下面称作 A）向每个哨兵节点发送命令，要求对方选自己为领头哨兵。</li>
-<li>如果目标哨兵节点没有选过其它人，则会同意将 A 设置成领头哨兵。</li>
-<li>如果 A 发现有超过半数且超过 quorum 参数值的哨兵节点同意选自己成为领头哨兵，则 A 成功成为领头哨兵。</li>
-<li>当有多个哨兵节点同时参选领头哨兵，则会出现没有任何节点当选的可能。此时每个参选节点将等待一个随机时间重新发起参数请求，进行下一轮选举，直到选举成功。</li>
-</ol>
-<p>因为要成为领头哨兵必须有超过半数的哨兵节点支持，所以每次选举最多只会选出一个领头哨兵。选出领头哨兵后，领头哨兵将会开始对主数据库进行故障恢复。故障恢复的过程相对简单，具体如下：</p>
-<p>首先领头哨兵将从停止服务的主数据库的从数据库中挑选一个来充当新的主数据库。挑选的依据如下：</p>
-<ol>
-<li>所有在线的从数据库中，选择优先级别最高的从数据库。优先级可以通过 <code>slave-priority</code> 选项来设置。</li>
-<li>如果有多个最高优先级的从数据库，则复制的命令偏移量越大（即复制越完成）越优先，</li>
-<li>如果以上条件都一样，则选择运行 ID 较小的从数据库。</li>
-</ol>
-<p>选出一个从数据库后，领头哨兵将向从数据库发送 <code>SLAVE NO ONE</code> 命令使其升格为主数据库。而后领头哨兵向其它从数据库发送 <code>SLAVEOF</code> 命令来使其成为新主数据库的从数据库。最后一步则是更新内部的记录，将已经停止服务的旧的主数据库更新为新的主数据库的从数据库，使得当其恢复服务时自动以从数据库的身份继续服务。</p>
-<h3 id="哨兵的部署"><a href="#哨兵的部署" class="headerlink" title="哨兵的部署"></a>哨兵的部署</h3><p>哨兵以独立进程的方式对一个主从系统进行监控，监控效果的好坏与否取决于哨兵的视角是否有代表性。如果一个主从系统中配置的哨兵较少，哨兵对整个系统的判断的可靠性就会降低。极端情况下，当只有一个哨兵时，哨兵本身就很有可能发生单点故障。整体来讲，相对稳妥的哨兵部署方案是使得哨兵的视角尽可能地与每个节点的视角一致，即：</p>
-<ul>
-<li>为每个节点（无论是主数据库还是从数据库）部署一个哨兵</li>
-<li>使每个哨兵与其对应的节点的网络环境相同或相近</li>
-</ul>
-<p>这样的部署方案可以保证哨兵的视角拥有较高的代表性和可靠性。举一个例子：当网络分区后，如果哨兵认为某个分区是主要分区，即意味着从每个节点观察，该分区均为主分区。</p>
-<p>同时设置 quorum 的值为 <code>N / 2 + 1</code> (其中 N 为哨兵节点数量)，这样使得只有大部分哨兵节点同意后才会进行故障恢复。</p>
-<p>当系统中的节点较多时，考虑到每个哨兵都会和系统中的所有节点建立连接，为每个节点分配一个哨兵会产生较多连接，尤其当进行客户端分片时使用多个哨兵节点监控多个主数据库会因为 Redis 不支持连接复用而产生大量冗余连接，同时如果 Redis  节点负载较高，会在一定程度上影响其对哨兵的回复和同机的哨兵与其它节点的通信。所以配置哨兵时还需根据实际的生产环境进行选择。</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {

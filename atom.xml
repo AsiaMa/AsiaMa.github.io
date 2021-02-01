@@ -6,7 +6,7 @@
   <link href="https://blog.asiama.top/atom.xml" rel="self"/>
   
   <link href="https://blog.asiama.top/"/>
-  <updated>2021-02-01T10:52:20.987Z</updated>
+  <updated>2021-02-01T12:01:59.286Z</updated>
   <id>https://blog.asiama.top/</id>
   
   <author>
@@ -17,11 +17,37 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>安全地终止线程</title>
+    <link href="https://blog.asiama.top/posts/e2c5.html"/>
+    <id>https://blog.asiama.top/posts/e2c5.html</id>
+    <published>2021-02-01T11:41:38.000Z</published>
+    <updated>2021-02-01T12:01:59.286Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;中断状态是线程的一个标识位，而中断操作是一种简便的线程间交互方式，而这种交互方式最适合用来取消或停止任务。除了中断以外，还可以利用一个 boolean 变量来控制是否需要停止任务并终止线程。&lt;/p&gt;
+&lt;pre class=&quot; language-java&quot;&gt;&lt;code</summary>
+        
+      
+    
+    
+    
+    <category term="JAVA" scheme="https://blog.asiama.top/categories/JAVA/"/>
+    
+    
+    <category term="多线程" scheme="https://blog.asiama.top/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
     <title>线程的状态</title>
     <link href="https://blog.asiama.top/posts/acd5.html"/>
     <id>https://blog.asiama.top/posts/acd5.html</id>
     <published>2021-02-01T10:11:04.000Z</published>
-    <updated>2021-02-01T10:52:20.987Z</updated>
+    <updated>2021-02-01T10:53:50.471Z</updated>
     
     
       
@@ -46,7 +72,7 @@
     <link href="https://blog.asiama.top/posts/6ee0.html"/>
     <id>https://blog.asiama.top/posts/6ee0.html</id>
     <published>2021-02-01T00:07:26.000Z</published>
-    <updated>2021-02-01T00:35:02.213Z</updated>
+    <updated>2021-02-01T10:53:50.469Z</updated>
     
     
       
@@ -452,29 +478,6 @@
         
         
     <summary type="html">&lt;h3 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;headerlink&quot; title=&quot;介绍&quot;&gt;&lt;/a&gt;介绍&lt;/h3&gt;&lt;p&gt;即使使用哨兵，此时的 Redis</summary>
-        
-      
-    
-    
-    
-    
-    <category term="Redis" scheme="https://blog.asiama.top/tags/Redis/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Redis主从复制</title>
-    <link href="https://blog.asiama.top/posts/d0dd.html"/>
-    <id>https://blog.asiama.top/posts/d0dd.html</id>
-    <published>2021-01-21T13:29:14.000Z</published>
-    <updated>2021-01-23T01:40:42.007Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;headerlink&quot; title=&quot;介绍&quot;&gt;&lt;/a&gt;介绍&lt;/h3&gt;&lt;p&gt;如果是一个小型项目，使用一台 Redis 服务器就已经足够了，然而现实中的项目通常需要若干台Redis</summary>
         
       
     
