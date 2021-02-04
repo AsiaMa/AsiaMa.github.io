@@ -441,21 +441,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-02-01
+                    2021-02-04
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    647
+                    4.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    21 分
                 </div>
                 
 
@@ -470,7 +470,25 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h3><p>锁是个非常有用的工具，运用场景非常多，因为它使用起来非常简单，而且易于理解。但同时它也会带来一些困扰，那就是可能会引起死锁，一旦产生死锁，就会造成系统功能不可用。让我们来看一段代码，这段代码可能会引起死锁，使线程 t1 和线程 t2 互相等待对方释放锁。</p>
+                <h3 id="死锁发生条件"><a href="#死锁发生条件" class="headerlink" title="死锁发生条件"></a>死锁发生条件</h3><ul>
+<li>互斥条件</li>
+</ul>
+<p>在一段时间内，某资源只能被一个线程占用。如果此时还有其它线程请求该资源，则请求线程等待，直到占有该资源的线程用完释放。</p>
+<ul>
+<li>请求与保持条件</li>
+</ul>
+<p>线程已经保持了至少一个资源，但又提出了新的资源请求，该资源已被其它线程占有，此时请求线程被阻塞，但对自己已获得的资源保持不放。</p>
+<ul>
+<li>不剥脱条件</li>
+</ul>
+<p>线程已获得的资源在未使用之前不能被剥夺，只能在线程使用完由自己释放。</p>
+<ul>
+<li>循环等待条件</li>
+</ul>
+<p>在发生死锁时，必然存在一个 线程-资源的循环链，即线程集合{P0, P1, P2 …… Pn} 中的 P0 正在等待一个 P1 占用的资源，P1正在等待 P2占用的资源，…… Pn 正在等待已被 P0 占用的资源。</p>
+<h3 id="多个线程造成死锁的情况"><a href="#多个线程造成死锁的情况" class="headerlink" title="多个线程造成死锁的情况"></a>多个线程造成死锁的情况</h3><p>如果多个线程之间的依赖关系是环形，存在环路的锁的依赖关系，那么也可能发生死锁。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/Snipaste_2021-02-04_08-46-40.png"></p>
+<h3 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h3><p>锁是个非常有用的工具，运用场景非常多，因为它使用起来非常简单，而且易于理解。但同时它也会带来一些困扰，那就是可能会引起死锁，一旦产生死锁，就会造成系统功能不可用。让我们来看一段代码，这段代码可能会引起死锁，使线程 t1 和线程 t2 互相等待对方释放锁。</p>
 <pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DeadLockDemo</span> <span class="token punctuation">{</span>
   <span class="token keyword">private</span> <span class="token keyword">static</span> String A <span class="token operator">=</span> <span class="token string">"A"</span><span class="token punctuation">;</span>
   <span class="token keyword">private</span> <span class="token keyword">static</span> String B <span class="token operator">=</span> <span class="token string">"B"</span><span class="token punctuation">;</span>
@@ -525,12 +543,543 @@
     <span class="token operator">-</span> locked <span class="token operator">&lt;</span><span class="token number">0x000000076ac1d7d8</span><span class="token operator">></span> <span class="token punctuation">(</span>a java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>String<span class="token punctuation">)</span>
     at com<span class="token punctuation">.</span>asia<span class="token punctuation">.</span>DeadLockDemo$$Lambda$<span class="token number">1</span><span class="token operator">/</span><span class="token number">1452126962</span><span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span>Unknown Source<span class="token punctuation">)</span>
     at java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>Thread<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span>Thread<span class="token punctuation">.</span>java<span class="token operator">:</span><span class="token number">748</span><span class="token punctuation">)</span></code></pre>
+<p>互不相让：当两个（或更多）线程（或进程） 相互持有对方所需要的资源，又不主动释放，导致程序陷入无尽的阻塞，这就是死锁。</p>
 <h3 id="避免死锁的常见方法"><a href="#避免死锁的常见方法" class="headerlink" title="避免死锁的常见方法"></a>避免死锁的常见方法</h3><ul>
 <li>避免一个线程同时获得多个锁。</li>
 <li>避免一个线程在锁内同时占用多个资源，尽量保证每个锁只占用一个资源。</li>
 <li>尝试使用定时锁，使用 lock.tryLock (timeout) 来替代使用内部锁机制。</li>
 <li>对于数据库锁，加锁和解锁必须在一个数据库连接里，否则会出现解锁失败的情况。</li>
 </ul>
+<h3 id="ThreadMXBean"><a href="#ThreadMXBean" class="headerlink" title="ThreadMXBean"></a>ThreadMXBean</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ThreadMXBeanDetection</span> <span class="token punctuation">{</span>
+  <span class="token keyword">private</span> String A <span class="token operator">=</span> <span class="token string">"A"</span><span class="token punctuation">;</span>
+  <span class="token keyword">private</span> String B <span class="token operator">=</span> <span class="token string">"B"</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> InterruptedException <span class="token punctuation">{</span>
+    <span class="token keyword">new</span> <span class="token class-name">ThreadMXBeanDetection</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">deadLock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    TimeUnit<span class="token punctuation">.</span>SECONDS<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ThreadMXBean threadMXBean <span class="token operator">=</span> ManagementFactory<span class="token punctuation">.</span><span class="token function">getThreadMXBean</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">long</span><span class="token punctuation">[</span><span class="token punctuation">]</span> deadlockedThreads <span class="token operator">=</span> threadMXBean<span class="token punctuation">.</span><span class="token function">findDeadlockedThreads</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">long</span> deadlockedThread <span class="token operator">:</span> deadlockedThreads<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      ThreadInfo threadInfo <span class="token operator">=</span> threadMXBean<span class="token punctuation">.</span><span class="token function">getThreadInfo</span><span class="token punctuation">(</span>deadlockedThread<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"发现死锁："</span> <span class="token operator">+</span> threadInfo<span class="token punctuation">.</span><span class="token function">getThreadName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">deadLock</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    Thread t1 <span class="token operator">=</span>
+        <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span>
+            <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">{</span>
+              <span class="token keyword">synchronized</span> <span class="token punctuation">(</span>A<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">try</span> <span class="token punctuation">{</span>
+                  TimeUnit<span class="token punctuation">.</span>SECONDS<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                  e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+                <span class="token keyword">synchronized</span> <span class="token punctuation">(</span>B<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                  System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"1"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+              <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            <span class="token string">"Asia"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    Thread t2 <span class="token operator">=</span>
+        <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span>
+            <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">{</span>
+              <span class="token keyword">synchronized</span> <span class="token punctuation">(</span>B<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">synchronized</span> <span class="token punctuation">(</span>A<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                  System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"2"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+              <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            <span class="token string">"Xiu"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    t1<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    t2<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/** 输出结果：
+发现死锁：Xiu
+发现死锁：Asia */</span></code></pre>
+<h3 id="哲学家就餐问题"><a href="#哲学家就餐问题" class="headerlink" title="哲学家就餐问题"></a>哲学家就餐问题</h3><p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/Snipaste_2021-02-04_10-14-23.png"></p>
+<h4 id="代码演示"><a href="#代码演示" class="headerlink" title="代码演示"></a>代码演示</h4><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DiningPhilosophers</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    Philosopher<span class="token punctuation">[</span><span class="token punctuation">]</span> philosophers <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Philosopher</span><span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    Object<span class="token punctuation">[</span><span class="token punctuation">]</span> chopsticks <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Object</span><span class="token punctuation">[</span>philosophers<span class="token punctuation">.</span>length<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> chopsticks<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      chopsticks<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Object</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> philosophers<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      Object leftChopstick <span class="token operator">=</span> chopsticks<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+      Object rightChopstick <span class="token operator">=</span> chopsticks<span class="token punctuation">[</span><span class="token punctuation">(</span>i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">%</span> chopsticks<span class="token punctuation">.</span>length<span class="token punctuation">]</span><span class="token punctuation">;</span>
+      philosophers<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Philosopher</span><span class="token punctuation">(</span>leftChopstick<span class="token punctuation">,</span> rightChopstick<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span>philosophers<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">"哲学家"</span> <span class="token operator">+</span> <span class="token punctuation">(</span>i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">Philosopher</span> <span class="token keyword">implements</span> <span class="token class-name">Runnable</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> Object leftChopstick<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> Object rightChopstick<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token function">Philosopher</span><span class="token punctuation">(</span>Object leftChopstick<span class="token punctuation">,</span> Object rightChopstick<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>leftChopstick <span class="token operator">=</span> leftChopstick<span class="token punctuation">;</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span>rightChopstick <span class="token operator">=</span> rightChopstick<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">try</span> <span class="token punctuation">{</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+          <span class="token function">doAction</span><span class="token punctuation">(</span><span class="token string">"Thinking"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+          <span class="token keyword">synchronized</span> <span class="token punctuation">(</span>leftChopstick<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">doAction</span><span class="token punctuation">(</span><span class="token string">"Pick up left chopstick"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">synchronized</span> <span class="token punctuation">(</span>rightChopstick<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+              <span class="token function">doAction</span><span class="token punctuation">(</span><span class="token string">"Picked up right chopstick  - eating"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+              <span class="token function">doAction</span><span class="token punctuation">(</span><span class="token string">"Put down right chopstick"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token function">doAction</span><span class="token punctuation">(</span><span class="token string">"Put down left chopstick"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">doAction</span><span class="token punctuation">(</span>String action<span class="token punctuation">)</span> <span class="token keyword">throws</span> InterruptedException <span class="token punctuation">{</span>
+      System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>Thread<span class="token punctuation">.</span><span class="token function">currentThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">" "</span> <span class="token operator">+</span> action<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      Thread<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">long</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>Math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/** 输出结果：
+哲学家2 Thinking
+哲学家4 Thinking
+哲学家3 Thinking
+哲学家1 Thinking
+哲学家5 Thinking
+哲学家5 Pick up left chopstick
+哲学家5 Picked up right chopstick  - eating
+哲学家3 Pick up left chopstick
+哲学家2 Pick up left chopstick
+哲学家4 Pick up left chopstick
+哲学家5 Put down right chopstick
+哲学家1 Pick up left chopstick
+哲学家5 Put down left chopstick
+哲学家5 Thinking
+哲学家4 Picked up right chopstick  - eating
+哲学家4 Put down right chopstick
+哲学家4 Put down left chopstick
+哲学家5 Pick up left chopstick
+哲学家4 Thinking
+哲学家3 Picked up right chopstick  - eating
+哲学家3 Put down right chopstick
+哲学家3 Put down left chopstick
+哲学家4 Pick up left chopstick
+哲学家3 Thinking
+哲学家2 Picked up right chopstick  - eating
+哲学家2 Put down right chopstick
+哲学家2 Put down left chopstick
+哲学家3 Pick up left chopstick
+哲学家2 Thinking
+哲学家1 Picked up right chopstick  - eating
+哲学家1 Put down right chopstick
+哲学家1 Put down left chopstick
+哲学家2 Pick up left chopstick
+哲学家1 Thinking
+哲学家5 Picked up right chopstick  - eating
+哲学家5 Put down right chopstick
+哲学家5 Put down left chopstick
+哲学家1 Pick up left chopstick
+哲学家5 Thinking
+哲学家4 Picked up right chopstick  - eating
+哲学家4 Put down right chopstick
+哲学家5 Pick up left chopstick
+哲学家4 Put down left chopstick
+哲学家4 Thinking
+哲学家3 Picked up right chopstick  - eating
+哲学家3 Put down right chopstick
+哲学家3 Put down left chopstick
+哲学家3 Thinking
+哲学家2 Picked up right chopstick  - eating
+哲学家4 Pick up left chopstick
+哲学家2 Put down right chopstick
+哲学家2 Put down left chopstick
+哲学家3 Pick up left chopstick
+哲学家2 Thinking
+哲学家1 Picked up right chopstick  - eating
+哲学家1 Put down right chopstick
+哲学家1 Put down left chopstick
+哲学家2 Pick up left chopstick
+哲学家1 Thinking
+哲学家5 Picked up right chopstick  - eating
+哲学家5 Put down right chopstick
+哲学家5 Put down left chopstick
+哲学家1 Pick up left chopstick
+哲学家5 Thinking
+哲学家4 Picked up right chopstick  - eating
+哲学家4 Put down right chopstick
+哲学家4 Put down left chopstick
+哲学家5 Pick up left chopstick
+哲学家4 Thinking
+哲学家3 Picked up right chopstick  - eating
+哲学家3 Put down right chopstick
+哲学家3 Put down left chopstick
+哲学家4 Pick up left chopstick
+哲学家2 Picked up right chopstick  - eating
+哲学家3 Thinking
+哲学家2 Put down right chopstick
+哲学家2 Put down left chopstick
+哲学家3 Pick up left chopstick
+哲学家2 Thinking
+哲学家1 Picked up right chopstick  - eating
+哲学家1 Put down right chopstick
+哲学家1 Put down left chopstick
+哲学家2 Pick up left chopstick
+哲学家1 Thinking
+哲学家5 Picked up right chopstick  - eating
+哲学家5 Put down right chopstick
+哲学家5 Put down left chopstick
+哲学家1 Pick up left chopstick
+哲学家5 Thinking
+哲学家4 Picked up right chopstick  - eating
+哲学家4 Put down right chopstick
+哲学家4 Put down left chopstick
+哲学家5 Pick up left chopstick
+哲学家4 Thinking
+哲学家3 Picked up right chopstick  - eating
+哲学家3 Put down right chopstick
+哲学家3 Put down left chopstick
+哲学家3 Thinking
+哲学家2 Picked up right chopstick  - eating
+哲学家4 Pick up left chopstick
+哲学家2 Put down right chopstick
+哲学家2 Put down left chopstick
+哲学家3 Pick up left chopstick
+哲学家2 Thinking
+哲学家1 Picked up right chopstick  - eating
+哲学家1 Put down right chopstick
+哲学家1 Put down left chopstick
+哲学家2 Pick up left chopstick
+哲学家1 Thinking
+哲学家5 Picked up right chopstick  - eating
+哲学家5 Put down right chopstick
+哲学家5 Put down left chopstick
+哲学家1 Pick up left chopstick
+哲学家5 Thinking
+哲学家4 Picked up right chopstick  - eating
+哲学家4 Put down right chopstick
+哲学家4 Put down left chopstick
+哲学家5 Pick up left chopstick
+哲学家4 Thinking
+哲学家3 Picked up right chopstick  - eating
+哲学家3 Put down right chopstick
+哲学家3 Put down left chopstick
+哲学家4 Pick up left chopstick
+哲学家3 Thinking
+哲学家2 Picked up right chopstick  - eating
+哲学家2 Put down right chopstick
+哲学家2 Put down left chopstick
+哲学家3 Pick up left chopstick
+哲学家2 Thinking
+哲学家1 Picked up right chopstick  - eating
+哲学家1 Put down right chopstick
+哲学家1 Put down left chopstick
+哲学家2 Pick up left chopstick
+哲学家1 Thinking
+哲学家5 Picked up right chopstick  - eating
+哲学家5 Put down right chopstick
+哲学家5 Put down left chopstick
+哲学家1 Pick up left chopstick
+哲学家5 Thinking
+哲学家4 Picked up right chopstick  - eating
+哲学家4 Put down right chopstick
+哲学家4 Put down left chopstick
+哲学家4 Thinking
+哲学家3 Picked up right chopstick  - eating
+哲学家3 Put down right chopstick
+哲学家5 Pick up left chopstick
+哲学家3 Put down left chopstick
+哲学家4 Pick up left chopstick
+哲学家3 Thinking
+哲学家2 Picked up right chopstick  - eating
+哲学家2 Put down right chopstick
+哲学家3 Pick up left chopstick
+哲学家2 Put down left chopstick
+哲学家2 Thinking
+哲学家1 Picked up right chopstick  - eating
+哲学家1 Put down right chopstick
+哲学家1 Put down left chopstick
+哲学家1 Thinking
+哲学家5 Picked up right chopstick  - eating
+哲学家5 Put down right chopstick
+哲学家2 Pick up left chopstick
+哲学家5 Put down left chopstick
+哲学家1 Pick up left chopstick
+哲学家5 Thinking
+哲学家4 Picked up right chopstick  - eating
+哲学家4 Put down right chopstick
+哲学家4 Put down left chopstick
+哲学家5 Pick up left chopstick
+哲学家3 Picked up right chopstick  - eating
+哲学家4 Thinking
+哲学家3 Put down right chopstick
+哲学家3 Put down left chopstick
+哲学家4 Pick up left chopstick
+哲学家3 Thinking
+哲学家2 Picked up right chopstick  - eating
+哲学家2 Put down right chopstick
+哲学家2 Put down left chopstick
+哲学家3 Pick up left chopstick
+哲学家2 Thinking
+哲学家1 Picked up right chopstick  - eating
+哲学家1 Put down right chopstick
+哲学家1 Put down left chopstick
+哲学家2 Pick up left chopstick
+哲学家1 Thinking
+哲学家5 Picked up right chopstick  - eating
+哲学家5 Put down right chopstick
+哲学家5 Put down left chopstick
+哲学家1 Pick up left chopstick
+哲学家5 Thinking
+哲学家4 Picked up right chopstick  - eating
+哲学家4 Put down right chopstick
+哲学家4 Put down left chopstick
+哲学家4 Thinking
+哲学家3 Picked up right chopstick  - eating
+哲学家5 Pick up left chopstick
+哲学家3 Put down right chopstick
+哲学家3 Put down left chopstick
+哲学家4 Pick up left chopstick
+哲学家3 Thinking
+哲学家2 Picked up right chopstick  - eating
+哲学家2 Put down right chopstick
+哲学家2 Put down left chopstick
+哲学家3 Pick up left chopstick
+哲学家2 Thinking
+哲学家1 Picked up right chopstick  - eating
+哲学家1 Put down right chopstick
+哲学家1 Put down left chopstick
+哲学家2 Pick up left chopstick
+哲学家1 Thinking
+哲学家5 Picked up right chopstick  - eating
+哲学家5 Put down right chopstick
+哲学家5 Put down left chopstick
+哲学家1 Pick up left chopstick
+哲学家5 Thinking
+哲学家4 Picked up right chopstick  - eating
+哲学家4 Put down right chopstick
+哲学家4 Put down left chopstick
+哲学家5 Pick up left chopstick
+哲学家4 Thinking
+哲学家3 Picked up right chopstick  - eating
+哲学家3 Put down right chopstick
+哲学家3 Put down left chopstick
+哲学家4 Pick up left chopstick
+哲学家3 Thinking
+哲学家2 Picked up right chopstick  - eating
+哲学家2 Put down right chopstick
+哲学家2 Put down left chopstick
+哲学家3 Pick up left chopstick
+哲学家2 Thinking
+哲学家1 Picked up right chopstick  - eating
+哲学家1 Put down right chopstick
+哲学家1 Put down left chopstick
+哲学家2 Pick up left chopstick
+哲学家5 Picked up right chopstick  - eating
+哲学家1 Thinking
+哲学家5 Put down right chopstick
+哲学家5 Put down left chopstick
+哲学家5 Thinking
+哲学家4 Picked up right chopstick  - eating
+哲学家1 Pick up left chopstick
+哲学家4 Put down right chopstick
+哲学家4 Put down left chopstick
+哲学家5 Pick up left chopstick
+哲学家3 Picked up right chopstick  - eating
+哲学家4 Thinking
+哲学家3 Put down right chopstick
+哲学家3 Put down left chopstick
+哲学家4 Pick up left chopstick
+哲学家3 Thinking
+哲学家2 Picked up right chopstick  - eating
+哲学家2 Put down right chopstick
+哲学家2 Put down left chopstick
+哲学家3 Pick up left chopstick
+哲学家2 Thinking
+哲学家1 Picked up right chopstick  - eating
+哲学家1 Put down right chopstick
+哲学家1 Put down left chopstick
+哲学家2 Pick up left chopstick
+哲学家1 Thinking
+哲学家5 Picked up right chopstick  - eating
+哲学家5 Put down right chopstick
+哲学家5 Put down left chopstick
+哲学家1 Pick up left chopstick
+哲学家5 Thinking
+哲学家4 Picked up right chopstick  - eating
+哲学家4 Put down right chopstick
+哲学家4 Put down left chopstick
+哲学家5 Pick up left chopstick
+哲学家4 Thinking
+哲学家3 Picked up right chopstick  - eating
+哲学家3 Put down right chopstick
+哲学家4 Pick up left chopstick
+哲学家3 Put down left chopstick
+哲学家3 Thinking
+哲学家2 Picked up right chopstick  - eating
+哲学家2 Put down right chopstick
+哲学家2 Put down left chopstick
+哲学家3 Pick up left chopstick
+哲学家2 Thinking
+哲学家1 Picked up right chopstick  - eating
+哲学家1 Put down right chopstick
+哲学家2 Pick up left chopstick
+哲学家1 Put down left chopstick
+哲学家1 Thinking
+哲学家5 Picked up right chopstick  - eating
+哲学家5 Put down right chopstick
+哲学家5 Put down left chopstick
+哲学家1 Pick up left chopstick
+哲学家5 Thinking
+哲学家4 Picked up right chopstick  - eating
+哲学家4 Put down right chopstick
+哲学家4 Put down left chopstick
+哲学家5 Pick up left chopstick
+哲学家4 Thinking
+哲学家3 Picked up right chopstick  - eating
+哲学家3 Put down right chopstick
+哲学家3 Put down left chopstick
+哲学家4 Pick up left chopstick
+哲学家3 Thinking
+哲学家2 Picked up right chopstick  - eating
+哲学家2 Put down right chopstick
+哲学家2 Put down left chopstick
+哲学家3 Pick up left chopstick
+哲学家2 Thinking
+哲学家1 Picked up right chopstick  - eating
+哲学家1 Put down right chopstick
+哲学家1 Put down left chopstick
+哲学家2 Pick up left chopstick
+哲学家1 Thinking
+哲学家5 Picked up right chopstick  - eating
+哲学家5 Put down right chopstick
+哲学家5 Put down left chopstick
+哲学家1 Pick up left chopstick
+哲学家5 Thinking
+哲学家4 Picked up right chopstick  - eating
+哲学家4 Put down right chopstick
+哲学家4 Put down left chopstick
+哲学家5 Pick up left chopstick
+哲学家4 Thinking
+哲学家3 Picked up right chopstick  - eating
+哲学家3 Put down right chopstick
+哲学家3 Put down left chopstick
+哲学家3 Thinking
+哲学家2 Picked up right chopstick  - eating
+哲学家4 Pick up left chopstick
+哲学家2 Put down right chopstick
+哲学家2 Put down left chopstick
+哲学家3 Pick up left chopstick
+哲学家1 Picked up right chopstick  - eating
+哲学家2 Thinking
+哲学家1 Put down right chopstick
+哲学家1 Put down left chopstick
+哲学家2 Pick up left chopstick
+哲学家1 Thinking
+哲学家5 Picked up right chopstick  - eating
+哲学家5 Put down right chopstick
+哲学家5 Put down left chopstick
+哲学家1 Pick up left chopstick
+哲学家5 Thinking
+哲学家4 Picked up right chopstick  - eating
+哲学家4 Put down right chopstick
+哲学家4 Put down left chopstick
+哲学家5 Pick up left chopstick
+哲学家3 Picked up right chopstick  - eating
+哲学家4 Thinking
+哲学家3 Put down right chopstick
+哲学家3 Put down left chopstick
+哲学家4 Pick up left chopstick
+哲学家3 Thinking
+哲学家2 Picked up right chopstick  - eating
+哲学家2 Put down right chopstick
+哲学家2 Put down left chopstick
+哲学家3 Pick up left chopstick
+哲学家1 Picked up right chopstick  - eating
+哲学家2 Thinking
+哲学家1 Put down right chopstick
+哲学家1 Put down left chopstick
+哲学家1 Thinking
+哲学家2 Pick up left chopstick
+哲学家5 Picked up right chopstick  - eating
+哲学家5 Put down right chopstick
+哲学家5 Put down left chopstick
+哲学家1 Pick up left chopstick
+哲学家5 Thinking
+哲学家4 Picked up right chopstick  - eating
+哲学家4 Put down right chopstick
+哲学家4 Put down left chopstick
+哲学家5 Pick up left chopstick
+哲学家4 Thinking
+哲学家3 Picked up right chopstick  - eating
+哲学家3 Put down right chopstick
+哲学家3 Put down left chopstick
+哲学家4 Pick up left chopstick
+哲学家3 Thinking
+哲学家2 Picked up right chopstick  - eating
+哲学家2 Put down right chopstick
+哲学家2 Put down left chopstick
+哲学家3 Pick up left chopstick
+哲学家2 Thinking
+哲学家1 Picked up right chopstick  - eating
+哲学家1 Put down right chopstick
+哲学家1 Put down left chopstick
+哲学家2 Pick up left chopstick
+哲学家1 Thinking
+哲学家5 Picked up right chopstick  - eating
+哲学家5 Put down right chopstick
+哲学家5 Put down left chopstick
+哲学家1 Pick up left chopstick
+哲学家5 Thinking
+哲学家4 Picked up right chopstick  - eating
+哲学家4 Put down right chopstick
+哲学家4 Put down left chopstick
+哲学家5 Pick up left chopstick
+哲学家4 Thinking
+哲学家4 Pick up left chopstick
+陷入死锁 */</span></code></pre>
+<h4 id="解决策略"><a href="#解决策略" class="headerlink" title="解决策略"></a>解决策略</h4><ul>
+<li>服务员检查</li>
+<li>改变一个哲学家拿叉子的顺序</li>
+<li>餐票</li>
+<li>领导调节</li>
+</ul>
+<p>改变一个哲学家拿叉子的顺序（只展示不同处代码）</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DiningPhilosophers</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> philosophers<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      Object leftChopstick <span class="token operator">=</span> chopsticks<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+      Object rightChopstick <span class="token operator">=</span> chopsticks<span class="token punctuation">[</span><span class="token punctuation">(</span>i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">%</span> chopsticks<span class="token punctuation">.</span>length<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+      <span class="token comment" spellcheck="true">// 改变最后一个哲学家拿叉子的顺序，先拿右边筷子，再拿左边筷子</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">==</span> philosophers<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        philosophers<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Philosopher</span><span class="token punctuation">(</span>rightChopstick<span class="token punctuation">,</span> leftChopstick<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        philosophers<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Philosopher</span><span class="token punctuation">(</span>leftChopstick<span class="token punctuation">,</span> rightChopstick<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+
+      <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span>philosophers<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">"哲学家"</span> <span class="token operator">+</span> <span class="token punctuation">(</span>i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+</code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -1049,7 +1598,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">88.8k</span>&nbsp;字
+                class="white-color">98k</span>&nbsp;字
             
             
             
