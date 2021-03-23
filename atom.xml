@@ -6,7 +6,7 @@
   <link href="https://blog.asiama.top/atom.xml" rel="self"/>
   
   <link href="https://blog.asiama.top/"/>
-  <updated>2021-02-04T10:22:00.736Z</updated>
+  <updated>2021-03-23T14:00:08.487Z</updated>
   <id>https://blog.asiama.top/</id>
   
   <author>
@@ -17,11 +17,163 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>macOS搭建PHP开发环境</title>
+    <link href="https://blog.asiama.top/posts/a33a.html"/>
+    <id>https://blog.asiama.top/posts/a33a.html</id>
+    <published>2021-03-23T13:05:24.000Z</published>
+    <updated>2021-03-23T14:00:08.487Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;安装-PHP-7-4&quot;&gt;&lt;a href=&quot;#安装-PHP-7-4&quot; class=&quot;headerlink&quot; title=&quot;安装 PHP 7.4&quot;&gt;&lt;/a&gt;安装 PHP 7.4&lt;/h3&gt;&lt;pre class=&quot; language-bash&quot;&gt;&lt;code</summary>
+        
+      
+    
+    
+    
+    
+    <category term="PHP" scheme="https://blog.asiama.top/tags/PHP/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CopyOnWriteArrayList</title>
+    <link href="https://blog.asiama.top/posts/34b0.html"/>
+    <id>https://blog.asiama.top/posts/34b0.html</id>
+    <published>2021-02-09T15:23:33.000Z</published>
+    <updated>2021-02-09T15:40:07.139Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;CopyOnWriteArrayList的优点&quot;&gt;&lt;a href=&quot;#CopyOnWriteArrayList的优点&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="多线程" scheme="https://blog.asiama.top/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+    
+    <category term="多线程" scheme="https://blog.asiama.top/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>原子类</title>
+    <link href="https://blog.asiama.top/posts/8802.html"/>
+    <id>https://blog.asiama.top/posts/8802.html</id>
+    <published>2021-02-09T01:08:00.000Z</published>
+    <updated>2021-02-09T01:19:46.562Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;原子类纵览&quot;&gt;&lt;a href=&quot;#原子类纵览&quot; class=&quot;headerlink&quot; title=&quot;原子类纵览&quot;&gt;&lt;/a&gt;原子类纵览&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Atomic*</summary>
+        
+      
+    
+    
+    
+    <category term="JAVA" scheme="https://blog.asiama.top/categories/JAVA/"/>
+    
+    
+    <category term="多线程" scheme="https://blog.asiama.top/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>读写锁的规则</title>
+    <link href="https://blog.asiama.top/posts/dd8b.html"/>
+    <id>https://blog.asiama.top/posts/dd8b.html</id>
+    <published>2021-02-08T12:46:30.000Z</published>
+    <updated>2021-02-08T13:11:21.202Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;读写锁的规则&quot;&gt;&lt;a href=&quot;#读写锁的规则&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="JAVA" scheme="https://blog.asiama.top/categories/JAVA/"/>
+    
+    
+    <category term="多线程" scheme="https://blog.asiama.top/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>线程池</title>
+    <link href="https://blog.asiama.top/posts/e2.html"/>
+    <id>https://blog.asiama.top/posts/e2.html</id>
+    <published>2021-02-07T02:04:12.000Z</published>
+    <updated>2021-02-07T09:45:40.055Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;使用线程池的好处&quot;&gt;&lt;a href=&quot;#使用线程池的好处&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="JAVA" scheme="https://blog.asiama.top/categories/JAVA/"/>
+    
+    
+    <category term="多线程" scheme="https://blog.asiama.top/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>线程与进程</title>
+    <link href="https://blog.asiama.top/posts/cda2.html"/>
+    <id>https://blog.asiama.top/posts/cda2.html</id>
+    <published>2021-02-04T11:28:47.000Z</published>
+    <updated>2021-02-04T11:45:20.902Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;在早期的计算机中不包含操作系统，它们从头到尾只执行一个程序，并且这个程序能访问计算机中的所有资源。在这种裸机环境中，不仅很难编写和运行程序，而且每次只能运行一个程序，这对于昂贵并且稀有的计算机资源来说也是一种浪费。&lt;/p&gt;
+&lt;p&gt;操作系统的出现使得计算机每次能运行多个程序，</summary>
+        
+      
+    
+    
+    
+    <category term="JAVA" scheme="https://blog.asiama.top/categories/JAVA/"/>
+    
+    
+    <category term="多线程" scheme="https://blog.asiama.top/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
     <title>synchronized</title>
     <link href="https://blog.asiama.top/posts/7ebc.html"/>
     <id>https://blog.asiama.top/posts/7ebc.html</id>
     <published>2021-02-04T08:03:19.000Z</published>
-    <updated>2021-02-04T10:22:00.736Z</updated>
+    <updated>2021-02-04T11:25:16.919Z</updated>
     
     
       
@@ -46,7 +198,7 @@
     <link href="https://blog.asiama.top/posts/1147.html"/>
     <id>https://blog.asiama.top/posts/1147.html</id>
     <published>2021-02-03T15:36:04.000Z</published>
-    <updated>2021-02-03T15:49:00.808Z</updated>
+    <updated>2021-02-04T11:25:16.926Z</updated>
     
     
       
@@ -72,7 +224,7 @@
     <link href="https://blog.asiama.top/posts/fe2a.html"/>
     <id>https://blog.asiama.top/posts/fe2a.html</id>
     <published>2021-02-03T11:30:49.000Z</published>
-    <updated>2021-02-03T15:20:24.011Z</updated>
+    <updated>2021-02-04T11:25:16.927Z</updated>
     
     
       
@@ -97,7 +249,7 @@
     <link href="https://blog.asiama.top/posts/88c6.html"/>
     <id>https://blog.asiama.top/posts/88c6.html</id>
     <published>2021-02-03T10:26:33.000Z</published>
-    <updated>2021-02-03T10:36:47.668Z</updated>
+    <updated>2021-02-04T11:25:16.930Z</updated>
     
     
       
@@ -122,7 +274,7 @@
     <link href="https://blog.asiama.top/posts/424f.html"/>
     <id>https://blog.asiama.top/posts/424f.html</id>
     <published>2021-02-03T01:31:33.000Z</published>
-    <updated>2021-02-03T01:41:25.910Z</updated>
+    <updated>2021-02-04T11:25:16.929Z</updated>
     
     
       
@@ -147,7 +299,7 @@
     <link href="https://blog.asiama.top/posts/fefe.html"/>
     <id>https://blog.asiama.top/posts/fefe.html</id>
     <published>2021-02-03T01:00:52.000Z</published>
-    <updated>2021-02-03T01:21:34.667Z</updated>
+    <updated>2021-02-04T11:25:16.923Z</updated>
     
     
       
@@ -173,7 +325,7 @@
     <link href="https://blog.asiama.top/posts/4878.html"/>
     <id>https://blog.asiama.top/posts/4878.html</id>
     <published>2021-02-02T13:56:52.000Z</published>
-    <updated>2021-02-02T14:54:52.876Z</updated>
+    <updated>2021-02-04T11:25:16.928Z</updated>
     
     
       
@@ -198,7 +350,7 @@
     <link href="https://blog.asiama.top/posts/446a.html"/>
     <id>https://blog.asiama.top/posts/446a.html</id>
     <published>2021-02-02T13:17:54.000Z</published>
-    <updated>2021-02-02T17:15:43.798Z</updated>
+    <updated>2021-02-04T11:25:16.921Z</updated>
     
     
       
@@ -224,7 +376,7 @@
     <link href="https://blog.asiama.top/posts/760c.html"/>
     <id>https://blog.asiama.top/posts/760c.html</id>
     <published>2021-02-02T03:29:19.000Z</published>
-    <updated>2021-02-02T08:40:52.257Z</updated>
+    <updated>2021-02-04T11:25:16.925Z</updated>
     
     
       
@@ -358,146 +510,6 @@
         
         
     <summary type="html">&lt;h3 id=&quot;从文本文件中读取数据（导入）&quot;&gt;&lt;a href=&quot;#从文本文件中读取数据（导入）&quot; class=&quot;headerlink&quot; title=&quot;从文本文件中读取数据（导入）&quot;&gt;&lt;/a&gt;从文本文件中读取数据（导入）&lt;/h3&gt;&lt;p&gt;当把大量数据输入到表中时，如果打开</summary>
-        
-      
-    
-    
-    
-    
-    <category term="MySQL" scheme="https://blog.asiama.top/tags/MySQL/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>熟练使用事务</title>
-    <link href="https://blog.asiama.top/posts/8c7e.html"/>
-    <id>https://blog.asiama.top/posts/8c7e.html</id>
-    <published>2021-01-28T02:29:05.000Z</published>
-    <updated>2021-01-28T04:33:01.824Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;什么是存储引擎&quot;&gt;&lt;a href=&quot;#什么是存储引擎&quot; class=&quot;headerlink&quot; title=&quot;什么是存储引擎&quot;&gt;&lt;/a&gt;什么是存储引擎&lt;/h3&gt;&lt;p&gt;在学习事务之前，我们需要了解一下 MySQL</summary>
-        
-      
-    
-    
-    
-    
-    <category term="MySQL" scheme="https://blog.asiama.top/tags/MySQL/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>熟练使用存储过程</title>
-    <link href="https://blog.asiama.top/posts/5d64.html"/>
-    <id>https://blog.asiama.top/posts/5d64.html</id>
-    <published>2021-01-28T02:27:12.000Z</published>
-    <updated>2021-01-28T02:28:25.130Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;什么是存储过程&quot;&gt;&lt;a href=&quot;#什么是存储过程&quot; class=&quot;headerlink&quot; title=&quot;什么是存储过程&quot;&gt;&lt;/a&gt;什么是存储过程&lt;/h3&gt;&lt;p&gt;将多个 SQL 语句组合成一个只需要使用命令 “CALL xx” 就能执行的集合，该集合就称为</summary>
-        
-      
-    
-    
-    
-    
-    <category term="MySQL" scheme="https://blog.asiama.top/tags/MySQL/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>熟练使用视图</title>
-    <link href="https://blog.asiama.top/posts/76dd.html"/>
-    <id>https://blog.asiama.top/posts/76dd.html</id>
-    <published>2021-01-27T10:26:13.000Z</published>
-    <updated>2021-01-27T13:36:25.827Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;什么是视图&quot;&gt;&lt;a href=&quot;#什么是视图&quot; class=&quot;headerlink&quot; title=&quot;什么是视图&quot;&gt;&lt;/a&gt;什么是视图&lt;/h3&gt;&lt;h4 id=&quot;视图的真面目&quot;&gt;&lt;a href=&quot;#视图的真面目&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    
-    <category term="MySQL" scheme="https://blog.asiama.top/tags/MySQL/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>观察者模式</title>
-    <link href="https://blog.asiama.top/posts/1e3a.html"/>
-    <id>https://blog.asiama.top/posts/1e3a.html</id>
-    <published>2021-01-26T13:07:36.000Z</published>
-    <updated>2021-01-27T10:19:31.784Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h3&gt;&lt;p&gt;我们常把 23 种经典的设计模式分为三类：创建型、结构型、行为型。创建型设计模式主要解决 “对象的创建” 问题，结构性设计模式主要解决</summary>
-        
-      
-    
-    
-    
-    <category term="设计模式" scheme="https://blog.asiama.top/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-    
-    <category term="观察者模式" scheme="https://blog.asiama.top/tags/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>使用多个表</title>
-    <link href="https://blog.asiama.top/posts/8c42.html"/>
-    <id>https://blog.asiama.top/posts/8c42.html</id>
-    <published>2021-01-26T13:00:05.000Z</published>
-    <updated>2021-01-27T10:21:49.754Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;显示多个表的记录&quot;&gt;&lt;a href=&quot;#显示多个表的记录&quot; class=&quot;headerlink&quot; title=&quot;显示多个表的记录&quot;&gt;&lt;/a&gt;显示多个表的记录&lt;/h3&gt;&lt;h4 id=&quot;确认本章示例中使用的多个表&quot;&gt;&lt;a href=&quot;#确认本章示例中使用的多个表&quot;</summary>
-        
-      
-    
-    
-    
-    
-    <category term="MySQL" scheme="https://blog.asiama.top/tags/MySQL/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>编辑数据</title>
-    <link href="https://blog.asiama.top/posts/3065.html"/>
-    <id>https://blog.asiama.top/posts/3065.html</id>
-    <published>2021-01-26T10:27:44.000Z</published>
-    <updated>2021-01-26T12:59:10.631Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;瞬间更新列中所有的记录&quot;&gt;&lt;a href=&quot;#瞬间更新列中所有的记录&quot; class=&quot;headerlink&quot; title=&quot;瞬间更新列中所有的记录&quot;&gt;&lt;/a&gt;瞬间更新列中所有的记录&lt;/h3&gt;&lt;p&gt;首先是修改记录的方法。修改记录时需要使用 UPDATE</summary>
         
       
     

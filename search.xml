@@ -178,6 +178,75 @@
       </tags>
   </entry>
   <entry>
+    <title>CopyOnWriteArrayList</title>
+    <url>/posts/34b0.html</url>
+    <content><![CDATA[<h3 id="CopyOnWriteArrayList的优点"><a href="#CopyOnWriteArrayList的优点" class="headerlink" title="CopyOnWriteArrayList的优点"></a>CopyOnWriteArrayList的优点</h3><p>读取完全不用加锁的，并且更厉害的是写入也不会阻塞读取操作。只有修改操作之间需要同步等待。</p>
+<h3 id="CopyOnWriteArrayList的缺点"><a href="#CopyOnWriteArrayList的缺点" class="headerlink" title="CopyOnWriteArrayList的缺点"></a>CopyOnWriteArrayList的缺点</h3><p>数据一致性问题：CopyOnWirite 容器只能保证数据的最终一致性，不能保证数据的实时一致性。所以如果你希望写入的数据，马上能读到，请不要用 CopyOnWtire 容器。</p>
+<p>内存占用问题：因为 CopyOnWrite 的是写时复制策略，所以在进行写操作的时候，内存会同时驻扎两个对象的内存。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>CopyOnWriteArrayList 使用写时复制的策略来保证 list 的一致性，而 获取-修改-写入 三步操作并不是原子性的，所以在增删改的过程中都使用了独占锁，来保证在某个时间只有一个线程对 list 数组进行修改。另外 CopyOnWriteArrayList 提供了弱一致性的迭代器，从而保证在获取迭代器后，其他线程对 list 的修改是不可见的，迭代器遍历的数组是一个快照。另外，CopyOnWriteArraySet 的底层是使用它实现的。</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <categories>
+        <category>多线程</category>
+      </categories>
+      <tags>
+        <tag>多线程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java的不足</title>
+    <url>/posts/26f4.html</url>
+    <content><![CDATA[<h3 id="检查异常"><a href="#检查异常" class="headerlink" title="检查异常"></a>检查异常</h3><p>检查异常会在编译时强制执行try catch处理，同时还需要进行某种排序处理。检查异常是一个失败的实践，几乎所有的主要API提供者都返回可检查异常。Kotlin中摒弃了检查异常。</p>
+<h3 id="基本类型和数组"><a href="#基本类型和数组" class="headerlink" title="基本类型和数组"></a>基本类型和数组</h3><p>Java的这个设计保留了字节码的底层细节，违反了“凡事皆为对象”的原则，如泛型无法包容基本类型就是一个例子。这也使得Java的类型系统显得不是那么地简单统一。比较好的方案是，源代码不用直接使用基本类型和数组，由编译器（或者JVM）来决定是否可以帮你对其优化，而Kotlin正是这么做的。</p>
+<h3 id="静态变量"><a href="#静态变量" class="headerlink" title="静态变量"></a>静态变量</h3><p>静态方法经常会导致需要显式的定义接口，从而使得API更加复杂。一个更好的办法就是采用单例对象，单例对象在大多数情况下表现得与静态对象差不多，但是可以像一个对象被传递。Kotlin中提供了object单例对象。</p>
+<h3 id="空指针异常"><a href="#空指针异常" class="headerlink" title="空指针异常"></a>空指针异常</h3><p>在Java中我们不得不写一堆防御代码来避免令人头疼的NPE。Kotlin中引入可空类型与安全调用符、Elvis操作符等特性来实现空安全。</p>
+<h3 id="一堆getter-setter单调冗长的样板代码"><a href="#一堆getter-setter单调冗长的样板代码" class="headerlink" title="一堆getter/setter单调冗长的样板代码"></a>一堆getter/setter单调冗长的样板代码</h3><p>在Kotlin中，我们可以使用数据类：</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">Person</span><span class="token punctuation">(</span><span class="token keyword">val</span> id<span class="token operator">:</span> Int<span class="token punctuation">,</span> <span class="token keyword">val</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span></code></pre>
+<h3 id="不容易传递函数"><a href="#不容易传递函数" class="headerlink" title="不容易传递函数"></a>不容易传递函数</h3><p>Java中没有一等函数类型，函数式（FP）编程只能通过使用接口类型以及多态特性“曲线”来实现。Java会将每一个算法（方法）都放入类中，这种限制会出现这样的“荒唐事”：我们只想实现一个函数算法，而这个时候必须还要给出一个类来放置这个方法；同样，如果在其它地方调用这个方法，必须通过创建该类来实现调用。在Kotlin中直接提供了一等函数（First-Class Function Type）类型，其跟普通类型一样，函数类型可以作为值来传递，也可以作为返回值。</p>
+<blockquote>
+<p>不可否认的是，C、C++和Java语言都是非常优秀的编程语言。但是事物总是不断发展变化的。就像C++语言是对C语言的继承与发展，Java语言是对C++语言的继承与改造，而Kotlin语言也是对Java语言的继承与变革。</p>
+</blockquote>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Bean 延迟查找</title>
     <url>/posts/cdfc.html</url>
     <content><![CDATA[<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ObjectProviderDemo</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">// @Configuration 是非必须注解</span>
@@ -262,42 +331,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Java的不足</title>
-    <url>/posts/26f4.html</url>
-    <content><![CDATA[<h3 id="检查异常"><a href="#检查异常" class="headerlink" title="检查异常"></a>检查异常</h3><p>检查异常会在编译时强制执行try catch处理，同时还需要进行某种排序处理。检查异常是一个失败的实践，几乎所有的主要API提供者都返回可检查异常。Kotlin中摒弃了检查异常。</p>
-<h3 id="基本类型和数组"><a href="#基本类型和数组" class="headerlink" title="基本类型和数组"></a>基本类型和数组</h3><p>Java的这个设计保留了字节码的底层细节，违反了“凡事皆为对象”的原则，如泛型无法包容基本类型就是一个例子。这也使得Java的类型系统显得不是那么地简单统一。比较好的方案是，源代码不用直接使用基本类型和数组，由编译器（或者JVM）来决定是否可以帮你对其优化，而Kotlin正是这么做的。</p>
-<h3 id="静态变量"><a href="#静态变量" class="headerlink" title="静态变量"></a>静态变量</h3><p>静态方法经常会导致需要显式的定义接口，从而使得API更加复杂。一个更好的办法就是采用单例对象，单例对象在大多数情况下表现得与静态对象差不多，但是可以像一个对象被传递。Kotlin中提供了object单例对象。</p>
-<h3 id="空指针异常"><a href="#空指针异常" class="headerlink" title="空指针异常"></a>空指针异常</h3><p>在Java中我们不得不写一堆防御代码来避免令人头疼的NPE。Kotlin中引入可空类型与安全调用符、Elvis操作符等特性来实现空安全。</p>
-<h3 id="一堆getter-setter单调冗长的样板代码"><a href="#一堆getter-setter单调冗长的样板代码" class="headerlink" title="一堆getter/setter单调冗长的样板代码"></a>一堆getter/setter单调冗长的样板代码</h3><p>在Kotlin中，我们可以使用数据类：</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">Person</span><span class="token punctuation">(</span><span class="token keyword">val</span> id<span class="token operator">:</span> Int<span class="token punctuation">,</span> <span class="token keyword">val</span> name<span class="token operator">:</span> String<span class="token punctuation">)</span></code></pre>
-<h3 id="不容易传递函数"><a href="#不容易传递函数" class="headerlink" title="不容易传递函数"></a>不容易传递函数</h3><p>Java中没有一等函数类型，函数式（FP）编程只能通过使用接口类型以及多态特性“曲线”来实现。Java会将每一个算法（方法）都放入类中，这种限制会出现这样的“荒唐事”：我们只想实现一个函数算法，而这个时候必须还要给出一个类来放置这个方法；同样，如果在其它地方调用这个方法，必须通过创建该类来实现调用。在Kotlin中直接提供了一等函数（First-Class Function Type）类型，其跟普通类型一样，函数类型可以作为值来传递，也可以作为返回值。</p>
-<blockquote>
-<p>不可否认的是，C、C++和Java语言都是非常优秀的编程语言。但是事物总是不断发展变化的。就像C++语言是对C语言的继承与发展，Java语言是对C++语言的继承与改造，而Kotlin语言也是对Java语言的继承与变革。</p>
-</blockquote>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>Kotlin</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Kotin介绍</title>
     <url>/posts/5487.html</url>
     <content><![CDATA[<h3 id="Kotlin的主要特征"><a href="#Kotlin的主要特征" class="headerlink" title="Kotlin的主要特征"></a>Kotlin的主要特征</h3><h4 id="静态类型"><a href="#静态类型" class="headerlink" title="静态类型"></a>静态类型</h4><p>Kotlin和Java一样是一种静态类型的编程语言。这意味着<code>所有表达式的类型在编译器已经确定了，而编译器就能验证对象是否包含了你想访问的方法或者字段</code>。</p>
@@ -340,6 +373,44 @@ b<span class="token operator">?</span><span class="token punctuation">.</span>le
 <span class="token punctuation">}</span></code></pre>
 <h4 id="互操作性"><a href="#互操作性" class="headerlink" title="互操作性"></a>互操作性</h4><p>Kotlin的优势是既有Java的完整生态（Kotlin完全无缝使用各类Java API框架库）,又有现代语言的高级特性（语法糖）。</p>
 <h3 id="编程哲学"><a href="#编程哲学" class="headerlink" title="编程哲学"></a>编程哲学</h3><p>编程的真正问题在于，如何把人类脑子里对问题的解决方案“具化”到机器世界，而这个“具化”过程正是编程语言所要表达的东西。如何富有表现力并且安全简洁的表达，这是所有编程语言所要解决的问题。</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Kotlin单例</title>
+    <url>/posts/9fbb.html</url>
+    <content><![CDATA[<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">class</span> Singleton <span class="token keyword">private</span> <span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">companion</span> <span class="token keyword">object</span> <span class="token punctuation">{</span>
+        <span class="token keyword">fun</span> <span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> Singleton <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> Holder<span class="token punctuation">.</span>instance
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">object</span> Holder <span class="token punctuation">{</span>
+        <span class="token keyword">val</span> instance <span class="token operator">=</span> <span class="token function">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -438,44 +509,6 @@ b<span class="token operator">?</span><span class="token punctuation">.</span>le
     l1<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
     <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"test2"</span><span class="token punctuation">)</span>
     <span class="token keyword">return</span> l1
-<span class="token punctuation">}</span></code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>Kotlin</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Kotlin单例</title>
-    <url>/posts/9fbb.html</url>
-    <content><![CDATA[<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">class</span> Singleton <span class="token keyword">private</span> <span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-
-    <span class="token keyword">companion</span> <span class="token keyword">object</span> <span class="token punctuation">{</span>
-        <span class="token keyword">fun</span> <span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> Singleton <span class="token punctuation">{</span>
-            <span class="token keyword">return</span> Holder<span class="token punctuation">.</span>instance
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">private</span> <span class="token keyword">object</span> Holder <span class="token punctuation">{</span>
-        <span class="token keyword">val</span> instance <span class="token operator">=</span> <span class="token function">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
@@ -2289,68 +2322,6 @@ System<span class="token punctuation">.</span>out<span class="token punctuation"
       </tags>
   </entry>
   <entry>
-    <title>kotlin泛型</title>
-    <url>/posts/3e59.html</url>
-    <content><![CDATA[<p>通过<code>where</code>关键字，对泛型参数限定满足所有条件</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">class</span> Test<span class="token operator">&lt;</span>T<span class="token operator">></span> <span class="token keyword">where</span> T <span class="token operator">:</span> Callback<span class="token punctuation">,</span> T <span class="token operator">:</span> Runnable <span class="token punctuation">{</span>
-    <span class="token keyword">fun</span> <span class="token function">add</span><span class="token punctuation">(</span>t<span class="token operator">:</span> T<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        t<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-        t<span class="token punctuation">.</span><span class="token function">callback</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">open</span> <span class="token keyword">class</span> A <span class="token operator">:</span> Runnable <span class="token punctuation">{</span>
-    <span class="token keyword">override</span> <span class="token keyword">fun</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"run"</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">class</span> B<span class="token operator">:</span> Callback<span class="token punctuation">,</span> <span class="token function">A</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">override</span> <span class="token keyword">fun</span> <span class="token function">callback</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"callback"</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-
-<span class="token punctuation">}</span>
-
-
-<span class="token keyword">interface</span> Callback <span class="token punctuation">{</span>
-    <span class="token keyword">fun</span> <span class="token function">callback</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">val</span> test <span class="token operator">=</span> Test<span class="token operator">&lt;</span>B<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    test<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token function">B</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-
-      <span class="token comment" spellcheck="true">// val test2 = Test&lt;A>() Type argument is not within its bounds. Expected: Callback</span>
-<span class="token punctuation">}</span></code></pre>
-<p>kotlin的真泛型</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">inline</span>  <span class="token keyword">fun</span>  <span class="token operator">&lt;</span><span class="token keyword">reified</span> T<span class="token operator">></span> Gson<span class="token punctuation">.</span><span class="token function">fromJson</span><span class="token punctuation">(</span>json<span class="token operator">:</span> String<span class="token punctuation">)</span><span class="token operator">:</span> T<span class="token punctuation">{</span>
-   <span class="token keyword">return</span> <span class="token function">fromJson</span><span class="token punctuation">(</span>json<span class="token punctuation">,</span> T<span class="token operator">::</span><span class="token keyword">class</span><span class="token punctuation">.</span>java<span class="token punctuation">)</span>
-<span class="token punctuation">}</span></code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>Kotlin</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>kotlin如何实现空安全</title>
     <url>/posts/b698.html</url>
     <content><![CDATA[<ol>
@@ -2436,6 +2407,175 @@ System<span class="token punctuation">.</span>out<span class="token punctuation"
       </script>]]></content>
       <tags>
         <tag>Kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>kotlin泛型</title>
+    <url>/posts/3e59.html</url>
+    <content><![CDATA[<p>通过<code>where</code>关键字，对泛型参数限定满足所有条件</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">class</span> Test<span class="token operator">&lt;</span>T<span class="token operator">></span> <span class="token keyword">where</span> T <span class="token operator">:</span> Callback<span class="token punctuation">,</span> T <span class="token operator">:</span> Runnable <span class="token punctuation">{</span>
+    <span class="token keyword">fun</span> <span class="token function">add</span><span class="token punctuation">(</span>t<span class="token operator">:</span> T<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        t<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        t<span class="token punctuation">.</span><span class="token function">callback</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">open</span> <span class="token keyword">class</span> A <span class="token operator">:</span> Runnable <span class="token punctuation">{</span>
+    <span class="token keyword">override</span> <span class="token keyword">fun</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"run"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> B<span class="token operator">:</span> Callback<span class="token punctuation">,</span> <span class="token function">A</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">override</span> <span class="token keyword">fun</span> <span class="token function">callback</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"callback"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+
+
+<span class="token keyword">interface</span> Callback <span class="token punctuation">{</span>
+    <span class="token keyword">fun</span> <span class="token function">callback</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">val</span> test <span class="token operator">=</span> Test<span class="token operator">&lt;</span>B<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    test<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token function">B</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+      <span class="token comment" spellcheck="true">// val test2 = Test&lt;A>() Type argument is not within its bounds. Expected: Callback</span>
+<span class="token punctuation">}</span></code></pre>
+<p>kotlin的真泛型</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">inline</span>  <span class="token keyword">fun</span>  <span class="token operator">&lt;</span><span class="token keyword">reified</span> T<span class="token operator">></span> Gson<span class="token punctuation">.</span><span class="token function">fromJson</span><span class="token punctuation">(</span>json<span class="token operator">:</span> String<span class="token punctuation">)</span><span class="token operator">:</span> T<span class="token punctuation">{</span>
+   <span class="token keyword">return</span> <span class="token function">fromJson</span><span class="token punctuation">(</span>json<span class="token punctuation">,</span> T<span class="token operator">::</span><span class="token keyword">class</span><span class="token punctuation">.</span>java<span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>macOS搭建PHP开发环境</title>
+    <url>/posts/a33a.html</url>
+    <content><![CDATA[<h3 id="安装-PHP-7-4"><a href="#安装-PHP-7-4" class="headerlink" title="安装 PHP 7.4"></a>安装 PHP 7.4</h3><pre class=" language-bash"><code class="language-bash">$ brew search php
+$ brew <span class="token function">install</span> php@7.4
+<span class="token punctuation">..</span><span class="token punctuation">..</span>
+<span class="token operator">==</span><span class="token operator">></span> Summary
+🍺  /usr/local/Cellar/php@7.4/7.4.16: 497 files, 72.4MB
+$ <span class="token keyword">echo</span> <span class="token string">'export PATH="/usr/local/Cellar/php@7.4/7.4.16/bin:<span class="token variable">$PATH</span>"'</span> <span class="token operator">>></span> ~/.zshrc
+$ <span class="token function">source</span> ~/.zshrc
+$ php -v
+PHP 7.4.16 <span class="token punctuation">(</span>cli<span class="token punctuation">)</span> <span class="token punctuation">(</span>built: Mar  4 2021 20:52:51<span class="token punctuation">)</span> <span class="token punctuation">(</span> NTS <span class="token punctuation">)</span>
+Copyright <span class="token punctuation">(</span>c<span class="token punctuation">)</span> The PHP Group
+Zend Engine v3.4.0, Copyright <span class="token punctuation">(</span>c<span class="token punctuation">)</span> Zend Technologies
+    with Zend OPcache v7.4.16, Copyright <span class="token punctuation">(</span>c<span class="token punctuation">)</span>, by Zend Technologies</code></pre>
+<h3 id="安装MySQL"><a href="#安装MySQL" class="headerlink" title="安装MySQL"></a>安装MySQL</h3><p>略…</p>
+<h3 id="安装-nginx"><a href="#安装-nginx" class="headerlink" title="安装 nginx"></a>安装 nginx</h3><pre class=" language-bash"><code class="language-bash">$ brew <span class="token function">install</span> nginx
+$ brew services start nginx
+<span class="token comment" spellcheck="true"># 查看 nginx 配置文件位置</span>
+$ nginx -h
+nginx version: nginx/1.19.8
+Usage: nginx <span class="token punctuation">[</span>-?hvVtTq<span class="token punctuation">]</span> <span class="token punctuation">[</span>-s signal<span class="token punctuation">]</span> <span class="token punctuation">[</span>-p prefix<span class="token punctuation">]</span>
+             <span class="token punctuation">[</span>-e filename<span class="token punctuation">]</span> <span class="token punctuation">[</span>-c filename<span class="token punctuation">]</span> <span class="token punctuation">[</span>-g directives<span class="token punctuation">]</span>
+
+Options:
+  -?,-h         <span class="token keyword">:</span> this <span class="token function">help</span>
+  -v            <span class="token keyword">:</span> show version and <span class="token keyword">exit</span>
+  -V            <span class="token keyword">:</span> show version and configure options <span class="token keyword">then</span> <span class="token keyword">exit</span>
+  -t            <span class="token keyword">:</span> <span class="token function">test</span> configuration and <span class="token keyword">exit</span>
+  -T            <span class="token keyword">:</span> <span class="token function">test</span> configuration, dump it and <span class="token keyword">exit</span>
+  -q            <span class="token keyword">:</span> suppress non-error messages during configuration testing
+  -s signal     <span class="token keyword">:</span> send signal to a master process: stop, quit, reopen, reload
+  -p prefix     <span class="token keyword">:</span> <span class="token keyword">set</span> prefix path <span class="token punctuation">(</span>default: /usr/local/Cellar/nginx/1.19.8/<span class="token punctuation">)</span>
+  -e filename   <span class="token keyword">:</span> <span class="token keyword">set</span> error log <span class="token function">file</span> <span class="token punctuation">(</span>default: /usr/local/var/log/nginx/error.log<span class="token punctuation">)</span>
+  -c filename   <span class="token keyword">:</span> <span class="token keyword">set</span> configuration <span class="token function">file</span> <span class="token punctuation">(</span>default: /usr/local/etc/nginx/nginx.conf<span class="token punctuation">)</span>
+  -g directives <span class="token keyword">:</span> <span class="token keyword">set</span> global directives out of configuration <span class="token function">file</span></code></pre>
+<p>打开配置文件</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">vi</span> /usr/local/etc/nginx/nginx.conf</code></pre>
+<p>在文件末尾可以看到：<code>include servers/*</code>;</p>
+<p>它将同目录下的 servers 目录里的文件都包含了进来，由此，我们可以在 servers 文件里创建开发项目的配置信息：</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">cd</span> /usr/local/etc/nginx/servers/
+$ <span class="token function">vi</span> test.conf</code></pre>
+<p>将以下配置信息，写入 test.conf 文件中：</p>
+<pre class=" language-bash"><code class="language-bash">server <span class="token punctuation">{</span>
+    listen 8099<span class="token punctuation">;</span>
+    server_name localhost<span class="token punctuation">;</span>
+    root /home/www/php-project<span class="token punctuation">;</span>
+    rewrite <span class="token keyword">.</span> /index.php<span class="token punctuation">;</span>
+    location / <span class="token punctuation">{</span>
+    index index.php index.html index.htm<span class="token punctuation">;</span>
+    autoindex on<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">#proxy the php scripts to php-fpm</span>
+    location ~ \.php$ <span class="token punctuation">{</span>
+        include /usr/local/etc/nginx/fastcgi.conf<span class="token punctuation">;</span>
+        fastcgi_intercept_errors on<span class="token punctuation">;</span>
+        fastcgi_pass 127.0.0.1:9000<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>在上述的 <code>/home/www/php-project</code> 的目录下，我们创建一个 index.php 文件：</p>
+<pre class=" language-bash"><code class="language-bash">$ vim /home/www/php-project/index.php</code></pre>
+<p>写入内容：</p>
+<pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+    <span class="token function">phpinfo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>重启 nginx:</p>
+<pre class=" language-bash"><code class="language-bash">$ brew services restart nginx</code></pre>
+<p>打开浏览器，访问 <code>http://localhost:8099</code>，即可访问到关于 PHP 配置的信息。</p>
+<h3 id="安装-Composer"><a href="#安装-Composer" class="headerlink" title="安装 Composer"></a>安装 Composer</h3><p>Composer 是 PHP 用来管理依赖（dependency）关系的工具。你可以在自己的项目中声明所依赖的外部工具库（libraries），Composer 会帮你安装这些依赖的库文件。</p>
+<p>安装并替换镜像：</p>
+<pre class=" language-bash"><code class="language-bash">$ curl -sS https://getcomposer.org/installer <span class="token operator">|</span> php
+$ <span class="token function">mv</span> composer.phar /usr/local/bin/composer
+$ composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/ <span class="token comment" spellcheck="true"># 改为阿里云的国内源</span></code></pre>
+<h3 id="安装-PHP-扩展"><a href="#安装-PHP-扩展" class="headerlink" title="安装 PHP 扩展"></a>安装 PHP 扩展</h3><p>以 php-redis 扩展为例，有下载源码包来进行安装或者 pecl install 安装：</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">wget</span> https://pecl.php.net/get/redis-5.1.0.tgz <span class="token comment" spellcheck="true"># 下载源码包</span>
+$ <span class="token function">tar</span> -zxvf redis-5.1.0.tgz <span class="token comment" spellcheck="true"># 解压</span>
+$ <span class="token function">cd</span> redis-5.1.0 <span class="token comment" spellcheck="true"># 进入目录</span>
+$ phpize <span class="token comment" spellcheck="true"># 生成编译配置</span>
+$ ./configure <span class="token comment" spellcheck="true"># 编译配置检测</span>
+$ <span class="token function">make</span> <span class="token comment" spellcheck="true"># 编译</span>
+$ <span class="token function">make</span> <span class="token function">install</span> <span class="token comment" spellcheck="true"># 安装</span></code></pre>
+<p>扩展安装完成后，我们还需最后一步，修改 <code>php.ini</code> 文件，并重启 PHP 服务：</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">vi</span> /usr/local/etc/php/7.4/php.ini <span class="token comment" spellcheck="true"># 追加 extension=redis.so</span>
+$ brew services restart php <span class="token comment" spellcheck="true"># 重启 php 服务</span>
+$ php -m <span class="token operator">|</span><span class="token function">grep</span> redis <span class="token comment" spellcheck="true"># 查看是否安装成功</span></code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>PHP</tag>
       </tags>
   </entry>
   <entry>
@@ -3868,6 +4008,63 @@ $ UNLOCK TABLES;</code></pre>
       </tags>
   </entry>
   <entry>
+    <title>原子类</title>
+    <url>/posts/8802.html</url>
+    <content><![CDATA[<h3 id="原子类纵览"><a href="#原子类纵览" class="headerlink" title="原子类纵览"></a>原子类纵览</h3><table>
+<thead>
+<tr>
+<th>Atomic* 基本类型原子类</th>
+<th>AtomicInteger<br>AtomicLong<br>AtomicBoolean</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Atomic* Array数组类型原子类</td>
+<td>AtomicIntegerArray<br>AtomicLongArray<br>AtomicReferenceArray</td>
+</tr>
+<tr>
+<td>Atomic*Reference 引用类型原子类</td>
+<td>AtomicReference<br>AtomicStampedReference<br>AtomicMarkableReference</td>
+</tr>
+<tr>
+<td>Atomic*FidleUpdater升级类型原子类</td>
+<td>AtomicIntegerFieldUpdater<br>AtomicLongFieldUpdater<br>AtomicReferenceFieldPpdater</td>
+</tr>
+<tr>
+<td>Adder 累加器</td>
+<td>LongAdder、DoubleAdder</td>
+</tr>
+<tr>
+<td>Accumulator 累加器</td>
+<td>LongAccumulator<br>DoubleAccumulator</td>
+</tr>
+</tbody></table>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <categories>
+        <category>JAVA</category>
+      </categories>
+      <tags>
+        <tag>多线程</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>可见性</title>
     <url>/posts/fe2a.html</url>
     <content><![CDATA[<h3 id="主内存与本地内存的关系"><a href="#主内存与本地内存的关系" class="headerlink" title="主内存与本地内存的关系"></a>主内存与本地内存的关系</h3><p>JMM 有以下规定：</p>
@@ -4772,104 +4969,6 @@ $mysql db1 -u root -p123456 -e "SELECT * FROM tb1"</code></pre>
       </tags>
   </entry>
   <entry>
-    <title>延迟初始化 Spring Bean</title>
-    <url>/posts/861c.html</url>
-    <content><![CDATA[<h3 id="Bean延迟初始化-（Lazy-Initialization）"><a href="#Bean延迟初始化-（Lazy-Initialization）" class="headerlink" title="Bean延迟初始化 （Lazy Initialization）"></a>Bean延迟初始化 （Lazy Initialization）</h3><ul>
-<li>XML配置：&lt;bean lazy-init=”true”&gt;</li>
-<li>Java注解：@Lazy(true)</li>
-</ul>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Employee</span> <span class="token keyword">implements</span> <span class="token class-name">InitializingBean</span> <span class="token punctuation">{</span>
-  <span class="token keyword">private</span> String name<span class="token punctuation">;</span>
-  <span class="token keyword">private</span> Integer age<span class="token punctuation">;</span>
-
-  <span class="token annotation punctuation">@PostConstruct</span>
-  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"@PostConstruct Employee 初始化中..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-
-  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">initEmployee</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"自定义初始化方法 initEmployee : Employee 初始化中..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-
-  <span class="token annotation punctuation">@Override</span>
-  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">afterPropertiesSet</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"InitializingBean#afterPropertiesSet : UserFactory 初始化中..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-
-  <span class="token comment" spellcheck="true">// 省略 getter setter</span>
-<span class="token punctuation">}</span>
-
-<span class="token annotation punctuation">@Configuration</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">BeanInitializationDemo</span> <span class="token punctuation">{</span>
-  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token comment" spellcheck="true">// 创建 BeanFactory 容器</span>
-    AnnotationConfigApplicationContext annotationConfigApplicationContext <span class="token operator">=</span>
-        <span class="token keyword">new</span> <span class="token class-name">AnnotationConfigApplicationContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">// 注册Configuration Class (配置类)</span>
-    annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">register</span><span class="token punctuation">(</span>BeanInitializationDemo<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">// 启动Spring 应用上下文</span>
-    annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">refresh</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">// 非延迟初始化在 Spring 应用上下文启动完成后，被初始化</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Spring 应用上下文已启动..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    Employee employee <span class="token operator">=</span> annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span>Employee<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>employee<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">// 关闭Spring 应用上下文</span>
-    annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-
-  <span class="token annotation punctuation">@Bean</span><span class="token punctuation">(</span>initMethod <span class="token operator">=</span> <span class="token string">"initEmployee"</span><span class="token punctuation">)</span>
-  <span class="token annotation punctuation">@Lazy</span>
-  <span class="token keyword">public</span> Employee <span class="token function">employee</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Employee</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">/** 输出结果：
-    Spring 应用上下文已启动...
-    @PostConstruct Employee 初始化中...
-    InitializingBean#afterPropertiesSet : UserFactory 初始化中...
-    自定义初始化方法 initEmployee : Employee 初始化中...
-    com.asia.Employee@19dc67c2 */</span>
-
-<span class="token comment" spellcheck="true">//非延迟初始化 @Lazy(value = false)</span>
-    <span class="token annotation punctuation">@Bean</span><span class="token punctuation">(</span>initMethod <span class="token operator">=</span> <span class="token string">"initEmployee"</span><span class="token punctuation">)</span>
-  <span class="token annotation punctuation">@Lazy</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">)</span>
-  <span class="token keyword">public</span> Employee <span class="token function">employee</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Employee</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">/** 输出结果：
-    @PostConstruct Employee 初始化中...
-    InitializingBean#afterPropertiesSet : UserFactory 初始化中...
-    自定义初始化方法 initEmployee : Employee 初始化中...
-    Spring 应用上下文已启动...
-    com.asia.Employee@19dc67c2 */</span></code></pre>
-<p>其实延迟加载和非延迟加载在定义的时候，也就是Bean注册的时候是没有区别的，按照你的需要来注册，但是在依赖查找和依赖注入的时候，它的区别就体现出来了。非延迟查找是在上下文初始化完成之前，就已经初始化了；延迟加载必须在上下文初始化完成之后来进行加载。</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <categories>
-        <category>JAVA</category>
-      </categories>
-      <tags>
-        <tag>Spring</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Kotlin常用作用域函数</title>
     <url>/posts/c396.html</url>
     <content><![CDATA[<h3 id="let-和-run"><a href="#let-和-run" class="headerlink" title="let 和 run"></a>let 和 run</h3><p>let 和 run 都会返回闭包的执行结果，区别在于let有闭包参数，而run没有闭包参数。</p>
@@ -5007,6 +5106,104 @@ $mysql db1 -u root -p123456 -e "SELECT * FROM tb1"</code></pre>
       </categories>
       <tags>
         <tag>Kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>延迟初始化 Spring Bean</title>
+    <url>/posts/861c.html</url>
+    <content><![CDATA[<h3 id="Bean延迟初始化-（Lazy-Initialization）"><a href="#Bean延迟初始化-（Lazy-Initialization）" class="headerlink" title="Bean延迟初始化 （Lazy Initialization）"></a>Bean延迟初始化 （Lazy Initialization）</h3><ul>
+<li>XML配置：&lt;bean lazy-init=”true”&gt;</li>
+<li>Java注解：@Lazy(true)</li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Employee</span> <span class="token keyword">implements</span> <span class="token class-name">InitializingBean</span> <span class="token punctuation">{</span>
+  <span class="token keyword">private</span> String name<span class="token punctuation">;</span>
+  <span class="token keyword">private</span> Integer age<span class="token punctuation">;</span>
+
+  <span class="token annotation punctuation">@PostConstruct</span>
+  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"@PostConstruct Employee 初始化中..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">initEmployee</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"自定义初始化方法 initEmployee : Employee 初始化中..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token annotation punctuation">@Override</span>
+  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">afterPropertiesSet</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"InitializingBean#afterPropertiesSet : UserFactory 初始化中..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token comment" spellcheck="true">// 省略 getter setter</span>
+<span class="token punctuation">}</span>
+
+<span class="token annotation punctuation">@Configuration</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">BeanInitializationDemo</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 创建 BeanFactory 容器</span>
+    AnnotationConfigApplicationContext annotationConfigApplicationContext <span class="token operator">=</span>
+        <span class="token keyword">new</span> <span class="token class-name">AnnotationConfigApplicationContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 注册Configuration Class (配置类)</span>
+    annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">register</span><span class="token punctuation">(</span>BeanInitializationDemo<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 启动Spring 应用上下文</span>
+    annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">refresh</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 非延迟初始化在 Spring 应用上下文启动完成后，被初始化</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Spring 应用上下文已启动..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Employee employee <span class="token operator">=</span> annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span>Employee<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>employee<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 关闭Spring 应用上下文</span>
+    annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token annotation punctuation">@Bean</span><span class="token punctuation">(</span>initMethod <span class="token operator">=</span> <span class="token string">"initEmployee"</span><span class="token punctuation">)</span>
+  <span class="token annotation punctuation">@Lazy</span>
+  <span class="token keyword">public</span> Employee <span class="token function">employee</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Employee</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/** 输出结果：
+    Spring 应用上下文已启动...
+    @PostConstruct Employee 初始化中...
+    InitializingBean#afterPropertiesSet : UserFactory 初始化中...
+    自定义初始化方法 initEmployee : Employee 初始化中...
+    com.asia.Employee@19dc67c2 */</span>
+
+<span class="token comment" spellcheck="true">//非延迟初始化 @Lazy(value = false)</span>
+    <span class="token annotation punctuation">@Bean</span><span class="token punctuation">(</span>initMethod <span class="token operator">=</span> <span class="token string">"initEmployee"</span><span class="token punctuation">)</span>
+  <span class="token annotation punctuation">@Lazy</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">)</span>
+  <span class="token keyword">public</span> Employee <span class="token function">employee</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Employee</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/** 输出结果：
+    @PostConstruct Employee 初始化中...
+    InitializingBean#afterPropertiesSet : UserFactory 初始化中...
+    自定义初始化方法 initEmployee : Employee 初始化中...
+    Spring 应用上下文已启动...
+    com.asia.Employee@19dc67c2 */</span></code></pre>
+<p>其实延迟加载和非延迟加载在定义的时候，也就是Bean注册的时候是没有区别的，按照你的需要来注册，但是在依赖查找和依赖注入的时候，它的区别就体现出来了。非延迟查找是在上下文初始化完成之前，就已经初始化了；延迟加载必须在上下文初始化完成之后来进行加载。</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <categories>
+        <category>JAVA</category>
+      </categories>
+      <tags>
+        <tag>Spring</tag>
       </tags>
   </entry>
   <entry>
@@ -5484,6 +5681,173 @@ map <span class="token operator">=</span> strategies<span class="token punctuati
       </tags>
   </entry>
   <entry>
+    <title>熟练使用事务</title>
+    <url>/posts/8c7e.html</url>
+    <content><![CDATA[<h3 id="什么是存储引擎"><a href="#什么是存储引擎" class="headerlink" title="什么是存储引擎"></a>什么是存储引擎</h3><p>在学习事务之前，我们需要了解一下 MySQL 中的<strong>存储引擎</strong>。</p>
+<p>MySQL 的功能大致分为两种。</p>
+<p>一个是连接客户端和提前检查 SQL 语句内容的功能，即数据库处理的 “前台” 部分。另一个是根据前台部分指示，完成查询和文件操作等工作的功能，即 “后台” 部分。这个后台部分称为存储引擎。</p>
+<img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/Snipaste_2021-01-28_11-39-03.png" style="zoom:67%;">
+
+<h4 id="存储引擎的种类"><a href="#存储引擎的种类" class="headerlink" title="存储引擎的种类"></a>存储引擎的种类</h4><p>MySQL 中预置了多个存储引擎，用户可以根据使用目的和个人喜好进行选择。另外每个表都可以单独执行存储引擎。</p>
+<p>目前 MySQL 中可以使用的存储引擎主要有以下几张：</p>
+<table>
+<thead>
+<tr>
+<th>存储引擎</th>
+<th>特征</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MyISAM</td>
+<td>以前版本中的默认存储引擎。虽然能够高速运行，但不支持事务和外键。</td>
+</tr>
+<tr>
+<td>InnoDB</td>
+<td>MySQL 5.5 或更高版本的默认存储引擎。是唯一一个支持事务的存储引擎。</td>
+</tr>
+<tr>
+<td>BLACKHOME</td>
+<td>写入的任何数据都会消失，查询始终返回空结果。主要用于复制。</td>
+</tr>
+<tr>
+<td>MERGE</td>
+<td>将多个 MyISAM 表作为一个表处理，也称为 MRG_MyISAM。</td>
+</tr>
+<tr>
+<td>CSV</td>
+<td>将数据的实体保存为CSV(逗号分隔) 格式的文本文件。该文件可以通过 Excel 等打开。</td>
+</tr>
+<tr>
+<td>MEMORY</td>
+<td>因为数据全部存储了内存中，所以处理速度非常快。主要作为从临时工作区和其它表中提取的数据的读取专用缓存使用。不支持事务。</td>
+</tr>
+<tr>
+<td>ARCHIVE</td>
+<td>虽然可以通过压缩来存储大量数据，但是仅支持 INSERT 和 SELECT。</td>
+</tr>
+</tbody></table>
+<p>到 MySQL 5.4 为止的版本中，默认存储引擎是 MyISAM。虽然 MyISAM 比当时的 InnoDB 的处理速度快，但遗憾的是它不支持事务。因此，当时也出现了 “不使用事务的话就选 MyISAM，使用事务的话就选 InnoDB” 这样的使用方式。但现在 InnoDB 的处理速度也变的很快了，所以我们不需要考虑 MyISAM。</p>
+<p>如果使用方法比较复杂，就需要对每一个存储引擎进行更为细致的调优，同时还有研究新的存储引擎。</p>
+<h3 id="设置存储引擎"><a href="#设置存储引擎" class="headerlink" title="设置存储引擎"></a>设置存储引擎</h3><h4 id="确认存储引擎"><a href="#确认存储引擎" class="headerlink" title="确认存储引擎"></a>确认存储引擎</h4><pre class=" language-mysql"><code class="language-mysql">$ SHOW CREATE TABLE 表名;</code></pre>
+<h4 id="显示当前可用的存储引擎"><a href="#显示当前可用的存储引擎" class="headerlink" title="显示当前可用的存储引擎"></a>显示当前可用的存储引擎</h4><pre class=" language-mysql"><code class="language-mysql">$ SHOW ENGINES \G</code></pre>
+<h4 id="修改存储引擎"><a href="#修改存储引擎" class="headerlink" title="修改存储引擎"></a>修改存储引擎</h4><pre class=" language-mysql"><code class="language-mysql">$ ALTER TABLE 表名 ENGINE = MyISAM;</code></pre>
+<h3 id="什么是事务"><a href="#什么是事务" class="headerlink" title="什么是事务"></a>什么是事务</h3><p>将多个操作作为单个逻辑工作单元的处理的功能称为<strong>事务（transaction）</strong>。将事务开始之后的处理结果反映到数据库中的操作称为<strong>提交（commit）</strong>，不反映到数据库而是恢复为原来状态的操作称为<strong>回滚（rollback）</strong>。</p>
+<h3 id="使用事务"><a href="#使用事务" class="headerlink" title="使用事务"></a>使用事务</h3><h4 id="开启事务"><a href="#开启事务" class="headerlink" title="开启事务"></a>开启事务</h4><pre class=" language-mysql"><code class="language-mysql">$ START TRANSACTION;
+Query OK, 0 rows affected (0.00 sec)</code></pre>
+<p>下面试着删除表 tb 中所有的记录</p>
+<pre class=" language-mysql"><code class="language-mysql">$ DELETE FROM tb;
+Query OK, 12 rows affected (0.00 sec)</code></pre>
+<p>因为没有加上 WHERE 等条件，所以表 tb 中的所有记录都会被删除。</p>
+<p>此时表的一部分会加锁（lock）。因此，在其它会话中不能对该表执行 INSERT 等操作。假设这时我们再启动一个命令提示符，并在 MySQL 监视器上对表 tb 执行 INSERT。在这种情况下，只有在开启了事务的监视器执行了 “COMMIT;” 或 “ROLLBACK;”，才能进行其它的会话处理。</p>
+<h4 id="确认表的内容"><a href="#确认表的内容" class="headerlink" title="确认表的内容"></a>确认表的内容</h4><pre class=" language-mysql"><code class="language-mysql">$ SELECT * FROM tb;
+Empty set (0.00 sec)</code></pre>
+<h4 id="回滚复原"><a href="#回滚复原" class="headerlink" title="回滚复原"></a>回滚复原</h4><pre class=" language-mysql"><code class="language-mysql">$ ROLLBACK;
+
+$ SELECT * FROM tb;
++-------+-------+-------+
+| empid | sales | month |
++-------+-------+-------+
+| A107  |    87 |     6 |
+| A103  |    12 |     6 |
+| A104  |    93 |     5 |
+| A102  |   205 |     6 |
+| A101  |   300 |     5 |
+| A103  |    17 |     5 |
+| A101  |   184 |     4 |
+| A104  |   181 |     4 |
+| A102  |    54 |     5 |
+| A103  |   101 |     4 |
++-------+-------+-------+
+10 rows in set (0.00 sec)</code></pre>
+<p>在上面的示例中，如果执行 “COMMIT;”  代替 “ROLLBACK;”，删除记录的结果就会提交（反映）到数据库中， 所有的记录都会被永久删除。</p>
+<blockquote>
+<p><strong>提示</strong>    DROP 等命令是不能执行回滚操作的（无法复原）。这一点需要大家注意。</p>
+</blockquote>
+<h3 id="自动提交功能"><a href="#自动提交功能" class="headerlink" title="自动提交功能"></a>自动提交功能</h3><p>在 MySQL 中执行命令，处理通常会直接提交。也就是说，所有命令都会自动 COMMIT。特别是在 MySQL 5.5 之前默认使用的 MyISAM 中，由于没有事务这项功能，所有命令都会被提交。这种自动提交的功能，称为 “自动提交功能”。</p>
+<p>在默认状态下，自动提价功能处于开启状态。但是，当存储引擎为 InnoDB 时，如果执行了 START TRANSACTION（或 BEGIN），在执行 COMMIT 命令之前就不会提交。多亏了这个功能，回滚操作（ROLLBACK） 才得以执行。</p>
+<p>用户也可以强制将自动提交功能设置为关闭。如果关闭了自动提交功能，即使执行 SQL 语句也不会自动提交，必须通过 COMMIT 进行提交，或者通过 ROLLBACK 进行复原。</p>
+<h4 id="关闭自动提交功能"><a href="#关闭自动提交功能" class="headerlink" title="关闭自动提交功能"></a>关闭自动提交功能</h4><pre class=" language-mysql"><code class="language-mysql">$ SET AUTOCOMMIT = 0;</code></pre>
+<p>执行下面命令：</p>
+<pre class=" language-mysql"><code class="language-mysql">$ INSERT INTO tb VALUES('test', 555, 555);
+Query OK, 1 row affected (0.00 sec)
+
+$ SELECT * FROM tb;
++-------+-------+-------+
+| empid | sales | month |
++-------+-------+-------+
+| A107  |    87 |     6 |
+| A103  |    12 |     6 |
+| A104  |    93 |     5 |
+| A102  |   205 |     6 |
+| A101  |   300 |     5 |
+| A103  |    17 |     5 |
+| A101  |   184 |     4 |
+| A104  |   181 |     4 |
+| A102  |    54 |     5 |
+| A103  |   101 |     4 |
+| test  |   555 |   555 |
++-------+-------+-------+
+11 rows in set (0.00 sec)</code></pre>
+<p>接下来进行 ROLLBACK，刚刚 INSERT 的记录就不会显示出来了。</p>
+<pre class=" language-mysql"><code class="language-mysql">mysql> ROLLBACK;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT * FROM tb;
++-------+-------+-------+
+| empid | sales | month |
++-------+-------+-------+
+| A107  |    87 |     6 |
+| A103  |    12 |     6 |
+| A104  |    93 |     5 |
+| A102  |   205 |     6 |
+| A101  |   300 |     5 |
+| A103  |    17 |     5 |
+| A101  |   184 |     4 |
+| A104  |   181 |     4 |
+| A102  |    54 |     5 |
+| A103  |   101 |     4 |
++-------+-------+-------+
+10 rows in set (0.00 sec)</code></pre>
+<p>可以看到数据没有自动提交。要想提交实际修改的数据，必须执行 “COMMIT”。</p>
+<h4 id="启动已关闭的自动提交功能"><a href="#启动已关闭的自动提交功能" class="headerlink" title="启动已关闭的自动提交功能"></a>启动已关闭的自动提交功能</h4><pre class=" language-mysql"><code class="language-mysql">$ SET AUTOCOMMIT = 1;</code></pre>
+<blockquote>
+<p><strong>如何确认当前自动提交功能的模式</strong>    我们可以通过 SELECT @@AUTOCOMMIT 确认当前自动提价功能的模式。如果是开启状态，则显示为 “1”；如果是关闭状态，则显示为 “0”。</p>
+</blockquote>
+<h4 id="事务的使用范围"><a href="#事务的使用范围" class="headerlink" title="事务的使用范围"></a>事务的使用范围</h4><p>启用事务之后，并不是所有操作都可以通过回滚复原。例如，下面这些命令就会被自动提交。</p>
+<ul>
+<li>DROP DATABSE</li>
+<li>DROP TABLE</li>
+<li>DROP VIEW</li>
+<li>ALTER TABLE</li>
+</ul>
+<p>即使开启了事务也有不能复原的情况，这一点需要注意。</p>
+<blockquote>
+<p><strong>提示</strong>    如果没有提交事务就退出 MySQL 监视器，修改的内容就会作废。也就是说，如果在未提交事务的情况下关闭连接，事务将自动回滚。</p>
+</blockquote>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>熟练使用存储过程</title>
     <url>/posts/5d64.html</url>
     <content><![CDATA[<h3 id="什么是存储过程"><a href="#什么是存储过程" class="headerlink" title="什么是存储过程"></a>什么是存储过程</h3><p>将多个 SQL 语句组合成一个只需要使用命令 “CALL xx” 就能执行的集合，该集合就称为 <strong>存储过程（stored procedure）</strong>。“存储（store）表示保存，“过程” 表示步骤。也就是说，存储过程是将一系列步骤归纳并存储起来的集合。</p>
@@ -5781,173 +6145,6 @@ END</code></pre>
       </tags>
   </entry>
   <entry>
-    <title>熟练使用事务</title>
-    <url>/posts/8c7e.html</url>
-    <content><![CDATA[<h3 id="什么是存储引擎"><a href="#什么是存储引擎" class="headerlink" title="什么是存储引擎"></a>什么是存储引擎</h3><p>在学习事务之前，我们需要了解一下 MySQL 中的<strong>存储引擎</strong>。</p>
-<p>MySQL 的功能大致分为两种。</p>
-<p>一个是连接客户端和提前检查 SQL 语句内容的功能，即数据库处理的 “前台” 部分。另一个是根据前台部分指示，完成查询和文件操作等工作的功能，即 “后台” 部分。这个后台部分称为存储引擎。</p>
-<img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/Snipaste_2021-01-28_11-39-03.png" style="zoom:67%;">
-
-<h4 id="存储引擎的种类"><a href="#存储引擎的种类" class="headerlink" title="存储引擎的种类"></a>存储引擎的种类</h4><p>MySQL 中预置了多个存储引擎，用户可以根据使用目的和个人喜好进行选择。另外每个表都可以单独执行存储引擎。</p>
-<p>目前 MySQL 中可以使用的存储引擎主要有以下几张：</p>
-<table>
-<thead>
-<tr>
-<th>存储引擎</th>
-<th>特征</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>MyISAM</td>
-<td>以前版本中的默认存储引擎。虽然能够高速运行，但不支持事务和外键。</td>
-</tr>
-<tr>
-<td>InnoDB</td>
-<td>MySQL 5.5 或更高版本的默认存储引擎。是唯一一个支持事务的存储引擎。</td>
-</tr>
-<tr>
-<td>BLACKHOME</td>
-<td>写入的任何数据都会消失，查询始终返回空结果。主要用于复制。</td>
-</tr>
-<tr>
-<td>MERGE</td>
-<td>将多个 MyISAM 表作为一个表处理，也称为 MRG_MyISAM。</td>
-</tr>
-<tr>
-<td>CSV</td>
-<td>将数据的实体保存为CSV(逗号分隔) 格式的文本文件。该文件可以通过 Excel 等打开。</td>
-</tr>
-<tr>
-<td>MEMORY</td>
-<td>因为数据全部存储了内存中，所以处理速度非常快。主要作为从临时工作区和其它表中提取的数据的读取专用缓存使用。不支持事务。</td>
-</tr>
-<tr>
-<td>ARCHIVE</td>
-<td>虽然可以通过压缩来存储大量数据，但是仅支持 INSERT 和 SELECT。</td>
-</tr>
-</tbody></table>
-<p>到 MySQL 5.4 为止的版本中，默认存储引擎是 MyISAM。虽然 MyISAM 比当时的 InnoDB 的处理速度快，但遗憾的是它不支持事务。因此，当时也出现了 “不使用事务的话就选 MyISAM，使用事务的话就选 InnoDB” 这样的使用方式。但现在 InnoDB 的处理速度也变的很快了，所以我们不需要考虑 MyISAM。</p>
-<p>如果使用方法比较复杂，就需要对每一个存储引擎进行更为细致的调优，同时还有研究新的存储引擎。</p>
-<h3 id="设置存储引擎"><a href="#设置存储引擎" class="headerlink" title="设置存储引擎"></a>设置存储引擎</h3><h4 id="确认存储引擎"><a href="#确认存储引擎" class="headerlink" title="确认存储引擎"></a>确认存储引擎</h4><pre class=" language-mysql"><code class="language-mysql">$ SHOW CREATE TABLE 表名;</code></pre>
-<h4 id="显示当前可用的存储引擎"><a href="#显示当前可用的存储引擎" class="headerlink" title="显示当前可用的存储引擎"></a>显示当前可用的存储引擎</h4><pre class=" language-mysql"><code class="language-mysql">$ SHOW ENGINES \G</code></pre>
-<h4 id="修改存储引擎"><a href="#修改存储引擎" class="headerlink" title="修改存储引擎"></a>修改存储引擎</h4><pre class=" language-mysql"><code class="language-mysql">$ ALTER TABLE 表名 ENGINE = MyISAM;</code></pre>
-<h3 id="什么是事务"><a href="#什么是事务" class="headerlink" title="什么是事务"></a>什么是事务</h3><p>将多个操作作为单个逻辑工作单元的处理的功能称为<strong>事务（transaction）</strong>。将事务开始之后的处理结果反映到数据库中的操作称为<strong>提交（commit）</strong>，不反映到数据库而是恢复为原来状态的操作称为<strong>回滚（rollback）</strong>。</p>
-<h3 id="使用事务"><a href="#使用事务" class="headerlink" title="使用事务"></a>使用事务</h3><h4 id="开启事务"><a href="#开启事务" class="headerlink" title="开启事务"></a>开启事务</h4><pre class=" language-mysql"><code class="language-mysql">$ START TRANSACTION;
-Query OK, 0 rows affected (0.00 sec)</code></pre>
-<p>下面试着删除表 tb 中所有的记录</p>
-<pre class=" language-mysql"><code class="language-mysql">$ DELETE FROM tb;
-Query OK, 12 rows affected (0.00 sec)</code></pre>
-<p>因为没有加上 WHERE 等条件，所以表 tb 中的所有记录都会被删除。</p>
-<p>此时表的一部分会加锁（lock）。因此，在其它会话中不能对该表执行 INSERT 等操作。假设这时我们再启动一个命令提示符，并在 MySQL 监视器上对表 tb 执行 INSERT。在这种情况下，只有在开启了事务的监视器执行了 “COMMIT;” 或 “ROLLBACK;”，才能进行其它的会话处理。</p>
-<h4 id="确认表的内容"><a href="#确认表的内容" class="headerlink" title="确认表的内容"></a>确认表的内容</h4><pre class=" language-mysql"><code class="language-mysql">$ SELECT * FROM tb;
-Empty set (0.00 sec)</code></pre>
-<h4 id="回滚复原"><a href="#回滚复原" class="headerlink" title="回滚复原"></a>回滚复原</h4><pre class=" language-mysql"><code class="language-mysql">$ ROLLBACK;
-
-$ SELECT * FROM tb;
-+-------+-------+-------+
-| empid | sales | month |
-+-------+-------+-------+
-| A107  |    87 |     6 |
-| A103  |    12 |     6 |
-| A104  |    93 |     5 |
-| A102  |   205 |     6 |
-| A101  |   300 |     5 |
-| A103  |    17 |     5 |
-| A101  |   184 |     4 |
-| A104  |   181 |     4 |
-| A102  |    54 |     5 |
-| A103  |   101 |     4 |
-+-------+-------+-------+
-10 rows in set (0.00 sec)</code></pre>
-<p>在上面的示例中，如果执行 “COMMIT;”  代替 “ROLLBACK;”，删除记录的结果就会提交（反映）到数据库中， 所有的记录都会被永久删除。</p>
-<blockquote>
-<p><strong>提示</strong>    DROP 等命令是不能执行回滚操作的（无法复原）。这一点需要大家注意。</p>
-</blockquote>
-<h3 id="自动提交功能"><a href="#自动提交功能" class="headerlink" title="自动提交功能"></a>自动提交功能</h3><p>在 MySQL 中执行命令，处理通常会直接提交。也就是说，所有命令都会自动 COMMIT。特别是在 MySQL 5.5 之前默认使用的 MyISAM 中，由于没有事务这项功能，所有命令都会被提交。这种自动提交的功能，称为 “自动提交功能”。</p>
-<p>在默认状态下，自动提价功能处于开启状态。但是，当存储引擎为 InnoDB 时，如果执行了 START TRANSACTION（或 BEGIN），在执行 COMMIT 命令之前就不会提交。多亏了这个功能，回滚操作（ROLLBACK） 才得以执行。</p>
-<p>用户也可以强制将自动提交功能设置为关闭。如果关闭了自动提交功能，即使执行 SQL 语句也不会自动提交，必须通过 COMMIT 进行提交，或者通过 ROLLBACK 进行复原。</p>
-<h4 id="关闭自动提交功能"><a href="#关闭自动提交功能" class="headerlink" title="关闭自动提交功能"></a>关闭自动提交功能</h4><pre class=" language-mysql"><code class="language-mysql">$ SET AUTOCOMMIT = 0;</code></pre>
-<p>执行下面命令：</p>
-<pre class=" language-mysql"><code class="language-mysql">$ INSERT INTO tb VALUES('test', 555, 555);
-Query OK, 1 row affected (0.00 sec)
-
-$ SELECT * FROM tb;
-+-------+-------+-------+
-| empid | sales | month |
-+-------+-------+-------+
-| A107  |    87 |     6 |
-| A103  |    12 |     6 |
-| A104  |    93 |     5 |
-| A102  |   205 |     6 |
-| A101  |   300 |     5 |
-| A103  |    17 |     5 |
-| A101  |   184 |     4 |
-| A104  |   181 |     4 |
-| A102  |    54 |     5 |
-| A103  |   101 |     4 |
-| test  |   555 |   555 |
-+-------+-------+-------+
-11 rows in set (0.00 sec)</code></pre>
-<p>接下来进行 ROLLBACK，刚刚 INSERT 的记录就不会显示出来了。</p>
-<pre class=" language-mysql"><code class="language-mysql">mysql> ROLLBACK;
-Query OK, 0 rows affected (0.00 sec)
-
-mysql> SELECT * FROM tb;
-+-------+-------+-------+
-| empid | sales | month |
-+-------+-------+-------+
-| A107  |    87 |     6 |
-| A103  |    12 |     6 |
-| A104  |    93 |     5 |
-| A102  |   205 |     6 |
-| A101  |   300 |     5 |
-| A103  |    17 |     5 |
-| A101  |   184 |     4 |
-| A104  |   181 |     4 |
-| A102  |    54 |     5 |
-| A103  |   101 |     4 |
-+-------+-------+-------+
-10 rows in set (0.00 sec)</code></pre>
-<p>可以看到数据没有自动提交。要想提交实际修改的数据，必须执行 “COMMIT”。</p>
-<h4 id="启动已关闭的自动提交功能"><a href="#启动已关闭的自动提交功能" class="headerlink" title="启动已关闭的自动提交功能"></a>启动已关闭的自动提交功能</h4><pre class=" language-mysql"><code class="language-mysql">$ SET AUTOCOMMIT = 1;</code></pre>
-<blockquote>
-<p><strong>如何确认当前自动提交功能的模式</strong>    我们可以通过 SELECT @@AUTOCOMMIT 确认当前自动提价功能的模式。如果是开启状态，则显示为 “1”；如果是关闭状态，则显示为 “0”。</p>
-</blockquote>
-<h4 id="事务的使用范围"><a href="#事务的使用范围" class="headerlink" title="事务的使用范围"></a>事务的使用范围</h4><p>启用事务之后，并不是所有操作都可以通过回滚复原。例如，下面这些命令就会被自动提交。</p>
-<ul>
-<li>DROP DATABSE</li>
-<li>DROP TABLE</li>
-<li>DROP VIEW</li>
-<li>ALTER TABLE</li>
-</ul>
-<p>即使开启了事务也有不能复原的情况，这一点需要注意。</p>
-<blockquote>
-<p><strong>提示</strong>    如果没有提交事务就退出 MySQL 监视器，修改的内容就会作废。也就是说，如果在未提交事务的情况下关闭连接，事务将自动回滚。</p>
-</blockquote>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>MySQL</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>熟练使用视图</title>
     <url>/posts/76dd.html</url>
     <content><![CDATA[<h3 id="什么是视图"><a href="#什么是视图" class="headerlink" title="什么是视图"></a>什么是视图</h3><h4 id="视图的真面目"><a href="#视图的真面目" class="headerlink" title="视图的真面目"></a>视图的真面目</h4><p>前面我们学习了多种使用 SELECT 提取纪录的方法。将 SELECT 的结果像表一样保留下来的虚表就是视图。</p>
@@ -6193,9 +6390,91 @@ $ DROP VIEW IF EXISTS v1;</code></pre>
       </tags>
   </entry>
   <entry>
+    <title>线程与进程</title>
+    <url>/posts/cda2.html</url>
+    <content><![CDATA[<p>在早期的计算机中不包含操作系统，它们从头到尾只执行一个程序，并且这个程序能访问计算机中的所有资源。在这种裸机环境中，不仅很难编写和运行程序，而且每次只能运行一个程序，这对于昂贵并且稀有的计算机资源来说也是一种浪费。</p>
+<p>操作系统的出现使得计算机每次能运行多个程序，并且不同的程序都在单独的进程中运行：操作系统为每个独立执行的进程分配各种资源，包括内存、文件句柄以及安全证书等。如果需要的话，在不同的进程之间可以通过一些粗粒度的通信机制来交换数据，包括：套接字、信号处理器、共享内存、信号量以及文件等。</p>
+<h3 id="什么是线程"><a href="#什么是线程" class="headerlink" title="什么是线程"></a>什么是线程</h3><p>线程是进程中的一个实体，线程本身是不会独立存在的。进程是代码在数据集合上的一次运行活动，是系统进行资源分配和调度的基本单位，线程则是进程的一个执行路径，一个进程中至少有一个线程，进程中的多个线程共享进程的资源。</p>
+<p>操作系统在分配资源时是把资源分配给进程的，但是 CPU 资源比较特殊，它是被分配给线程的，因为真正要占用 CPU 运行的是线程，所以也说线程是 CPU 分配的基本单位。</p>
+<p>在 JAVA 中，当我们启动 main 函数时其实就启动了一个进程，而 main 函数所在的线程就是这个进程中的一个线程，也称主线程。</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <categories>
+        <category>JAVA</category>
+      </categories>
+      <tags>
+        <tag>多线程</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>线程安全</title>
     <url>/posts/424f.html</url>
     <content><![CDATA[<h3 id="什么是线程安全"><a href="#什么是线程安全" class="headerlink" title="什么是线程安全"></a>什么是线程安全</h3><p>当多个线程访问一个对象时，如果不用考虑这些线程在运行时环境下的采用何种调度方式或者将如何交替执行，并且在调用方代码中不需要进行额外的同步或协同，调用这个对象的行为都可以获得正确的结果，那这个对象是线程安全的。</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <categories>
+        <category>JAVA</category>
+      </categories>
+      <tags>
+        <tag>多线程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>线程池</title>
+    <url>/posts/e2.html</url>
+    <content><![CDATA[<h3 id="使用线程池的好处"><a href="#使用线程池的好处" class="headerlink" title="使用线程池的好处"></a>使用线程池的好处</h3><ul>
+<li>降低资源消耗。通过重复利用已创建的线程降低线程的创建和销毁造成的消耗。</li>
+<li>提高响应速度。当任务到达时，任务可以不需要等到线程创建就能立即执行。</li>
+<li>提高线程的可管理性。线程是稀缺资源，如果无限制地创建，不仅会消耗系统资源，还会降低系统的稳定性，使用线程池可以进行统一分配、调优和监控。但是，要做到合理地利用线程池，必须对其使用原理了如指掌。</li>
+</ul>
+<h3 id="添加线程的规则"><a href="#添加线程的规则" class="headerlink" title="添加线程的规则"></a>添加线程的规则</h3><ol>
+<li>如果线程数小于 corePoolSize，即使其它工作线程处于空闲状态，也会创建一个新线程来运行新任务。</li>
+<li>如果线程数等于（或大于） corePoolSize 但少于 maximumPoolSize，则将任务放入阻塞队列。</li>
+<li>如果队列已满，并且线程数小于 maxPoolSize，则创建一个新线程来运行任务。</li>
+<li>如果队列已满，并且线程数大于或等于 maxPoolSize，则拒绝该任务。</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/Snipaste_2021-02-07_13-02-01.png"></p>
+<h3 id="线程池的状态"><a href="#线程池的状态" class="headerlink" title="线程池的状态"></a>线程池的状态</h3><ul>
+<li>RUNNING：接受新任务并且处理阻塞队列里的任务。</li>
+<li>SHUTDOWN：拒绝新任务但是处理阻塞队列里的任务。</li>
+<li>STOP：拒绝新任务并且抛弃阻塞队列的任务，同时会中断正在处理的任务。</li>
+<li>TIDYING：所有任务都执行完（包括阻塞队列里面的任务）后当前线程池活动线程数为 0，将要调用 terminated 方法。</li>
+<li>TERMINATED：终止状态。terminated 方法调用完成以后的状态。</li>
+</ul>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -6536,6 +6815,89 @@ infix <span class="token keyword">fun</span> Int<span class="token punctuation">
       </tags>
   </entry>
   <entry>
+    <title>Kotlin自定义操作符</title>
+    <url>/posts/8051.html</url>
+    <content><![CDATA[<h3 id="自定义Convert操作符"><a href="#自定义Convert操作符" class="headerlink" title="自定义Convert操作符"></a>自定义Convert操作符</h3><pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">myOperation</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">fun</span> <span class="token function">myOperation</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">val</span> list<span class="token operator">:</span> List<span class="token operator">&lt;</span>Int<span class="token operator">></span> <span class="token operator">=</span> <span class="token function">listOf</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span>
+    list<span class="token punctuation">.</span><span class="token function">covert</span> <span class="token punctuation">{</span>
+        it <span class="token operator">+</span> <span class="token number">1</span>
+    <span class="token punctuation">}</span><span class="token punctuation">.</span><span class="token function">forEach</span> <span class="token punctuation">{</span>
+        <span class="token function">print</span><span class="token punctuation">(</span>it<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">inline</span> <span class="token keyword">fun</span> <span class="token operator">&lt;</span>T<span class="token punctuation">,</span> E<span class="token operator">></span> List<span class="token operator">&lt;</span>T<span class="token operator">></span><span class="token punctuation">.</span><span class="token function">covert</span><span class="token punctuation">(</span>action<span class="token operator">:</span> <span class="token punctuation">(</span>T<span class="token punctuation">)</span> <span class="token operator">-></span> E<span class="token punctuation">)</span><span class="token operator">:</span> Iterable<span class="token operator">&lt;</span>E<span class="token operator">></span> <span class="token punctuation">{</span>
+    <span class="token keyword">val</span> list<span class="token operator">:</span> MutableList<span class="token operator">&lt;</span>E<span class="token operator">></span> <span class="token operator">=</span> <span class="token function">mutableListOf</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>item<span class="token operator">:</span> T <span class="token keyword">in</span> <span class="token keyword">this</span><span class="token punctuation">)</span>
+        list<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token function">action</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> list
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/** 输出结果：23456 */</span></code></pre>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p>在最近的这个项目中，需要导出Excel，产品经理希望导出的时候在每一行的行首都增加一个行号，从1开始，这个时候自定义集合操作符就派上用场了。</p>
+<pre class=" language-kotlin"><code class="language-kotlin"><span class="token comment" spellcheck="true">// rowIndex 导出excel时使用</span>
+<span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token keyword">var</span> rowIndex<span class="token operator">:</span> Int <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token keyword">val</span> name<span class="token operator">:</span> String<span class="token punctuation">,</span> <span class="token keyword">val</span> age<span class="token operator">:</span> Int<span class="token punctuation">)</span>
+
+<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">val</span> u1 <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"AsiaMa"</span><span class="token punctuation">,</span> age <span class="token operator">=</span> <span class="token number">23</span><span class="token punctuation">)</span>
+    <span class="token keyword">val</span> u2 <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"Xiu"</span><span class="token punctuation">,</span> age <span class="token operator">=</span> <span class="token number">30</span><span class="token punctuation">)</span>
+    <span class="token keyword">val</span> u3 <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"Ghost"</span><span class="token punctuation">,</span> age <span class="token operator">=</span> <span class="token number">11</span><span class="token punctuation">)</span>
+    <span class="token keyword">val</span> u4 <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"Lost"</span><span class="token punctuation">,</span> age <span class="token operator">=</span> <span class="token number">16</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">val</span> userList <span class="token operator">=</span> <span class="token function">listOf</span><span class="token punctuation">(</span>u1<span class="token punctuation">,</span> u2<span class="token punctuation">,</span> u3<span class="token punctuation">,</span> u4<span class="token punctuation">)</span>
+    userList<span class="token punctuation">.</span><span class="token function">covert</span> <span class="token punctuation">{</span>
+        it
+    <span class="token punctuation">}</span><span class="token punctuation">.</span><span class="token function">forEach</span> <span class="token punctuation">{</span>
+        <span class="token function">print</span><span class="token punctuation">(</span>it<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">inline</span> <span class="token keyword">fun</span> List<span class="token operator">&lt;</span>User<span class="token operator">></span><span class="token punctuation">.</span><span class="token function">covert</span><span class="token punctuation">(</span>action<span class="token operator">:</span> <span class="token punctuation">(</span>User<span class="token punctuation">)</span> <span class="token operator">-></span> User<span class="token punctuation">)</span><span class="token operator">:</span> MutableList<span class="token operator">&lt;</span>User<span class="token operator">></span> <span class="token punctuation">{</span>
+    <span class="token keyword">val</span> list<span class="token operator">:</span> MutableList<span class="token operator">&lt;</span>User<span class="token operator">></span> <span class="token operator">=</span> <span class="token function">mutableListOf</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>index<span class="token operator">:</span> Int<span class="token punctuation">,</span> item<span class="token operator">:</span> User<span class="token punctuation">)</span> <span class="token keyword">in</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">withIndex</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// 设置行号</span>
+        <span class="token function">action</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">.</span>rowIndex <span class="token operator">=</span> index <span class="token operator">+</span> <span class="token number">1</span>
+        list<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token function">action</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> list
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/** 
+    输出结果：
+        User(rowIndex=1, name=AsiaMa, age=23)
+        User(rowIndex=2, name=Xiu, age=30)
+        User(rowIndex=3, name=Ghost, age=11)
+        User(rowIndex=4, name=Lost, age=16) 
+*/</span></code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <categories>
+        <category>函数式编程</category>
+      </categories>
+      <tags>
+        <tag>Kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>英语学习第一天</title>
     <url>/posts/56b.html</url>
     <content><![CDATA[<h2 id="五种基本句型"><a href="#五种基本句型" class="headerlink" title="五种基本句型"></a>五种基本句型</h2><p>主语：动作的发起者，位于句首。</p>
@@ -6654,89 +7016,6 @@ infix <span class="token keyword">fun</span> Int<span class="token punctuation">
       </script>]]></content>
       <tags>
         <tag>English</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Kotlin自定义操作符</title>
-    <url>/posts/8051.html</url>
-    <content><![CDATA[<h3 id="自定义Convert操作符"><a href="#自定义Convert操作符" class="headerlink" title="自定义Convert操作符"></a>自定义Convert操作符</h3><pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token function">myOperation</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">fun</span> <span class="token function">myOperation</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">val</span> list<span class="token operator">:</span> List<span class="token operator">&lt;</span>Int<span class="token operator">></span> <span class="token operator">=</span> <span class="token function">listOf</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span>
-    list<span class="token punctuation">.</span><span class="token function">covert</span> <span class="token punctuation">{</span>
-        it <span class="token operator">+</span> <span class="token number">1</span>
-    <span class="token punctuation">}</span><span class="token punctuation">.</span><span class="token function">forEach</span> <span class="token punctuation">{</span>
-        <span class="token function">print</span><span class="token punctuation">(</span>it<span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">inline</span> <span class="token keyword">fun</span> <span class="token operator">&lt;</span>T<span class="token punctuation">,</span> E<span class="token operator">></span> List<span class="token operator">&lt;</span>T<span class="token operator">></span><span class="token punctuation">.</span><span class="token function">covert</span><span class="token punctuation">(</span>action<span class="token operator">:</span> <span class="token punctuation">(</span>T<span class="token punctuation">)</span> <span class="token operator">-></span> E<span class="token punctuation">)</span><span class="token operator">:</span> Iterable<span class="token operator">&lt;</span>E<span class="token operator">></span> <span class="token punctuation">{</span>
-    <span class="token keyword">val</span> list<span class="token operator">:</span> MutableList<span class="token operator">&lt;</span>E<span class="token operator">></span> <span class="token operator">=</span> <span class="token function">mutableListOf</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span>item<span class="token operator">:</span> T <span class="token keyword">in</span> <span class="token keyword">this</span><span class="token punctuation">)</span>
-        list<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token function">action</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">)</span>
-    <span class="token keyword">return</span> list
-<span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">/** 输出结果：23456 */</span></code></pre>
-<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p>在最近的这个项目中，需要导出Excel，产品经理希望导出的时候在每一行的行首都增加一个行号，从1开始，这个时候自定义集合操作符就派上用场了。</p>
-<pre class=" language-kotlin"><code class="language-kotlin"><span class="token comment" spellcheck="true">// rowIndex 导出excel时使用</span>
-<span class="token keyword">data</span> <span class="token keyword">class</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token keyword">var</span> rowIndex<span class="token operator">:</span> Int <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token keyword">val</span> name<span class="token operator">:</span> String<span class="token punctuation">,</span> <span class="token keyword">val</span> age<span class="token operator">:</span> Int<span class="token punctuation">)</span>
-
-<span class="token keyword">fun</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">val</span> u1 <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"AsiaMa"</span><span class="token punctuation">,</span> age <span class="token operator">=</span> <span class="token number">23</span><span class="token punctuation">)</span>
-    <span class="token keyword">val</span> u2 <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"Xiu"</span><span class="token punctuation">,</span> age <span class="token operator">=</span> <span class="token number">30</span><span class="token punctuation">)</span>
-    <span class="token keyword">val</span> u3 <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"Ghost"</span><span class="token punctuation">,</span> age <span class="token operator">=</span> <span class="token number">11</span><span class="token punctuation">)</span>
-    <span class="token keyword">val</span> u4 <span class="token operator">=</span> <span class="token function">User</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"Lost"</span><span class="token punctuation">,</span> age <span class="token operator">=</span> <span class="token number">16</span><span class="token punctuation">)</span>
-
-    <span class="token keyword">val</span> userList <span class="token operator">=</span> <span class="token function">listOf</span><span class="token punctuation">(</span>u1<span class="token punctuation">,</span> u2<span class="token punctuation">,</span> u3<span class="token punctuation">,</span> u4<span class="token punctuation">)</span>
-    userList<span class="token punctuation">.</span><span class="token function">covert</span> <span class="token punctuation">{</span>
-        it
-    <span class="token punctuation">}</span><span class="token punctuation">.</span><span class="token function">forEach</span> <span class="token punctuation">{</span>
-        <span class="token function">print</span><span class="token punctuation">(</span>it<span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">inline</span> <span class="token keyword">fun</span> List<span class="token operator">&lt;</span>User<span class="token operator">></span><span class="token punctuation">.</span><span class="token function">covert</span><span class="token punctuation">(</span>action<span class="token operator">:</span> <span class="token punctuation">(</span>User<span class="token punctuation">)</span> <span class="token operator">-></span> User<span class="token punctuation">)</span><span class="token operator">:</span> MutableList<span class="token operator">&lt;</span>User<span class="token operator">></span> <span class="token punctuation">{</span>
-    <span class="token keyword">val</span> list<span class="token operator">:</span> MutableList<span class="token operator">&lt;</span>User<span class="token operator">></span> <span class="token operator">=</span> <span class="token function">mutableListOf</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>index<span class="token operator">:</span> Int<span class="token punctuation">,</span> item<span class="token operator">:</span> User<span class="token punctuation">)</span> <span class="token keyword">in</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">withIndex</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token comment" spellcheck="true">// 设置行号</span>
-        <span class="token function">action</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">.</span>rowIndex <span class="token operator">=</span> index <span class="token operator">+</span> <span class="token number">1</span>
-        list<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token function">action</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">return</span> list
-<span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">/** 
-    输出结果：
-        User(rowIndex=1, name=AsiaMa, age=23)
-        User(rowIndex=2, name=Xiu, age=30)
-        User(rowIndex=3, name=Ghost, age=11)
-        User(rowIndex=4, name=Lost, age=16) 
-*/</span></code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <categories>
-        <category>函数式编程</category>
-      </categories>
-      <tags>
-        <tag>Kotlin</tag>
       </tags>
   </entry>
   <entry>
@@ -7124,6 +7403,51 @@ $ TTL foo
       </script>]]></content>
       <tags>
         <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>读写锁的规则</title>
+    <url>/posts/dd8b.html</url>
+    <content><![CDATA[<h3 id="读写锁的规则"><a href="#读写锁的规则" class="headerlink" title="读写锁的规则"></a>读写锁的规则</h3><ul>
+<li>多个线程只申请读锁，都可以申请到</li>
+<li>如果有一个线程已经占用了读锁，则此时其它线程如果要申请写锁，则申请写锁的线程会一直等待释放读锁。</li>
+<li>如果有一个线程已经占用了写锁，则此时其它线程如果申请写锁或者读锁，则申请的线程会一直等待释放写锁。</li>
+</ul>
+<blockquote>
+<p>一句话总结：要么是一个或多个线程同时有读锁，要么是一个线程有写锁，但是两者不会同时出现（要么多读，要么一写）。</p>
+</blockquote>
+<h3 id="读锁插队策略"><a href="#读锁插队策略" class="headerlink" title="读锁插队策略"></a>读锁插队策略</h3><ul>
+<li>公平锁：不允许插队</li>
+<li>非公平锁<ul>
+<li>写锁可以随时插队</li>
+<li>读锁仅在等待队列头结点不是写锁的时候可以插队</li>
+</ul>
+</li>
+</ul>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <categories>
+        <category>JAVA</category>
+      </categories>
+      <tags>
+        <tag>多线程</tag>
       </tags>
   </entry>
   <entry>
