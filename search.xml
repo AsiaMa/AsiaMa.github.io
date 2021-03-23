@@ -1,6 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Bean 延迟查找</title>
+    <url>/posts/cdfc.html</url>
+    <content><![CDATA[<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ObjectProviderDemo</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">// @Configuration 是非必须注解</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// 创建 BeanFactory 容器</span>
+    AnnotationConfigApplicationContext annotationConfigApplicationContext <span class="token operator">=</span>
+        <span class="token keyword">new</span> <span class="token class-name">AnnotationConfigApplicationContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 注册配置类</span>
+    annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">register</span><span class="token punctuation">(</span>ObjectProviderDemo<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 启动应用上下文</span>
+    annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">refresh</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 依赖查找集合对象</span>
+    <span class="token function">lookupByObjectProvider</span><span class="token punctuation">(</span>annotationConfigApplicationContext<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">lookupIfAvailable</span><span class="token punctuation">(</span>annotationConfigApplicationContext<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">lookupByStreamOps</span><span class="token punctuation">(</span>annotationConfigApplicationContext<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 关闭应用上下文</span>
+    annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">lookupByObjectProvider</span><span class="token punctuation">(</span>
+      AnnotationConfigApplicationContext annotationConfigApplicationContext<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    ObjectProvider<span class="token operator">&lt;</span>String<span class="token operator">></span> objectProvider <span class="token operator">=</span>
+        annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">getBeanProvider</span><span class="token punctuation">(</span>String<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>objectProvider<span class="token punctuation">.</span><span class="token function">getObject</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">lookupIfAvailable</span><span class="token punctuation">(</span>
+      AnnotationConfigApplicationContext annotationConfigApplicationContext<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    ObjectProvider<span class="token operator">&lt;</span>User<span class="token operator">></span> userObjectProvider <span class="token operator">=</span>
+        annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">getBeanProvider</span><span class="token punctuation">(</span>User<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    User user <span class="token operator">=</span> userObjectProvider<span class="token punctuation">.</span><span class="token function">getIfAvailable</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">"hah"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"user: "</span> <span class="token operator">+</span> user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">lookupByStreamOps</span><span class="token punctuation">(</span>
+      AnnotationConfigApplicationContext annotationConfigApplicationContext<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    ObjectProvider<span class="token operator">&lt;</span>String<span class="token operator">></span> objectProvider <span class="token operator">=</span>
+        annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">getBeanProvider</span><span class="token punctuation">(</span>String<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    objectProvider<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>System<span class="token punctuation">.</span>out<span class="token operator">:</span><span class="token operator">:</span>println<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token annotation punctuation">@Bean</span>
+  <span class="token keyword">public</span> String <span class="token function">helloWorld</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">// 方法名就是 Bean 名称 = "helloWorld</span>
+    <span class="token keyword">return</span> <span class="token string">"hello, world!"</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token annotation punctuation">@Bean</span>
+  <span class="token annotation punctuation">@Primary</span>
+  <span class="token keyword">public</span> String <span class="token function">message</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token string">"Message"</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/** 输出结果：
+    Message
+    user: User{id=1, name='hah'}
+    hello, world!
+    Message */</span></code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <categories>
+        <category>JAVA</category>
+      </categories>
+      <tags>
+        <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CopyOnWriteArrayList</title>
+    <url>/posts/34b0.html</url>
+    <content><![CDATA[<h3 id="CopyOnWriteArrayList的优点"><a href="#CopyOnWriteArrayList的优点" class="headerlink" title="CopyOnWriteArrayList的优点"></a>CopyOnWriteArrayList的优点</h3><p>读取完全不用加锁的，并且更厉害的是写入也不会阻塞读取操作。只有修改操作之间需要同步等待。</p>
+<h3 id="CopyOnWriteArrayList的缺点"><a href="#CopyOnWriteArrayList的缺点" class="headerlink" title="CopyOnWriteArrayList的缺点"></a>CopyOnWriteArrayList的缺点</h3><p>数据一致性问题：CopyOnWirite 容器只能保证数据的最终一致性，不能保证数据的实时一致性。所以如果你希望写入的数据，马上能读到，请不要用 CopyOnWtire 容器。</p>
+<p>内存占用问题：因为 CopyOnWrite 的是写时复制策略，所以在进行写操作的时候，内存会同时驻扎两个对象的内存。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>CopyOnWriteArrayList 使用写时复制的策略来保证 list 的一致性，而 获取-修改-写入 三步操作并不是原子性的，所以在增删改的过程中都使用了独占锁，来保证在某个时间只有一个线程对 list 数组进行修改。另外 CopyOnWriteArrayList 提供了弱一致性的迭代器，从而保证在获取迭代器后，其他线程对 list 的修改是不可见的，迭代器遍历的数组是一个快照。另外，CopyOnWriteArraySet 的底层是使用它实现的。</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <categories>
+        <category>多线程</category>
+      </categories>
+      <tags>
+        <tag>多线程</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Bean的初始化方式</title>
     <url>/posts/c3f8.html</url>
     <content><![CDATA[<h3 id="PostConstruct标注方法"><a href="#PostConstruct标注方法" class="headerlink" title="@PostConstruct标注方法"></a>@PostConstruct标注方法</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Employee</span> <span class="token punctuation">{</span>
@@ -178,12 +295,35 @@
       </tags>
   </entry>
   <entry>
-    <title>CopyOnWriteArrayList</title>
-    <url>/posts/34b0.html</url>
-    <content><![CDATA[<h3 id="CopyOnWriteArrayList的优点"><a href="#CopyOnWriteArrayList的优点" class="headerlink" title="CopyOnWriteArrayList的优点"></a>CopyOnWriteArrayList的优点</h3><p>读取完全不用加锁的，并且更厉害的是写入也不会阻塞读取操作。只有修改操作之间需要同步等待。</p>
-<h3 id="CopyOnWriteArrayList的缺点"><a href="#CopyOnWriteArrayList的缺点" class="headerlink" title="CopyOnWriteArrayList的缺点"></a>CopyOnWriteArrayList的缺点</h3><p>数据一致性问题：CopyOnWirite 容器只能保证数据的最终一致性，不能保证数据的实时一致性。所以如果你希望写入的数据，马上能读到，请不要用 CopyOnWtire 容器。</p>
-<p>内存占用问题：因为 CopyOnWrite 的是写时复制策略，所以在进行写操作的时候，内存会同时驻扎两个对象的内存。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>CopyOnWriteArrayList 使用写时复制的策略来保证 list 的一致性，而 获取-修改-写入 三步操作并不是原子性的，所以在增删改的过程中都使用了独占锁，来保证在某个时间只有一个线程对 list 数组进行修改。另外 CopyOnWriteArrayList 提供了弱一致性的迭代器，从而保证在获取迭代器后，其他线程对 list 的修改是不可见的，迭代器遍历的数组是一个快照。另外，CopyOnWriteArraySet 的底层是使用它实现的。</p>
+    <title>Java堆的参数</title>
+    <url>/posts/81cf.html</url>
+    <content><![CDATA[<ul>
+<li>-Xss: 栈的大小</li>
+<li>-Xms: 初始堆大小，默认物理内存的 1/64</li>
+<li>-Xmx: 最大堆大小，默认物理内存的 1/4</li>
+<li>-Xmn: 新生代大小，默认整个堆的3/8</li>
+<li>-XX:NewRatio: 老年代与新生代的比值</li>
+<li>-XX:SurvivorRatio: Eden区和Survivor区的大小比值</li>
+<li>-XX:+HeapDumpOnOutOfMemory: OOM时导出堆到文件</li>
+<li>-XX:+HeapDumpPath: 导出OOM的路径</li>
+<li>-XX:OnOutOfMemotyError: 在OOM时，执行一个脚本</li>
+</ul>
+<h3 id="栈帧"><a href="#栈帧" class="headerlink" title="栈帧"></a>栈帧</h3><ul>
+<li><p>栈帧是用于支持JVM进行方法调用和方法执行的数据结构。</p>
+</li>
+<li><p>栈帧随着方法调用而创建，随着方法结束而销毁。</p>
+</li>
+<li><p>栈帧里面存储了方法的局部变量表、操作数栈、动态链接、方法返回地址等信息。</p>
+</li>
+</ul>
+<h3 id="局部变量表"><a href="#局部变量表" class="headerlink" title="局部变量表"></a>局部变量表</h3><p>用来存放方法参数和方法内部定义的局部变量。</p>
+<ol>
+<li>以变量槽 slot 位单位，目前一个 slot 存放 32 位以内的数据类型。</li>
+<li>对于 64 位的数据占 2 个 slot。</li>
+<li>对于实例方法，第 0 位 slot 存放的是 this，然后从 1 到 n，以此分配给参数列表。</li>
+<li>根据方法体内步定义的变量顺序和作用与来分配slot。</li>
+<li>Slot 是复用的，以节省栈帧空间，这种设计可能会影响系统的垃圾收集行为。</li>
+</ol>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -203,11 +343,8 @@
             document.body.appendChild(img);
           });
       </script>]]></content>
-      <categories>
-        <category>多线程</category>
-      </categories>
       <tags>
-        <tag>多线程</tag>
+        <tag>JVM</tag>
       </tags>
   </entry>
   <entry>
@@ -244,90 +381,6 @@
       </script>]]></content>
       <tags>
         <tag>Kotlin</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Bean 延迟查找</title>
-    <url>/posts/cdfc.html</url>
-    <content><![CDATA[<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ObjectProviderDemo</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">// @Configuration 是非必须注解</span>
-  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token comment" spellcheck="true">// 创建 BeanFactory 容器</span>
-    AnnotationConfigApplicationContext annotationConfigApplicationContext <span class="token operator">=</span>
-        <span class="token keyword">new</span> <span class="token class-name">AnnotationConfigApplicationContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">// 注册配置类</span>
-    annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">register</span><span class="token punctuation">(</span>ObjectProviderDemo<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">// 启动应用上下文</span>
-    annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">refresh</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">// 依赖查找集合对象</span>
-    <span class="token function">lookupByObjectProvider</span><span class="token punctuation">(</span>annotationConfigApplicationContext<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">lookupIfAvailable</span><span class="token punctuation">(</span>annotationConfigApplicationContext<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">lookupByStreamOps</span><span class="token punctuation">(</span>annotationConfigApplicationContext<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">// 关闭应用上下文</span>
-    annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-
-  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">lookupByObjectProvider</span><span class="token punctuation">(</span>
-      AnnotationConfigApplicationContext annotationConfigApplicationContext<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    ObjectProvider<span class="token operator">&lt;</span>String<span class="token operator">></span> objectProvider <span class="token operator">=</span>
-        annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">getBeanProvider</span><span class="token punctuation">(</span>String<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>objectProvider<span class="token punctuation">.</span><span class="token function">getObject</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-
-  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">lookupIfAvailable</span><span class="token punctuation">(</span>
-      AnnotationConfigApplicationContext annotationConfigApplicationContext<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    ObjectProvider<span class="token operator">&lt;</span>User<span class="token operator">></span> userObjectProvider <span class="token operator">=</span>
-        annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">getBeanProvider</span><span class="token punctuation">(</span>User<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    User user <span class="token operator">=</span> userObjectProvider<span class="token punctuation">.</span><span class="token function">getIfAvailable</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">"hah"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"user: "</span> <span class="token operator">+</span> user<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-
-  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">lookupByStreamOps</span><span class="token punctuation">(</span>
-      AnnotationConfigApplicationContext annotationConfigApplicationContext<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    ObjectProvider<span class="token operator">&lt;</span>String<span class="token operator">></span> objectProvider <span class="token operator">=</span>
-        annotationConfigApplicationContext<span class="token punctuation">.</span><span class="token function">getBeanProvider</span><span class="token punctuation">(</span>String<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    objectProvider<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>System<span class="token punctuation">.</span>out<span class="token operator">:</span><span class="token operator">:</span>println<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-
-  <span class="token annotation punctuation">@Bean</span>
-  <span class="token keyword">public</span> String <span class="token function">helloWorld</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">// 方法名就是 Bean 名称 = "helloWorld</span>
-    <span class="token keyword">return</span> <span class="token string">"hello, world!"</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-
-  <span class="token annotation punctuation">@Bean</span>
-  <span class="token annotation punctuation">@Primary</span>
-  <span class="token keyword">public</span> String <span class="token function">message</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> <span class="token string">"Message"</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">/** 输出结果：
-    Message
-    user: User{id=1, name='hah'}
-    hello, world!
-    Message */</span></code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <categories>
-        <category>JAVA</category>
-      </categories>
-      <tags>
-        <tag>Spring</tag>
       </tags>
   </entry>
   <entry>
@@ -373,44 +426,6 @@ b<span class="token operator">?</span><span class="token punctuation">.</span>le
 <span class="token punctuation">}</span></code></pre>
 <h4 id="互操作性"><a href="#互操作性" class="headerlink" title="互操作性"></a>互操作性</h4><p>Kotlin的优势是既有Java的完整生态（Kotlin完全无缝使用各类Java API框架库）,又有现代语言的高级特性（语法糖）。</p>
 <h3 id="编程哲学"><a href="#编程哲学" class="headerlink" title="编程哲学"></a>编程哲学</h3><p>编程的真正问题在于，如何把人类脑子里对问题的解决方案“具化”到机器世界，而这个“具化”过程正是编程语言所要表达的东西。如何富有表现力并且安全简洁的表达，这是所有编程语言所要解决的问题。</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>Kotlin</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Kotlin单例</title>
-    <url>/posts/9fbb.html</url>
-    <content><![CDATA[<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">class</span> Singleton <span class="token keyword">private</span> <span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-
-    <span class="token keyword">companion</span> <span class="token keyword">object</span> <span class="token punctuation">{</span>
-        <span class="token keyword">fun</span> <span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> Singleton <span class="token punctuation">{</span>
-            <span class="token keyword">return</span> Holder<span class="token punctuation">.</span>instance
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">private</span> <span class="token keyword">object</span> Holder <span class="token punctuation">{</span>
-        <span class="token keyword">val</span> instance <span class="token operator">=</span> <span class="token function">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -509,6 +524,44 @@ b<span class="token operator">?</span><span class="token punctuation">.</span>le
     l1<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
     <span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"test2"</span><span class="token punctuation">)</span>
     <span class="token keyword">return</span> l1
+<span class="token punctuation">}</span></code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Kotlin单例</title>
+    <url>/posts/9fbb.html</url>
+    <content><![CDATA[<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">class</span> Singleton <span class="token keyword">private</span> <span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">companion</span> <span class="token keyword">object</span> <span class="token punctuation">{</span>
+        <span class="token keyword">fun</span> <span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> Singleton <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> Holder<span class="token punctuation">.</span>instance
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">object</span> Holder <span class="token punctuation">{</span>
+        <span class="token keyword">val</span> instance <span class="token operator">=</span> <span class="token function">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
@@ -3242,89 +3295,6 @@ $ RPUSH queue:3 task2
       </tags>
   </entry>
   <entry>
-    <title>使用UncaughtExceptionHandler</title>
-    <url>/posts/fefe.html</url>
-    <content><![CDATA[<h3 id="为什么使用"><a href="#为什么使用" class="headerlink" title="为什么使用"></a>为什么使用</h3><ul>
-<li>子线程异常无法用传统方法捕获，只能在自己的线程内部 try …catch，无法在开启线程的地方 try…catch</li>
-</ul>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UseOwnUncaughtExceptionHandler</span> <span class="token punctuation">{</span>
-  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    Runnable r <span class="token operator">=</span>
-        <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">{</span>
-          <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">// 无法捕获异常</span>
-    <span class="token keyword">try</span> <span class="token punctuation">{</span>
-      <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span>r<span class="token punctuation">,</span> <span class="token string">"t1"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span>r<span class="token punctuation">,</span> <span class="token string">"t2"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span>r<span class="token punctuation">,</span> <span class="token string">"t3"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span>r<span class="token punctuation">,</span> <span class="token string">"t4"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      e<span class="token punctuation">.</span><span class="token function">getMessage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
-<h3 id="Java-异常体系"><a href="#Java-异常体系" class="headerlink" title="Java 异常体系"></a>Java 异常体系</h3><p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/Snipaste_2021-02-03_09-20-35.png"></p>
-<h3 id="自己实现"><a href="#自己实现" class="headerlink" title="自己实现"></a>自己实现</h3><ul>
-<li>给程序统一配置（推荐）</li>
-<li>给每个线程单独设置</li>
-<li>给线程池设置</li>
-</ul>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyUncaughtExceptionHandler</span> <span class="token keyword">implements</span> <span class="token class-name">Thread<span class="token punctuation">.</span>UncaughtExceptionHandler</span> <span class="token punctuation">{</span>
-  <span class="token keyword">private</span> <span class="token keyword">final</span> String name<span class="token punctuation">;</span>
-
-  <span class="token keyword">public</span> <span class="token function">MyUncaughtExceptionHandler</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">"自定义异常处理器"</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-
-  <span class="token annotation punctuation">@Override</span>
-  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">uncaughtException</span><span class="token punctuation">(</span>Thread t<span class="token punctuation">,</span> Throwable e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    Logger logger <span class="token operator">=</span> Logger<span class="token punctuation">.</span><span class="token function">getAnonymousLogger</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    logger<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>Level<span class="token punctuation">.</span>WARNING<span class="token punctuation">,</span> <span class="token string">"线程异常终止了: "</span> <span class="token operator">+</span> t<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> t<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UseOwnUncaughtExceptionHandler</span> <span class="token punctuation">{</span>
-  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    Runnable r <span class="token operator">=</span>
-        <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">{</span>
-          <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span><span class="token punctuation">;</span>
-
-    Thread<span class="token punctuation">.</span><span class="token function">setDefaultUncaughtExceptionHandler</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">MyUncaughtExceptionHandler</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span>r<span class="token punctuation">,</span> <span class="token string">"t1"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span>r<span class="token punctuation">,</span> <span class="token string">"t2"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span>r<span class="token punctuation">,</span> <span class="token string">"t3"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span>r<span class="token punctuation">,</span> <span class="token string">"t4"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <categories>
-        <category>JAVA</category>
-      </categories>
-      <tags>
-        <tag>多线程</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>使用interrupt正确停止线程</title>
     <url>/posts/760c.html</url>
     <content><![CDATA[<h3 id="中断策略"><a href="#中断策略" class="headerlink" title="中断策略"></a>中断策略</h3><p>原理介绍：使用 interrupt 来通知，而不是强制。</p>
@@ -3668,6 +3638,89 @@ Interrupted，程序运行结束 */</span></code></pre>
 <blockquote>
 <p>Thread.interrupted() 方法，清除当前线程的状态，也就是 interrupet 置为 false。目标对象是当前线程（也就是这个方法目前在那个线程执行），不管在哪个对象调用本方法。</p>
 </blockquote>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <categories>
+        <category>JAVA</category>
+      </categories>
+      <tags>
+        <tag>多线程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用UncaughtExceptionHandler</title>
+    <url>/posts/fefe.html</url>
+    <content><![CDATA[<h3 id="为什么使用"><a href="#为什么使用" class="headerlink" title="为什么使用"></a>为什么使用</h3><ul>
+<li>子线程异常无法用传统方法捕获，只能在自己的线程内部 try …catch，无法在开启线程的地方 try…catch</li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UseOwnUncaughtExceptionHandler</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    Runnable r <span class="token operator">=</span>
+        <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">{</span>
+          <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 无法捕获异常</span>
+    <span class="token keyword">try</span> <span class="token punctuation">{</span>
+      <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span>r<span class="token punctuation">,</span> <span class="token string">"t1"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span>r<span class="token punctuation">,</span> <span class="token string">"t2"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span>r<span class="token punctuation">,</span> <span class="token string">"t3"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span>r<span class="token punctuation">,</span> <span class="token string">"t4"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      e<span class="token punctuation">.</span><span class="token function">getMessage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<h3 id="Java-异常体系"><a href="#Java-异常体系" class="headerlink" title="Java 异常体系"></a>Java 异常体系</h3><p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/Snipaste_2021-02-03_09-20-35.png"></p>
+<h3 id="自己实现"><a href="#自己实现" class="headerlink" title="自己实现"></a>自己实现</h3><ul>
+<li>给程序统一配置（推荐）</li>
+<li>给每个线程单独设置</li>
+<li>给线程池设置</li>
+</ul>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyUncaughtExceptionHandler</span> <span class="token keyword">implements</span> <span class="token class-name">Thread<span class="token punctuation">.</span>UncaughtExceptionHandler</span> <span class="token punctuation">{</span>
+  <span class="token keyword">private</span> <span class="token keyword">final</span> String name<span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token function">MyUncaughtExceptionHandler</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">"自定义异常处理器"</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token annotation punctuation">@Override</span>
+  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">uncaughtException</span><span class="token punctuation">(</span>Thread t<span class="token punctuation">,</span> Throwable e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    Logger logger <span class="token operator">=</span> Logger<span class="token punctuation">.</span><span class="token function">getAnonymousLogger</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    logger<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>Level<span class="token punctuation">.</span>WARNING<span class="token punctuation">,</span> <span class="token string">"线程异常终止了: "</span> <span class="token operator">+</span> t<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> t<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UseOwnUncaughtExceptionHandler</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    Runnable r <span class="token operator">=</span>
+        <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">{</span>
+          <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    Thread<span class="token punctuation">.</span><span class="token function">setDefaultUncaughtExceptionHandler</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">MyUncaughtExceptionHandler</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span>r<span class="token punctuation">,</span> <span class="token string">"t1"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span>r<span class="token punctuation">,</span> <span class="token string">"t2"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span>r<span class="token punctuation">,</span> <span class="token string">"t3"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span>r<span class="token punctuation">,</span> <span class="token string">"t4"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -5207,6 +5260,171 @@ $mysql db1 -u root -p123456 -e "SELECT * FROM tb1"</code></pre>
       </tags>
   </entry>
   <entry>
+    <title>测试多线程上下文切换</title>
+    <url>/posts/2067.html</url>
+    <content><![CDATA[<h3 id="上下文切换"><a href="#上下文切换" class="headerlink" title="上下文切换"></a>上下文切换</h3><p>即使是单核处理器也支持多线程执行代码，CPU 通过给每个线程分配 CPU 时间片来实现这个机制。时间片是 CPU 分配给各个线程的时间，因为时间片非常短，所以 CPU 通过不停地切换线程执行，让我们感觉多个线程是同时执行的，时间片一般是几十毫秒（ms）。</p>
+<p>CPU 通过时间片分配算法来循环执行任务，当前任务执行一个时间片后会切换到下一个任务。但是，在切换前会保存上一个任务的状态，以便下回切换回这个任务时，可以再加载这个任务的状态。所以任务从保存到再加载的过程就是一次上下文切换。</p>
+<p>这就像我们同时读两本书，当我们在读一本英文的技术书时，发现某个单词不认识，于是便打开中英文词典，但是在放下英文技术书之前，大脑必须先记住这本书读到了多少页的第多少行，等查完单词之后，能够继续读这本书。这样的切换是会影响读书效率的，同样上下文切换也会影响多线程的执行速度。</p>
+<h3 id="多线程一定快吗"><a href="#多线程一定快吗" class="headerlink" title="多线程一定快吗"></a>多线程一定快吗</h3><p>下面的代码演示串行和并发执行并累计操作的时间，请分析：下面的代码并发执行一定比串行快吗？</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ConcurrencyTest</span> <span class="token punctuation">{</span>
+  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">long</span> count <span class="token operator">=</span> 1000001L<span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> InterruptedException <span class="token punctuation">{</span>
+    <span class="token function">concurrency</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">serial</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">concurrency</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> InterruptedException <span class="token punctuation">{</span>
+    <span class="token keyword">long</span> start <span class="token operator">=</span> System<span class="token punctuation">.</span><span class="token function">nanoTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Thread t <span class="token operator">=</span>
+        <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span>
+            <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">{</span>
+              <span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+              <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> count<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                a <span class="token operator">+=</span> <span class="token number">5</span><span class="token punctuation">;</span>
+              <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    t<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">int</span> b <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> count<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      b<span class="token operator">--</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    t<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">double</span> time <span class="token operator">=</span> <span class="token punctuation">(</span>System<span class="token punctuation">.</span><span class="token function">nanoTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> start<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">1E6</span><span class="token punctuation">;</span>
+
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"concurrency: "</span> <span class="token operator">+</span> time <span class="token operator">+</span> <span class="token string">"ms, b = "</span> <span class="token operator">+</span> b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">serial</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">long</span> start <span class="token operator">=</span> System<span class="token punctuation">.</span><span class="token function">nanoTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> count<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      a <span class="token operator">+=</span> <span class="token number">5</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">int</span> b <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> count<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      b<span class="token operator">--</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">double</span> time <span class="token operator">=</span> <span class="token punctuation">(</span>System<span class="token punctuation">.</span><span class="token function">nanoTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> start<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">1E6</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"serial: "</span> <span class="token operator">+</span> time <span class="token operator">+</span> <span class="token string">"ms, b = "</span> <span class="token operator">+</span> b <span class="token operator">+</span> <span class="token string">", a = "</span> <span class="token operator">+</span> a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">/** 输出结果：
+    concurrency: 68.555391ms, b = -1000001
+    serial: 5.589674ms, b = -1000001, a = 5000005 */</span></code></pre>
+<p>测试结果如下所示：</p>
+<table>
+<thead>
+<tr>
+<th>循环次数</th>
+<th>串行执行耗时 /ms</th>
+<th>并发执行耗时 /ms</th>
+<th>并发比串行快多少</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>10亿</td>
+<td>724.332455ms</td>
+<td>391.188627ms</td>
+<td>约 1 倍</td>
+</tr>
+<tr>
+<td>1亿</td>
+<td>71.894395ms</td>
+<td>87.138227ms</td>
+<td>差不多</td>
+</tr>
+<tr>
+<td>1千万</td>
+<td>10.201172ms</td>
+<td>48.001412ms</td>
+<td>慢</td>
+</tr>
+<tr>
+<td>1百万</td>
+<td>5.589674ms</td>
+<td>68.555391ms</td>
+<td>慢</td>
+</tr>
+<tr>
+<td>十万</td>
+<td>1.783637ms</td>
+<td>40.619798ms</td>
+<td>慢</td>
+</tr>
+</tbody></table>
+<h3 id="如何减少上下文切换"><a href="#如何减少上下文切换" class="headerlink" title="如何减少上下文切换"></a>如何减少上下文切换</h3><p>减少上下文切换的方法有无锁并发编程、CAS 算法、使用最少线程和使用协程。</p>
+<ul>
+<li>无锁并发编程。多线程竞争锁时，会引起上下文切换，所以多线程处理数据时，可以用一些办法来避免使用锁，如将数据的 ID 按照 Hash 算法取模分段，不同的线程处理不同段的数据。</li>
+<li>CAS 算法。Java 的 Atomic 包使用 CAS 算法来更新数据，而不需要加锁。</li>
+<li>使用最少的线程。避免创建不需要的线程，比如任务很少，但是创建了很多线程来处理，这样会造成大量线程都处理等待状态。</li>
+<li>协程：在单线程里实现多任务的调度，并在单线程里维持多个任务间的切换。</li>
+</ul>
+<h3 id="减少上下文切换实战"><a href="#减少上下文切换实战" class="headerlink" title="减少上下文切换实战"></a>减少上下文切换实战</h3><p>下面将通过减少线上大量的 WAITING 的线程，来减少上下文切换次数。</p>
+<p><strong>第一步</strong>：用 jstack 命令查看 dump 线程信息，看看 pid 为 37772 的进程里的线程都在做什么。</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">sudo</span> -u admin /usr/bin/jstack 37772 <span class="token operator">></span> /Users/asiama/dump17</code></pre>
+<p><strong>第二步</strong>：统计所有线程分别处于什么状态，发现 300 多个线程处理 WAITING (onobject-monitor) 状态</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">grep</span> java.lang.Thread.State /Users/asiama/dump17 <span class="token operator">|</span> <span class="token function">awk</span> <span class="token string">'{print <span class="token variable">$2</span><span class="token variable">$3</span><span class="token variable">$4</span><span class="token variable">$5</span>}'</span> <span class="token operator">|</span> <span class="token function">sort</span> <span class="token operator">|</span> <span class="token function">uniq</span> -c
+    39 RUNNABLE
+  21 TIMED_WAITING<span class="token punctuation">(</span>onobjectmonitor<span class="token punctuation">)</span>
+   6 TIMED_WAITING<span class="token punctuation">(</span>parking<span class="token punctuation">)</span>
+  51 TIMED_WAITING<span class="token punctuation">(</span>sleeping<span class="token punctuation">)</span>
+ 305 WAITING<span class="token punctuation">(</span>onobjectmonitor<span class="token punctuation">)</span>
+   3 WAITING<span class="token punctuation">(</span>parking<span class="token punctuation">)</span></code></pre>
+<p><strong>第三步</strong>：打开 dump 文件查看处于 WAITING (onobjectmonitor) 的线程在做什么。发现这些线程基本全是 JBOSS 的工作线程，在 await。说明 JBOSS 线程池里线程接收到的任务太少，大量线程都闲着。</p>
+<p><strong>第四步</strong>：减少 JBOSS 的工作线程数，找到 JBOSS 的线程池配置信息，将 maxThreads 降到 100。</p>
+<pre class=" language-xml"><code class="language-xml">&lt;maxThreads="250" maxHttpHeaderSize="8192" ... /></code></pre>
+<p><strong>第五步</strong>：重启 JBOSS，再 dump 线程信息，然后统计 WAITING （onobjectmonitor）的线程，发现减少了 175  个。WAITING 线程少了，系统上下文切换的次数就会少，因为每一次从 WAITING 到 RUNNABLE 都会进行一次上下文的切换。</p>
+<h3 id="资源限制的挑战"><a href="#资源限制的挑战" class="headerlink" title="资源限制的挑战"></a>资源限制的挑战</h3><ul>
+<li>什么是资源限制</li>
+</ul>
+<p>资源限制是指在进行并发编程时，程序的执行速度受限于计算机硬件资源或软件资源。例如，服务器的带宽只有 2MB/s，某个资源的下载速度只有 1mb/s，系统启动 10 个线程下载资源，下载速度不会变成 10mb/s，所以在进行并发编程时，要考虑这些资源的限制。硬件资源限制有带宽的上传/下载速度、硬盘读写速度和 CPU 的处理速度。软件资源限制有数据库的连接数和 socket 连接数等。</p>
+<ul>
+<li>资源限制引发的问题</li>
+</ul>
+<p>在并发编程中，将代码执行速度加快的原则是将代码中串行的部分变成并发执行，但是如果将某段串行的代码并发执行，因为受限于资源，仍然在串行执行，这时候程序不仅不会加快执行，反而会更慢，因为增加了上下文切换和资源调度的时间。例如，之前看到一段程序使用多线程在办公网并发地下载和处理数据时，导致 CPU 利用率达到 100%，几个小时都不能运行完成任务，后来改成单线程，一个小时就执行完成了。</p>
+<ul>
+<li>如何解决资源限制的问题</li>
+</ul>
+<p>对于硬件资源限制，可以考虑使用集群并行执行程序。既然单机的资源有限制，那么就让程序在多机上运行。比如使用 ODPS、Hadoop 或者自己搭建服务器集群，不同的机器处理不同的数据。可以通过 “数据ID%机器数”，计算机得到一个机器编号，然后由对应编号的机器处理这笔数据。</p>
+<p>对于软件资源的限制，可以考虑使用资源池将资源复用。比如使用连接池将数据库和 Socket 连接复用，或者在调用对方 webservice 接口获取数据时，只建立一个连接。</p>
+<ul>
+<li>在资源限制情况下进行并发编程</li>
+</ul>
+<p>如何在资源限制的情况下，让程序执行更快呢？方法就是，根据不同的资源限制调整程序的并发度，比如下载文件程序依赖于两个资源：带宽和硬盘读写速度。有数据库操作时，设计数据库连接数，如果 SQL 语句执行非常快，而线程的数量比数据库连接数大很多，则某些线程会被阻塞，等待数据库连接。</p>
+<blockquote>
+<p>有的并发程序写得不严谨，在并发下如果出现问题，定位起来会比较耗时和棘手。所以，对 Java 开发工程师而言，强烈建议多使用 JDK 并发包提供的并发容器和工具类来解决并发问题，因为这些类都已经通过了充分的测试和优化。</p>
+</blockquote>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <categories>
+        <category>JAVA</category>
+      </categories>
+      <tags>
+        <tag>多线程</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>探讨复杂的 if-else 语句“优雅处理”的思路</title>
     <url>/posts/afc9.html</url>
     <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在实际开发中，往往不是简单 if-else 结构，我们通常会不经意间写下如下代码：</p>
@@ -5513,171 +5731,6 @@ map <span class="token operator">=</span> strategies<span class="token punctuati
       <tags>
         <tag>策略</tag>
         <tag>工厂</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>测试多线程上下文切换</title>
-    <url>/posts/2067.html</url>
-    <content><![CDATA[<h3 id="上下文切换"><a href="#上下文切换" class="headerlink" title="上下文切换"></a>上下文切换</h3><p>即使是单核处理器也支持多线程执行代码，CPU 通过给每个线程分配 CPU 时间片来实现这个机制。时间片是 CPU 分配给各个线程的时间，因为时间片非常短，所以 CPU 通过不停地切换线程执行，让我们感觉多个线程是同时执行的，时间片一般是几十毫秒（ms）。</p>
-<p>CPU 通过时间片分配算法来循环执行任务，当前任务执行一个时间片后会切换到下一个任务。但是，在切换前会保存上一个任务的状态，以便下回切换回这个任务时，可以再加载这个任务的状态。所以任务从保存到再加载的过程就是一次上下文切换。</p>
-<p>这就像我们同时读两本书，当我们在读一本英文的技术书时，发现某个单词不认识，于是便打开中英文词典，但是在放下英文技术书之前，大脑必须先记住这本书读到了多少页的第多少行，等查完单词之后，能够继续读这本书。这样的切换是会影响读书效率的，同样上下文切换也会影响多线程的执行速度。</p>
-<h3 id="多线程一定快吗"><a href="#多线程一定快吗" class="headerlink" title="多线程一定快吗"></a>多线程一定快吗</h3><p>下面的代码演示串行和并发执行并累计操作的时间，请分析：下面的代码并发执行一定比串行快吗？</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ConcurrencyTest</span> <span class="token punctuation">{</span>
-  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">long</span> count <span class="token operator">=</span> 1000001L<span class="token punctuation">;</span>
-
-  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> InterruptedException <span class="token punctuation">{</span>
-    <span class="token function">concurrency</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">serial</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-
-  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">concurrency</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> InterruptedException <span class="token punctuation">{</span>
-    <span class="token keyword">long</span> start <span class="token operator">=</span> System<span class="token punctuation">.</span><span class="token function">nanoTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    Thread t <span class="token operator">=</span>
-        <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span>
-            <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">{</span>
-              <span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-              <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> count<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                a <span class="token operator">+=</span> <span class="token number">5</span><span class="token punctuation">;</span>
-              <span class="token punctuation">}</span>
-            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    t<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">int</span> b <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> count<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      b<span class="token operator">--</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    t<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">double</span> time <span class="token operator">=</span> <span class="token punctuation">(</span>System<span class="token punctuation">.</span><span class="token function">nanoTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> start<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">1E6</span><span class="token punctuation">;</span>
-
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"concurrency: "</span> <span class="token operator">+</span> time <span class="token operator">+</span> <span class="token string">"ms, b = "</span> <span class="token operator">+</span> b<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-
-  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">serial</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">long</span> start <span class="token operator">=</span> System<span class="token punctuation">.</span><span class="token function">nanoTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> count<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      a <span class="token operator">+=</span> <span class="token number">5</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">int</span> b <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> count<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      b<span class="token operator">--</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">double</span> time <span class="token operator">=</span> <span class="token punctuation">(</span>System<span class="token punctuation">.</span><span class="token function">nanoTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> start<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">1E6</span><span class="token punctuation">;</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"serial: "</span> <span class="token operator">+</span> time <span class="token operator">+</span> <span class="token string">"ms, b = "</span> <span class="token operator">+</span> b <span class="token operator">+</span> <span class="token string">", a = "</span> <span class="token operator">+</span> a<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">/** 输出结果：
-    concurrency: 68.555391ms, b = -1000001
-    serial: 5.589674ms, b = -1000001, a = 5000005 */</span></code></pre>
-<p>测试结果如下所示：</p>
-<table>
-<thead>
-<tr>
-<th>循环次数</th>
-<th>串行执行耗时 /ms</th>
-<th>并发执行耗时 /ms</th>
-<th>并发比串行快多少</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>10亿</td>
-<td>724.332455ms</td>
-<td>391.188627ms</td>
-<td>约 1 倍</td>
-</tr>
-<tr>
-<td>1亿</td>
-<td>71.894395ms</td>
-<td>87.138227ms</td>
-<td>差不多</td>
-</tr>
-<tr>
-<td>1千万</td>
-<td>10.201172ms</td>
-<td>48.001412ms</td>
-<td>慢</td>
-</tr>
-<tr>
-<td>1百万</td>
-<td>5.589674ms</td>
-<td>68.555391ms</td>
-<td>慢</td>
-</tr>
-<tr>
-<td>十万</td>
-<td>1.783637ms</td>
-<td>40.619798ms</td>
-<td>慢</td>
-</tr>
-</tbody></table>
-<h3 id="如何减少上下文切换"><a href="#如何减少上下文切换" class="headerlink" title="如何减少上下文切换"></a>如何减少上下文切换</h3><p>减少上下文切换的方法有无锁并发编程、CAS 算法、使用最少线程和使用协程。</p>
-<ul>
-<li>无锁并发编程。多线程竞争锁时，会引起上下文切换，所以多线程处理数据时，可以用一些办法来避免使用锁，如将数据的 ID 按照 Hash 算法取模分段，不同的线程处理不同段的数据。</li>
-<li>CAS 算法。Java 的 Atomic 包使用 CAS 算法来更新数据，而不需要加锁。</li>
-<li>使用最少的线程。避免创建不需要的线程，比如任务很少，但是创建了很多线程来处理，这样会造成大量线程都处理等待状态。</li>
-<li>协程：在单线程里实现多任务的调度，并在单线程里维持多个任务间的切换。</li>
-</ul>
-<h3 id="减少上下文切换实战"><a href="#减少上下文切换实战" class="headerlink" title="减少上下文切换实战"></a>减少上下文切换实战</h3><p>下面将通过减少线上大量的 WAITING 的线程，来减少上下文切换次数。</p>
-<p><strong>第一步</strong>：用 jstack 命令查看 dump 线程信息，看看 pid 为 37772 的进程里的线程都在做什么。</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">sudo</span> -u admin /usr/bin/jstack 37772 <span class="token operator">></span> /Users/asiama/dump17</code></pre>
-<p><strong>第二步</strong>：统计所有线程分别处于什么状态，发现 300 多个线程处理 WAITING (onobject-monitor) 状态</p>
-<pre class=" language-bash"><code class="language-bash">$ <span class="token function">grep</span> java.lang.Thread.State /Users/asiama/dump17 <span class="token operator">|</span> <span class="token function">awk</span> <span class="token string">'{print <span class="token variable">$2</span><span class="token variable">$3</span><span class="token variable">$4</span><span class="token variable">$5</span>}'</span> <span class="token operator">|</span> <span class="token function">sort</span> <span class="token operator">|</span> <span class="token function">uniq</span> -c
-    39 RUNNABLE
-  21 TIMED_WAITING<span class="token punctuation">(</span>onobjectmonitor<span class="token punctuation">)</span>
-   6 TIMED_WAITING<span class="token punctuation">(</span>parking<span class="token punctuation">)</span>
-  51 TIMED_WAITING<span class="token punctuation">(</span>sleeping<span class="token punctuation">)</span>
- 305 WAITING<span class="token punctuation">(</span>onobjectmonitor<span class="token punctuation">)</span>
-   3 WAITING<span class="token punctuation">(</span>parking<span class="token punctuation">)</span></code></pre>
-<p><strong>第三步</strong>：打开 dump 文件查看处于 WAITING (onobjectmonitor) 的线程在做什么。发现这些线程基本全是 JBOSS 的工作线程，在 await。说明 JBOSS 线程池里线程接收到的任务太少，大量线程都闲着。</p>
-<p><strong>第四步</strong>：减少 JBOSS 的工作线程数，找到 JBOSS 的线程池配置信息，将 maxThreads 降到 100。</p>
-<pre class=" language-xml"><code class="language-xml">&lt;maxThreads="250" maxHttpHeaderSize="8192" ... /></code></pre>
-<p><strong>第五步</strong>：重启 JBOSS，再 dump 线程信息，然后统计 WAITING （onobjectmonitor）的线程，发现减少了 175  个。WAITING 线程少了，系统上下文切换的次数就会少，因为每一次从 WAITING 到 RUNNABLE 都会进行一次上下文的切换。</p>
-<h3 id="资源限制的挑战"><a href="#资源限制的挑战" class="headerlink" title="资源限制的挑战"></a>资源限制的挑战</h3><ul>
-<li>什么是资源限制</li>
-</ul>
-<p>资源限制是指在进行并发编程时，程序的执行速度受限于计算机硬件资源或软件资源。例如，服务器的带宽只有 2MB/s，某个资源的下载速度只有 1mb/s，系统启动 10 个线程下载资源，下载速度不会变成 10mb/s，所以在进行并发编程时，要考虑这些资源的限制。硬件资源限制有带宽的上传/下载速度、硬盘读写速度和 CPU 的处理速度。软件资源限制有数据库的连接数和 socket 连接数等。</p>
-<ul>
-<li>资源限制引发的问题</li>
-</ul>
-<p>在并发编程中，将代码执行速度加快的原则是将代码中串行的部分变成并发执行，但是如果将某段串行的代码并发执行，因为受限于资源，仍然在串行执行，这时候程序不仅不会加快执行，反而会更慢，因为增加了上下文切换和资源调度的时间。例如，之前看到一段程序使用多线程在办公网并发地下载和处理数据时，导致 CPU 利用率达到 100%，几个小时都不能运行完成任务，后来改成单线程，一个小时就执行完成了。</p>
-<ul>
-<li>如何解决资源限制的问题</li>
-</ul>
-<p>对于硬件资源限制，可以考虑使用集群并行执行程序。既然单机的资源有限制，那么就让程序在多机上运行。比如使用 ODPS、Hadoop 或者自己搭建服务器集群，不同的机器处理不同的数据。可以通过 “数据ID%机器数”，计算机得到一个机器编号，然后由对应编号的机器处理这笔数据。</p>
-<p>对于软件资源的限制，可以考虑使用资源池将资源复用。比如使用连接池将数据库和 Socket 连接复用，或者在调用对方 webservice 接口获取数据时，只建立一个连接。</p>
-<ul>
-<li>在资源限制情况下进行并发编程</li>
-</ul>
-<p>如何在资源限制的情况下，让程序执行更快呢？方法就是，根据不同的资源限制调整程序的并发度，比如下载文件程序依赖于两个资源：带宽和硬盘读写速度。有数据库操作时，设计数据库连接数，如果 SQL 语句执行非常快，而线程的数量比数据库连接数大很多，则某些线程会被阻塞，等待数据库连接。</p>
-<blockquote>
-<p>有的并发程序写得不严谨，在并发下如果出现问题，定位起来会比较耗时和棘手。所以，对 Java 开发工程师而言，强烈建议多使用 JDK 并发包提供的并发容器和工具类来解决并发问题，因为这些类都已经通过了充分的测试和优化。</p>
-</blockquote>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <categories>
-        <category>JAVA</category>
-      </categories>
-      <tags>
-        <tag>多线程</tag>
       </tags>
   </entry>
   <entry>
@@ -9042,6 +9095,480 @@ cluster-require-full-coverge no</code></pre>
       </tags>
   </entry>
   <entry>
+    <title>使用多个表</title>
+    <url>/posts/8c42.html</url>
+    <content><![CDATA[<h3 id="显示多个表的记录"><a href="#显示多个表的记录" class="headerlink" title="显示多个表的记录"></a>显示多个表的记录</h3><h4 id="确认本章示例中使用的多个表"><a href="#确认本章示例中使用的多个表" class="headerlink" title="确认本章示例中使用的多个表"></a>确认本章示例中使用的多个表</h4><p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/Snipaste_2021-01-27_11-09-50.png"></p>
+<h4 id="显示多条提取结果"><a href="#显示多条提取结果" class="headerlink" title="显示多条提取结果"></a>显示多条提取结果</h4><p>从多个表中取出记录，并将它们汇总到一起显示出来。我们可以使用 UNION 命令从多个表中提取记录并将它们合并起来。</p>
+<p>比如从去年的客户表和今年的客户表中把老客户的记录提取出来，然后合并到一起显示。也可以合并结构不同的表数据。一般来说，合并到一起显示的列，其数据类型需要一致。不过，即使数据类型不同，很多时候 MySQL 也会对可以合并的记录一起合并。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT 列名1 FROM 表名1 UNION SELECT 列名2 FROM 表名;</code></pre>
+<p>写成一行的话有点不好理解。执行换行和缩进后，格式会变成下面这样。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT 
+                列名 1
+    FROM 
+                表名 1
+UNION
+    SELECT 
+                列名 2
+    FROM
+                表名 2;</code></pre>
+<p>UNION 将两个 “SELECT … FROM …” 的结果合并存了起来。</p>
+<p>首先试着合并具有相同列结构的表 tb1 和 tb2 的记录。因为合并的是所有的列，所以需要用 UNION 把 ”SELECT * FROM …“ 连接起来。</p>
+<pre class=" language-mysql"><code class="language-mysql">SELECT * FROM tb1 UNION SELECT * FROM tb2;
++-------+--------+------+
+| empid | name   | age  |
++-------+--------+------+
+| A101  | 佐腾   |   40 |
+| A102  | 高桥   |   28 |
+| A103  | 中川   |   20 |
+| A104  | 渡边   |   23 |
+| A105  | 西泽   |   35 |
+| A106  | 中村   |   26 |
+| A107  | 田中   |   24 |
+| A108  | 铃木   |   23 |
+| A109  | 村井   |   25 |
+| A110  | 吉田   |   27 |
++-------+--------+------+
+10 rows in set (0.00 sec)</code></pre>
+<p>为了便于阅读，我们可以用 () 把各个 “SELECT …” 括起来。这种写法更容易理解。</p>
+<pre class=" language-mysql"><code class="language-mysql">(SELECT * FROM tb1) UNION (SELECT * FROM tb2);</code></pre>
+<h4 id="使用-UNION-合并-3-个以上的表"><a href="#使用-UNION-合并-3-个以上的表" class="headerlink" title="使用 UNION 合并 3 个以上的表"></a>使用 UNION 合并 3 个以上的表</h4><p>将 empid 为 A102、A103、A104、A107 的记录一个一个地 SELECT 出来，然后使用 UNION 进行合并。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ (SELECT * FROM tb WHERE empid = 'A102')
+UNION (SELECT * FROM tb WHERE empid = 'A103')
+UNION (SELECT * FROM tb WHERE empid = 'A104')
+UNION (SELECT * FROM tb WHERE empid = 'A107');</code></pre>
+<h4 id="按条件合并多条提取结果进行显示"><a href="#按条件合并多条提取结果进行显示" class="headerlink" title="按条件合并多条提取结果进行显示"></a>按条件合并多条提取结果进行显示</h4><p>当使用 UNION 合并提取的多条记录时，如果需要添加条件，可以在各个命令的最后加上 “WHERE 条件”。</p>
+<p>试着提取符合下面两个条件中任意一个条件的员工的员工号：</p>
+<ol>
+<li><p>表 tb 中销售额（sales）大于等于 200 万元的员工的员工号（empid）（筛选出 A101 和 A102）</p>
+</li>
+<li><p>表 tb1 中年龄（age）大于等于 35 岁员工的员工号    (筛选出 A101 和  A105)</p>
+</li>
+</ol>
+<pre class=" language-mysql"><code class="language-mysql">$ (SELECT empid FROM tb WHERE sales >= 200) UNION (SELECT empid FROM tb1 WHERE age >= 35);
++-------+
+| empid |
++-------+
+| A101  |
+| A102  |
+| A105  |
++-------+
+3 rows in set (0.01 sec)</code></pre>
+<h4 id="合并显示多条提取结果（允许重复）"><a href="#合并显示多条提取结果（允许重复）" class="headerlink" title="合并显示多条提取结果（允许重复）"></a>合并显示多条提取结果（允许重复）</h4><p>每个员工的员工号整齐地显示出来。大家可能认为这是理所当然的，但事实并非如此。这个结果合并的是多个表中的记录。也就是说，根据条件 1 提取了 A101 和 A102，根据条件 2 提取了 A101 和 A105，所以按理说应该显示多个 A101。但是，A101 仅显示了一条记录。之所以会出现这样的情况，是因为在提取纪录的同时执行了 “消除重复记录” 的操作。</p>
+<p>如果对大量记录执行 “消除重复” 的操作，就会产生一定的等待时间。因此，在处理大量记录的情况下，省去这项操作效率更高。我们可以通过 UNION 加上 ALL 来省去消除重复记录的操作。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ (SELECT empid FROM tb WHERE sales >= 200) UNION ALL (SELECT empid FROM tb1 WHERE age >= 35);
++-------+
+| empid |
++-------+
+| A101  |
+| A102  |
+| A101  |
+| A105  |
++-------+
+4 rows in set (0.00 sec)</code></pre>
+<h3 id="连接多个表并显示-内连接"><a href="#连接多个表并显示-内连接" class="headerlink" title="连接多个表并显示(内连接)"></a>连接多个表并显示(内连接)</h3><p>将多个表通过某个连接键连接在一起的处理称为 “连接”。这种处理符合关系数据库的特性。</p>
+<p>表 tb 中 empid 为 A101 的员工是 40 岁的佐藤。可如果只看表 tb，我们是无法得知员工姓名的。因此，我们需要将销售信息表 tb 和员工信息表 tb1 共同拥有的列 empid 设置为连接键，连接这两个表并显示出来。</p>
+<p>我们可以使用 JOIN 连接两个表</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT 列名 FROM 表1 JOIN 要连接的表2 ON 表1的列 = 表2的列</code></pre>
+<p>ON 的后面要写上作为连接键的条件。例如，在连接表 tb 和表 tb1 的情况下，由于列 empid 是共同的列，所以我们要设置这个键为连接键。在 “ON 表1的列 = 表2的列” 的部分中， “xx 表的 xx 列” 的中间要加上 “.”。就像下面这样：</p>
+<pre class=" language-mysql"><code class="language-mysql">ON tb.empid = tb1.empid</code></pre>
+<p>这里我们暂时使用 ‘*’ 将所有的列都显示出来：</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT * FROM tb JOIN tb1 ON tb.empid = tb1.empid;
++-------+-------+-------+-------+--------+------+
+| empid | sales | month | empid | name   | age  |
++-------+-------+-------+-------+--------+------+
+| A103  |   101 |     4 | A103  | 中川   |   20 |
+| A102  |    54 |     5 | A102  | 高桥   |   28 |
+| A104  |   181 |     4 | A104  | 渡边   |   23 |
+| A101  |   184 |     4 | A101  | 佐腾   |   40 |
+| A103  |    17 |     5 | A103  | 中川   |   20 |
+| A101  |   300 |     5 | A101  | 佐腾   |   40 |
+| A102  |   205 |     6 | A102  | 高桥   |   28 |
+| A104  |    93 |     5 | A104  | 渡边   |   23 |
+| A103  |    12 |     6 | A103  | 中川   |   20 |
++-------+-------+-------+-------+--------+------+
+9 rows in set (0.00 sec)</code></pre>
+<p>像这样把不同的表中相匹配的记录提取出来的连接方式称为<strong>内连接</strong>。如果要明确指出某一处理是内连接，可以将 JOIN 部分写成 INNER JOIN。像下面这样 JOIN 的前面加上 INNER，结果不会发生任何改变。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT * FROM tb INNER JOIN tb1 ON tb.empid = tb1.empid;</code></pre>
+<h4 id="选择列进行显示"><a href="#选择列进行显示" class="headerlink" title="选择列进行显示"></a>选择列进行显示</h4><p>我们使用 “*” 显示了所有的列。这次，我们来选择要显示的列。不过，在连接表的时候如果只写 name 和 sales，MySQL 会不知道这些列属于哪个表。在这种情况下，我们要把列名写成 “表名.列名”。另外，列会按照指定的顺序显示。同一列显示多少次都没有关系。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT tb.empid, tb1.name, tb.sales 
+        FROM tb 
+    JOIN tb1
+        ON tb.empid = tb1.empid;
++-------+--------+-------+
+| empid | name   | sales |
++-------+--------+-------+
+| A103  | 中川   |   101 |
+| A102  | 高桥   |    54 |
+| A104  | 渡边   |   181 |
+| A101  | 佐腾   |   184 |
+| A103  | 中川   |    17 |
+| A101  | 佐腾   |   300 |
+| A102  | 高桥   |   205 |
+| A104  | 渡边   |    93 |
+| A103  | 中川   |    12 |
++-------+--------+-------+
+9 rows in set (0.00 sec)</code></pre>
+<h4 id="给表添加别名"><a href="#给表添加别名" class="headerlink" title="给表添加别名"></a>给表添加别名</h4><pre class=" language-mysql"><code class="language-mysql">表名 AS 别名</code></pre>
+<h4 id="使用-USING-使-ON-的部分更容易阅读"><a href="#使用-USING-使-ON-的部分更容易阅读" class="headerlink" title="使用 USING 使 ON~ 的部分更容易阅读"></a>使用 USING 使 ON~ 的部分更容易阅读</h4><p>在前面的示例中，作为连接键的两个列恰好都是 empid 这个名字。在使用相同列名进行指定的情况下，我们可以使用 <strong>USING(作为连接键的列名)</strong> 简单地进行记述。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT tb.empid, tb1.name, tb.sales FROM tb JOIN tb1 USING(empid);
++-------+--------+-------+
+| empid | name   | sales |
++-------+--------+-------+
+| A103  | 中川   |   101 |
+| A102  | 高桥   |    54 |
+| A104  | 渡边   |   181 |
+| A101  | 佐腾   |   184 |
+| A103  | 中川   |    17 |
+| A101  | 佐腾   |   300 |
+| A102  | 高桥   |   205 |
+| A104  | 渡边   |    93 |
+| A103  | 中川   |    12 |
++-------+--------+-------+
+9 rows in set (0.00 sec)</code></pre>
+<h4 id="通过-WHERE-设置条件从连接表中提取纪录"><a href="#通过-WHERE-设置条件从连接表中提取纪录" class="headerlink" title="通过 WHERE 设置条件从连接表中提取纪录"></a>通过 WHERE 设置条件从连接表中提取纪录</h4><p>通过 WHERE 来设置条件，仅显示连接表中符合条件的记录。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT tb.empid AS 员工号, tb1.name AS 姓名, tb.sales AS 销售额
+            FROM tb
+    JOIN tb1
+            USING(empid)
+    WHERE tb.sales >= 100;
++-----------+--------+-----------+
+| 员工号    | 姓名   | 销售额    |
++-----------+--------+-----------+
+| A103      | 中川   |       101 |
+| A104      | 渡边   |       181 |
+| A101      | 佐腾   |       184 |
+| A101      | 佐腾   |       300 |
+| A102      | 高桥   |       205 |
++-----------+--------+-----------+
+5 rows in set (0.00 sec)</code></pre>
+<h4 id="提取多个表中的记录"><a href="#提取多个表中的记录" class="headerlink" title="提取多个表中的记录"></a>提取多个表中的记录</h4><p>我们可以使用 JOIN 连接多个表。在 “SELECT … JOIN … ON …” 的基础上加上 “JOIN … ON …” 就可以对多个表进行连接。但是，在连接多个表的情况下，处理时间会相应地变长，记述的内容也会变得难以理解。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT ~ FROM
+ 表名 1
+ JOIN 表名 2 连接条件
+ JOIN 表名 3 连接条件
+ ...;</code></pre>
+<p>公司员工的 “出生地” 信息保存在表 tb3 中。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT tb.empid, tb.sales, tb1.name, tb3.region
+    FROM tb
+JOIN tb1
+    USING(empid)
+JOIN tb3
+    USING(empid);</code></pre>
+<p>我们使用 3 个表共有的列 empid 执行了 USING(empid)。如果使用 ON 将 ON tb.empid = tb1.empid 和  on tb.empid = tb3.empid。</p>
+<h3 id="显示多个表的所有记录（外连接）"><a href="#显示多个表的所有记录（外连接）" class="headerlink" title="显示多个表的所有记录（外连接）"></a>显示多个表的所有记录（外连接）</h3><pre class=" language-mysql"><code class="language-mysql">$ SELECT x.empid, y.name, x.sales
+      FROM tb AS x
+  JOIN tb1 AS y
+      on x.empid = y.empid;
++-------+--------+-------+
+| empid | name   | sales |
++-------+--------+-------+
+| A103  | 中川   |   101 |
+| A102  | 高桥   |    54 |
+| A104  | 渡边   |   181 |
+| A101  | 佐腾   |   184 |
+| A103  | 中川   |    17 |
+| A101  | 佐腾   |   300 |
+| A102  | 高桥   |   205 |
+| A104  | 渡边   |    93 |
+| A103  | 中川   |    12 |
++-------+--------+-------+
+9 rows in set (0.00 sec)</code></pre>
+<p>实际上，表 tb 中有一个 empid = A107 的人，但这个人没有登记在表 tb1 的员工名单上。A107是其它营业所的员工，所有表 tb1 中没有这个人的数据。虽然他贡献了一部分销售额，但使用 JOIN 连接表时不会显示这个人的记录。</p>
+<p>另外，员工信息表 tb1 中虽然有 A105 西泽的信息，但销售信息表 tb 没有他的相关信息。也就是说，虽然西泽被列入了员工名册中，但可能因为没有销售成绩，所以销售信息表中没有显示 A105 的记录。</p>
+<ul>
+<li><strong>使用了 JOIN (或者 INNER JOIN) 的 “内连接” 只会提取与连接键相匹配的记录</strong></li>
+</ul>
+<p>因此，只存在表 tb 或者表 tb1 中的记录将被忽略。但是，我们有时也会遇到必须显示这些记录的情况。这这种情况下，我们需要使用 <strong>外连接</strong>。外连接具有一下特性：</p>
+<ul>
+<li><strong>即使与连接键不匹配，外链接也会提取两个表中的所有记录。</strong></li>
+</ul>
+<h4 id="外连接的种类"><a href="#外连接的种类" class="headerlink" title="外连接的种类"></a>外连接的种类</h4><ul>
+<li>左外连接<ul>
+<li>显示 “相匹配的记录” 和 “表1（即左表）的全部记录”</li>
+</ul>
+</li>
+<li>右外连接<ul>
+<li>显示 “相匹配的记录” 和 “要连接的表2（即右表）的全部记录”</li>
+</ul>
+</li>
+</ul>
+<h4 id="使用左外连接"><a href="#使用左外连接" class="headerlink" title="使用左外连接"></a>使用左外连接</h4><p>当进行左外连接时，我们只需将内连接中使用的 JOIN 修改为 <strong>LEFT JOIN</strong> 即可。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT 列名
+            FROM 表1
+    LEFT JOIN 要连接的表2
+            ON 表1的列 = 表2的列 </code></pre>
+<p>使用左外连接显示表 tb 和 表 tb1 相匹配的记录，以及表 tb 的所有记录。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT tb.empid, tb1.name FROM tb LEFT JOIN tb1 USING(empid);
++-------+--------+
+| empid | name   |
++-------+--------+
+| A103  | 中川   |
+| A102  | 高桥   |
+| A104  | 渡边   |
+| A101  | 佐腾   |
+| A103  | 中川   |
+| A101  | 佐腾   |
+| A102  | 高桥   |
+| A104  | 渡边   |
+| A103  | 中川   |
+| A107  | NULL   |
++-------+--------+
+10 rows in set (0.00 sec)</code></pre>
+<h4 id="使用右外连接"><a href="#使用右外连接" class="headerlink" title="使用右外连接"></a>使用右外连接</h4><p>通过右外连接显示 “相匹配的记录” 和 “要连接的右表的所有记录”。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT 列名 
+            FROM 表 1
+    RIGHT JOIN 要连接的表2
+            ON 表1的列 = 表2的列</code></pre>
+<p>有些记录在员工信息表 tb1 中有，但在销售信息表 tb 中没有，对于这种没有销售额的员工的记录，我们也将其全部显示出来。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT tb.empid, tb1.name
+            FROM tb
+    RIGHT JOIN tb1
+    USING(empid);
++-------+--------+
+| empid | name   |
++-------+--------+
+| A103  | 中川   |
+| A102  | 高桥   |
+| A104  | 渡边   |
+| A101  | 佐腾   |
+| A103  | 中川   |
+| A101  | 佐腾   |
+| A102  | 高桥   |
+| A104  | 渡边   |
+| A103  | 中川   |
+| NULL  | 西泽   |
++-------+--------+
+10 rows in set (0.00 sec)</code></pre>
+<p>执行的结果中显示了表 tb 和表 tb1 相匹配的记录，以及右表 tb1 的所有记录。</p>
+<blockquote>
+<p><strong>加上 OUTER 后的书写方法</strong>    </p>
+<p>LEFT JOIN 也可以写成 LEFT OUTER JOIN。同样，RIGHT JOIN 也可以写成 RIGHT OUTER JOIN。</p>
+</blockquote>
+<h3 id="自连接"><a href="#自连接" class="headerlink" title="自连接"></a>自连接</h3><p>我们可以将表与其自身，也就是和同名的表进行连接。这种连接方式称为自连接。因为是两个同名的表进行连接，所以如果直接执行连接，就会显示出两个同名的列。这样就无法对列进行识别了（发生了错误），因此连接时必须定义别名。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT 列名 FROM 表名 AS 别名1 JOIN 表名 AS 别名2;</code></pre>
+<p>我们试着对员工信息表 tb1 进行自连接，并把所有的列显示出来。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT * FROM tb1 AS a JOIN tb1 AS b;
++-------+--------+------+-------+--------+------+
+| empid | name   | age  | empid | name   | age  |
++-------+--------+------+-------+--------+------+
+| A101  | 佐腾   |   40 | A101  | 佐腾   |   40 |
+| A102  | 高桥   |   28 | A101  | 佐腾   |   40 |
+| A103  | 中川   |   20 | A101  | 佐腾   |   40 |
+| A104  | 渡边   |   23 | A101  | 佐腾   |   40 |
+| A105  | 西泽   |   35 | A101  | 佐腾   |   40 |
+| A101  | 佐腾   |   40 | A102  | 高桥   |   28 |
+| A102  | 高桥   |   28 | A102  | 高桥   |   28 |
+| A103  | 中川   |   20 | A102  | 高桥   |   28 |
+| A104  | 渡边   |   23 | A102  | 高桥   |   28 |
+| A105  | 西泽   |   35 | A102  | 高桥   |   28 |
+| A101  | 佐腾   |   40 | A103  | 中川   |   20 |
+| A102  | 高桥   |   28 | A103  | 中川   |   20 |
+| A103  | 中川   |   20 | A103  | 中川   |   20 |
+| A104  | 渡边   |   23 | A103  | 中川   |   20 |
+| A105  | 西泽   |   35 | A103  | 中川   |   20 |
+| A101  | 佐腾   |   40 | A104  | 渡边   |   23 |
+| A102  | 高桥   |   28 | A104  | 渡边   |   23 |
+| A103  | 中川   |   20 | A104  | 渡边   |   23 |
+| A104  | 渡边   |   23 | A104  | 渡边   |   23 |
+| A105  | 西泽   |   35 | A104  | 渡边   |   23 |
+| A101  | 佐腾   |   40 | A105  | 西泽   |   35 |
+| A102  | 高桥   |   28 | A105  | 西泽   |   35 |
+| A103  | 中川   |   20 | A105  | 西泽   |   35 |
+| A104  | 渡边   |   23 | A105  | 西泽   |   35 |
+| A105  | 西泽   |   35 | A105  | 西泽   |   35 |
++-------+--------+------+-------+--------+------+
+25 rows in set (0.01 sec)</code></pre>
+<h4 id="排序的技巧-其一"><a href="#排序的技巧-其一" class="headerlink" title="排序的技巧 其一"></a>排序的技巧 其一</h4><p>自连接的结果中会包含所有的组合。如果其中有你想要的组合，之后就可以通过设置条件来选出想要的内容了。</p>
+<img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/2991611739549_.pic_hd.jpg" style="zoom:50%;">
+
+<p>请看右侧为 “佐藤 40 ”，左侧为 “佐藤 40 ”、“高桥 28 ”、“中川 20 ”、“渡边 23 ”、“西泽 35 ” 的 5 行记录。</p>
+<p>在这 5 行记录中，大于等于右侧 “佐藤 40 ” 中 40 这个数字的数据在左侧仅有 1，所以佐藤排名第一。</p>
+<p>同样，请看右侧 “高桥 28”，左侧为 “佐藤 40 ”、“高桥 28 ”、“中川 20 ”、“渡边 23 ”、“西泽 35 ” 的 5 行记录。</p>
+<p>在这 5 行记录中，其中大于等于右侧 “高桥 28 ” 中 28 这个数字的数据在左侧有 3个，分别是 40、38、28，也就是说高桥排在第三。</p>
+<p>像这样，在右侧相同的 5 行记录的范围内，大于等于右侧 age 的值在左侧 age 中的个数就是排名。</p>
+<p>换句话说，就是只需要自连接，并对每一组 empid 计算大于等于右侧 age 的值在左侧 age 中的个数即可。该数可以通过 COUNT(*) 计算。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT a.name, a.age, COUNT(*)
+        FROM tb1 AS a
+    JOIN tb1 AS b
+        WHERE a.age <= b.age
+    GROUP BY a.empid;
++--------+------+----------+
+| name   | age  | COUNT(*) |
++--------+------+----------+
+| 佐腾   |   40 |        1 |
+| 高桥   |   28 |        3 |
+| 中川   |   20 |        5 |
+| 渡边   |   23 |        4 |
+| 西泽   |   35 |        2 |
++--------+------+----------+
+5 rows in set (0.01 sec)</code></pre>
+<h3 id="从-SELECT-的记录中-SELECT-子查询"><a href="#从-SELECT-的记录中-SELECT-子查询" class="headerlink" title="从 SELECT 的记录中 SELECT (子查询)"></a>从 SELECT 的记录中 SELECT (子查询)</h3><h4 id="什么是子查询"><a href="#什么是子查询" class="headerlink" title="什么是子查询"></a>什么是子查询</h4><p>使用子查询可以完成两个阶段的处理：执行查询，然后使用检索到的记录进一步执行查询。例如，在第一阶段中进行 “从销售信息表中提取销售额大于等于200万元的员工号” 的处理，然后在第二阶段中进行  “从提取出来的员工号中提出相对应的姓名” 的处理。 第一阶段的查询称为 <strong>子查询</strong>。</p>
+<p>第一阶段的子查询可以返回值、列和记录等。许多使用了子查询的处理，可以用其他方法取代，例如内连接。但是，子查询的处理方式更容易理解，处理效率也更高。</p>
+<h4 id="显示最大值（返回的值的子查询-其一）"><a href="#显示最大值（返回的值的子查询-其一）" class="headerlink" title="显示最大值（返回的值的子查询 其一）"></a>显示最大值（返回的值的子查询 其一）</h4><ul>
+<li>显示表 tb 中列 sales 最大值的记录</li>
+</ul>
+<p>换句话说，就是显示在销售信息表 tb 中销售额最高（sales最大） 的员工记录。列的最大值可以用 MAX 函数计算。或许有人会想 ”这还不简单“，按照下面的方式处理不就可以了。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT * FROM tb WHERE sales = MAX(sales);</code></pre>
+<p>试着执行一下，结果会发生错误。只写 MAX(sales) 是不会计算出列 sales 的最大值的。想要获取列 sales 中的最大值，就需要按照下面的方式进行查询。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT MAX(sales) FROM tb;</code></pre>
+<p>当提取最大值相对应的记录时，需要先通过上面的操作获取最大值，然后从表 tb 中提取纪录。这里，子查询就起到了非常重要的作用。首先，在第一阶段的查询中取出 MAX(sales) 的值，然后在第二阶段选择（SELECT）包含了最大值的列 sales 的纪录。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT * FROM tb WHERE sales IN (第一阶段的处理结果);</code></pre>
+<p>执行下面的命令：</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT *
+            FROM tb 
+    WHERE sales 
+            in (SELECT MAX(seles) FROM tb);
++-------+-------+-------+
+| empid | sales | month |
++-------+-------+-------+
+| A101  |   300 |     5 |
++-------+-------+-------+
+1 row in set (0.02 sec)</code></pre>
+<blockquote>
+<p><strong>GROUP BY 函数</strong>    MAX、AVG 和 SUM 等聚合函数也称为 “GROUP BY” 函数，这类函数用于处理分组后的值。但是，在没有 “GROUP BY” 的情况下，这类函数会将整个表作为一个组进行处理。</p>
+</blockquote>
+<h4 id="提取大于等于平均值的纪录（返回值的子查询-其二）"><a href="#提取大于等于平均值的纪录（返回值的子查询-其二）" class="headerlink" title="提取大于等于平均值的纪录（返回值的子查询 其二）"></a>提取大于等于平均值的纪录（返回值的子查询 其二）</h4><p>试着计算员工信息报 tb1 中员工的平均年龄，并提取大于等于平均年龄的员工的纪录。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT * 
+            FROM tb1 
+    WHERE AGE >= (SELECT AVG(age) FROM tb1);
++-------+--------+------+
+| empid | name   | age  |
++-------+--------+------+
+| A101  | 佐腾   |   40 |
+| A105  | 西泽   |   35 |
++-------+--------+------+
+2 rows in set (0.00 sec)</code></pre>
+<blockquote>
+<p><strong>子查询和内连接的提取结果的差异（虽然相似但不同!）</strong></p>
+<p>子查询和内连接非常相似。我们来看一个例子。对于销售信息表 tb 中存在的员工号 empid，显示员工信息表 tb1 中相应的员工号 empid 和 姓名name。下面分别用 “子查询” 和 “内连接” 实现上述内容的示例。</p>
+<ul>
+<li>子查询</li>
+</ul>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT empid, name 
+          FROM tb1 
+  WHERE empid IN (SELECT empid FROM tb);
++-------+--------+
+| empid | name   |
++-------+--------+
+| A101  | 佐腾   |
+| A102  | 高桥   |
+| A103  | 中川   |
+| A104  | 渡边   |
+4 rows in set (0.00 sec)</code></pre>
+<ul>
+<li>内连接</li>
+</ul>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT tb1.empid, tb1.name 
+            FROM tb1 
+    JOIN tb ON tb1.empid = tb.empid;
++-------+--------+
+| empid | name   |
++-------+--------+
+| A103  | 中川   |
+| A102  | 高桥   |
+| A104  | 渡边   |
+| A101  | 佐腾   |
+| A103  | 中川   |
+| A101  | 佐腾   |
+| A102  | 高桥   |
+| A104  | 渡边   |
+| A103  | 中川   |
++-------+--------+
+9 rows in set (0.00 sec)</code></pre>
+<p>二者的执行结果是不同的。在使用子查询的情况下，会先提取表 tb 中存在 empid，然后仅显示和表 tb1 相匹配的纪录。而使用内连接的话，将显示表 tb 中所有的纪录。</p>
+</blockquote>
+<h4 id="使用-“-”-代替-IN-会报错吗"><a href="#使用-“-”-代替-IN-会报错吗" class="headerlink" title="使用 “=” 代替 IN 会报错吗"></a>使用 “=” 代替 IN 会报错吗</h4><pre class=" language-mysql"><code class="language-mysql">$ SELECT * 
+            FROM tb1 
+    WHERE empid = (SELECT empid FROM tb WHERE sales >= 200);
+ERROR 1242 (21000): Subquery returns more than 1 row</code></pre>
+<p>很遗憾，执行此命令会出现 <code>ERROR 1242 (21000): Subquery returns more than 1 row</code>（子查询返回的结果多于一行）。如果满足 “e pid 与 x x 恰好一致” 的条件，使用 “=” 也无妨。但是在这个示例中，多条记录在第一阶段被提取了出来，因此必须使用表示 “…之一” 的 IN。</p>
+<p>当然，如果只有一条相对应的记录，那么即使使用 “=” 也不会报错。如：</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT * 
+            FROM tb1 
+    WHERE empid = (SELECT empid FROM tb ORDER BY sales DESC LIMIT 1);
++-------+--------+------+
+| empid | name   | age  |
++-------+--------+------+
+| A101  | 佐腾   |   40 |
++-------+--------+------+
+1 row in set (0.00 sec)</code></pre>
+<p>LIMIT 1 时仅能提出一条记录，所以使用 “=” 也不会报错。</p>
+<h4 id="使用-EXISTS，仅以存在的记录为对象"><a href="#使用-EXISTS，仅以存在的记录为对象" class="headerlink" title="使用 EXISTS，仅以存在的记录为对象"></a>使用 EXISTS，仅以存在的记录为对象</h4><p>我们也可以使用 EXISTS，不返回指定的列而返回 “第一阶段子查询存在的目标记录” 这样的信息。</p>
+<ul>
+<li>从表 tb 中提取有销售额的员工的记录，然后从表 tb1 中提取相对应的记录显示出来。</li>
+</ul>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT * 
+            FROM tb1 
+    WHERE EXISTS(SELECT * FROM tb WHERE tb.empid = tb1.empid);
++-------+--------+------+
+| empid | name   | age  |
++-------+--------+------+
+| A101  | 佐腾   |   40 |
+| A102  | 高桥   |   28 |
+| A103  | 中川   |   20 |
+| A104  | 渡边   |   23 |
++-------+--------+------+
+4 rows in set (0.00 sec)</code></pre>
+<p>A105 在表 tb 中不存在相应的 empid，所以没有显示出来。从中我们可以知道，A105 的西泽没有销售额。</p>
+<h4 id="使用-NOT-EXISTS"><a href="#使用-NOT-EXISTS" class="headerlink" title="使用 NOT EXISTS"></a>使用 NOT EXISTS</h4><pre class=" language-mysql"><code class="language-mysql">$ SELECT * 
+            FROM tb1 
+    WHERE EXISTS(SELECT * FROM tb WHERE tb.empid = tb1.empid);
+| empid | name   | age  |
++-------+--------+------+
+| A105  | 西泽   |   35 |
++-------+--------+------+
+1 row in set (0.01 sec)    </code></pre>
+<p>从中我们可以知道，没有销售额的员工是 35 岁的 A105 西泽。</p>
+<h4 id="排序的技巧-其二"><a href="#排序的技巧-其二" class="headerlink" title="排序的技巧 其二"></a>排序的技巧 其二</h4><p>在使用子查询的情况下，我们可以用各种各样的方法进行排序，而且这些方法比自连接的方法更容易理解。这里来介绍其中一种方法。</p>
+<ul>
+<li>创建和表 tb 结构相同的表 tb_rank。</li>
+<li>向表 tb_rank 中添加具有自动连续编号功能的列 c_rank。</li>
+<li>对表 tb 执行按列 sales 由高到低排序的 SELECT 子查询</li>
+<li>将子查询的结果 INSERT 到 tb_rank 中。</li>
+</ul>
+<pre class=" language-mysql"><code class="language-mysql">$ CREATE TABLE tb_rank LIKE tb;
+$ ALTER TABLE tb_rank ADD c_rank INT AUTO_INCREMENT PRIMARY KEY;
+$ INSERT INTO tb_rank(empid, sales, month) (SELECT empid,sales, month FROM tb ORDER BY sales DESC);
+$ SELECT * FROM tb_rank;
++-------+-------+-------+--------+
+| empid | sales | month | c_rank |
++-------+-------+-------+--------+
+| A101  |   300 |     5 |      1 |
+| A102  |   205 |     6 |      2 |
+| A101  |   184 |     4 |      3 |
+| A104  |   181 |     4 |      4 |
+| A103  |   101 |     4 |      5 |
+| A104  |    93 |     5 |      6 |
+| A107  |    87 |     6 |      7 |
+| A102  |    54 |     5 |      8 |
+| A103  |    17 |     5 |      9 |
+| A103  |    12 |     6 |     10 |
++-------+-------+-------+--------+
+10 rows in set (0.00 sec)</code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用各种条件进行提取</title>
     <url>/posts/2693.html</url>
     <content><![CDATA[<h3 id="准备表"><a href="#准备表" class="headerlink" title="准备表"></a>准备表</h3><p>我们将使用表 tb 来练习 SELECT 的用法。</p>
@@ -9637,480 +10164,6 @@ END     |
 <p>FROM ~ —&gt; WHERE ~ —&gt; GROUP BY ~ —&gt; HAVING ～ —&gt; SELECT ~ —&gt; ORDER BY ~</p>
 <p>也就是说，在通过 GROUP BY 分组之前会执行 WHERE，而 HAVING 执行的对象是 GROUP BY 分组后的结果。另外，可以看到 ORDER BY 重新排列了 SELECT 的结果。</p>
 </blockquote>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>MySQL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用多个表</title>
-    <url>/posts/8c42.html</url>
-    <content><![CDATA[<h3 id="显示多个表的记录"><a href="#显示多个表的记录" class="headerlink" title="显示多个表的记录"></a>显示多个表的记录</h3><h4 id="确认本章示例中使用的多个表"><a href="#确认本章示例中使用的多个表" class="headerlink" title="确认本章示例中使用的多个表"></a>确认本章示例中使用的多个表</h4><p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/Snipaste_2021-01-27_11-09-50.png"></p>
-<h4 id="显示多条提取结果"><a href="#显示多条提取结果" class="headerlink" title="显示多条提取结果"></a>显示多条提取结果</h4><p>从多个表中取出记录，并将它们汇总到一起显示出来。我们可以使用 UNION 命令从多个表中提取记录并将它们合并起来。</p>
-<p>比如从去年的客户表和今年的客户表中把老客户的记录提取出来，然后合并到一起显示。也可以合并结构不同的表数据。一般来说，合并到一起显示的列，其数据类型需要一致。不过，即使数据类型不同，很多时候 MySQL 也会对可以合并的记录一起合并。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ SELECT 列名1 FROM 表名1 UNION SELECT 列名2 FROM 表名;</code></pre>
-<p>写成一行的话有点不好理解。执行换行和缩进后，格式会变成下面这样。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ SELECT 
-                列名 1
-    FROM 
-                表名 1
-UNION
-    SELECT 
-                列名 2
-    FROM
-                表名 2;</code></pre>
-<p>UNION 将两个 “SELECT … FROM …” 的结果合并存了起来。</p>
-<p>首先试着合并具有相同列结构的表 tb1 和 tb2 的记录。因为合并的是所有的列，所以需要用 UNION 把 ”SELECT * FROM …“ 连接起来。</p>
-<pre class=" language-mysql"><code class="language-mysql">SELECT * FROM tb1 UNION SELECT * FROM tb2;
-+-------+--------+------+
-| empid | name   | age  |
-+-------+--------+------+
-| A101  | 佐腾   |   40 |
-| A102  | 高桥   |   28 |
-| A103  | 中川   |   20 |
-| A104  | 渡边   |   23 |
-| A105  | 西泽   |   35 |
-| A106  | 中村   |   26 |
-| A107  | 田中   |   24 |
-| A108  | 铃木   |   23 |
-| A109  | 村井   |   25 |
-| A110  | 吉田   |   27 |
-+-------+--------+------+
-10 rows in set (0.00 sec)</code></pre>
-<p>为了便于阅读，我们可以用 () 把各个 “SELECT …” 括起来。这种写法更容易理解。</p>
-<pre class=" language-mysql"><code class="language-mysql">(SELECT * FROM tb1) UNION (SELECT * FROM tb2);</code></pre>
-<h4 id="使用-UNION-合并-3-个以上的表"><a href="#使用-UNION-合并-3-个以上的表" class="headerlink" title="使用 UNION 合并 3 个以上的表"></a>使用 UNION 合并 3 个以上的表</h4><p>将 empid 为 A102、A103、A104、A107 的记录一个一个地 SELECT 出来，然后使用 UNION 进行合并。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ (SELECT * FROM tb WHERE empid = 'A102')
-UNION (SELECT * FROM tb WHERE empid = 'A103')
-UNION (SELECT * FROM tb WHERE empid = 'A104')
-UNION (SELECT * FROM tb WHERE empid = 'A107');</code></pre>
-<h4 id="按条件合并多条提取结果进行显示"><a href="#按条件合并多条提取结果进行显示" class="headerlink" title="按条件合并多条提取结果进行显示"></a>按条件合并多条提取结果进行显示</h4><p>当使用 UNION 合并提取的多条记录时，如果需要添加条件，可以在各个命令的最后加上 “WHERE 条件”。</p>
-<p>试着提取符合下面两个条件中任意一个条件的员工的员工号：</p>
-<ol>
-<li><p>表 tb 中销售额（sales）大于等于 200 万元的员工的员工号（empid）（筛选出 A101 和 A102）</p>
-</li>
-<li><p>表 tb1 中年龄（age）大于等于 35 岁员工的员工号    (筛选出 A101 和  A105)</p>
-</li>
-</ol>
-<pre class=" language-mysql"><code class="language-mysql">$ (SELECT empid FROM tb WHERE sales >= 200) UNION (SELECT empid FROM tb1 WHERE age >= 35);
-+-------+
-| empid |
-+-------+
-| A101  |
-| A102  |
-| A105  |
-+-------+
-3 rows in set (0.01 sec)</code></pre>
-<h4 id="合并显示多条提取结果（允许重复）"><a href="#合并显示多条提取结果（允许重复）" class="headerlink" title="合并显示多条提取结果（允许重复）"></a>合并显示多条提取结果（允许重复）</h4><p>每个员工的员工号整齐地显示出来。大家可能认为这是理所当然的，但事实并非如此。这个结果合并的是多个表中的记录。也就是说，根据条件 1 提取了 A101 和 A102，根据条件 2 提取了 A101 和 A105，所以按理说应该显示多个 A101。但是，A101 仅显示了一条记录。之所以会出现这样的情况，是因为在提取纪录的同时执行了 “消除重复记录” 的操作。</p>
-<p>如果对大量记录执行 “消除重复” 的操作，就会产生一定的等待时间。因此，在处理大量记录的情况下，省去这项操作效率更高。我们可以通过 UNION 加上 ALL 来省去消除重复记录的操作。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ (SELECT empid FROM tb WHERE sales >= 200) UNION ALL (SELECT empid FROM tb1 WHERE age >= 35);
-+-------+
-| empid |
-+-------+
-| A101  |
-| A102  |
-| A101  |
-| A105  |
-+-------+
-4 rows in set (0.00 sec)</code></pre>
-<h3 id="连接多个表并显示-内连接"><a href="#连接多个表并显示-内连接" class="headerlink" title="连接多个表并显示(内连接)"></a>连接多个表并显示(内连接)</h3><p>将多个表通过某个连接键连接在一起的处理称为 “连接”。这种处理符合关系数据库的特性。</p>
-<p>表 tb 中 empid 为 A101 的员工是 40 岁的佐藤。可如果只看表 tb，我们是无法得知员工姓名的。因此，我们需要将销售信息表 tb 和员工信息表 tb1 共同拥有的列 empid 设置为连接键，连接这两个表并显示出来。</p>
-<p>我们可以使用 JOIN 连接两个表</p>
-<pre class=" language-mysql"><code class="language-mysql">$ SELECT 列名 FROM 表1 JOIN 要连接的表2 ON 表1的列 = 表2的列</code></pre>
-<p>ON 的后面要写上作为连接键的条件。例如，在连接表 tb 和表 tb1 的情况下，由于列 empid 是共同的列，所以我们要设置这个键为连接键。在 “ON 表1的列 = 表2的列” 的部分中， “xx 表的 xx 列” 的中间要加上 “.”。就像下面这样：</p>
-<pre class=" language-mysql"><code class="language-mysql">ON tb.empid = tb1.empid</code></pre>
-<p>这里我们暂时使用 ‘*’ 将所有的列都显示出来：</p>
-<pre class=" language-mysql"><code class="language-mysql">$ SELECT * FROM tb JOIN tb1 ON tb.empid = tb1.empid;
-+-------+-------+-------+-------+--------+------+
-| empid | sales | month | empid | name   | age  |
-+-------+-------+-------+-------+--------+------+
-| A103  |   101 |     4 | A103  | 中川   |   20 |
-| A102  |    54 |     5 | A102  | 高桥   |   28 |
-| A104  |   181 |     4 | A104  | 渡边   |   23 |
-| A101  |   184 |     4 | A101  | 佐腾   |   40 |
-| A103  |    17 |     5 | A103  | 中川   |   20 |
-| A101  |   300 |     5 | A101  | 佐腾   |   40 |
-| A102  |   205 |     6 | A102  | 高桥   |   28 |
-| A104  |    93 |     5 | A104  | 渡边   |   23 |
-| A103  |    12 |     6 | A103  | 中川   |   20 |
-+-------+-------+-------+-------+--------+------+
-9 rows in set (0.00 sec)</code></pre>
-<p>像这样把不同的表中相匹配的记录提取出来的连接方式称为<strong>内连接</strong>。如果要明确指出某一处理是内连接，可以将 JOIN 部分写成 INNER JOIN。像下面这样 JOIN 的前面加上 INNER，结果不会发生任何改变。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ SELECT * FROM tb INNER JOIN tb1 ON tb.empid = tb1.empid;</code></pre>
-<h4 id="选择列进行显示"><a href="#选择列进行显示" class="headerlink" title="选择列进行显示"></a>选择列进行显示</h4><p>我们使用 “*” 显示了所有的列。这次，我们来选择要显示的列。不过，在连接表的时候如果只写 name 和 sales，MySQL 会不知道这些列属于哪个表。在这种情况下，我们要把列名写成 “表名.列名”。另外，列会按照指定的顺序显示。同一列显示多少次都没有关系。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ SELECT tb.empid, tb1.name, tb.sales 
-        FROM tb 
-    JOIN tb1
-        ON tb.empid = tb1.empid;
-+-------+--------+-------+
-| empid | name   | sales |
-+-------+--------+-------+
-| A103  | 中川   |   101 |
-| A102  | 高桥   |    54 |
-| A104  | 渡边   |   181 |
-| A101  | 佐腾   |   184 |
-| A103  | 中川   |    17 |
-| A101  | 佐腾   |   300 |
-| A102  | 高桥   |   205 |
-| A104  | 渡边   |    93 |
-| A103  | 中川   |    12 |
-+-------+--------+-------+
-9 rows in set (0.00 sec)</code></pre>
-<h4 id="给表添加别名"><a href="#给表添加别名" class="headerlink" title="给表添加别名"></a>给表添加别名</h4><pre class=" language-mysql"><code class="language-mysql">表名 AS 别名</code></pre>
-<h4 id="使用-USING-使-ON-的部分更容易阅读"><a href="#使用-USING-使-ON-的部分更容易阅读" class="headerlink" title="使用 USING 使 ON~ 的部分更容易阅读"></a>使用 USING 使 ON~ 的部分更容易阅读</h4><p>在前面的示例中，作为连接键的两个列恰好都是 empid 这个名字。在使用相同列名进行指定的情况下，我们可以使用 <strong>USING(作为连接键的列名)</strong> 简单地进行记述。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ SELECT tb.empid, tb1.name, tb.sales FROM tb JOIN tb1 USING(empid);
-+-------+--------+-------+
-| empid | name   | sales |
-+-------+--------+-------+
-| A103  | 中川   |   101 |
-| A102  | 高桥   |    54 |
-| A104  | 渡边   |   181 |
-| A101  | 佐腾   |   184 |
-| A103  | 中川   |    17 |
-| A101  | 佐腾   |   300 |
-| A102  | 高桥   |   205 |
-| A104  | 渡边   |    93 |
-| A103  | 中川   |    12 |
-+-------+--------+-------+
-9 rows in set (0.00 sec)</code></pre>
-<h4 id="通过-WHERE-设置条件从连接表中提取纪录"><a href="#通过-WHERE-设置条件从连接表中提取纪录" class="headerlink" title="通过 WHERE 设置条件从连接表中提取纪录"></a>通过 WHERE 设置条件从连接表中提取纪录</h4><p>通过 WHERE 来设置条件，仅显示连接表中符合条件的记录。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ SELECT tb.empid AS 员工号, tb1.name AS 姓名, tb.sales AS 销售额
-            FROM tb
-    JOIN tb1
-            USING(empid)
-    WHERE tb.sales >= 100;
-+-----------+--------+-----------+
-| 员工号    | 姓名   | 销售额    |
-+-----------+--------+-----------+
-| A103      | 中川   |       101 |
-| A104      | 渡边   |       181 |
-| A101      | 佐腾   |       184 |
-| A101      | 佐腾   |       300 |
-| A102      | 高桥   |       205 |
-+-----------+--------+-----------+
-5 rows in set (0.00 sec)</code></pre>
-<h4 id="提取多个表中的记录"><a href="#提取多个表中的记录" class="headerlink" title="提取多个表中的记录"></a>提取多个表中的记录</h4><p>我们可以使用 JOIN 连接多个表。在 “SELECT … JOIN … ON …” 的基础上加上 “JOIN … ON …” 就可以对多个表进行连接。但是，在连接多个表的情况下，处理时间会相应地变长，记述的内容也会变得难以理解。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ SELECT ~ FROM
- 表名 1
- JOIN 表名 2 连接条件
- JOIN 表名 3 连接条件
- ...;</code></pre>
-<p>公司员工的 “出生地” 信息保存在表 tb3 中。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ SELECT tb.empid, tb.sales, tb1.name, tb3.region
-    FROM tb
-JOIN tb1
-    USING(empid)
-JOIN tb3
-    USING(empid);</code></pre>
-<p>我们使用 3 个表共有的列 empid 执行了 USING(empid)。如果使用 ON 将 ON tb.empid = tb1.empid 和  on tb.empid = tb3.empid。</p>
-<h3 id="显示多个表的所有记录（外连接）"><a href="#显示多个表的所有记录（外连接）" class="headerlink" title="显示多个表的所有记录（外连接）"></a>显示多个表的所有记录（外连接）</h3><pre class=" language-mysql"><code class="language-mysql">$ SELECT x.empid, y.name, x.sales
-      FROM tb AS x
-  JOIN tb1 AS y
-      on x.empid = y.empid;
-+-------+--------+-------+
-| empid | name   | sales |
-+-------+--------+-------+
-| A103  | 中川   |   101 |
-| A102  | 高桥   |    54 |
-| A104  | 渡边   |   181 |
-| A101  | 佐腾   |   184 |
-| A103  | 中川   |    17 |
-| A101  | 佐腾   |   300 |
-| A102  | 高桥   |   205 |
-| A104  | 渡边   |    93 |
-| A103  | 中川   |    12 |
-+-------+--------+-------+
-9 rows in set (0.00 sec)</code></pre>
-<p>实际上，表 tb 中有一个 empid = A107 的人，但这个人没有登记在表 tb1 的员工名单上。A107是其它营业所的员工，所有表 tb1 中没有这个人的数据。虽然他贡献了一部分销售额，但使用 JOIN 连接表时不会显示这个人的记录。</p>
-<p>另外，员工信息表 tb1 中虽然有 A105 西泽的信息，但销售信息表 tb 没有他的相关信息。也就是说，虽然西泽被列入了员工名册中，但可能因为没有销售成绩，所以销售信息表中没有显示 A105 的记录。</p>
-<ul>
-<li><strong>使用了 JOIN (或者 INNER JOIN) 的 “内连接” 只会提取与连接键相匹配的记录</strong></li>
-</ul>
-<p>因此，只存在表 tb 或者表 tb1 中的记录将被忽略。但是，我们有时也会遇到必须显示这些记录的情况。这这种情况下，我们需要使用 <strong>外连接</strong>。外连接具有一下特性：</p>
-<ul>
-<li><strong>即使与连接键不匹配，外链接也会提取两个表中的所有记录。</strong></li>
-</ul>
-<h4 id="外连接的种类"><a href="#外连接的种类" class="headerlink" title="外连接的种类"></a>外连接的种类</h4><ul>
-<li>左外连接<ul>
-<li>显示 “相匹配的记录” 和 “表1（即左表）的全部记录”</li>
-</ul>
-</li>
-<li>右外连接<ul>
-<li>显示 “相匹配的记录” 和 “要连接的表2（即右表）的全部记录”</li>
-</ul>
-</li>
-</ul>
-<h4 id="使用左外连接"><a href="#使用左外连接" class="headerlink" title="使用左外连接"></a>使用左外连接</h4><p>当进行左外连接时，我们只需将内连接中使用的 JOIN 修改为 <strong>LEFT JOIN</strong> 即可。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ SELECT 列名
-            FROM 表1
-    LEFT JOIN 要连接的表2
-            ON 表1的列 = 表2的列 </code></pre>
-<p>使用左外连接显示表 tb 和 表 tb1 相匹配的记录，以及表 tb 的所有记录。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ SELECT tb.empid, tb1.name FROM tb LEFT JOIN tb1 USING(empid);
-+-------+--------+
-| empid | name   |
-+-------+--------+
-| A103  | 中川   |
-| A102  | 高桥   |
-| A104  | 渡边   |
-| A101  | 佐腾   |
-| A103  | 中川   |
-| A101  | 佐腾   |
-| A102  | 高桥   |
-| A104  | 渡边   |
-| A103  | 中川   |
-| A107  | NULL   |
-+-------+--------+
-10 rows in set (0.00 sec)</code></pre>
-<h4 id="使用右外连接"><a href="#使用右外连接" class="headerlink" title="使用右外连接"></a>使用右外连接</h4><p>通过右外连接显示 “相匹配的记录” 和 “要连接的右表的所有记录”。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ SELECT 列名 
-            FROM 表 1
-    RIGHT JOIN 要连接的表2
-            ON 表1的列 = 表2的列</code></pre>
-<p>有些记录在员工信息表 tb1 中有，但在销售信息表 tb 中没有，对于这种没有销售额的员工的记录，我们也将其全部显示出来。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ SELECT tb.empid, tb1.name
-            FROM tb
-    RIGHT JOIN tb1
-    USING(empid);
-+-------+--------+
-| empid | name   |
-+-------+--------+
-| A103  | 中川   |
-| A102  | 高桥   |
-| A104  | 渡边   |
-| A101  | 佐腾   |
-| A103  | 中川   |
-| A101  | 佐腾   |
-| A102  | 高桥   |
-| A104  | 渡边   |
-| A103  | 中川   |
-| NULL  | 西泽   |
-+-------+--------+
-10 rows in set (0.00 sec)</code></pre>
-<p>执行的结果中显示了表 tb 和表 tb1 相匹配的记录，以及右表 tb1 的所有记录。</p>
-<blockquote>
-<p><strong>加上 OUTER 后的书写方法</strong>    </p>
-<p>LEFT JOIN 也可以写成 LEFT OUTER JOIN。同样，RIGHT JOIN 也可以写成 RIGHT OUTER JOIN。</p>
-</blockquote>
-<h3 id="自连接"><a href="#自连接" class="headerlink" title="自连接"></a>自连接</h3><p>我们可以将表与其自身，也就是和同名的表进行连接。这种连接方式称为自连接。因为是两个同名的表进行连接，所以如果直接执行连接，就会显示出两个同名的列。这样就无法对列进行识别了（发生了错误），因此连接时必须定义别名。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ SELECT 列名 FROM 表名 AS 别名1 JOIN 表名 AS 别名2;</code></pre>
-<p>我们试着对员工信息表 tb1 进行自连接，并把所有的列显示出来。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ SELECT * FROM tb1 AS a JOIN tb1 AS b;
-+-------+--------+------+-------+--------+------+
-| empid | name   | age  | empid | name   | age  |
-+-------+--------+------+-------+--------+------+
-| A101  | 佐腾   |   40 | A101  | 佐腾   |   40 |
-| A102  | 高桥   |   28 | A101  | 佐腾   |   40 |
-| A103  | 中川   |   20 | A101  | 佐腾   |   40 |
-| A104  | 渡边   |   23 | A101  | 佐腾   |   40 |
-| A105  | 西泽   |   35 | A101  | 佐腾   |   40 |
-| A101  | 佐腾   |   40 | A102  | 高桥   |   28 |
-| A102  | 高桥   |   28 | A102  | 高桥   |   28 |
-| A103  | 中川   |   20 | A102  | 高桥   |   28 |
-| A104  | 渡边   |   23 | A102  | 高桥   |   28 |
-| A105  | 西泽   |   35 | A102  | 高桥   |   28 |
-| A101  | 佐腾   |   40 | A103  | 中川   |   20 |
-| A102  | 高桥   |   28 | A103  | 中川   |   20 |
-| A103  | 中川   |   20 | A103  | 中川   |   20 |
-| A104  | 渡边   |   23 | A103  | 中川   |   20 |
-| A105  | 西泽   |   35 | A103  | 中川   |   20 |
-| A101  | 佐腾   |   40 | A104  | 渡边   |   23 |
-| A102  | 高桥   |   28 | A104  | 渡边   |   23 |
-| A103  | 中川   |   20 | A104  | 渡边   |   23 |
-| A104  | 渡边   |   23 | A104  | 渡边   |   23 |
-| A105  | 西泽   |   35 | A104  | 渡边   |   23 |
-| A101  | 佐腾   |   40 | A105  | 西泽   |   35 |
-| A102  | 高桥   |   28 | A105  | 西泽   |   35 |
-| A103  | 中川   |   20 | A105  | 西泽   |   35 |
-| A104  | 渡边   |   23 | A105  | 西泽   |   35 |
-| A105  | 西泽   |   35 | A105  | 西泽   |   35 |
-+-------+--------+------+-------+--------+------+
-25 rows in set (0.01 sec)</code></pre>
-<h4 id="排序的技巧-其一"><a href="#排序的技巧-其一" class="headerlink" title="排序的技巧 其一"></a>排序的技巧 其一</h4><p>自连接的结果中会包含所有的组合。如果其中有你想要的组合，之后就可以通过设置条件来选出想要的内容了。</p>
-<img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/2991611739549_.pic_hd.jpg" style="zoom:50%;">
-
-<p>请看右侧为 “佐藤 40 ”，左侧为 “佐藤 40 ”、“高桥 28 ”、“中川 20 ”、“渡边 23 ”、“西泽 35 ” 的 5 行记录。</p>
-<p>在这 5 行记录中，大于等于右侧 “佐藤 40 ” 中 40 这个数字的数据在左侧仅有 1，所以佐藤排名第一。</p>
-<p>同样，请看右侧 “高桥 28”，左侧为 “佐藤 40 ”、“高桥 28 ”、“中川 20 ”、“渡边 23 ”、“西泽 35 ” 的 5 行记录。</p>
-<p>在这 5 行记录中，其中大于等于右侧 “高桥 28 ” 中 28 这个数字的数据在左侧有 3个，分别是 40、38、28，也就是说高桥排在第三。</p>
-<p>像这样，在右侧相同的 5 行记录的范围内，大于等于右侧 age 的值在左侧 age 中的个数就是排名。</p>
-<p>换句话说，就是只需要自连接，并对每一组 empid 计算大于等于右侧 age 的值在左侧 age 中的个数即可。该数可以通过 COUNT(*) 计算。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ SELECT a.name, a.age, COUNT(*)
-        FROM tb1 AS a
-    JOIN tb1 AS b
-        WHERE a.age <= b.age
-    GROUP BY a.empid;
-+--------+------+----------+
-| name   | age  | COUNT(*) |
-+--------+------+----------+
-| 佐腾   |   40 |        1 |
-| 高桥   |   28 |        3 |
-| 中川   |   20 |        5 |
-| 渡边   |   23 |        4 |
-| 西泽   |   35 |        2 |
-+--------+------+----------+
-5 rows in set (0.01 sec)</code></pre>
-<h3 id="从-SELECT-的记录中-SELECT-子查询"><a href="#从-SELECT-的记录中-SELECT-子查询" class="headerlink" title="从 SELECT 的记录中 SELECT (子查询)"></a>从 SELECT 的记录中 SELECT (子查询)</h3><h4 id="什么是子查询"><a href="#什么是子查询" class="headerlink" title="什么是子查询"></a>什么是子查询</h4><p>使用子查询可以完成两个阶段的处理：执行查询，然后使用检索到的记录进一步执行查询。例如，在第一阶段中进行 “从销售信息表中提取销售额大于等于200万元的员工号” 的处理，然后在第二阶段中进行  “从提取出来的员工号中提出相对应的姓名” 的处理。 第一阶段的查询称为 <strong>子查询</strong>。</p>
-<p>第一阶段的子查询可以返回值、列和记录等。许多使用了子查询的处理，可以用其他方法取代，例如内连接。但是，子查询的处理方式更容易理解，处理效率也更高。</p>
-<h4 id="显示最大值（返回的值的子查询-其一）"><a href="#显示最大值（返回的值的子查询-其一）" class="headerlink" title="显示最大值（返回的值的子查询 其一）"></a>显示最大值（返回的值的子查询 其一）</h4><ul>
-<li>显示表 tb 中列 sales 最大值的记录</li>
-</ul>
-<p>换句话说，就是显示在销售信息表 tb 中销售额最高（sales最大） 的员工记录。列的最大值可以用 MAX 函数计算。或许有人会想 ”这还不简单“，按照下面的方式处理不就可以了。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ SELECT * FROM tb WHERE sales = MAX(sales);</code></pre>
-<p>试着执行一下，结果会发生错误。只写 MAX(sales) 是不会计算出列 sales 的最大值的。想要获取列 sales 中的最大值，就需要按照下面的方式进行查询。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ SELECT MAX(sales) FROM tb;</code></pre>
-<p>当提取最大值相对应的记录时，需要先通过上面的操作获取最大值，然后从表 tb 中提取纪录。这里，子查询就起到了非常重要的作用。首先，在第一阶段的查询中取出 MAX(sales) 的值，然后在第二阶段选择（SELECT）包含了最大值的列 sales 的纪录。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ SELECT * FROM tb WHERE sales IN (第一阶段的处理结果);</code></pre>
-<p>执行下面的命令：</p>
-<pre class=" language-mysql"><code class="language-mysql">$ SELECT *
-            FROM tb 
-    WHERE sales 
-            in (SELECT MAX(seles) FROM tb);
-+-------+-------+-------+
-| empid | sales | month |
-+-------+-------+-------+
-| A101  |   300 |     5 |
-+-------+-------+-------+
-1 row in set (0.02 sec)</code></pre>
-<blockquote>
-<p><strong>GROUP BY 函数</strong>    MAX、AVG 和 SUM 等聚合函数也称为 “GROUP BY” 函数，这类函数用于处理分组后的值。但是，在没有 “GROUP BY” 的情况下，这类函数会将整个表作为一个组进行处理。</p>
-</blockquote>
-<h4 id="提取大于等于平均值的纪录（返回值的子查询-其二）"><a href="#提取大于等于平均值的纪录（返回值的子查询-其二）" class="headerlink" title="提取大于等于平均值的纪录（返回值的子查询 其二）"></a>提取大于等于平均值的纪录（返回值的子查询 其二）</h4><p>试着计算员工信息报 tb1 中员工的平均年龄，并提取大于等于平均年龄的员工的纪录。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ SELECT * 
-            FROM tb1 
-    WHERE AGE >= (SELECT AVG(age) FROM tb1);
-+-------+--------+------+
-| empid | name   | age  |
-+-------+--------+------+
-| A101  | 佐腾   |   40 |
-| A105  | 西泽   |   35 |
-+-------+--------+------+
-2 rows in set (0.00 sec)</code></pre>
-<blockquote>
-<p><strong>子查询和内连接的提取结果的差异（虽然相似但不同!）</strong></p>
-<p>子查询和内连接非常相似。我们来看一个例子。对于销售信息表 tb 中存在的员工号 empid，显示员工信息表 tb1 中相应的员工号 empid 和 姓名name。下面分别用 “子查询” 和 “内连接” 实现上述内容的示例。</p>
-<ul>
-<li>子查询</li>
-</ul>
-<pre class=" language-mysql"><code class="language-mysql">$ SELECT empid, name 
-          FROM tb1 
-  WHERE empid IN (SELECT empid FROM tb);
-+-------+--------+
-| empid | name   |
-+-------+--------+
-| A101  | 佐腾   |
-| A102  | 高桥   |
-| A103  | 中川   |
-| A104  | 渡边   |
-4 rows in set (0.00 sec)</code></pre>
-<ul>
-<li>内连接</li>
-</ul>
-<pre class=" language-mysql"><code class="language-mysql">$ SELECT tb1.empid, tb1.name 
-            FROM tb1 
-    JOIN tb ON tb1.empid = tb.empid;
-+-------+--------+
-| empid | name   |
-+-------+--------+
-| A103  | 中川   |
-| A102  | 高桥   |
-| A104  | 渡边   |
-| A101  | 佐腾   |
-| A103  | 中川   |
-| A101  | 佐腾   |
-| A102  | 高桥   |
-| A104  | 渡边   |
-| A103  | 中川   |
-+-------+--------+
-9 rows in set (0.00 sec)</code></pre>
-<p>二者的执行结果是不同的。在使用子查询的情况下，会先提取表 tb 中存在 empid，然后仅显示和表 tb1 相匹配的纪录。而使用内连接的话，将显示表 tb 中所有的纪录。</p>
-</blockquote>
-<h4 id="使用-“-”-代替-IN-会报错吗"><a href="#使用-“-”-代替-IN-会报错吗" class="headerlink" title="使用 “=” 代替 IN 会报错吗"></a>使用 “=” 代替 IN 会报错吗</h4><pre class=" language-mysql"><code class="language-mysql">$ SELECT * 
-            FROM tb1 
-    WHERE empid = (SELECT empid FROM tb WHERE sales >= 200);
-ERROR 1242 (21000): Subquery returns more than 1 row</code></pre>
-<p>很遗憾，执行此命令会出现 <code>ERROR 1242 (21000): Subquery returns more than 1 row</code>（子查询返回的结果多于一行）。如果满足 “e pid 与 x x 恰好一致” 的条件，使用 “=” 也无妨。但是在这个示例中，多条记录在第一阶段被提取了出来，因此必须使用表示 “…之一” 的 IN。</p>
-<p>当然，如果只有一条相对应的记录，那么即使使用 “=” 也不会报错。如：</p>
-<pre class=" language-mysql"><code class="language-mysql">$ SELECT * 
-            FROM tb1 
-    WHERE empid = (SELECT empid FROM tb ORDER BY sales DESC LIMIT 1);
-+-------+--------+------+
-| empid | name   | age  |
-+-------+--------+------+
-| A101  | 佐腾   |   40 |
-+-------+--------+------+
-1 row in set (0.00 sec)</code></pre>
-<p>LIMIT 1 时仅能提出一条记录，所以使用 “=” 也不会报错。</p>
-<h4 id="使用-EXISTS，仅以存在的记录为对象"><a href="#使用-EXISTS，仅以存在的记录为对象" class="headerlink" title="使用 EXISTS，仅以存在的记录为对象"></a>使用 EXISTS，仅以存在的记录为对象</h4><p>我们也可以使用 EXISTS，不返回指定的列而返回 “第一阶段子查询存在的目标记录” 这样的信息。</p>
-<ul>
-<li>从表 tb 中提取有销售额的员工的记录，然后从表 tb1 中提取相对应的记录显示出来。</li>
-</ul>
-<pre class=" language-mysql"><code class="language-mysql">$ SELECT * 
-            FROM tb1 
-    WHERE EXISTS(SELECT * FROM tb WHERE tb.empid = tb1.empid);
-+-------+--------+------+
-| empid | name   | age  |
-+-------+--------+------+
-| A101  | 佐腾   |   40 |
-| A102  | 高桥   |   28 |
-| A103  | 中川   |   20 |
-| A104  | 渡边   |   23 |
-+-------+--------+------+
-4 rows in set (0.00 sec)</code></pre>
-<p>A105 在表 tb 中不存在相应的 empid，所以没有显示出来。从中我们可以知道，A105 的西泽没有销售额。</p>
-<h4 id="使用-NOT-EXISTS"><a href="#使用-NOT-EXISTS" class="headerlink" title="使用 NOT EXISTS"></a>使用 NOT EXISTS</h4><pre class=" language-mysql"><code class="language-mysql">$ SELECT * 
-            FROM tb1 
-    WHERE EXISTS(SELECT * FROM tb WHERE tb.empid = tb1.empid);
-| empid | name   | age  |
-+-------+--------+------+
-| A105  | 西泽   |   35 |
-+-------+--------+------+
-1 row in set (0.01 sec)    </code></pre>
-<p>从中我们可以知道，没有销售额的员工是 35 岁的 A105 西泽。</p>
-<h4 id="排序的技巧-其二"><a href="#排序的技巧-其二" class="headerlink" title="排序的技巧 其二"></a>排序的技巧 其二</h4><p>在使用子查询的情况下，我们可以用各种各样的方法进行排序，而且这些方法比自连接的方法更容易理解。这里来介绍其中一种方法。</p>
-<ul>
-<li>创建和表 tb 结构相同的表 tb_rank。</li>
-<li>向表 tb_rank 中添加具有自动连续编号功能的列 c_rank。</li>
-<li>对表 tb 执行按列 sales 由高到低排序的 SELECT 子查询</li>
-<li>将子查询的结果 INSERT 到 tb_rank 中。</li>
-</ul>
-<pre class=" language-mysql"><code class="language-mysql">$ CREATE TABLE tb_rank LIKE tb;
-$ ALTER TABLE tb_rank ADD c_rank INT AUTO_INCREMENT PRIMARY KEY;
-$ INSERT INTO tb_rank(empid, sales, month) (SELECT empid,sales, month FROM tb ORDER BY sales DESC);
-$ SELECT * FROM tb_rank;
-+-------+-------+-------+--------+
-| empid | sales | month | c_rank |
-+-------+-------+-------+--------+
-| A101  |   300 |     5 |      1 |
-| A102  |   205 |     6 |      2 |
-| A101  |   184 |     4 |      3 |
-| A104  |   181 |     4 |      4 |
-| A103  |   101 |     4 |      5 |
-| A104  |    93 |     5 |      6 |
-| A107  |    87 |     6 |      7 |
-| A102  |    54 |     5 |      8 |
-| A103  |    17 |     5 |      9 |
-| A103  |    12 |     6 |     10 |
-+-------+-------+-------+--------+
-10 rows in set (0.00 sec)</code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {

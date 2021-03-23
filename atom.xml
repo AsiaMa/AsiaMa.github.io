@@ -6,7 +6,7 @@
   <link href="https://blog.asiama.top/atom.xml" rel="self"/>
   
   <link href="https://blog.asiama.top/"/>
-  <updated>2021-03-23T14:00:08.487Z</updated>
+  <updated>2021-03-23T14:03:44.282Z</updated>
   <id>https://blog.asiama.top/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://blog.asiama.top/posts/a33a.html"/>
     <id>https://blog.asiama.top/posts/a33a.html</id>
     <published>2021-03-23T13:05:24.000Z</published>
-    <updated>2021-03-23T14:00:08.487Z</updated>
+    <updated>2021-03-23T14:03:44.282Z</updated>
     
     
       
@@ -40,11 +40,38 @@
   </entry>
   
   <entry>
+    <title>Java堆的参数</title>
+    <link href="https://blog.asiama.top/posts/81cf.html"/>
+    <id>https://blog.asiama.top/posts/81cf.html</id>
+    <published>2021-02-16T10:09:32.170Z</published>
+    <updated>2021-03-23T14:07:42.452Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;ul&gt;
+&lt;li&gt;-Xss: 栈的大小&lt;/li&gt;
+&lt;li&gt;-Xms: 初始堆大小，默认物理内存的 1/64&lt;/li&gt;
+&lt;li&gt;-Xmx: 最大堆大小，默认物理内存的 1/4&lt;/li&gt;
+&lt;li&gt;-Xmn:</summary>
+        
+      
+    
+    
+    
+    
+    <category term="JVM" scheme="https://blog.asiama.top/tags/JVM/"/>
+    
+  </entry>
+  
+  <entry>
     <title>CopyOnWriteArrayList</title>
     <link href="https://blog.asiama.top/posts/34b0.html"/>
     <id>https://blog.asiama.top/posts/34b0.html</id>
     <published>2021-02-09T15:23:33.000Z</published>
-    <updated>2021-02-09T15:40:07.139Z</updated>
+    <updated>2021-03-23T14:03:44.281Z</updated>
     
     
       
@@ -69,7 +96,7 @@
     <link href="https://blog.asiama.top/posts/8802.html"/>
     <id>https://blog.asiama.top/posts/8802.html</id>
     <published>2021-02-09T01:08:00.000Z</published>
-    <updated>2021-02-09T01:19:46.562Z</updated>
+    <updated>2021-03-23T14:03:44.283Z</updated>
     
     
       
@@ -97,7 +124,7 @@
     <link href="https://blog.asiama.top/posts/dd8b.html"/>
     <id>https://blog.asiama.top/posts/dd8b.html</id>
     <published>2021-02-08T12:46:30.000Z</published>
-    <updated>2021-02-08T13:11:21.202Z</updated>
+    <updated>2021-03-23T14:03:44.288Z</updated>
     
     
       
@@ -122,7 +149,7 @@
     <link href="https://blog.asiama.top/posts/e2.html"/>
     <id>https://blog.asiama.top/posts/e2.html</id>
     <published>2021-02-07T02:04:12.000Z</published>
-    <updated>2021-02-07T09:45:40.055Z</updated>
+    <updated>2021-03-23T14:03:44.286Z</updated>
     
     
       
@@ -147,7 +174,7 @@
     <link href="https://blog.asiama.top/posts/cda2.html"/>
     <id>https://blog.asiama.top/posts/cda2.html</id>
     <published>2021-02-04T11:28:47.000Z</published>
-    <updated>2021-02-04T11:45:20.902Z</updated>
+    <updated>2021-03-23T14:03:44.285Z</updated>
     
     
       
@@ -494,29 +521,6 @@
     
     
     <category term="多线程" scheme="https://blog.asiama.top/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>使用文件进行交互</title>
-    <link href="https://blog.asiama.top/posts/ee67.html"/>
-    <id>https://blog.asiama.top/posts/ee67.html</id>
-    <published>2021-01-28T04:33:36.000Z</published>
-    <updated>2021-01-28T10:06:08.902Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;从文本文件中读取数据（导入）&quot;&gt;&lt;a href=&quot;#从文本文件中读取数据（导入）&quot; class=&quot;headerlink&quot; title=&quot;从文本文件中读取数据（导入）&quot;&gt;&lt;/a&gt;从文本文件中读取数据（导入）&lt;/h3&gt;&lt;p&gt;当把大量数据输入到表中时，如果打开</summary>
-        
-      
-    
-    
-    
-    
-    <category term="MySQL" scheme="https://blog.asiama.top/tags/MySQL/"/>
     
   </entry>
   
