@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="函数式编程, Java,Git,SpringBoot,SpringCloud,SpringCloud Alibaba等">
+    <meta name="keywords" content="macOS安装memcached扩展, Java,Git,SpringBoot,SpringCloud,SpringCloud Alibaba等">
     <meta name="description" content="专注WJava后端,大数据,分享知识,分享生活">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>函数式编程 | 三十二道街</title>
+    <title>macOS安装memcached扩展 | 三十二道街</title>
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/libs/awesome/css/all.css">
@@ -287,12 +287,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/23.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/20.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">函数式编程</h1>
+                    <h1 class="description center-align post-title">macOS安装memcached扩展</h1>
                 </div>
             </div>
         </div>
@@ -409,8 +409,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F/">
-                                <span class="chip bg-color">编程范式</span>
+                            <a href="/tags/PHP/">
+                                <span class="chip bg-color">PHP</span>
                             </a>
                         
                     </div>
@@ -425,21 +425,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-12-07
+                    2021-03-23
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-12-29
+                    2021-03-23
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    536
+                    201
                 </div>
                 
 
@@ -461,25 +461,26 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>函数式编程的核心概念如下：</p>
-<ul>
-<li>头等函数：把函数（一小段行为）当作值使用，可以用变量保存它，把它当作参数传递，或者当作其它函数的返回值。</li>
-<li>不可变性：使用不可变对象，这保证了它们的状态在其创建之后不能再变化。</li>
-<li>无副作用：使用的是纯函数。此类函数在输入相同时会产生同样的结果，并且不会修改其它对象的状态，也不会和外面的世界交互。</li>
-</ul>
-<p>优点：</p>
-<ol>
-<li>简洁</li>
-</ol>
-<p>函数式风格的代码比相应的命令式风格的代码更优雅、更简练，因为把函数当作值可以让你获得更强大的抽象能力，从而避免重复代码。假设你有两段类似的代码，实现相似的任务（例如，在集合中寻找一个匹配的元素），但具体细节略有不同（如何判断元素式匹配的）。可以轻易地将这段逻辑公共部分提取到一个函数中，并将其它不同的部分作为参数传递给它。这些参数本身也是函数，但你可以使用一种简洁的语法来表示这些匿名函数，它被称作lambda表达式。</p>
-<ol start="2">
-<li>多线程安全</li>
-</ol>
-<p>多线程程序中最大的错误来源之一就是，在没有采取适当同步机制的情况下，在不同的线程上修改同一份数据。如果你使用的是不可变数据结构和纯函数，就能保证这样不安全的修改根本不会发生，也就不需要考虑为其设计股灾的同步方案。</p>
-<ol start="3">
-<li>易测试性</li>
-</ol>
-<p>没有副作用的函数可以独立地进行测试，因为不需要写大量的设置代码来构造它们所依赖的整个环境。</p>
+                <h3 id="安装Memcached"><a href="#安装Memcached" class="headerlink" title="安装Memcached"></a>安装Memcached</h3><h5 id="源码安装"><a href="#源码安装" class="headerlink" title="源码安装"></a>源码安装</h5><pre class=" language-bash"><code class="language-bash">$ brew <span class="token function">install</span> libevent
+$ <span class="token function">tar</span> -zxvf memcached-1.6.9.tar.gz
+$ ./configure --prefix<span class="token operator">=</span>/usr/local/memecached
+$ <span class="token function">sudo</span> <span class="token function">make</span> <span class="token operator">&amp;&amp;</span> <span class="token function">sudo</span> <span class="token function">make</span> <span class="token function">install</span></code></pre>
+<h5 id="brew安装"><a href="#brew安装" class="headerlink" title="brew安装"></a>brew安装</h5><pre class=" language-bash"><code class="language-bash">$ brew <span class="token function">install</span> memcached
+<span class="token comment" spellcheck="true">### 配置开机启动</span>
+$ <span class="token function">ln</span> -sfv /usr/local/opt/memcached/*.plist ~/Library/LaunchAgents
+$ launchctl load  ~/Library/LaunchAgents/homebrew.mxcl.memcached.plist
+<span class="token comment" spellcheck="true">### 启动memcached</span>
+$ memcached –d –m 2048 –p 11211</code></pre>
+<h3 id="安装-Memcached扩展"><a href="#安装-Memcached扩展" class="headerlink" title="安装 Memcached扩展"></a>安装 Memcached扩展</h3><pre class=" language-bash"><code class="language-bash">$ <span class="token function">tar</span> -zxvf memcached-3.1.5.tgz
+<span class="token comment" spellcheck="true">### 生成configure</span>
+$ phpize 
+$ brew <span class="token function">install</span> zlib
+$ brew <span class="token function">install</span> libmemcached
+$ ./configure --with-php-config<span class="token operator">=</span>/usr/local/bin/php-config --with-zlib-dir<span class="token operator">=</span>/usr/local/Cellar/zlib/1.2.11 --with-libmemcached-dir<span class="token operator">=</span>/usr/local/opt/libmemcached
+$  <span class="token function">make</span> <span class="token operator">&amp;&amp;</span> <span class="token function">make</span> <span class="token function">install</span> </code></pre>
+<h4 id="修改-php-ini-文件"><a href="#修改-php-ini-文件" class="headerlink" title="修改 php.ini 文件"></a>修改 php.ini 文件</h4><pre class=" language-bash"><code class="language-bash">$ <span class="token function">vi</span> /usr/local/etc/php/8.0/php.ini  <span class="token comment" spellcheck="true"># 追加 extension=memcached.so</span>
+$ brew services restart php
+$ php -m <span class="token operator">|</span><span class="token function">grep</span> memcached</code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -523,7 +524,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://blog.asiama.top/posts/f609.html">https://blog.asiama.top/posts/f609.html</a>
+                    <a href="https://blog.asiama.top/posts/3cd3.html">https://blog.asiama.top/posts/3cd3.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -561,8 +562,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F/">
-                                    <span class="chip bg-color">编程范式</span>
+                                <a href="/tags/PHP/">
+                                    <span class="chip bg-color">PHP</span>
                                 </a>
                             
                         </div>
@@ -733,7 +734,7 @@
         repo: 'asiama.github.io',
         owner: 'asiama',
         admin: "asiama",
-        id: '2020-12-07T04-33-00',
+        id: '2021-03-23T22-40-58',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -757,17 +758,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/posts/26f4.html">
+                <a href="/posts/3cd3.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/16.jpg" class="responsive-img" alt="Java的不足">
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/20.jpg" class="responsive-img" alt="macOS安装memcached扩展">
                         
-                        <span class="card-title">Java的不足</span>
+                        <span class="card-title">macOS安装memcached扩展</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -777,9 +779,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-12-07
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-03-23
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -788,11 +790,12 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Kotlin/">
-                        <span class="chip bg-color">Kotlin</span>
+                    <a href="/tags/PHP/">
+                        <span class="chip bg-color">PHP</span>
                     </a>
                     
                 </div>
@@ -806,13 +809,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/posts/9968.html">
+                <a href="/posts/a33a.html">
                     <div class="card-image">
                         
                         
-                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/18.jpg" class="responsive-img" alt="英语学习第三天">
+                        <img src="https://cdn.jsdelivr.net/gh/asiama/asiama.github.io/medias/featureimages/19.jpg" class="responsive-img" alt="macOS搭建PHP开发环境">
                         
-                        <span class="card-title">英语学习第三天</span>
+                        <span class="card-title">macOS搭建PHP开发环境</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -823,7 +826,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-12-06
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-03-23
                             </span>
                         <span class="publish-author">
                             
@@ -836,8 +839,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/English/">
-                        <span class="chip bg-color">English</span>
+                    <a href="/tags/PHP/">
+                        <span class="chip bg-color">PHP</span>
                     </a>
                     
                 </div>
