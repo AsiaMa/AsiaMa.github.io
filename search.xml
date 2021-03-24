@@ -262,39 +262,6 @@
       </tags>
   </entry>
   <entry>
-    <title>CopyOnWriteArrayList</title>
-    <url>/posts/34b0.html</url>
-    <content><![CDATA[<h3 id="CopyOnWriteArrayList的优点"><a href="#CopyOnWriteArrayList的优点" class="headerlink" title="CopyOnWriteArrayList的优点"></a>CopyOnWriteArrayList的优点</h3><p>读取完全不用加锁的，并且更厉害的是写入也不会阻塞读取操作。只有修改操作之间需要同步等待。</p>
-<h3 id="CopyOnWriteArrayList的缺点"><a href="#CopyOnWriteArrayList的缺点" class="headerlink" title="CopyOnWriteArrayList的缺点"></a>CopyOnWriteArrayList的缺点</h3><p>数据一致性问题：CopyOnWirite 容器只能保证数据的最终一致性，不能保证数据的实时一致性。所以如果你希望写入的数据，马上能读到，请不要用 CopyOnWtire 容器。</p>
-<p>内存占用问题：因为 CopyOnWrite 的是写时复制策略，所以在进行写操作的时候，内存会同时驻扎两个对象的内存。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>CopyOnWriteArrayList 使用写时复制的策略来保证 list 的一致性，而 获取-修改-写入 三步操作并不是原子性的，所以在增删改的过程中都使用了独占锁，来保证在某个时间只有一个线程对 list 数组进行修改。另外 CopyOnWriteArrayList 提供了弱一致性的迭代器，从而保证在获取迭代器后，其他线程对 list 的修改是不可见的，迭代器遍历的数组是一个快照。另外，CopyOnWriteArraySet 的底层是使用它实现的。</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <categories>
-        <category>多线程</category>
-      </categories>
-      <tags>
-        <tag>多线程</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Java堆的参数</title>
     <url>/posts/81cf.html</url>
     <content><![CDATA[<ul>
@@ -549,20 +516,12 @@ b<span class="token operator">?</span><span class="token punctuation">.</span>le
       </tags>
   </entry>
   <entry>
-    <title>Kotlin单例</title>
-    <url>/posts/9fbb.html</url>
-    <content><![CDATA[<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">class</span> Singleton <span class="token keyword">private</span> <span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-
-    <span class="token keyword">companion</span> <span class="token keyword">object</span> <span class="token punctuation">{</span>
-        <span class="token keyword">fun</span> <span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> Singleton <span class="token punctuation">{</span>
-            <span class="token keyword">return</span> Holder<span class="token punctuation">.</span>instance
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">private</span> <span class="token keyword">object</span> Holder <span class="token punctuation">{</span>
-        <span class="token keyword">val</span> instance <span class="token operator">=</span> <span class="token function">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
+    <title>CopyOnWriteArrayList</title>
+    <url>/posts/34b0.html</url>
+    <content><![CDATA[<h3 id="CopyOnWriteArrayList的优点"><a href="#CopyOnWriteArrayList的优点" class="headerlink" title="CopyOnWriteArrayList的优点"></a>CopyOnWriteArrayList的优点</h3><p>读取完全不用加锁的，并且更厉害的是写入也不会阻塞读取操作。只有修改操作之间需要同步等待。</p>
+<h3 id="CopyOnWriteArrayList的缺点"><a href="#CopyOnWriteArrayList的缺点" class="headerlink" title="CopyOnWriteArrayList的缺点"></a>CopyOnWriteArrayList的缺点</h3><p>数据一致性问题：CopyOnWirite 容器只能保证数据的最终一致性，不能保证数据的实时一致性。所以如果你希望写入的数据，马上能读到，请不要用 CopyOnWtire 容器。</p>
+<p>内存占用问题：因为 CopyOnWrite 的是写时复制策略，所以在进行写操作的时候，内存会同时驻扎两个对象的内存。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>CopyOnWriteArrayList 使用写时复制的策略来保证 list 的一致性，而 获取-修改-写入 三步操作并不是原子性的，所以在增删改的过程中都使用了独占锁，来保证在某个时间只有一个线程对 list 数组进行修改。另外 CopyOnWriteArrayList 提供了弱一致性的迭代器，从而保证在获取迭代器后，其他线程对 list 的修改是不可见的，迭代器遍历的数组是一个快照。另外，CopyOnWriteArraySet 的底层是使用它实现的。</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -582,8 +541,11 @@ b<span class="token operator">?</span><span class="token punctuation">.</span>le
             document.body.appendChild(img);
           });
       </script>]]></content>
+      <categories>
+        <category>多线程</category>
+      </categories>
       <tags>
-        <tag>Kotlin</tag>
+        <tag>多线程</tag>
       </tags>
   </entry>
   <entry>
@@ -805,6 +767,130 @@ Index_comment:
       </tags>
   </entry>
   <entry>
+    <title>Kotlin单例</title>
+    <url>/posts/9fbb.html</url>
+    <content><![CDATA[<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">class</span> Singleton <span class="token keyword">private</span> <span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">companion</span> <span class="token keyword">object</span> <span class="token punctuation">{</span>
+        <span class="token keyword">fun</span> <span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> Singleton <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> Holder<span class="token punctuation">.</span>instance
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">object</span> Holder <span class="token punctuation">{</span>
+        <span class="token keyword">val</span> instance <span class="token operator">=</span> <span class="token function">Singleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MySQL字符编码设置</title>
+    <url>/posts/d16b.html</url>
+    <content><![CDATA[<h3 id="关于中文的设置"><a href="#关于中文的设置" class="headerlink" title="关于中文的设置"></a>关于中文的设置</h3><p>某种字符的集合称为<strong>字符集（character set）</strong>。例如中文汉字和英文字母都是字符集的一种。</p>
+<p>在计算机和网络上表示字符时，需要给各个字符添加识别信息，例如数字或者符号等。给各个字符分配的数字或者符号称为<strong>字符代码（character code）</strong>。</p>
+<p>给字符集分配字符代码时的规则称为<strong>字符编码（character encoding）</strong>，中文相关的主流字符编码如下所示：</p>
+<table>
+<thead>
+<tr>
+<th>字符编码名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ISO-8859-1</td>
+<td>字母的字符编码（单字节编码）</td>
+</tr>
+<tr>
+<td>GB 2312</td>
+<td>1981 年 5 月 1 日发布的简体中文汉字编码国家标准</td>
+</tr>
+<tr>
+<td>GBK</td>
+<td>1995 年 12 月发布的汉字编码国际标准，是对 GB 2312 编码的补充</td>
+</tr>
+<tr>
+<td>cp936</td>
+<td>微软 Windows 环境上在 GB 2312 的基础上扩展的字符编码，通常被视为等同于 GBK</td>
+</tr>
+<tr>
+<td>EUC-CN</td>
+<td>Linux/Unix 环境上以 GB 2312 为基础的字符编码</td>
+</tr>
+<tr>
+<td>GB 18030</td>
+<td>2000 年 3 月 17 日发布的汉字编码国际标准，是对 GBK 编码的补充，兼容 GBK 和 GB 2312 字符集</td>
+</tr>
+<tr>
+<td>UTF-8</td>
+<td>针对 Unicode 字符集的一种可变长度字符编码</td>
+</tr>
+</tbody></table>
+<p>举例来说，“啊” 字在中国国家标准 GB 2312、GBK 和 GB 18030 字符编码中的编码都为 “B0A1”，而在 UTF-8 中则为 “E5958A”。从中可以看出，即使文字相同，如果字符编码不同，表示的字符也可能不同，由此才出现了乱码现象。</p>
+<p>世界上有许多语言系统和文字，所以除了上面介绍的内容之外还有无数的字符集和字符编码。但这样一来，面向全世界发布的网页等就会变得很难处理，因此人们开发了可以支持全世界所有字符的字符集 Unicode。Unicode 的字符编码方式有好几种，现在最为常用的是在 HTML 5 中被默认使用的 UTF-8。顺便说一下，在 UTF-8 的情况下，字符集和字符编码都称为 UTF-8。</p>
+<h3 id="MySQL的字符编码设置"><a href="#MySQL的字符编码设置" class="headerlink" title="MySQL的字符编码设置"></a>MySQL的字符编码设置</h3><p>通过 Web 应用程序，我们可以把输入的数据存储到数据库，再从数据库读出数据显示在 Web 画面上。在 Web 的世界中默认使用的字符编码是 UTF-8，所以如果数据库的字符编码也是 UTF-8，就不需要进行字符编码的转换了。</p>
+<p>因为中文 Windows 系统中命令行的默认字符编码是 GBK，所以 MySQL 监视器的输入输出字符串的字符编码也是 GBK。也就是说，存储在数据库中的字符的字符编码和客户端的输入输出中使用的字符编码并不相同。</p>
+<img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/Snipaste_2021-01-27_11-28-25.png" style="zoom:50%;">
+
+<p>在这种情况下，当向数据库存储数据时（GBK —&gt; UTF-8），以及从数据库读取数据显示在客户端上时（UTF-8—&gt; GBK），都需要进行字符编码的转换。可以通过 修改MySQL 的设置文件（my.ini ）即可：</p>
+<pre class=" language-shell"><code class="language-shell"># SQL 的安装目录下,如：C:\ProgramData\MySQL\MySQL Server 8.0\my.ini
+character-set-server=utf8
+default-character-set=gbk</code></pre>
+<h3 id="命令提示符的UTF-8设置"><a href="#命令提示符的UTF-8设置" class="headerlink" title="命令提示符的UTF-8设置"></a>命令提示符的UTF-8设置</h3><p>Windows终端默认使用字符编码GBK进行数据的输入和输出，而数据库则使用UTF-8存储数据。其实我们也可以把命令终端的字符编码设置成UTF-8。我们需要按照下面的格式在命令终端执行<code>chcp</code></p>
+<pre><code>shell</code></pre>
+<p>chcp用于修改命令终端的字符编码，<code>65001代表UTF-8</code>。如果这样设置，就不需要修改 my.ini 中的内容了。</p>
+<h3 id="确认MySQL中字符编码的设置情况"><a href="#确认MySQL中字符编码的设置情况" class="headerlink" title="确认MySQL中字符编码的设置情况"></a>确认MySQL中字符编码的设置情况</h3><p>启动MySQL监视器，输入status。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/one.png"></p>
+<p>1代表服务器端的字符编码设置，2代表客户端的字符编码设置。</p>
+<p>指定字符编码启动MySQL监视器</p>
+<pre class=" language-sh"><code class="language-sh">$ mysql -uroot -proot --default-character-set=gbk</code></pre>
+<p>另外字符编码设置情况还可以通过下面的命令查看</p>
+<pre class=" language-mysql"><code class="language-mysql">SHOW VARIABLES LIKE 'char%'</code></pre>
+<p>按下<code>F7键后，历史命令</code>会全部显示出来。</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MySQL数据类型</title>
     <url>/posts/f499.html</url>
     <content><![CDATA[<h3 id="什么是数据类型"><a href="#什么是数据类型" class="headerlink" title="什么是数据类型"></a>什么是数据类型</h3><p>数据库的表中只能输入各个列执行格式的数据。例如，指定为 “数值类型” 的列中不能输入字符等数据。指定为 “日期类型“的列中，只能输入日期数据。这种数据的格式称为”数据类型“。</p>
@@ -943,92 +1029,6 @@ $ db1:localhost<span class="token operator">></span></code></pre>
 <li>回到初期状态</li>
 </ul>
 <pre class=" language-bash"><code class="language-bash">$ prompt mysql<span class="token operator">></span></code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>MySQL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MySQL字符编码设置</title>
-    <url>/posts/d16b.html</url>
-    <content><![CDATA[<h3 id="关于中文的设置"><a href="#关于中文的设置" class="headerlink" title="关于中文的设置"></a>关于中文的设置</h3><p>某种字符的集合称为<strong>字符集（character set）</strong>。例如中文汉字和英文字母都是字符集的一种。</p>
-<p>在计算机和网络上表示字符时，需要给各个字符添加识别信息，例如数字或者符号等。给各个字符分配的数字或者符号称为<strong>字符代码（character code）</strong>。</p>
-<p>给字符集分配字符代码时的规则称为<strong>字符编码（character encoding）</strong>，中文相关的主流字符编码如下所示：</p>
-<table>
-<thead>
-<tr>
-<th>字符编码名</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>ISO-8859-1</td>
-<td>字母的字符编码（单字节编码）</td>
-</tr>
-<tr>
-<td>GB 2312</td>
-<td>1981 年 5 月 1 日发布的简体中文汉字编码国家标准</td>
-</tr>
-<tr>
-<td>GBK</td>
-<td>1995 年 12 月发布的汉字编码国际标准，是对 GB 2312 编码的补充</td>
-</tr>
-<tr>
-<td>cp936</td>
-<td>微软 Windows 环境上在 GB 2312 的基础上扩展的字符编码，通常被视为等同于 GBK</td>
-</tr>
-<tr>
-<td>EUC-CN</td>
-<td>Linux/Unix 环境上以 GB 2312 为基础的字符编码</td>
-</tr>
-<tr>
-<td>GB 18030</td>
-<td>2000 年 3 月 17 日发布的汉字编码国际标准，是对 GBK 编码的补充，兼容 GBK 和 GB 2312 字符集</td>
-</tr>
-<tr>
-<td>UTF-8</td>
-<td>针对 Unicode 字符集的一种可变长度字符编码</td>
-</tr>
-</tbody></table>
-<p>举例来说，“啊” 字在中国国家标准 GB 2312、GBK 和 GB 18030 字符编码中的编码都为 “B0A1”，而在 UTF-8 中则为 “E5958A”。从中可以看出，即使文字相同，如果字符编码不同，表示的字符也可能不同，由此才出现了乱码现象。</p>
-<p>世界上有许多语言系统和文字，所以除了上面介绍的内容之外还有无数的字符集和字符编码。但这样一来，面向全世界发布的网页等就会变得很难处理，因此人们开发了可以支持全世界所有字符的字符集 Unicode。Unicode 的字符编码方式有好几种，现在最为常用的是在 HTML 5 中被默认使用的 UTF-8。顺便说一下，在 UTF-8 的情况下，字符集和字符编码都称为 UTF-8。</p>
-<h3 id="MySQL的字符编码设置"><a href="#MySQL的字符编码设置" class="headerlink" title="MySQL的字符编码设置"></a>MySQL的字符编码设置</h3><p>通过 Web 应用程序，我们可以把输入的数据存储到数据库，再从数据库读出数据显示在 Web 画面上。在 Web 的世界中默认使用的字符编码是 UTF-8，所以如果数据库的字符编码也是 UTF-8，就不需要进行字符编码的转换了。</p>
-<p>因为中文 Windows 系统中命令行的默认字符编码是 GBK，所以 MySQL 监视器的输入输出字符串的字符编码也是 GBK。也就是说，存储在数据库中的字符的字符编码和客户端的输入输出中使用的字符编码并不相同。</p>
-<img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/Snipaste_2021-01-27_11-28-25.png" style="zoom:50%;">
-
-<p>在这种情况下，当向数据库存储数据时（GBK —&gt; UTF-8），以及从数据库读取数据显示在客户端上时（UTF-8—&gt; GBK），都需要进行字符编码的转换。可以通过 修改MySQL 的设置文件（my.ini ）即可：</p>
-<pre class=" language-shell"><code class="language-shell"># SQL 的安装目录下,如：C:\ProgramData\MySQL\MySQL Server 8.0\my.ini
-character-set-server=utf8
-default-character-set=gbk</code></pre>
-<h3 id="命令提示符的UTF-8设置"><a href="#命令提示符的UTF-8设置" class="headerlink" title="命令提示符的UTF-8设置"></a>命令提示符的UTF-8设置</h3><p>Windows终端默认使用字符编码GBK进行数据的输入和输出，而数据库则使用UTF-8存储数据。其实我们也可以把命令终端的字符编码设置成UTF-8。我们需要按照下面的格式在命令终端执行<code>chcp</code></p>
-<pre><code>shell</code></pre>
-<p>chcp用于修改命令终端的字符编码，<code>65001代表UTF-8</code>。如果这样设置，就不需要修改 my.ini 中的内容了。</p>
-<h3 id="确认MySQL中字符编码的设置情况"><a href="#确认MySQL中字符编码的设置情况" class="headerlink" title="确认MySQL中字符编码的设置情况"></a>确认MySQL中字符编码的设置情况</h3><p>启动MySQL监视器，输入status。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/one.png"></p>
-<p>1代表服务器端的字符编码设置，2代表客户端的字符编码设置。</p>
-<p>指定字符编码启动MySQL监视器</p>
-<pre class=" language-sh"><code class="language-sh">$ mysql -uroot -proot --default-character-set=gbk</code></pre>
-<p>另外字符编码设置情况还可以通过下面的命令查看</p>
-<pre class=" language-mysql"><code class="language-mysql">SHOW VARIABLES LIKE 'char%'</code></pre>
-<p>按下<code>F7键后，历史命令</code>会全部显示出来。</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -1427,85 +1427,6 @@ Reading messages<span class="token punctuation">..</span>. <span class="token pu
       </tags>
   </entry>
   <entry>
-    <title>Redis位操作</title>
-    <url>/posts/5969.html</url>
-    <content><![CDATA[<h3 id="位操作命令"><a href="#位操作命令" class="headerlink" title="位操作命令"></a>位操作命令</h3><pre class=" language-bash"><code class="language-bash">$ GETBIT key offset
-$ SETBIT key offset value
-$ BITCOUNT key <span class="token punctuation">[</span>start<span class="token punctuation">]</span> <span class="token punctuation">[</span>end<span class="token punctuation">]</span>
-$ BITOP operation destkey key <span class="token punctuation">[</span>key <span class="token punctuation">..</span>.<span class="token punctuation">]</span></code></pre>
-<h3 id="演示"><a href="#演示" class="headerlink" title="演示"></a>演示</h3><p>一个字节由 8 个二进制位组成，Redis 提供了 4 个命令可以直接对二进制位进行操作。为了演示，我们首先将 foo 赋值为 bar：</p>
-<pre class=" language-bash"><code class="language-bash">$ SET foo bar
-OK</code></pre>
-<p>bar 的 3 个字母 “b”, “a” 和 “r” 对应的 ASCII 码分别为98、97 和 114，转换为二进制后分别为 1100010、1100001 和 1110010，所以 foo 键中的二进制位结构如下所示：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/14771610958236_.pic_hd.jpg"></p>
-<p><code>GETBIT</code> 命令可以获得一个字符串类型键指定位置的二进制位的值（0 或 1），索引从 0 开始：</p>
-<pre class=" language-bash"><code class="language-bash">$ GETBIT foo 0
-<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 0
-$ GETBIT foo 6
-<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1</code></pre>
-<p>如果需要获取的二进制位的索引超出了键值的二进制为的实际长度则默认值是0：</p>
-<pre class=" language-bash"><code class="language-bash">$ GETBIT foo 10000
-<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 0</code></pre>
-<p><code>SETBIT</code> 命令可以设置字符串类型键指定位置的二进制位的值，返回值是该位置的旧值。如我们要将 foo 键值设置为 arr，可以通过位操作将 foo 键的二进制位的索引第 6 位设为0，第 7 位设为1：</p>
-<pre class=" language-bash"><code class="language-bash">$ SETBIT foo 6 0
-<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1
-$ SETBIT foo 7 1
-<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 0
-$ GET foo
-<span class="token string">"aar"</span></code></pre>
-<p>如果要设置的位置超过了键值的二进制位的长度，<code>SETBIT</code> 命令会自动将中间的二进制位设置为 0。</p>
-<p><code>BITCOUNT</code> 命令可以获得字符串类型键中值是1的二进制位个数，如：</p>
-<pre class=" language-bash"><code class="language-bash">$ BITCOUNT foo
-<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 10</code></pre>
-<p>可以通过参数来限制统计的字节范围，如我们只希望统计前两个字节（即 “aa” ）:</p>
-<pre class=" language-bash"><code class="language-bash">$ BITCOUNT foo 0 1
-<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 6</code></pre>
-<p><code>BITOP</code> 命令可以对多个字符串类型键进行位运算，并将结果存储在 destkey 参数指定的键中。<code>BITOP</code> 命令支持的运算操作有 AND、OR、XOR 和 NOT。</p>
-<pre class=" language-bash"><code class="language-bash">$ SET foo1 bar
-OK
-$ SET foo2 aar
-OK
-$ BITOP OR res foo1 foo2
-<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 3
-$ GET res
-<span class="token string">"car"</span></code></pre>
-<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/14841610959643_.pic_hd.jpg"></p>
-<p><code>BITPOS</code>  命令可以获得指定键的第一个位置是 0 或者 1 的位置。还是以 ”bar“这个键值位例，如果想获取键值中的第一个二进制位为 1 的偏移量，则可以执行：</p>
-<pre class=" language-bash"><code class="language-bash">$ SET foo bar
-OK
-$ BITPOS foo 1
-<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1</code></pre>
-<p><code>BITOPS</code> 命令的第二个和第三个参数分别可以用来指定要查询的起始字节和结束字节。注意这里的单位不再是二进制位，而是字节。如果我们想查询的第二个字节到第三个字节之间（即 ”a“ 和 ”r“）出现的第一个值位 1 的二进制位的偏移量，则可以执行：</p>
-<pre><code>$ BITPOS foo 1 1 2
-(integer) 9</code></pre>
-<p>这里的返回结果的偏移量是从头开始算起的，与起始字节无关。</p>
-<blockquote>
-<p>如果不设置结束字节且键值的所有二进制位都是 1 ，则当要查询值为 0 的二进制位偏移量时，返回结果会是键值长度的下一个字位的偏移量。这是因为 Redis 会认为键值长度之后的二进制位都是 0。</p>
-</blockquote>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>Redis</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Redis事务</title>
     <url>/posts/a455.html</url>
     <content><![CDATA[<blockquote>
@@ -1585,6 +1506,85 @@ $ GET key
 </blockquote>
 <p>执行 EXEC 命令会取消对所有键的监控。</p>
 <p>可以使用 UNWATCH 命令来保证下一个事务的执行不会收到影响。</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis位操作</title>
+    <url>/posts/5969.html</url>
+    <content><![CDATA[<h3 id="位操作命令"><a href="#位操作命令" class="headerlink" title="位操作命令"></a>位操作命令</h3><pre class=" language-bash"><code class="language-bash">$ GETBIT key offset
+$ SETBIT key offset value
+$ BITCOUNT key <span class="token punctuation">[</span>start<span class="token punctuation">]</span> <span class="token punctuation">[</span>end<span class="token punctuation">]</span>
+$ BITOP operation destkey key <span class="token punctuation">[</span>key <span class="token punctuation">..</span>.<span class="token punctuation">]</span></code></pre>
+<h3 id="演示"><a href="#演示" class="headerlink" title="演示"></a>演示</h3><p>一个字节由 8 个二进制位组成，Redis 提供了 4 个命令可以直接对二进制位进行操作。为了演示，我们首先将 foo 赋值为 bar：</p>
+<pre class=" language-bash"><code class="language-bash">$ SET foo bar
+OK</code></pre>
+<p>bar 的 3 个字母 “b”, “a” 和 “r” 对应的 ASCII 码分别为98、97 和 114，转换为二进制后分别为 1100010、1100001 和 1110010，所以 foo 键中的二进制位结构如下所示：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/14771610958236_.pic_hd.jpg"></p>
+<p><code>GETBIT</code> 命令可以获得一个字符串类型键指定位置的二进制位的值（0 或 1），索引从 0 开始：</p>
+<pre class=" language-bash"><code class="language-bash">$ GETBIT foo 0
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 0
+$ GETBIT foo 6
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1</code></pre>
+<p>如果需要获取的二进制位的索引超出了键值的二进制为的实际长度则默认值是0：</p>
+<pre class=" language-bash"><code class="language-bash">$ GETBIT foo 10000
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 0</code></pre>
+<p><code>SETBIT</code> 命令可以设置字符串类型键指定位置的二进制位的值，返回值是该位置的旧值。如我们要将 foo 键值设置为 arr，可以通过位操作将 foo 键的二进制位的索引第 6 位设为0，第 7 位设为1：</p>
+<pre class=" language-bash"><code class="language-bash">$ SETBIT foo 6 0
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1
+$ SETBIT foo 7 1
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 0
+$ GET foo
+<span class="token string">"aar"</span></code></pre>
+<p>如果要设置的位置超过了键值的二进制位的长度，<code>SETBIT</code> 命令会自动将中间的二进制位设置为 0。</p>
+<p><code>BITCOUNT</code> 命令可以获得字符串类型键中值是1的二进制位个数，如：</p>
+<pre class=" language-bash"><code class="language-bash">$ BITCOUNT foo
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 10</code></pre>
+<p>可以通过参数来限制统计的字节范围，如我们只希望统计前两个字节（即 “aa” ）:</p>
+<pre class=" language-bash"><code class="language-bash">$ BITCOUNT foo 0 1
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 6</code></pre>
+<p><code>BITOP</code> 命令可以对多个字符串类型键进行位运算，并将结果存储在 destkey 参数指定的键中。<code>BITOP</code> 命令支持的运算操作有 AND、OR、XOR 和 NOT。</p>
+<pre class=" language-bash"><code class="language-bash">$ SET foo1 bar
+OK
+$ SET foo2 aar
+OK
+$ BITOP OR res foo1 foo2
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 3
+$ GET res
+<span class="token string">"car"</span></code></pre>
+<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/14841610959643_.pic_hd.jpg"></p>
+<p><code>BITPOS</code>  命令可以获得指定键的第一个位置是 0 或者 1 的位置。还是以 ”bar“这个键值位例，如果想获取键值中的第一个二进制位为 1 的偏移量，则可以执行：</p>
+<pre class=" language-bash"><code class="language-bash">$ SET foo bar
+OK
+$ BITPOS foo 1
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1</code></pre>
+<p><code>BITOPS</code> 命令的第二个和第三个参数分别可以用来指定要查询的起始字节和结束字节。注意这里的单位不再是二进制位，而是字节。如果我们想查询的第二个字节到第三个字节之间（即 ”a“ 和 ”r“）出现的第一个值位 1 的二进制位的偏移量，则可以执行：</p>
+<pre><code>$ BITPOS foo 1 1 2
+(integer) 9</code></pre>
+<p>这里的返回结果的偏移量是从头开始算起的，与起始字节无关。</p>
+<blockquote>
+<p>如果不设置结束字节且键值的所有二进制位都是 1 ，则当要查询值为 0 的二进制位偏移量时，返回结果会是键值长度的下一个字位的偏移量。这是因为 Redis 会认为键值长度之后的二进制位都是 0。</p>
+</blockquote>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -1718,82 +1718,6 @@ appendfsync everysec
 <blockquote>
 <p>Redis 允许同时开启 AOF 和 RDB，即保证了数据安全又使得进行备份等操作十分容易。此时重新启动 Redis 后， Redis会使用 AOF 文件来恢复数据，因为 AOF 方式的持久化可能丢失的数据更少。 </p>
 </blockquote>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>Redis</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Redis的SORT命令</title>
-    <url>/posts/7886.html</url>
-    <content><![CDATA[<p><code>SORT</code> 命令可以对列表类型、集合类型和有序集合类型键进行排序。</p>
-<pre class=" language-bash"><code class="language-bash">$ LPUSH myList 4 2 6 1 3 7
-<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 6
-$ LRANGE myList 0 -1
-1<span class="token punctuation">)</span> <span class="token string">"7"</span>
-2<span class="token punctuation">)</span> <span class="token string">"3"</span>
-3<span class="token punctuation">)</span> <span class="token string">"1"</span>
-4<span class="token punctuation">)</span> <span class="token string">"6"</span>
-5<span class="token punctuation">)</span> <span class="token string">"2"</span>
-6<span class="token punctuation">)</span> <span class="token string">"4"</span>
-$ SORT myList
-1<span class="token punctuation">)</span> <span class="token string">"1"</span>
-2<span class="token punctuation">)</span> <span class="token string">"2"</span>
-3<span class="token punctuation">)</span> <span class="token string">"3"</span>
-4<span class="token punctuation">)</span> <span class="token string">"4"</span>
-5<span class="token punctuation">)</span> <span class="token string">"6"</span>
-6<span class="token punctuation">)</span> <span class="token string">"7"</span></code></pre>
-<p>在对有序集合排序时会忽略元素的分数，只针对元素自身的值进行排序。比如：</p>
-<pre class=" language-bash"><code class="language-bash">$ ZADD myzset 50 2 40 3 20 1 60 5
-<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 4
-$ SORT myzset
-1<span class="token punctuation">)</span> <span class="token string">"1"</span>
-2<span class="token punctuation">)</span> <span class="token string">"2"</span>
-3<span class="token punctuation">)</span> <span class="token string">"3"</span>
-4<span class="token punctuation">)</span> <span class="token string">"5"</span></code></pre>
-<p>除了可以排列数字外，SORT 命令还可以通过 ALPHA 参数实现按照字典顺序排列非数字元素，就像这样：</p>
-<pre class=" language-bash"><code class="language-bash">$ LPUSH myList z c d a e h j b
-<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 8
-$ SORT myList
-<span class="token punctuation">(</span>error<span class="token punctuation">)</span> ERR One or <span class="token function">more</span> scores can<span class="token string">'t be converted into double
-$ SORT myList ALPHA
-1) "a"
-2) "b"
-3) "c"
-4) "d"
-5) "e"
-6) "h"
-7) "j"
-8) "z"
-$ ZADD myzset 77 asiaMa 90 xiu 68 min
-(integer) 3
-$ SORT myzset
-(error) ERR One or more scores can'</span>t be converted into double
-$ SORT myzset ALPHA
-1<span class="token punctuation">)</span> <span class="token string">"asiaMa"</span>
-2<span class="token punctuation">)</span> <span class="token string">"min"</span>
-3<span class="token punctuation">)</span> <span class="token string">"xiu"</span></code></pre>
-<p>从这段示例中可以看到如果没有加 <code>ALPHA</code> 参数的话，<code>SORT</code> 命令会尝试将所有元素转换成双精度数来比较，如果无法转换则会提示错误。</p>
-<p><code>SORT</code> 命令还支持 <code>LIMIT</code> 参数来返回指定范围的记过。用法同 SQL 语句一样，<code>LIMIE offset count</code>, 表示跳过前 offset 个元素并获取之后的 count 个元素。</p>
-<pre class=" language-bash"><code class="language-bash">$ SORT tag:ruby:posts DESC LIMIT 1 2</code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -1995,6 +1919,82 @@ esac</code></pre>
 <pre class=" language-bash"><code class="language-bash">$ redis-cli SHUTDOWN</code></pre>
 <p>当 Redis 收到 <code>SHUTDOWN</code> 命令后，会先断开所有客户端连接，然后根据配置执行持久化，最后完成退出。</p>
 <p>Redis 可以妥善处理 SIGTERM （signal termination） 信号，所以使用 kill Redis 进行的 PID 也可以正常结束 Redis，效果与发送 SHTUDOWN 命令一样。</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis的SORT命令</title>
+    <url>/posts/7886.html</url>
+    <content><![CDATA[<p><code>SORT</code> 命令可以对列表类型、集合类型和有序集合类型键进行排序。</p>
+<pre class=" language-bash"><code class="language-bash">$ LPUSH myList 4 2 6 1 3 7
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 6
+$ LRANGE myList 0 -1
+1<span class="token punctuation">)</span> <span class="token string">"7"</span>
+2<span class="token punctuation">)</span> <span class="token string">"3"</span>
+3<span class="token punctuation">)</span> <span class="token string">"1"</span>
+4<span class="token punctuation">)</span> <span class="token string">"6"</span>
+5<span class="token punctuation">)</span> <span class="token string">"2"</span>
+6<span class="token punctuation">)</span> <span class="token string">"4"</span>
+$ SORT myList
+1<span class="token punctuation">)</span> <span class="token string">"1"</span>
+2<span class="token punctuation">)</span> <span class="token string">"2"</span>
+3<span class="token punctuation">)</span> <span class="token string">"3"</span>
+4<span class="token punctuation">)</span> <span class="token string">"4"</span>
+5<span class="token punctuation">)</span> <span class="token string">"6"</span>
+6<span class="token punctuation">)</span> <span class="token string">"7"</span></code></pre>
+<p>在对有序集合排序时会忽略元素的分数，只针对元素自身的值进行排序。比如：</p>
+<pre class=" language-bash"><code class="language-bash">$ ZADD myzset 50 2 40 3 20 1 60 5
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 4
+$ SORT myzset
+1<span class="token punctuation">)</span> <span class="token string">"1"</span>
+2<span class="token punctuation">)</span> <span class="token string">"2"</span>
+3<span class="token punctuation">)</span> <span class="token string">"3"</span>
+4<span class="token punctuation">)</span> <span class="token string">"5"</span></code></pre>
+<p>除了可以排列数字外，SORT 命令还可以通过 ALPHA 参数实现按照字典顺序排列非数字元素，就像这样：</p>
+<pre class=" language-bash"><code class="language-bash">$ LPUSH myList z c d a e h j b
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 8
+$ SORT myList
+<span class="token punctuation">(</span>error<span class="token punctuation">)</span> ERR One or <span class="token function">more</span> scores can<span class="token string">'t be converted into double
+$ SORT myList ALPHA
+1) "a"
+2) "b"
+3) "c"
+4) "d"
+5) "e"
+6) "h"
+7) "j"
+8) "z"
+$ ZADD myzset 77 asiaMa 90 xiu 68 min
+(integer) 3
+$ SORT myzset
+(error) ERR One or more scores can'</span>t be converted into double
+$ SORT myzset ALPHA
+1<span class="token punctuation">)</span> <span class="token string">"asiaMa"</span>
+2<span class="token punctuation">)</span> <span class="token string">"min"</span>
+3<span class="token punctuation">)</span> <span class="token string">"xiu"</span></code></pre>
+<p>从这段示例中可以看到如果没有加 <code>ALPHA</code> 参数的话，<code>SORT</code> 命令会尝试将所有元素转换成双精度数来比较，如果无法转换则会提示错误。</p>
+<p><code>SORT</code> 命令还支持 <code>LIMIT</code> 参数来返回指定范围的记过。用法同 SQL 语句一样，<code>LIMIE offset count</code>, 表示跳过前 offset 个元素并获取之后的 count 个元素。</p>
+<pre class=" language-bash"><code class="language-bash">$ SORT tag:ruby:posts DESC LIMIT 1 2</code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -3795,116 +3795,6 @@ Interrupted，程序运行结束 */</span></code></pre>
       </tags>
   </entry>
   <entry>
-    <title>函数式编程</title>
-    <url>/posts/f609.html</url>
-    <content><![CDATA[<p>函数式编程的核心概念如下：</p>
-<ul>
-<li>头等函数：把函数（一小段行为）当作值使用，可以用变量保存它，把它当作参数传递，或者当作其它函数的返回值。</li>
-<li>不可变性：使用不可变对象，这保证了它们的状态在其创建之后不能再变化。</li>
-<li>无副作用：使用的是纯函数。此类函数在输入相同时会产生同样的结果，并且不会修改其它对象的状态，也不会和外面的世界交互。</li>
-</ul>
-<p>优点：</p>
-<ol>
-<li>简洁</li>
-</ol>
-<p>函数式风格的代码比相应的命令式风格的代码更优雅、更简练，因为把函数当作值可以让你获得更强大的抽象能力，从而避免重复代码。假设你有两段类似的代码，实现相似的任务（例如，在集合中寻找一个匹配的元素），但具体细节略有不同（如何判断元素式匹配的）。可以轻易地将这段逻辑公共部分提取到一个函数中，并将其它不同的部分作为参数传递给它。这些参数本身也是函数，但你可以使用一种简洁的语法来表示这些匿名函数，它被称作lambda表达式。</p>
-<ol start="2">
-<li>多线程安全</li>
-</ol>
-<p>多线程程序中最大的错误来源之一就是，在没有采取适当同步机制的情况下，在不同的线程上修改同一份数据。如果你使用的是不可变数据结构和纯函数，就能保证这样不安全的修改根本不会发生，也就不需要考虑为其设计股灾的同步方案。</p>
-<ol start="3">
-<li>易测试性</li>
-</ol>
-<p>没有副作用的函数可以独立地进行测试，因为不需要写大量的设置代码来构造它们所依赖的整个环境。</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>编程范式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>创建数据库</title>
-    <url>/posts/cd0e.html</url>
-    <content><![CDATA[<h3 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h3><pre class=" language-mysql"><code class="language-mysql">CREATE DATABASE 数据库名;</code></pre>
-<p>SQL 语句的命令需要使用半角字符输入，输入全角字符会发生错误。另外，MySQL 不区分大小写。</p>
-<blockquote>
-<p><strong>提示</strong>    在 Windows 和 macOS 的环境中不区分字符的大小写，但是在 Linux 环境中却区分大小写。也就是说，表 tb1 和 表 TB1 在 Windows 和 macOS 环境中会作为相同的表名处理，但是在 Linux 环境中会作为不同的表名处理。</p>
-</blockquote>
-<h3 id="确认数据库"><a href="#确认数据库" class="headerlink" title="确认数据库"></a>确认数据库</h3><pre class=" language-mysql"><code class="language-mysql">SHOW DATABASES;</code></pre>
-<h3 id="指定使用的数据库"><a href="#指定使用的数据库" class="headerlink" title="指定使用的数据库"></a>指定使用的数据库</h3><pre class=" language-mysql"><code class="language-mysql">USE database_name;</code></pre>
-<blockquote>
-<p><strong>提示</strong>    我们可以使用 \u 来代替 use，使用 \u db1 命令执行数据库。</p>
-</blockquote>
-<h3 id="显示当前使用的数据库"><a href="#显示当前使用的数据库" class="headerlink" title="显示当前使用的数据库"></a>显示当前使用的数据库</h3><pre class=" language-mysql"><code class="language-mysql">SELECT DATABASES</code></pre>
-<blockquote>
-<p><strong>提示</strong>    我们可以直接指定数据库启动MySQL监视器。在这种情况下，可以像<code>mysql db1 -u root -proot</code> 这样，通过在命令提示符中指定数据库名来执行mysql命令。</p>
-</blockquote>
-<h3 id="创建表"><a href="#创建表" class="headerlink" title="创建表"></a>创建表</h3><pre class=" language-mysql"><code class="language-mysql">CREATE TABLE 表名（列名1 数据类型1，列名2 数据类型2 ...）</code></pre>
-<h3 id="显示所有的表"><a href="#显示所有的表" class="headerlink" title="显示所有的表"></a>显示所有的表</h3><pre class=" language-mysql"><code class="language-mysql">SHOW TABLES;</code></pre>
-<blockquote>
-<p><strong>提示</strong>    在 MySQL 中输入字符到表中时，会因为各种原因出现字符乱码的情况。这时有一个方法可以解决这个问题，那就是执行字符编码创建表。</p>
-<pre class=" language-mysql"><code class="language-mysql">CREATE TABLE tb1(emp_id VARCHAR(10), name VARCHAR(10), age INT) CHARSET=utf8mb4;</code></pre>
-</blockquote>
-<h3 id="访问其他数据库"><a href="#访问其他数据库" class="headerlink" title="访问其他数据库"></a>访问其他数据库</h3><p>在使用 <code>use</code> 选择数据库的情况下也能够操作其它数据库中的表。这是可以像 “数据库名.表名” 这样把 “数据库名” 和 “表名” 用 “.” 连接起来。</p>
-<pre class=" language-mysql"><code class="language-mysql">SELECT * FROM db2.table;</code></pre>
-<h3 id="确认表的列结构"><a href="#确认表的列结构" class="headerlink" title="确认表的列结构"></a>确认表的列结构</h3><pre class=" language-mysql"><code class="language-mysql">DESC 表名;</code></pre>
-<p>例如，查看 tb1 表的数据结构：</p>
-<pre class=" language-bash"><code class="language-bash">$ DESC tb1<span class="token punctuation">;</span>
-+-------+--------------+------+-----+---------+-------+
-<span class="token operator">|</span> Field <span class="token operator">|</span> Type         <span class="token operator">|</span> Null <span class="token operator">|</span> Key <span class="token operator">|</span> Default <span class="token operator">|</span> Extra <span class="token operator">|</span>
-+-------+--------------+------+-----+---------+-------+
-<span class="token operator">|</span> empid <span class="token operator">|</span> varchar<span class="token punctuation">(</span>10<span class="token punctuation">)</span>  <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> NULL    <span class="token operator">|</span>       <span class="token operator">|</span>
-<span class="token operator">|</span> name  <span class="token operator">|</span> varchar<span class="token punctuation">(</span>10<span class="token punctuation">)</span>  <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> NULL    <span class="token operator">|</span>       <span class="token operator">|</span>
-<span class="token operator">|</span> age   <span class="token operator">|</span> int          <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> NULL    <span class="token operator">|</span>       <span class="token operator">|</span>
-+-------+--------------+------+-----+---------+-------+</code></pre>
-<p>Null 表示“允许不输入任何值”，Default表示“如果什么值都不输入就用这个值”。Field表示列名，Type表示数据类型。</p>
-<p>因为列name被设置成了VARCHAR(10)，所以我们无法输入多于10个字符的数据。但是在MySQL中，即使输入了多于指定字符数（这里是10个字符）的数据也不会报错，而是会忽略无法插入的字符（这里是指10个字符之后的数据），这一点需要注意。</p>
-<blockquote>
-<p>如果将SQL Modes设为STRICE_TRANS_TABLES时回报出Data to long for column ‘XXX’ at row XX的错误。</p>
-</blockquote>
-<h3 id="向表中插入多行记录"><a href="#向表中插入多行记录" class="headerlink" title="向表中插入多行记录"></a>向表中插入多行记录</h3><pre class=" language-mysql"><code class="language-mysql">INSERT INTO tb1 (emp_id, name, age) VALUES ('A101', '佐藤', 40), ('A102', '高桥', 28), ('A103', '中川', 20), ('A104', '渡边', 23), ('A105', '西泽', 35);</code></pre>
-<h3 id="复制表"><a href="#复制表" class="headerlink" title="复制表"></a>复制表</h3><pre class=" language-mysql"><code class="language-mysql">CREATE TABLE tb1A SELECT * FROM tb1;</code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>MySQL</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>使用文件进行交互</title>
     <url>/posts/ee67.html</url>
     <content><![CDATA[<h3 id="从文本文件中读取数据（导入）"><a href="#从文本文件中读取数据（导入）" class="headerlink" title="从文本文件中读取数据（导入）"></a>从文本文件中读取数据（导入）</h3><p>当把大量数据输入到表中时，如果打开 MySQL 监视器用键盘手动输入所有数据，就会耗费非常多的时间和精力。</p>
@@ -4043,6 +3933,116 @@ $ UNLOCK TABLES;</code></pre>
 <h4 id="表的备份"><a href="#表的备份" class="headerlink" title="表的备份"></a>表的备份</h4><pre class=" language-bash"><code class="language-bash">$ mysqldump -u 用户名 -p密码 数据库名 表名 <span class="token operator">></span> 输出文件的名称</code></pre>
 <p>恢复表和恢复数据库一样，不用指定表名，直接读取文件即可。如：</p>
 <pre class=" language-bash"><code class="language-bash">$ mysql -u root -proot db3 <span class="token operator">&lt;</span> /Users/asiama/tb1_out.txt</code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>函数式编程</title>
+    <url>/posts/f609.html</url>
+    <content><![CDATA[<p>函数式编程的核心概念如下：</p>
+<ul>
+<li>头等函数：把函数（一小段行为）当作值使用，可以用变量保存它，把它当作参数传递，或者当作其它函数的返回值。</li>
+<li>不可变性：使用不可变对象，这保证了它们的状态在其创建之后不能再变化。</li>
+<li>无副作用：使用的是纯函数。此类函数在输入相同时会产生同样的结果，并且不会修改其它对象的状态，也不会和外面的世界交互。</li>
+</ul>
+<p>优点：</p>
+<ol>
+<li>简洁</li>
+</ol>
+<p>函数式风格的代码比相应的命令式风格的代码更优雅、更简练，因为把函数当作值可以让你获得更强大的抽象能力，从而避免重复代码。假设你有两段类似的代码，实现相似的任务（例如，在集合中寻找一个匹配的元素），但具体细节略有不同（如何判断元素式匹配的）。可以轻易地将这段逻辑公共部分提取到一个函数中，并将其它不同的部分作为参数传递给它。这些参数本身也是函数，但你可以使用一种简洁的语法来表示这些匿名函数，它被称作lambda表达式。</p>
+<ol start="2">
+<li>多线程安全</li>
+</ol>
+<p>多线程程序中最大的错误来源之一就是，在没有采取适当同步机制的情况下，在不同的线程上修改同一份数据。如果你使用的是不可变数据结构和纯函数，就能保证这样不安全的修改根本不会发生，也就不需要考虑为其设计股灾的同步方案。</p>
+<ol start="3">
+<li>易测试性</li>
+</ol>
+<p>没有副作用的函数可以独立地进行测试，因为不需要写大量的设置代码来构造它们所依赖的整个环境。</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>编程范式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>创建数据库</title>
+    <url>/posts/cd0e.html</url>
+    <content><![CDATA[<h3 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h3><pre class=" language-mysql"><code class="language-mysql">CREATE DATABASE 数据库名;</code></pre>
+<p>SQL 语句的命令需要使用半角字符输入，输入全角字符会发生错误。另外，MySQL 不区分大小写。</p>
+<blockquote>
+<p><strong>提示</strong>    在 Windows 和 macOS 的环境中不区分字符的大小写，但是在 Linux 环境中却区分大小写。也就是说，表 tb1 和 表 TB1 在 Windows 和 macOS 环境中会作为相同的表名处理，但是在 Linux 环境中会作为不同的表名处理。</p>
+</blockquote>
+<h3 id="确认数据库"><a href="#确认数据库" class="headerlink" title="确认数据库"></a>确认数据库</h3><pre class=" language-mysql"><code class="language-mysql">SHOW DATABASES;</code></pre>
+<h3 id="指定使用的数据库"><a href="#指定使用的数据库" class="headerlink" title="指定使用的数据库"></a>指定使用的数据库</h3><pre class=" language-mysql"><code class="language-mysql">USE database_name;</code></pre>
+<blockquote>
+<p><strong>提示</strong>    我们可以使用 \u 来代替 use，使用 \u db1 命令执行数据库。</p>
+</blockquote>
+<h3 id="显示当前使用的数据库"><a href="#显示当前使用的数据库" class="headerlink" title="显示当前使用的数据库"></a>显示当前使用的数据库</h3><pre class=" language-mysql"><code class="language-mysql">SELECT DATABASES</code></pre>
+<blockquote>
+<p><strong>提示</strong>    我们可以直接指定数据库启动MySQL监视器。在这种情况下，可以像<code>mysql db1 -u root -proot</code> 这样，通过在命令提示符中指定数据库名来执行mysql命令。</p>
+</blockquote>
+<h3 id="创建表"><a href="#创建表" class="headerlink" title="创建表"></a>创建表</h3><pre class=" language-mysql"><code class="language-mysql">CREATE TABLE 表名（列名1 数据类型1，列名2 数据类型2 ...）</code></pre>
+<h3 id="显示所有的表"><a href="#显示所有的表" class="headerlink" title="显示所有的表"></a>显示所有的表</h3><pre class=" language-mysql"><code class="language-mysql">SHOW TABLES;</code></pre>
+<blockquote>
+<p><strong>提示</strong>    在 MySQL 中输入字符到表中时，会因为各种原因出现字符乱码的情况。这时有一个方法可以解决这个问题，那就是执行字符编码创建表。</p>
+<pre class=" language-mysql"><code class="language-mysql">CREATE TABLE tb1(emp_id VARCHAR(10), name VARCHAR(10), age INT) CHARSET=utf8mb4;</code></pre>
+</blockquote>
+<h3 id="访问其他数据库"><a href="#访问其他数据库" class="headerlink" title="访问其他数据库"></a>访问其他数据库</h3><p>在使用 <code>use</code> 选择数据库的情况下也能够操作其它数据库中的表。这是可以像 “数据库名.表名” 这样把 “数据库名” 和 “表名” 用 “.” 连接起来。</p>
+<pre class=" language-mysql"><code class="language-mysql">SELECT * FROM db2.table;</code></pre>
+<h3 id="确认表的列结构"><a href="#确认表的列结构" class="headerlink" title="确认表的列结构"></a>确认表的列结构</h3><pre class=" language-mysql"><code class="language-mysql">DESC 表名;</code></pre>
+<p>例如，查看 tb1 表的数据结构：</p>
+<pre class=" language-bash"><code class="language-bash">$ DESC tb1<span class="token punctuation">;</span>
++-------+--------------+------+-----+---------+-------+
+<span class="token operator">|</span> Field <span class="token operator">|</span> Type         <span class="token operator">|</span> Null <span class="token operator">|</span> Key <span class="token operator">|</span> Default <span class="token operator">|</span> Extra <span class="token operator">|</span>
++-------+--------------+------+-----+---------+-------+
+<span class="token operator">|</span> empid <span class="token operator">|</span> varchar<span class="token punctuation">(</span>10<span class="token punctuation">)</span>  <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> NULL    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> name  <span class="token operator">|</span> varchar<span class="token punctuation">(</span>10<span class="token punctuation">)</span>  <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> NULL    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> age   <span class="token operator">|</span> int          <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> NULL    <span class="token operator">|</span>       <span class="token operator">|</span>
++-------+--------------+------+-----+---------+-------+</code></pre>
+<p>Null 表示“允许不输入任何值”，Default表示“如果什么值都不输入就用这个值”。Field表示列名，Type表示数据类型。</p>
+<p>因为列name被设置成了VARCHAR(10)，所以我们无法输入多于10个字符的数据。但是在MySQL中，即使输入了多于指定字符数（这里是10个字符）的数据也不会报错，而是会忽略无法插入的字符（这里是指10个字符之后的数据），这一点需要注意。</p>
+<blockquote>
+<p>如果将SQL Modes设为STRICE_TRANS_TABLES时回报出Data to long for column ‘XXX’ at row XX的错误。</p>
+</blockquote>
+<h3 id="向表中插入多行记录"><a href="#向表中插入多行记录" class="headerlink" title="向表中插入多行记录"></a>向表中插入多行记录</h3><pre class=" language-mysql"><code class="language-mysql">INSERT INTO tb1 (emp_id, name, age) VALUES ('A101', '佐藤', 40), ('A102', '高桥', 28), ('A103', '中川', 20), ('A104', '渡边', 23), ('A105', '西泽', 35);</code></pre>
+<h3 id="复制表"><a href="#复制表" class="headerlink" title="复制表"></a>复制表</h3><pre class=" language-mysql"><code class="language-mysql">CREATE TABLE tb1A SELECT * FROM tb1;</code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -6998,51 +6998,6 @@ infix <span class="token keyword">fun</span> Int<span class="token punctuation">
       </tags>
   </entry>
   <entry>
-    <title>英语学习第三天</title>
-    <url>/posts/9968.html</url>
-    <content><![CDATA[<h3 id="动名词作主语"><a href="#动名词作主语" class="headerlink" title="动名词作主语"></a>动名词作主语</h3><ul>
-<li>Eating an apple a day keeps you healthy.</li>
-<li>Running five miles is the first thing he does in the morning.</li>
-</ul>
-<h3 id="不定式作主语"><a href="#不定式作主语" class="headerlink" title="不定式作主语"></a>不定式作主语</h3><ul>
-<li>To study abroad is my greatest desire.</li>
-<li>To travel around the world is my plan for this year.</li>
-</ul>
-<p>动名词作主语不讨论这件事做或没做。不定式做主语，这件事情还没有做。</p>
-<p>动词要做主语，不能用原词。可以用动名词，也可以用不定式。如果是不定式，这个动作要没做才可以。</p>
-<blockquote>
-<p>不定式和动名词作主语时，常出现主语过长的情况，可以用代词it代替，作形式主语放在句首，而把真正的主语，即不定式或动名词短语放在句尾。动名词移至句尾时，常改为不定式。</p>
-</blockquote>
-<p>Collecting stamps is one of his hobbies.</p>
-<p><code>It</code> is one of his hobbies <code>to collect stamps</code>.</p>
-<p>Eating an apple a day keeps you healthy.</p>
-<p><code>It</code> keeps you healthy <code>to eat an appale</code>.</p>
-<h3 id="单词"><a href="#单词" class="headerlink" title="单词"></a>单词</h3><p>hear from 收到….的信</p>
-<p>hear sb do sth 听见某人做某事 </p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>English</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>英语学习第一天</title>
     <url>/posts/56b.html</url>
     <content><![CDATA[<h2 id="五种基本句型"><a href="#五种基本句型" class="headerlink" title="五种基本句型"></a>五种基本句型</h2><p>主语：动作的发起者，位于句首。</p>
@@ -7140,6 +7095,51 @@ infix <span class="token keyword">fun</span> Int<span class="token punctuation">
 <li>She talk loudy.（方式状语）</li>
 <li>He walks in a funny way.</li>
 </ul>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>English</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>英语学习第三天</title>
+    <url>/posts/9968.html</url>
+    <content><![CDATA[<h3 id="动名词作主语"><a href="#动名词作主语" class="headerlink" title="动名词作主语"></a>动名词作主语</h3><ul>
+<li>Eating an apple a day keeps you healthy.</li>
+<li>Running five miles is the first thing he does in the morning.</li>
+</ul>
+<h3 id="不定式作主语"><a href="#不定式作主语" class="headerlink" title="不定式作主语"></a>不定式作主语</h3><ul>
+<li>To study abroad is my greatest desire.</li>
+<li>To travel around the world is my plan for this year.</li>
+</ul>
+<p>动名词作主语不讨论这件事做或没做。不定式做主语，这件事情还没有做。</p>
+<p>动词要做主语，不能用原词。可以用动名词，也可以用不定式。如果是不定式，这个动作要没做才可以。</p>
+<blockquote>
+<p>不定式和动名词作主语时，常出现主语过长的情况，可以用代词it代替，作形式主语放在句首，而把真正的主语，即不定式或动名词短语放在句尾。动名词移至句尾时，常改为不定式。</p>
+</blockquote>
+<p>Collecting stamps is one of his hobbies.</p>
+<p><code>It</code> is one of his hobbies <code>to collect stamps</code>.</p>
+<p>Eating an apple a day keeps you healthy.</p>
+<p><code>It</code> keeps you healthy <code>to eat an appale</code>.</p>
+<h3 id="单词"><a href="#单词" class="headerlink" title="单词"></a>单词</h3><p>hear from 收到….的信</p>
+<p>hear sb do sth 听见某人做某事 </p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
