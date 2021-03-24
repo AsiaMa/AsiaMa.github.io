@@ -1,39 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>CopyOnWriteArrayList</title>
-    <url>/posts/34b0.html</url>
-    <content><![CDATA[<h3 id="CopyOnWriteArrayList的优点"><a href="#CopyOnWriteArrayList的优点" class="headerlink" title="CopyOnWriteArrayList的优点"></a>CopyOnWriteArrayList的优点</h3><p>读取完全不用加锁的，并且更厉害的是写入也不会阻塞读取操作。只有修改操作之间需要同步等待。</p>
-<h3 id="CopyOnWriteArrayList的缺点"><a href="#CopyOnWriteArrayList的缺点" class="headerlink" title="CopyOnWriteArrayList的缺点"></a>CopyOnWriteArrayList的缺点</h3><p>数据一致性问题：CopyOnWirite 容器只能保证数据的最终一致性，不能保证数据的实时一致性。所以如果你希望写入的数据，马上能读到，请不要用 CopyOnWtire 容器。</p>
-<p>内存占用问题：因为 CopyOnWrite 的是写时复制策略，所以在进行写操作的时候，内存会同时驻扎两个对象的内存。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>CopyOnWriteArrayList 使用写时复制的策略来保证 list 的一致性，而 获取-修改-写入 三步操作并不是原子性的，所以在增删改的过程中都使用了独占锁，来保证在某个时间只有一个线程对 list 数组进行修改。另外 CopyOnWriteArrayList 提供了弱一致性的迭代器，从而保证在获取迭代器后，其他线程对 list 的修改是不可见的，迭代器遍历的数组是一个快照。另外，CopyOnWriteArraySet 的底层是使用它实现的。</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <categories>
-        <category>多线程</category>
-      </categories>
-      <tags>
-        <tag>多线程</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Bean 延迟查找</title>
     <url>/posts/cdfc.html</url>
     <content><![CDATA[<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ObjectProviderDemo</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">// @Configuration 是非必须注解</span>
@@ -115,6 +82,39 @@
       </categories>
       <tags>
         <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CopyOnWriteArrayList</title>
+    <url>/posts/34b0.html</url>
+    <content><![CDATA[<h3 id="CopyOnWriteArrayList的优点"><a href="#CopyOnWriteArrayList的优点" class="headerlink" title="CopyOnWriteArrayList的优点"></a>CopyOnWriteArrayList的优点</h3><p>读取完全不用加锁的，并且更厉害的是写入也不会阻塞读取操作。只有修改操作之间需要同步等待。</p>
+<h3 id="CopyOnWriteArrayList的缺点"><a href="#CopyOnWriteArrayList的缺点" class="headerlink" title="CopyOnWriteArrayList的缺点"></a>CopyOnWriteArrayList的缺点</h3><p>数据一致性问题：CopyOnWirite 容器只能保证数据的最终一致性，不能保证数据的实时一致性。所以如果你希望写入的数据，马上能读到，请不要用 CopyOnWtire 容器。</p>
+<p>内存占用问题：因为 CopyOnWrite 的是写时复制策略，所以在进行写操作的时候，内存会同时驻扎两个对象的内存。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>CopyOnWriteArrayList 使用写时复制的策略来保证 list 的一致性，而 获取-修改-写入 三步操作并不是原子性的，所以在增删改的过程中都使用了独占锁，来保证在某个时间只有一个线程对 list 数组进行修改。另外 CopyOnWriteArrayList 提供了弱一致性的迭代器，从而保证在获取迭代器后，其他线程对 list 的修改是不可见的，迭代器遍历的数组是一个快照。另外，CopyOnWriteArraySet 的底层是使用它实现的。</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <categories>
+        <category>多线程</category>
+      </categories>
+      <tags>
+        <tag>多线程</tag>
       </tags>
   </entry>
   <entry>
@@ -549,254 +549,6 @@ b<span class="token operator">?</span><span class="token punctuation">.</span>le
       </tags>
   </entry>
   <entry>
-    <title>MySQL字符编码设置</title>
-    <url>/posts/d16b.html</url>
-    <content><![CDATA[<h3 id="关于中文的设置"><a href="#关于中文的设置" class="headerlink" title="关于中文的设置"></a>关于中文的设置</h3><p>某种字符的集合称为<strong>字符集（character set）</strong>。例如中文汉字和英文字母都是字符集的一种。</p>
-<p>在计算机和网络上表示字符时，需要给各个字符添加识别信息，例如数字或者符号等。给各个字符分配的数字或者符号称为<strong>字符代码（character code）</strong>。</p>
-<p>给字符集分配字符代码时的规则称为<strong>字符编码（character encoding）</strong>，中文相关的主流字符编码如下所示：</p>
-<table>
-<thead>
-<tr>
-<th>字符编码名</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>ISO-8859-1</td>
-<td>字母的字符编码（单字节编码）</td>
-</tr>
-<tr>
-<td>GB 2312</td>
-<td>1981 年 5 月 1 日发布的简体中文汉字编码国家标准</td>
-</tr>
-<tr>
-<td>GBK</td>
-<td>1995 年 12 月发布的汉字编码国际标准，是对 GB 2312 编码的补充</td>
-</tr>
-<tr>
-<td>cp936</td>
-<td>微软 Windows 环境上在 GB 2312 的基础上扩展的字符编码，通常被视为等同于 GBK</td>
-</tr>
-<tr>
-<td>EUC-CN</td>
-<td>Linux/Unix 环境上以 GB 2312 为基础的字符编码</td>
-</tr>
-<tr>
-<td>GB 18030</td>
-<td>2000 年 3 月 17 日发布的汉字编码国际标准，是对 GBK 编码的补充，兼容 GBK 和 GB 2312 字符集</td>
-</tr>
-<tr>
-<td>UTF-8</td>
-<td>针对 Unicode 字符集的一种可变长度字符编码</td>
-</tr>
-</tbody></table>
-<p>举例来说，“啊” 字在中国国家标准 GB 2312、GBK 和 GB 18030 字符编码中的编码都为 “B0A1”，而在 UTF-8 中则为 “E5958A”。从中可以看出，即使文字相同，如果字符编码不同，表示的字符也可能不同，由此才出现了乱码现象。</p>
-<p>世界上有许多语言系统和文字，所以除了上面介绍的内容之外还有无数的字符集和字符编码。但这样一来，面向全世界发布的网页等就会变得很难处理，因此人们开发了可以支持全世界所有字符的字符集 Unicode。Unicode 的字符编码方式有好几种，现在最为常用的是在 HTML 5 中被默认使用的 UTF-8。顺便说一下，在 UTF-8 的情况下，字符集和字符编码都称为 UTF-8。</p>
-<h3 id="MySQL的字符编码设置"><a href="#MySQL的字符编码设置" class="headerlink" title="MySQL的字符编码设置"></a>MySQL的字符编码设置</h3><p>通过 Web 应用程序，我们可以把输入的数据存储到数据库，再从数据库读出数据显示在 Web 画面上。在 Web 的世界中默认使用的字符编码是 UTF-8，所以如果数据库的字符编码也是 UTF-8，就不需要进行字符编码的转换了。</p>
-<p>因为中文 Windows 系统中命令行的默认字符编码是 GBK，所以 MySQL 监视器的输入输出字符串的字符编码也是 GBK。也就是说，存储在数据库中的字符的字符编码和客户端的输入输出中使用的字符编码并不相同。</p>
-<img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/Snipaste_2021-01-27_11-28-25.png" style="zoom:50%;">
-
-<p>在这种情况下，当向数据库存储数据时（GBK —&gt; UTF-8），以及从数据库读取数据显示在客户端上时（UTF-8—&gt; GBK），都需要进行字符编码的转换。可以通过 修改MySQL 的设置文件（my.ini ）即可：</p>
-<pre class=" language-shell"><code class="language-shell"># SQL 的安装目录下,如：C:\ProgramData\MySQL\MySQL Server 8.0\my.ini
-character-set-server=utf8
-default-character-set=gbk</code></pre>
-<h3 id="命令提示符的UTF-8设置"><a href="#命令提示符的UTF-8设置" class="headerlink" title="命令提示符的UTF-8设置"></a>命令提示符的UTF-8设置</h3><p>Windows终端默认使用字符编码GBK进行数据的输入和输出，而数据库则使用UTF-8存储数据。其实我们也可以把命令终端的字符编码设置成UTF-8。我们需要按照下面的格式在命令终端执行<code>chcp</code></p>
-<pre><code>shell</code></pre>
-<p>chcp用于修改命令终端的字符编码，<code>65001代表UTF-8</code>。如果这样设置，就不需要修改 my.ini 中的内容了。</p>
-<h3 id="确认MySQL中字符编码的设置情况"><a href="#确认MySQL中字符编码的设置情况" class="headerlink" title="确认MySQL中字符编码的设置情况"></a>确认MySQL中字符编码的设置情况</h3><p>启动MySQL监视器，输入status。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/one.png"></p>
-<p>1代表服务器端的字符编码设置，2代表客户端的字符编码设置。</p>
-<p>指定字符编码启动MySQL监视器</p>
-<pre class=" language-sh"><code class="language-sh">$ mysql -uroot -proot --default-character-set=gbk</code></pre>
-<p>另外字符编码设置情况还可以通过下面的命令查看</p>
-<pre class=" language-mysql"><code class="language-mysql">SHOW VARIABLES LIKE 'char%'</code></pre>
-<p>按下<code>F7键后，历史命令</code>会全部显示出来。</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>MySQL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MySQL数据类型</title>
-    <url>/posts/f499.html</url>
-    <content><![CDATA[<h3 id="什么是数据类型"><a href="#什么是数据类型" class="headerlink" title="什么是数据类型"></a>什么是数据类型</h3><p>数据库的表中只能输入各个列执行格式的数据。例如，指定为 “数值类型” 的列中不能输入字符等数据。指定为 “日期类型“的列中，只能输入日期数据。这种数据的格式称为”数据类型“。</p>
-<p>数据类型具有降低输入错误数据的可能行、保证数据库整体可信赖的特点。</p>
-<h3 id="数值类型"><a href="#数值类型" class="headerlink" title="数值类型"></a>数值类型</h3><h4 id="常用的数值型数据类型"><a href="#常用的数值型数据类型" class="headerlink" title="常用的数值型数据类型"></a>常用的数值型数据类型</h4><table>
-<thead>
-<tr>
-<th>数据类型</th>
-<th>含义</th>
-<th>对应的范围</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>INT</td>
-<td>整数</td>
-<td>-2 147 483 648～2 147 483 647</td>
-</tr>
-<tr>
-<td>TINYINT</td>
-<td>极小的整数</td>
-<td>-128 ～ 127</td>
-</tr>
-<tr>
-<td>SMALLINT</td>
-<td>小整数</td>
-<td>-32 768 - 32 767</td>
-</tr>
-<tr>
-<td>MDEIUMINT</td>
-<td>中等整数</td>
-<td>-8 388 608 ～ 8 388 607</td>
-</tr>
-<tr>
-<td>BIGINT</td>
-<td>大整数</td>
-<td>-9 223 372 036 854 775 808 ～ -9 223 372 036 854 775 807</td>
-</tr>
-<tr>
-<td>FLOAT</td>
-<td>单精度浮点数</td>
-<td>3.402823466E+38 ~ 1.175494351E-38, <br>0 <br>1.175494351E-38~3.402823466E+38</td>
-</tr>
-<tr>
-<td>DOUBLE</td>
-<td>双精度浮点数</td>
-<td>-1.7976931348623157E+308 ~ -2.2250738585072014E-308<br>0<br>2.2250738585072014E-308 to 1.7976931348623157E+308</td>
-</tr>
-<tr>
-<td>DECIMAL</td>
-<td>精确小数</td>
-<td>DECINAL(最大位数，小数点之后的位数) 的格式中的 “最大位数” 可以指定不大于 65 的值，“小数点之后的位数” 可以指定不大于 30 的值，不会产生误差。</td>
-</tr>
-</tbody></table>
-<h4 id="输入数值数据"><a href="#输入数值数据" class="headerlink" title="输入数值数据"></a>输入数值数据</h4><p>数值也可以使用指数表示法输入。例如，“6.02E+23” 表示 <code>6.02 乘以 10 的 23 次方</code>。</p>
-<p>举例来说，当向表 tb1A 的 INT 类型的列 age 中输入 10000 时，如果使用指数格式，就是下面这种形式：</p>
-<pre class=" language-mysql"><code class="language-mysql">INSERT INTO tb1A (age) VALUES(1E+4);</code></pre>
-<h3 id="字符串类型"><a href="#字符串类型" class="headerlink" title="字符串类型"></a>字符串类型</h3><h4 id="常用的字符串数据类型"><a href="#常用的字符串数据类型" class="headerlink" title="常用的字符串数据类型"></a>常用的字符串数据类型</h4><table>
-<thead>
-<tr>
-<th>数据类型</th>
-<th>含义</th>
-<th>对应的范围</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>CHAR</td>
-<td>固定长度字符串</td>
-<td>长度不超过 255 个字符</td>
-</tr>
-<tr>
-<td>VARCHAR</td>
-<td>可变长度字符串</td>
-<td>1 ～ 65532 字节。字符数的上限取决于使用的字符编码</td>
-</tr>
-<tr>
-<td>TEXT</td>
-<td>长文本字符串</td>
-<td>长度不超过 65 535 个字符</td>
-</tr>
-<tr>
-<td>LONGTEXT</td>
-<td>极长的文本字符串</td>
-<td>长度不超过 4 294 967 295 个字符</td>
-</tr>
-</tbody></table>
-<p>一般情况下，长度不超过 255 个字符的用 VARCHAR ，超过 255 个字符的用 TEXT 就足够了。</p>
-<p>CHAR 类型为固定长度的字符串，在保存数据的时候，字符数如果没有达到（）中指定的数量就会用空格填充。但是，读取时这些填充的空格会被自动删除。而 VARCHAR 为可变长度字符串，保存数据时不会填充空格。</p>
-<h4 id="输入字符串"><a href="#输入字符串" class="headerlink" title="输入字符串"></a>输入字符串</h4><p>字符串数据需要用双引号<code>"</code>或者单引号<code>'</code> 括起来。如果输入的字符串数据中包含 <code>'</code>，那么 <code>'</code>之后出现的 <code>'</code> 就会被解释为表示字符串结束的<code>'</code>。</p>
-<p>所以当把 <code>' '</code> 当成字符输入时，要在它的前面加上 “\”，该操作称为<strong>转义处理（escape processing）</strong>。</p>
-<p>下面是向表 tb1B 的列 name 中输入带单引号 <code>'西泽'</code> 的例子</p>
-<pre class=" language-mysql"><code class="language-mysql">INSERT INTO tb1B (name) VALUES ('\'西泽\'');</code></pre>
-<p>同样，当输入 “\” 时，也需要在前面加上 “\”，输入 “\”。</p>
-<h4 id="VARCHAR-和-CHAR-的位数单位"><a href="#VARCHAR-和-CHAR-的位数单位" class="headerlink" title="VARCHAR 和 CHAR 的位数单位"></a>VARCHAR 和 CHAR 的位数单位</h4><p>在 MySQL 4.1 以后的版本中，VARCHAR 和 CHAR 的 () 中指定的位数单位变成了 “字符”。以 VARCHAR(10) 为例，不管输入的是中文还是半角英文字母和数字，最多都只能保存10 个字符。</p>
-<h3 id="日期与时间类型"><a href="#日期与时间类型" class="headerlink" title="日期与时间类型"></a>日期与时间类型</h3><h4 id="常用的日期与时间数据类型"><a href="#常用的日期与时间数据类型" class="headerlink" title="常用的日期与时间数据类型"></a>常用的日期与时间数据类型</h4><p>能够保存日期或时间的列的数据类型包括 DATE（日期）、TIME（时间）、YEAR（年），以及把日期和时间组合在一起的 DATETIME 等。</p>
-<table>
-<thead>
-<tr>
-<th>数据类型</th>
-<th>含义</th>
-<th>对应的范围</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>DATETIME</td>
-<td>日期和时间</td>
-<td>1000-01-01 00:00:00 ～ 9999-12-31 23:59:59</td>
-</tr>
-<tr>
-<td>DATE</td>
-<td>日期</td>
-<td>1000-01-01 ～ 9999-12-31</td>
-</tr>
-<tr>
-<td>YEAR</td>
-<td>年</td>
-<td>1901 ～2155（4 位时）<br>1970 ～ 2069（70 ～ 69）（2 位时）</td>
-</tr>
-<tr>
-<td>TIME</td>
-<td>时间</td>
-<td>-838:59:59 ～ 838:59:59</td>
-</tr>
-</tbody></table>
-<h4 id="输入日期与时间类型的数据"><a href="#输入日期与时间类型的数据" class="headerlink" title="输入日期与时间类型的数据"></a>输入日期与时间类型的数据</h4><p>日期与时间类型的数据需要使用单引号 <code>'</code> 或者 双引号 <code>"</code> 括起来。在 MySQL 中，日期必须以 YYYY-MM-DD 的格式输入，时间必须以 HH:MM:SS 的格式输入（高版本的 MySQL 没有此限制）。</p>
-<h3 id="修改提示符的字符串"><a href="#修改提示符的字符串" class="headerlink" title="修改提示符的字符串"></a>修改提示符的字符串</h3><p>在 MySQL 监视器运行的时候，我们能够在提示符 “&gt;” 中执行显示自己想显示的内容。</p>
-<p>当 MySQL 监视器启动时，我们可以指定 “–promat = 提示符的内容” 选项设置提示符，但如果设置的提示符中包含中文就会发生乱码（在 Windows 的情况下）。当发生这种情况时，我们可以在 MySQL 监视器启动后使用 prompt 命令修改提示符的内容。</p>
-<ul>
-<li>设置作为提示符显示的文本</li>
-</ul>
-<pre class=" language-bash"><code class="language-bash">$ prompt 作为提示符显示的文本</code></pre>
-<p>设置 MySQL 监视器提示符的显示内容为 “当前数据库名：主机名&gt;”</p>
-<pre class=" language-bash"><code class="language-bash">$ prompt \d:\h<span class="token operator">></span>
-PROMPT <span class="token keyword">set</span> to <span class="token string">'\d:\h>'</span>
-$ db1:localhost<span class="token operator">></span></code></pre>
-<ul>
-<li>回到初期状态</li>
-</ul>
-<pre class=" language-bash"><code class="language-bash">$ prompt mysql<span class="token operator">></span></code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>MySQL</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Kotlin单例</title>
     <url>/posts/9fbb.html</url>
     <content><![CDATA[<pre class=" language-kotlin"><code class="language-kotlin"><span class="token keyword">class</span> Singleton <span class="token keyword">private</span> <span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -1029,6 +781,254 @@ Index_comment:
 <p>在使用索引的情况下，即使索引在创建过程中出现了错误，查找结果也不会收到任何影响。创建索引只会影响数据库整体的处理速度。</p>
 <p>索引的创建是影响整个数据库处理效率的重要问题。我们把这种提高处理效率的对策称为调优（tuning）。如何调优就要看数据工程师的技能了。</p>
 </blockquote>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MySQL字符编码设置</title>
+    <url>/posts/d16b.html</url>
+    <content><![CDATA[<h3 id="关于中文的设置"><a href="#关于中文的设置" class="headerlink" title="关于中文的设置"></a>关于中文的设置</h3><p>某种字符的集合称为<strong>字符集（character set）</strong>。例如中文汉字和英文字母都是字符集的一种。</p>
+<p>在计算机和网络上表示字符时，需要给各个字符添加识别信息，例如数字或者符号等。给各个字符分配的数字或者符号称为<strong>字符代码（character code）</strong>。</p>
+<p>给字符集分配字符代码时的规则称为<strong>字符编码（character encoding）</strong>，中文相关的主流字符编码如下所示：</p>
+<table>
+<thead>
+<tr>
+<th>字符编码名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ISO-8859-1</td>
+<td>字母的字符编码（单字节编码）</td>
+</tr>
+<tr>
+<td>GB 2312</td>
+<td>1981 年 5 月 1 日发布的简体中文汉字编码国家标准</td>
+</tr>
+<tr>
+<td>GBK</td>
+<td>1995 年 12 月发布的汉字编码国际标准，是对 GB 2312 编码的补充</td>
+</tr>
+<tr>
+<td>cp936</td>
+<td>微软 Windows 环境上在 GB 2312 的基础上扩展的字符编码，通常被视为等同于 GBK</td>
+</tr>
+<tr>
+<td>EUC-CN</td>
+<td>Linux/Unix 环境上以 GB 2312 为基础的字符编码</td>
+</tr>
+<tr>
+<td>GB 18030</td>
+<td>2000 年 3 月 17 日发布的汉字编码国际标准，是对 GBK 编码的补充，兼容 GBK 和 GB 2312 字符集</td>
+</tr>
+<tr>
+<td>UTF-8</td>
+<td>针对 Unicode 字符集的一种可变长度字符编码</td>
+</tr>
+</tbody></table>
+<p>举例来说，“啊” 字在中国国家标准 GB 2312、GBK 和 GB 18030 字符编码中的编码都为 “B0A1”，而在 UTF-8 中则为 “E5958A”。从中可以看出，即使文字相同，如果字符编码不同，表示的字符也可能不同，由此才出现了乱码现象。</p>
+<p>世界上有许多语言系统和文字，所以除了上面介绍的内容之外还有无数的字符集和字符编码。但这样一来，面向全世界发布的网页等就会变得很难处理，因此人们开发了可以支持全世界所有字符的字符集 Unicode。Unicode 的字符编码方式有好几种，现在最为常用的是在 HTML 5 中被默认使用的 UTF-8。顺便说一下，在 UTF-8 的情况下，字符集和字符编码都称为 UTF-8。</p>
+<h3 id="MySQL的字符编码设置"><a href="#MySQL的字符编码设置" class="headerlink" title="MySQL的字符编码设置"></a>MySQL的字符编码设置</h3><p>通过 Web 应用程序，我们可以把输入的数据存储到数据库，再从数据库读出数据显示在 Web 画面上。在 Web 的世界中默认使用的字符编码是 UTF-8，所以如果数据库的字符编码也是 UTF-8，就不需要进行字符编码的转换了。</p>
+<p>因为中文 Windows 系统中命令行的默认字符编码是 GBK，所以 MySQL 监视器的输入输出字符串的字符编码也是 GBK。也就是说，存储在数据库中的字符的字符编码和客户端的输入输出中使用的字符编码并不相同。</p>
+<img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/Snipaste_2021-01-27_11-28-25.png" style="zoom:50%;">
+
+<p>在这种情况下，当向数据库存储数据时（GBK —&gt; UTF-8），以及从数据库读取数据显示在客户端上时（UTF-8—&gt; GBK），都需要进行字符编码的转换。可以通过 修改MySQL 的设置文件（my.ini ）即可：</p>
+<pre class=" language-shell"><code class="language-shell"># SQL 的安装目录下,如：C:\ProgramData\MySQL\MySQL Server 8.0\my.ini
+character-set-server=utf8
+default-character-set=gbk</code></pre>
+<h3 id="命令提示符的UTF-8设置"><a href="#命令提示符的UTF-8设置" class="headerlink" title="命令提示符的UTF-8设置"></a>命令提示符的UTF-8设置</h3><p>Windows终端默认使用字符编码GBK进行数据的输入和输出，而数据库则使用UTF-8存储数据。其实我们也可以把命令终端的字符编码设置成UTF-8。我们需要按照下面的格式在命令终端执行<code>chcp</code></p>
+<pre><code>shell</code></pre>
+<p>chcp用于修改命令终端的字符编码，<code>65001代表UTF-8</code>。如果这样设置，就不需要修改 my.ini 中的内容了。</p>
+<h3 id="确认MySQL中字符编码的设置情况"><a href="#确认MySQL中字符编码的设置情况" class="headerlink" title="确认MySQL中字符编码的设置情况"></a>确认MySQL中字符编码的设置情况</h3><p>启动MySQL监视器，输入status。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/one.png"></p>
+<p>1代表服务器端的字符编码设置，2代表客户端的字符编码设置。</p>
+<p>指定字符编码启动MySQL监视器</p>
+<pre class=" language-sh"><code class="language-sh">$ mysql -uroot -proot --default-character-set=gbk</code></pre>
+<p>另外字符编码设置情况还可以通过下面的命令查看</p>
+<pre class=" language-mysql"><code class="language-mysql">SHOW VARIABLES LIKE 'char%'</code></pre>
+<p>按下<code>F7键后，历史命令</code>会全部显示出来。</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MySQL数据类型</title>
+    <url>/posts/f499.html</url>
+    <content><![CDATA[<h3 id="什么是数据类型"><a href="#什么是数据类型" class="headerlink" title="什么是数据类型"></a>什么是数据类型</h3><p>数据库的表中只能输入各个列执行格式的数据。例如，指定为 “数值类型” 的列中不能输入字符等数据。指定为 “日期类型“的列中，只能输入日期数据。这种数据的格式称为”数据类型“。</p>
+<p>数据类型具有降低输入错误数据的可能行、保证数据库整体可信赖的特点。</p>
+<h3 id="数值类型"><a href="#数值类型" class="headerlink" title="数值类型"></a>数值类型</h3><h4 id="常用的数值型数据类型"><a href="#常用的数值型数据类型" class="headerlink" title="常用的数值型数据类型"></a>常用的数值型数据类型</h4><table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>含义</th>
+<th>对应的范围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>INT</td>
+<td>整数</td>
+<td>-2 147 483 648～2 147 483 647</td>
+</tr>
+<tr>
+<td>TINYINT</td>
+<td>极小的整数</td>
+<td>-128 ～ 127</td>
+</tr>
+<tr>
+<td>SMALLINT</td>
+<td>小整数</td>
+<td>-32 768 - 32 767</td>
+</tr>
+<tr>
+<td>MDEIUMINT</td>
+<td>中等整数</td>
+<td>-8 388 608 ～ 8 388 607</td>
+</tr>
+<tr>
+<td>BIGINT</td>
+<td>大整数</td>
+<td>-9 223 372 036 854 775 808 ～ -9 223 372 036 854 775 807</td>
+</tr>
+<tr>
+<td>FLOAT</td>
+<td>单精度浮点数</td>
+<td>3.402823466E+38 ~ 1.175494351E-38, <br>0 <br>1.175494351E-38~3.402823466E+38</td>
+</tr>
+<tr>
+<td>DOUBLE</td>
+<td>双精度浮点数</td>
+<td>-1.7976931348623157E+308 ~ -2.2250738585072014E-308<br>0<br>2.2250738585072014E-308 to 1.7976931348623157E+308</td>
+</tr>
+<tr>
+<td>DECIMAL</td>
+<td>精确小数</td>
+<td>DECINAL(最大位数，小数点之后的位数) 的格式中的 “最大位数” 可以指定不大于 65 的值，“小数点之后的位数” 可以指定不大于 30 的值，不会产生误差。</td>
+</tr>
+</tbody></table>
+<h4 id="输入数值数据"><a href="#输入数值数据" class="headerlink" title="输入数值数据"></a>输入数值数据</h4><p>数值也可以使用指数表示法输入。例如，“6.02E+23” 表示 <code>6.02 乘以 10 的 23 次方</code>。</p>
+<p>举例来说，当向表 tb1A 的 INT 类型的列 age 中输入 10000 时，如果使用指数格式，就是下面这种形式：</p>
+<pre class=" language-mysql"><code class="language-mysql">INSERT INTO tb1A (age) VALUES(1E+4);</code></pre>
+<h3 id="字符串类型"><a href="#字符串类型" class="headerlink" title="字符串类型"></a>字符串类型</h3><h4 id="常用的字符串数据类型"><a href="#常用的字符串数据类型" class="headerlink" title="常用的字符串数据类型"></a>常用的字符串数据类型</h4><table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>含义</th>
+<th>对应的范围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CHAR</td>
+<td>固定长度字符串</td>
+<td>长度不超过 255 个字符</td>
+</tr>
+<tr>
+<td>VARCHAR</td>
+<td>可变长度字符串</td>
+<td>1 ～ 65532 字节。字符数的上限取决于使用的字符编码</td>
+</tr>
+<tr>
+<td>TEXT</td>
+<td>长文本字符串</td>
+<td>长度不超过 65 535 个字符</td>
+</tr>
+<tr>
+<td>LONGTEXT</td>
+<td>极长的文本字符串</td>
+<td>长度不超过 4 294 967 295 个字符</td>
+</tr>
+</tbody></table>
+<p>一般情况下，长度不超过 255 个字符的用 VARCHAR ，超过 255 个字符的用 TEXT 就足够了。</p>
+<p>CHAR 类型为固定长度的字符串，在保存数据的时候，字符数如果没有达到（）中指定的数量就会用空格填充。但是，读取时这些填充的空格会被自动删除。而 VARCHAR 为可变长度字符串，保存数据时不会填充空格。</p>
+<h4 id="输入字符串"><a href="#输入字符串" class="headerlink" title="输入字符串"></a>输入字符串</h4><p>字符串数据需要用双引号<code>"</code>或者单引号<code>'</code> 括起来。如果输入的字符串数据中包含 <code>'</code>，那么 <code>'</code>之后出现的 <code>'</code> 就会被解释为表示字符串结束的<code>'</code>。</p>
+<p>所以当把 <code>' '</code> 当成字符输入时，要在它的前面加上 “\”，该操作称为<strong>转义处理（escape processing）</strong>。</p>
+<p>下面是向表 tb1B 的列 name 中输入带单引号 <code>'西泽'</code> 的例子</p>
+<pre class=" language-mysql"><code class="language-mysql">INSERT INTO tb1B (name) VALUES ('\'西泽\'');</code></pre>
+<p>同样，当输入 “\” 时，也需要在前面加上 “\”，输入 “\”。</p>
+<h4 id="VARCHAR-和-CHAR-的位数单位"><a href="#VARCHAR-和-CHAR-的位数单位" class="headerlink" title="VARCHAR 和 CHAR 的位数单位"></a>VARCHAR 和 CHAR 的位数单位</h4><p>在 MySQL 4.1 以后的版本中，VARCHAR 和 CHAR 的 () 中指定的位数单位变成了 “字符”。以 VARCHAR(10) 为例，不管输入的是中文还是半角英文字母和数字，最多都只能保存10 个字符。</p>
+<h3 id="日期与时间类型"><a href="#日期与时间类型" class="headerlink" title="日期与时间类型"></a>日期与时间类型</h3><h4 id="常用的日期与时间数据类型"><a href="#常用的日期与时间数据类型" class="headerlink" title="常用的日期与时间数据类型"></a>常用的日期与时间数据类型</h4><p>能够保存日期或时间的列的数据类型包括 DATE（日期）、TIME（时间）、YEAR（年），以及把日期和时间组合在一起的 DATETIME 等。</p>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>含义</th>
+<th>对应的范围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DATETIME</td>
+<td>日期和时间</td>
+<td>1000-01-01 00:00:00 ～ 9999-12-31 23:59:59</td>
+</tr>
+<tr>
+<td>DATE</td>
+<td>日期</td>
+<td>1000-01-01 ～ 9999-12-31</td>
+</tr>
+<tr>
+<td>YEAR</td>
+<td>年</td>
+<td>1901 ～2155（4 位时）<br>1970 ～ 2069（70 ～ 69）（2 位时）</td>
+</tr>
+<tr>
+<td>TIME</td>
+<td>时间</td>
+<td>-838:59:59 ～ 838:59:59</td>
+</tr>
+</tbody></table>
+<h4 id="输入日期与时间类型的数据"><a href="#输入日期与时间类型的数据" class="headerlink" title="输入日期与时间类型的数据"></a>输入日期与时间类型的数据</h4><p>日期与时间类型的数据需要使用单引号 <code>'</code> 或者 双引号 <code>"</code> 括起来。在 MySQL 中，日期必须以 YYYY-MM-DD 的格式输入，时间必须以 HH:MM:SS 的格式输入（高版本的 MySQL 没有此限制）。</p>
+<h3 id="修改提示符的字符串"><a href="#修改提示符的字符串" class="headerlink" title="修改提示符的字符串"></a>修改提示符的字符串</h3><p>在 MySQL 监视器运行的时候，我们能够在提示符 “&gt;” 中执行显示自己想显示的内容。</p>
+<p>当 MySQL 监视器启动时，我们可以指定 “–promat = 提示符的内容” 选项设置提示符，但如果设置的提示符中包含中文就会发生乱码（在 Windows 的情况下）。当发生这种情况时，我们可以在 MySQL 监视器启动后使用 prompt 命令修改提示符的内容。</p>
+<ul>
+<li>设置作为提示符显示的文本</li>
+</ul>
+<pre class=" language-bash"><code class="language-bash">$ prompt 作为提示符显示的文本</code></pre>
+<p>设置 MySQL 监视器提示符的显示内容为 “当前数据库名：主机名&gt;”</p>
+<pre class=" language-bash"><code class="language-bash">$ prompt \d:\h<span class="token operator">></span>
+PROMPT <span class="token keyword">set</span> to <span class="token string">'\d:\h>'</span>
+$ db1:localhost<span class="token operator">></span></code></pre>
+<ul>
+<li>回到初期状态</li>
+</ul>
+<pre class=" language-bash"><code class="language-bash">$ prompt mysql<span class="token operator">></span></code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -1344,6 +1344,89 @@ PONG</code></pre>
       </tags>
   </entry>
   <entry>
+    <title>Redis之发布-订阅模式</title>
+    <url>/posts/8649.html</url>
+    <content><![CDATA[<h3 id="发布-订阅-模式"><a href="#发布-订阅-模式" class="headerlink" title="发布/订阅 模式"></a>发布/订阅 模式</h3><p>Redis 提供了一组命令可以让开发者实现 “发布/订阅”（publish/subscribe）模式。“发布/订阅” 模式同样可以实现进程间的消息传递，其原理是这样的：</p>
+<p>“发布/订阅” 模式中包含两种角色，分别是发布者和订阅者。订阅者可以订阅一个或若干个频道（channel），而发布者可以向指定的频道发布消息，所有订阅此频道的订阅者都可以收到此消息。</p>
+<p>发布者发布消息的命令是 <code>PUBLISH</code>，用法是 <code>PUBLISH channel message</code>，如向 <code>channel.1</code> 说一声 “hi”：</p>
+<pre class=" language-bash"><code class="language-bash">$ PUBLISH channel.1 hi
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 0</code></pre>
+<p>这样消息就发出去了。<code>PUBLISH</code> 命令的返回值表示接收到这条消息的订阅者数量。因为此时没有客户端订阅 <code>channel.1</code>，所以返回 0。发出去的消息不会被持久化，也就是说当有客户端订阅  <code>channel.1</code> 后只能收到后续发布到该频道的消息，之前发送的就收不到了。</p>
+<p>订阅频道的命令是 <code>SUBSCRIBE</code>，可以同时订阅多个频道，用法是：</p>
+<pre class=" language-bash"><code class="language-bash">$ SUBSCRIBE channel <span class="token punctuation">[</span>channel <span class="token punctuation">..</span>.<span class="token punctuation">]</span></code></pre>
+<p>现在新开一个 redis-cli 实例 A，用来订阅 <code>channel.1</code> ：</p>
+<pre class=" language-bash"><code class="language-bash">$ SUBSCRIBE channel.1
+Reading messages<span class="token punctuation">..</span>. <span class="token punctuation">(</span>press Ctrl-C to quit<span class="token punctuation">)</span>
+1<span class="token punctuation">)</span> <span class="token string">"subscribe"</span>
+2<span class="token punctuation">)</span> <span class="token string">"channel.1"</span>
+3<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1</code></pre>
+<p>执行 <code>SUBSCRIBE</code> 命令后，客户端会进入订阅状态，处于此状态下客户端不能使用除<code>SUBSRCIBE</code> 、<code>UNSUBSRCIBE</code> 、<code>PSUBSCRIBE</code> 、<code>PUNSUBSCRIBE</code> 这4个属于“发布/订阅”模式的命令之外的命令，否则会报错。</p>
+<p>进入订阅状态后客户端可能收到三种类型的回复。每种类型的回复都包含3个值，第一个值是消息的类型，根据消息类型的不同，第二、第三个值的含义也不同。</p>
+<p>消息类型的取值可能有一下3个：</p>
+<ul>
+<li><code>subscribe</code>。表示订阅成功的反馈信息。第二个值是订阅成功的频道名称，第三个值是当前客户端订阅的频道数量。</li>
+<li><code>message</code>。这个类型的回复是我们最关心的，它表示接收到的消息。第二个值表示产生消息的频道名称，第三个值是消息的内容。</li>
+<li><code>unsubscribe</code>。表示成功取消订阅某个频道。第二个值是对应的频道名称，第三个值是当前客户端订阅的频道数量。当此值为 0 时，客户端会退出订阅状态，之后就可以执行其它非 “发布/订阅” 模式的命令了。</li>
+</ul>
+<p>上例中当实例 A 订阅了 <code>channel.1</code>，进入订阅状态后收到一条 <code>subscribe</code> 类型的回复，这是我们打开另一个 redis-cli 实例 B，并向 <code>channel.1</code> 发送一条消息：</p>
+<pre class=" language-bash"><code class="language-bash">$ PUBLISH channel.1 good
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1</code></pre>
+<p>返回值为 1 表示有一个客户端订阅了 <code>channel.1</code>，此时实例 A 收到了类型为 <code>message</code> 的回复：</p>
+<pre class=" language-bash"><code class="language-bash">1<span class="token punctuation">)</span> <span class="token string">"message"</span>
+2<span class="token punctuation">)</span> <span class="token string">"channel.1"</span>
+3<span class="token punctuation">)</span> <span class="token string">"good"</span></code></pre>
+<p>使用 UNSUBSCRIBE 命令可以取消订阅者指定的频道，用法为 </p>
+<pre class=" language-bash"><code class="language-bash">UNSUBSCRIBE channel <span class="token punctuation">[</span>channel <span class="token punctuation">..</span>.<span class="token punctuation">]</span></code></pre>
+<p>如果不指定频道，则会取消订阅所有频道。</p>
+<h3 id="按照规则订阅"><a href="#按照规则订阅" class="headerlink" title="按照规则订阅"></a>按照规则订阅</h3><p>除了可以使用 <code>SUBSCRIBE</code> 命令订阅指定的频道外，还可以使用 <code>PSUBSCRIBE</code> 命令订阅指定的规则。规则支持 <code>glob</code> 风格通配符格式。</p>
+<pre class=" language-bash"><code class="language-bash">$ PSUBSCRIBE channel.?*
+Reading messages<span class="token punctuation">..</span>. <span class="token punctuation">(</span>press Ctrl-C to quit<span class="token punctuation">)</span>
+1<span class="token punctuation">)</span> <span class="token string">"psubscribe"</span>
+2<span class="token punctuation">)</span> <span class="token string">"channel.?*"</span>
+3<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1</code></pre>
+<p>规则 <code>channel.1?*</code> 可以匹配 <code>channel.1</code> 和 <code>channel.10</code>。 但不会匹配 <code>channel.</code>。</p>
+<p>这时在实例 B 中发布消息：</p>
+<pre class=" language-bash"><code class="language-bash">$ PUBLISH channel.1 hi
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 2</code></pre>
+<p>返回结果为 2 是因为实例 A 和 实例 C 两个客户端都订阅了 <code>channel.1</code> 频道。实例 C 收到的回复是：</p>
+<pre class=" language-bash"><code class="language-bash">1<span class="token punctuation">)</span> <span class="token string">"pmessage"</span>
+2<span class="token punctuation">)</span> <span class="token string">"channel.?*"</span>
+3<span class="token punctuation">)</span> <span class="token string">"channel.1"</span>
+4<span class="token punctuation">)</span> <span class="token string">"hi"</span></code></pre>
+<p>第一个值表示这条消息是通过 <code>PSUBSCRIBE</code> 命令订阅频道收到的，第二个值表示订阅时使用的通配符，第三个值表示产生消息的频道命令，第四个值则是消息内容。</p>
+<blockquote>
+<p><strong>提示</strong>    使用 <code>PSUBSCRIBE</code> 命令可以重复订阅一个频道，如某客户端执行了 <code>PUBSCRIBE  channel.?  channel.?*</code> ，这是向 <code>channel.2</code> 发布消息后该客户端会收到两条消息，而同时 <code>PUBLISH</code> 命令的返回值也是 2 不是 1。同样的，如果有两一个客户端执行了 <code>SUBSCRIBE channel.10</code> 和 <code>PSUBSCRIBE channel.?*</code> 的话，向 <code>channel.10</code> 发送命令该客服端也会收到两条消息（但是是两种类型：<code>message</code> 和 <code>pmessage</code>），同时 <code>PUBLISH</code> 命令会返回 2。</p>
+</blockquote>
+<p><code>PUNSUBSCRIBE</code> 命令可以退订指定的规则，用法是 ：</p>
+<pre class=" language-bash"><code class="language-bash">$ PUNSUBSCRIBE pattern <span class="token punctuation">[</span>pattern <span class="token punctuation">..</span>.<span class="token punctuation">]</span></code></pre>
+<p>如果没有参数则会退订所有规则。</p>
+<blockquote>
+<p><strong>注意</strong>    使用 <code>PUNSUBSCRIBE</code> 命令只会退订通过 <code>PSUBSCIBE</code> 命令订阅的规则，不会影响直接通过 <code>SUBSCRIBE</code> 命令订阅的频道；同样 <code>UNSUBSCRIBE</code> 命令也不会影响通过 <code>PSUBSCRIBE</code> 命令订阅的规则。另外容易出错的一点是使用 <code>PUNSUBSCIBE</code> 命令退订某个规则时，不会将其中的通配符展开，而是进行严格的字符串匹配，所有 <code>PUNSUBSCRIBE *</code> 无法退订 <code>channel.*</code> 规则，而是必须使用 <code>PUNSUBSCRIBE channel.*</code> 才能退订。</p>
+</blockquote>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Redis事务</title>
     <url>/posts/a455.html</url>
     <content><![CDATA[<blockquote>
@@ -1501,89 +1584,6 @@ $ BITPOS foo 1
 <p>这里的返回结果的偏移量是从头开始算起的，与起始字节无关。</p>
 <blockquote>
 <p>如果不设置结束字节且键值的所有二进制位都是 1 ，则当要查询值为 0 的二进制位偏移量时，返回结果会是键值长度的下一个字位的偏移量。这是因为 Redis 会认为键值长度之后的二进制位都是 0。</p>
-</blockquote>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>Redis</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Redis之发布-订阅模式</title>
-    <url>/posts/8649.html</url>
-    <content><![CDATA[<h3 id="发布-订阅-模式"><a href="#发布-订阅-模式" class="headerlink" title="发布/订阅 模式"></a>发布/订阅 模式</h3><p>Redis 提供了一组命令可以让开发者实现 “发布/订阅”（publish/subscribe）模式。“发布/订阅” 模式同样可以实现进程间的消息传递，其原理是这样的：</p>
-<p>“发布/订阅” 模式中包含两种角色，分别是发布者和订阅者。订阅者可以订阅一个或若干个频道（channel），而发布者可以向指定的频道发布消息，所有订阅此频道的订阅者都可以收到此消息。</p>
-<p>发布者发布消息的命令是 <code>PUBLISH</code>，用法是 <code>PUBLISH channel message</code>，如向 <code>channel.1</code> 说一声 “hi”：</p>
-<pre class=" language-bash"><code class="language-bash">$ PUBLISH channel.1 hi
-<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 0</code></pre>
-<p>这样消息就发出去了。<code>PUBLISH</code> 命令的返回值表示接收到这条消息的订阅者数量。因为此时没有客户端订阅 <code>channel.1</code>，所以返回 0。发出去的消息不会被持久化，也就是说当有客户端订阅  <code>channel.1</code> 后只能收到后续发布到该频道的消息，之前发送的就收不到了。</p>
-<p>订阅频道的命令是 <code>SUBSCRIBE</code>，可以同时订阅多个频道，用法是：</p>
-<pre class=" language-bash"><code class="language-bash">$ SUBSCRIBE channel <span class="token punctuation">[</span>channel <span class="token punctuation">..</span>.<span class="token punctuation">]</span></code></pre>
-<p>现在新开一个 redis-cli 实例 A，用来订阅 <code>channel.1</code> ：</p>
-<pre class=" language-bash"><code class="language-bash">$ SUBSCRIBE channel.1
-Reading messages<span class="token punctuation">..</span>. <span class="token punctuation">(</span>press Ctrl-C to quit<span class="token punctuation">)</span>
-1<span class="token punctuation">)</span> <span class="token string">"subscribe"</span>
-2<span class="token punctuation">)</span> <span class="token string">"channel.1"</span>
-3<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1</code></pre>
-<p>执行 <code>SUBSCRIBE</code> 命令后，客户端会进入订阅状态，处于此状态下客户端不能使用除<code>SUBSRCIBE</code> 、<code>UNSUBSRCIBE</code> 、<code>PSUBSCRIBE</code> 、<code>PUNSUBSCRIBE</code> 这4个属于“发布/订阅”模式的命令之外的命令，否则会报错。</p>
-<p>进入订阅状态后客户端可能收到三种类型的回复。每种类型的回复都包含3个值，第一个值是消息的类型，根据消息类型的不同，第二、第三个值的含义也不同。</p>
-<p>消息类型的取值可能有一下3个：</p>
-<ul>
-<li><code>subscribe</code>。表示订阅成功的反馈信息。第二个值是订阅成功的频道名称，第三个值是当前客户端订阅的频道数量。</li>
-<li><code>message</code>。这个类型的回复是我们最关心的，它表示接收到的消息。第二个值表示产生消息的频道名称，第三个值是消息的内容。</li>
-<li><code>unsubscribe</code>。表示成功取消订阅某个频道。第二个值是对应的频道名称，第三个值是当前客户端订阅的频道数量。当此值为 0 时，客户端会退出订阅状态，之后就可以执行其它非 “发布/订阅” 模式的命令了。</li>
-</ul>
-<p>上例中当实例 A 订阅了 <code>channel.1</code>，进入订阅状态后收到一条 <code>subscribe</code> 类型的回复，这是我们打开另一个 redis-cli 实例 B，并向 <code>channel.1</code> 发送一条消息：</p>
-<pre class=" language-bash"><code class="language-bash">$ PUBLISH channel.1 good
-<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1</code></pre>
-<p>返回值为 1 表示有一个客户端订阅了 <code>channel.1</code>，此时实例 A 收到了类型为 <code>message</code> 的回复：</p>
-<pre class=" language-bash"><code class="language-bash">1<span class="token punctuation">)</span> <span class="token string">"message"</span>
-2<span class="token punctuation">)</span> <span class="token string">"channel.1"</span>
-3<span class="token punctuation">)</span> <span class="token string">"good"</span></code></pre>
-<p>使用 UNSUBSCRIBE 命令可以取消订阅者指定的频道，用法为 </p>
-<pre class=" language-bash"><code class="language-bash">UNSUBSCRIBE channel <span class="token punctuation">[</span>channel <span class="token punctuation">..</span>.<span class="token punctuation">]</span></code></pre>
-<p>如果不指定频道，则会取消订阅所有频道。</p>
-<h3 id="按照规则订阅"><a href="#按照规则订阅" class="headerlink" title="按照规则订阅"></a>按照规则订阅</h3><p>除了可以使用 <code>SUBSCRIBE</code> 命令订阅指定的频道外，还可以使用 <code>PSUBSCRIBE</code> 命令订阅指定的规则。规则支持 <code>glob</code> 风格通配符格式。</p>
-<pre class=" language-bash"><code class="language-bash">$ PSUBSCRIBE channel.?*
-Reading messages<span class="token punctuation">..</span>. <span class="token punctuation">(</span>press Ctrl-C to quit<span class="token punctuation">)</span>
-1<span class="token punctuation">)</span> <span class="token string">"psubscribe"</span>
-2<span class="token punctuation">)</span> <span class="token string">"channel.?*"</span>
-3<span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1</code></pre>
-<p>规则 <code>channel.1?*</code> 可以匹配 <code>channel.1</code> 和 <code>channel.10</code>。 但不会匹配 <code>channel.</code>。</p>
-<p>这时在实例 B 中发布消息：</p>
-<pre class=" language-bash"><code class="language-bash">$ PUBLISH channel.1 hi
-<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 2</code></pre>
-<p>返回结果为 2 是因为实例 A 和 实例 C 两个客户端都订阅了 <code>channel.1</code> 频道。实例 C 收到的回复是：</p>
-<pre class=" language-bash"><code class="language-bash">1<span class="token punctuation">)</span> <span class="token string">"pmessage"</span>
-2<span class="token punctuation">)</span> <span class="token string">"channel.?*"</span>
-3<span class="token punctuation">)</span> <span class="token string">"channel.1"</span>
-4<span class="token punctuation">)</span> <span class="token string">"hi"</span></code></pre>
-<p>第一个值表示这条消息是通过 <code>PSUBSCRIBE</code> 命令订阅频道收到的，第二个值表示订阅时使用的通配符，第三个值表示产生消息的频道命令，第四个值则是消息内容。</p>
-<blockquote>
-<p><strong>提示</strong>    使用 <code>PSUBSCRIBE</code> 命令可以重复订阅一个频道，如某客户端执行了 <code>PUBSCRIBE  channel.?  channel.?*</code> ，这是向 <code>channel.2</code> 发布消息后该客户端会收到两条消息，而同时 <code>PUBLISH</code> 命令的返回值也是 2 不是 1。同样的，如果有两一个客户端执行了 <code>SUBSCRIBE channel.10</code> 和 <code>PSUBSCRIBE channel.?*</code> 的话，向 <code>channel.10</code> 发送命令该客服端也会收到两条消息（但是是两种类型：<code>message</code> 和 <code>pmessage</code>），同时 <code>PUBLISH</code> 命令会返回 2。</p>
-</blockquote>
-<p><code>PUNSUBSCRIBE</code> 命令可以退订指定的规则，用法是 ：</p>
-<pre class=" language-bash"><code class="language-bash">$ PUNSUBSCRIBE pattern <span class="token punctuation">[</span>pattern <span class="token punctuation">..</span>.<span class="token punctuation">]</span></code></pre>
-<p>如果没有参数则会退订所有规则。</p>
-<blockquote>
-<p><strong>注意</strong>    使用 <code>PUNSUBSCRIBE</code> 命令只会退订通过 <code>PSUBSCIBE</code> 命令订阅的规则，不会影响直接通过 <code>SUBSCRIBE</code> 命令订阅的频道；同样 <code>UNSUBSCRIBE</code> 命令也不会影响通过 <code>PSUBSCRIBE</code> 命令订阅的规则。另外容易出错的一点是使用 <code>PUNSUBSCIBE</code> 命令退订某个规则时，不会将其中的通配符展开，而是进行严格的字符串匹配，所有 <code>PUNSUBSCRIBE *</code> 无法退订 <code>channel.*</code> 规则，而是必须使用 <code>PUNSUBSCRIBE channel.*</code> 才能退订。</p>
 </blockquote>
 <script>
         document.querySelectorAll('.github-emoji')
@@ -2463,52 +2463,6 @@ System<span class="token punctuation">.</span>out<span class="token punctuation"
       </tags>
   </entry>
   <entry>
-    <title>macOS安装memcached扩展</title>
-    <url>/posts/3cd3.html</url>
-    <content><![CDATA[<h3 id="安装Memcached"><a href="#安装Memcached" class="headerlink" title="安装Memcached"></a>安装Memcached</h3><h5 id="源码安装"><a href="#源码安装" class="headerlink" title="源码安装"></a>源码安装</h5><pre class=" language-bash"><code class="language-bash">$ brew <span class="token function">install</span> libevent
-$ <span class="token function">tar</span> -zxvf memcached-1.6.9.tar.gz
-$ ./configure --prefix<span class="token operator">=</span>/usr/local/memecached
-$ <span class="token function">sudo</span> <span class="token function">make</span> <span class="token operator">&amp;&amp;</span> <span class="token function">sudo</span> <span class="token function">make</span> <span class="token function">install</span></code></pre>
-<h5 id="brew安装"><a href="#brew安装" class="headerlink" title="brew安装"></a>brew安装</h5><pre class=" language-bash"><code class="language-bash">$ brew <span class="token function">install</span> memcached
-<span class="token comment" spellcheck="true">### 配置开机启动</span>
-$ <span class="token function">ln</span> -sfv /usr/local/opt/memcached/*.plist ~/Library/LaunchAgents
-$ launchctl load  ~/Library/LaunchAgents/homebrew.mxcl.memcached.plist
-<span class="token comment" spellcheck="true">### 启动memcached</span>
-$ memcached –d –m 2048 –p 11211</code></pre>
-<h3 id="安装-Memcached扩展"><a href="#安装-Memcached扩展" class="headerlink" title="安装 Memcached扩展"></a>安装 Memcached扩展</h3><pre class=" language-bash"><code class="language-bash">$ <span class="token function">tar</span> -zxvf memcached-3.1.5.tgz
-<span class="token comment" spellcheck="true">### 生成configure</span>
-$ phpize 
-$ brew <span class="token function">install</span> zlib
-$ brew <span class="token function">install</span> libmemcached
-$ ./configure --with-php-config<span class="token operator">=</span>/usr/local/bin/php-config --with-zlib-dir<span class="token operator">=</span>/usr/local/Cellar/zlib/1.2.11 --with-libmemcached-dir<span class="token operator">=</span>/usr/local/opt/libmemcached
-$  <span class="token function">make</span> <span class="token operator">&amp;&amp;</span> <span class="token function">make</span> <span class="token function">install</span> </code></pre>
-<h4 id="修改-php-ini-文件"><a href="#修改-php-ini-文件" class="headerlink" title="修改 php.ini 文件"></a>修改 php.ini 文件</h4><pre class=" language-bash"><code class="language-bash">$ <span class="token function">vi</span> /usr/local/etc/php/8.0/php.ini  <span class="token comment" spellcheck="true"># 追加 extension=memcached.so</span>
-$ brew services restart php
-$ php -m <span class="token operator">|</span><span class="token function">grep</span> memcached</code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>PHP</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>kotlin泛型</title>
     <url>/posts/3e59.html</url>
     <content><![CDATA[<p>通过<code>where</code>关键字，对泛型参数限定满足所有条件</p>
@@ -2568,6 +2522,52 @@ $ php -m <span class="token operator">|</span><span class="token function">grep<
       </script>]]></content>
       <tags>
         <tag>Kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>macOS安装memcached扩展</title>
+    <url>/posts/3cd3.html</url>
+    <content><![CDATA[<h3 id="安装Memcached"><a href="#安装Memcached" class="headerlink" title="安装Memcached"></a>安装Memcached</h3><h5 id="源码安装"><a href="#源码安装" class="headerlink" title="源码安装"></a>源码安装</h5><pre class=" language-bash"><code class="language-bash">$ brew <span class="token function">install</span> libevent
+$ <span class="token function">tar</span> -zxvf memcached-1.6.9.tar.gz
+$ ./configure --prefix<span class="token operator">=</span>/usr/local/memecached
+$ <span class="token function">sudo</span> <span class="token function">make</span> <span class="token operator">&amp;&amp;</span> <span class="token function">sudo</span> <span class="token function">make</span> <span class="token function">install</span></code></pre>
+<h5 id="brew安装"><a href="#brew安装" class="headerlink" title="brew安装"></a>brew安装</h5><pre class=" language-bash"><code class="language-bash">$ brew <span class="token function">install</span> memcached
+<span class="token comment" spellcheck="true">### 配置开机启动</span>
+$ <span class="token function">ln</span> -sfv /usr/local/opt/memcached/*.plist ~/Library/LaunchAgents
+$ launchctl load  ~/Library/LaunchAgents/homebrew.mxcl.memcached.plist
+<span class="token comment" spellcheck="true">### 启动memcached</span>
+$ memcached –d –m 2048 –p 11211</code></pre>
+<h3 id="安装-Memcached扩展"><a href="#安装-Memcached扩展" class="headerlink" title="安装 Memcached扩展"></a>安装 Memcached扩展</h3><pre class=" language-bash"><code class="language-bash">$ <span class="token function">tar</span> -zxvf memcached-3.1.5.tgz
+<span class="token comment" spellcheck="true">### 生成configure</span>
+$ phpize 
+$ brew <span class="token function">install</span> zlib
+$ brew <span class="token function">install</span> libmemcached
+$ ./configure --with-php-config<span class="token operator">=</span>/usr/local/bin/php-config --with-zlib-dir<span class="token operator">=</span>/usr/local/Cellar/zlib/1.2.11 --with-libmemcached-dir<span class="token operator">=</span>/usr/local/opt/libmemcached
+$  <span class="token function">make</span> <span class="token operator">&amp;&amp;</span> <span class="token function">make</span> <span class="token function">install</span> </code></pre>
+<h4 id="修改-php-ini-文件"><a href="#修改-php-ini-文件" class="headerlink" title="修改 php.ini 文件"></a>修改 php.ini 文件</h4><pre class=" language-bash"><code class="language-bash">$ <span class="token function">vi</span> /usr/local/etc/php/8.0/php.ini  <span class="token comment" spellcheck="true"># 追加 extension=memcached.so</span>
+$ brew services restart php
+$ php -m <span class="token operator">|</span><span class="token function">grep</span> memcached</code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>PHP</tag>
       </tags>
   </entry>
   <entry>
@@ -3795,6 +3795,116 @@ Interrupted，程序运行结束 */</span></code></pre>
       </tags>
   </entry>
   <entry>
+    <title>函数式编程</title>
+    <url>/posts/f609.html</url>
+    <content><![CDATA[<p>函数式编程的核心概念如下：</p>
+<ul>
+<li>头等函数：把函数（一小段行为）当作值使用，可以用变量保存它，把它当作参数传递，或者当作其它函数的返回值。</li>
+<li>不可变性：使用不可变对象，这保证了它们的状态在其创建之后不能再变化。</li>
+<li>无副作用：使用的是纯函数。此类函数在输入相同时会产生同样的结果，并且不会修改其它对象的状态，也不会和外面的世界交互。</li>
+</ul>
+<p>优点：</p>
+<ol>
+<li>简洁</li>
+</ol>
+<p>函数式风格的代码比相应的命令式风格的代码更优雅、更简练，因为把函数当作值可以让你获得更强大的抽象能力，从而避免重复代码。假设你有两段类似的代码，实现相似的任务（例如，在集合中寻找一个匹配的元素），但具体细节略有不同（如何判断元素式匹配的）。可以轻易地将这段逻辑公共部分提取到一个函数中，并将其它不同的部分作为参数传递给它。这些参数本身也是函数，但你可以使用一种简洁的语法来表示这些匿名函数，它被称作lambda表达式。</p>
+<ol start="2">
+<li>多线程安全</li>
+</ol>
+<p>多线程程序中最大的错误来源之一就是，在没有采取适当同步机制的情况下，在不同的线程上修改同一份数据。如果你使用的是不可变数据结构和纯函数，就能保证这样不安全的修改根本不会发生，也就不需要考虑为其设计股灾的同步方案。</p>
+<ol start="3">
+<li>易测试性</li>
+</ol>
+<p>没有副作用的函数可以独立地进行测试，因为不需要写大量的设置代码来构造它们所依赖的整个环境。</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>编程范式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>创建数据库</title>
+    <url>/posts/cd0e.html</url>
+    <content><![CDATA[<h3 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h3><pre class=" language-mysql"><code class="language-mysql">CREATE DATABASE 数据库名;</code></pre>
+<p>SQL 语句的命令需要使用半角字符输入，输入全角字符会发生错误。另外，MySQL 不区分大小写。</p>
+<blockquote>
+<p><strong>提示</strong>    在 Windows 和 macOS 的环境中不区分字符的大小写，但是在 Linux 环境中却区分大小写。也就是说，表 tb1 和 表 TB1 在 Windows 和 macOS 环境中会作为相同的表名处理，但是在 Linux 环境中会作为不同的表名处理。</p>
+</blockquote>
+<h3 id="确认数据库"><a href="#确认数据库" class="headerlink" title="确认数据库"></a>确认数据库</h3><pre class=" language-mysql"><code class="language-mysql">SHOW DATABASES;</code></pre>
+<h3 id="指定使用的数据库"><a href="#指定使用的数据库" class="headerlink" title="指定使用的数据库"></a>指定使用的数据库</h3><pre class=" language-mysql"><code class="language-mysql">USE database_name;</code></pre>
+<blockquote>
+<p><strong>提示</strong>    我们可以使用 \u 来代替 use，使用 \u db1 命令执行数据库。</p>
+</blockquote>
+<h3 id="显示当前使用的数据库"><a href="#显示当前使用的数据库" class="headerlink" title="显示当前使用的数据库"></a>显示当前使用的数据库</h3><pre class=" language-mysql"><code class="language-mysql">SELECT DATABASES</code></pre>
+<blockquote>
+<p><strong>提示</strong>    我们可以直接指定数据库启动MySQL监视器。在这种情况下，可以像<code>mysql db1 -u root -proot</code> 这样，通过在命令提示符中指定数据库名来执行mysql命令。</p>
+</blockquote>
+<h3 id="创建表"><a href="#创建表" class="headerlink" title="创建表"></a>创建表</h3><pre class=" language-mysql"><code class="language-mysql">CREATE TABLE 表名（列名1 数据类型1，列名2 数据类型2 ...）</code></pre>
+<h3 id="显示所有的表"><a href="#显示所有的表" class="headerlink" title="显示所有的表"></a>显示所有的表</h3><pre class=" language-mysql"><code class="language-mysql">SHOW TABLES;</code></pre>
+<blockquote>
+<p><strong>提示</strong>    在 MySQL 中输入字符到表中时，会因为各种原因出现字符乱码的情况。这时有一个方法可以解决这个问题，那就是执行字符编码创建表。</p>
+<pre class=" language-mysql"><code class="language-mysql">CREATE TABLE tb1(emp_id VARCHAR(10), name VARCHAR(10), age INT) CHARSET=utf8mb4;</code></pre>
+</blockquote>
+<h3 id="访问其他数据库"><a href="#访问其他数据库" class="headerlink" title="访问其他数据库"></a>访问其他数据库</h3><p>在使用 <code>use</code> 选择数据库的情况下也能够操作其它数据库中的表。这是可以像 “数据库名.表名” 这样把 “数据库名” 和 “表名” 用 “.” 连接起来。</p>
+<pre class=" language-mysql"><code class="language-mysql">SELECT * FROM db2.table;</code></pre>
+<h3 id="确认表的列结构"><a href="#确认表的列结构" class="headerlink" title="确认表的列结构"></a>确认表的列结构</h3><pre class=" language-mysql"><code class="language-mysql">DESC 表名;</code></pre>
+<p>例如，查看 tb1 表的数据结构：</p>
+<pre class=" language-bash"><code class="language-bash">$ DESC tb1<span class="token punctuation">;</span>
++-------+--------------+------+-----+---------+-------+
+<span class="token operator">|</span> Field <span class="token operator">|</span> Type         <span class="token operator">|</span> Null <span class="token operator">|</span> Key <span class="token operator">|</span> Default <span class="token operator">|</span> Extra <span class="token operator">|</span>
++-------+--------------+------+-----+---------+-------+
+<span class="token operator">|</span> empid <span class="token operator">|</span> varchar<span class="token punctuation">(</span>10<span class="token punctuation">)</span>  <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> NULL    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> name  <span class="token operator">|</span> varchar<span class="token punctuation">(</span>10<span class="token punctuation">)</span>  <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> NULL    <span class="token operator">|</span>       <span class="token operator">|</span>
+<span class="token operator">|</span> age   <span class="token operator">|</span> int          <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> NULL    <span class="token operator">|</span>       <span class="token operator">|</span>
++-------+--------------+------+-----+---------+-------+</code></pre>
+<p>Null 表示“允许不输入任何值”，Default表示“如果什么值都不输入就用这个值”。Field表示列名，Type表示数据类型。</p>
+<p>因为列name被设置成了VARCHAR(10)，所以我们无法输入多于10个字符的数据。但是在MySQL中，即使输入了多于指定字符数（这里是10个字符）的数据也不会报错，而是会忽略无法插入的字符（这里是指10个字符之后的数据），这一点需要注意。</p>
+<blockquote>
+<p>如果将SQL Modes设为STRICE_TRANS_TABLES时回报出Data to long for column ‘XXX’ at row XX的错误。</p>
+</blockquote>
+<h3 id="向表中插入多行记录"><a href="#向表中插入多行记录" class="headerlink" title="向表中插入多行记录"></a>向表中插入多行记录</h3><pre class=" language-mysql"><code class="language-mysql">INSERT INTO tb1 (emp_id, name, age) VALUES ('A101', '佐藤', 40), ('A102', '高桥', 28), ('A103', '中川', 20), ('A104', '渡边', 23), ('A105', '西泽', 35);</code></pre>
+<h3 id="复制表"><a href="#复制表" class="headerlink" title="复制表"></a>复制表</h3><pre class=" language-mysql"><code class="language-mysql">CREATE TABLE tb1A SELECT * FROM tb1;</code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用文件进行交互</title>
     <url>/posts/ee67.html</url>
     <content><![CDATA[<h3 id="从文本文件中读取数据（导入）"><a href="#从文本文件中读取数据（导入）" class="headerlink" title="从文本文件中读取数据（导入）"></a>从文本文件中读取数据（导入）</h3><p>当把大量数据输入到表中时，如果打开 MySQL 监视器用键盘手动输入所有数据，就会耗费非常多的时间和精力。</p>
@@ -3933,116 +4043,6 @@ $ UNLOCK TABLES;</code></pre>
 <h4 id="表的备份"><a href="#表的备份" class="headerlink" title="表的备份"></a>表的备份</h4><pre class=" language-bash"><code class="language-bash">$ mysqldump -u 用户名 -p密码 数据库名 表名 <span class="token operator">></span> 输出文件的名称</code></pre>
 <p>恢复表和恢复数据库一样，不用指定表名，直接读取文件即可。如：</p>
 <pre class=" language-bash"><code class="language-bash">$ mysql -u root -proot db3 <span class="token operator">&lt;</span> /Users/asiama/tb1_out.txt</code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>MySQL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>函数式编程</title>
-    <url>/posts/f609.html</url>
-    <content><![CDATA[<p>函数式编程的核心概念如下：</p>
-<ul>
-<li>头等函数：把函数（一小段行为）当作值使用，可以用变量保存它，把它当作参数传递，或者当作其它函数的返回值。</li>
-<li>不可变性：使用不可变对象，这保证了它们的状态在其创建之后不能再变化。</li>
-<li>无副作用：使用的是纯函数。此类函数在输入相同时会产生同样的结果，并且不会修改其它对象的状态，也不会和外面的世界交互。</li>
-</ul>
-<p>优点：</p>
-<ol>
-<li>简洁</li>
-</ol>
-<p>函数式风格的代码比相应的命令式风格的代码更优雅、更简练，因为把函数当作值可以让你获得更强大的抽象能力，从而避免重复代码。假设你有两段类似的代码，实现相似的任务（例如，在集合中寻找一个匹配的元素），但具体细节略有不同（如何判断元素式匹配的）。可以轻易地将这段逻辑公共部分提取到一个函数中，并将其它不同的部分作为参数传递给它。这些参数本身也是函数，但你可以使用一种简洁的语法来表示这些匿名函数，它被称作lambda表达式。</p>
-<ol start="2">
-<li>多线程安全</li>
-</ol>
-<p>多线程程序中最大的错误来源之一就是，在没有采取适当同步机制的情况下，在不同的线程上修改同一份数据。如果你使用的是不可变数据结构和纯函数，就能保证这样不安全的修改根本不会发生，也就不需要考虑为其设计股灾的同步方案。</p>
-<ol start="3">
-<li>易测试性</li>
-</ol>
-<p>没有副作用的函数可以独立地进行测试，因为不需要写大量的设置代码来构造它们所依赖的整个环境。</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>编程范式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>创建数据库</title>
-    <url>/posts/cd0e.html</url>
-    <content><![CDATA[<h3 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h3><pre class=" language-mysql"><code class="language-mysql">CREATE DATABASE 数据库名;</code></pre>
-<p>SQL 语句的命令需要使用半角字符输入，输入全角字符会发生错误。另外，MySQL 不区分大小写。</p>
-<blockquote>
-<p><strong>提示</strong>    在 Windows 和 macOS 的环境中不区分字符的大小写，但是在 Linux 环境中却区分大小写。也就是说，表 tb1 和 表 TB1 在 Windows 和 macOS 环境中会作为相同的表名处理，但是在 Linux 环境中会作为不同的表名处理。</p>
-</blockquote>
-<h3 id="确认数据库"><a href="#确认数据库" class="headerlink" title="确认数据库"></a>确认数据库</h3><pre class=" language-mysql"><code class="language-mysql">SHOW DATABASES;</code></pre>
-<h3 id="指定使用的数据库"><a href="#指定使用的数据库" class="headerlink" title="指定使用的数据库"></a>指定使用的数据库</h3><pre class=" language-mysql"><code class="language-mysql">USE database_name;</code></pre>
-<blockquote>
-<p><strong>提示</strong>    我们可以使用 \u 来代替 use，使用 \u db1 命令执行数据库。</p>
-</blockquote>
-<h3 id="显示当前使用的数据库"><a href="#显示当前使用的数据库" class="headerlink" title="显示当前使用的数据库"></a>显示当前使用的数据库</h3><pre class=" language-mysql"><code class="language-mysql">SELECT DATABASES</code></pre>
-<blockquote>
-<p><strong>提示</strong>    我们可以直接指定数据库启动MySQL监视器。在这种情况下，可以像<code>mysql db1 -u root -proot</code> 这样，通过在命令提示符中指定数据库名来执行mysql命令。</p>
-</blockquote>
-<h3 id="创建表"><a href="#创建表" class="headerlink" title="创建表"></a>创建表</h3><pre class=" language-mysql"><code class="language-mysql">CREATE TABLE 表名（列名1 数据类型1，列名2 数据类型2 ...）</code></pre>
-<h3 id="显示所有的表"><a href="#显示所有的表" class="headerlink" title="显示所有的表"></a>显示所有的表</h3><pre class=" language-mysql"><code class="language-mysql">SHOW TABLES;</code></pre>
-<blockquote>
-<p><strong>提示</strong>    在 MySQL 中输入字符到表中时，会因为各种原因出现字符乱码的情况。这时有一个方法可以解决这个问题，那就是执行字符编码创建表。</p>
-<pre class=" language-mysql"><code class="language-mysql">CREATE TABLE tb1(emp_id VARCHAR(10), name VARCHAR(10), age INT) CHARSET=utf8mb4;</code></pre>
-</blockquote>
-<h3 id="访问其他数据库"><a href="#访问其他数据库" class="headerlink" title="访问其他数据库"></a>访问其他数据库</h3><p>在使用 <code>use</code> 选择数据库的情况下也能够操作其它数据库中的表。这是可以像 “数据库名.表名” 这样把 “数据库名” 和 “表名” 用 “.” 连接起来。</p>
-<pre class=" language-mysql"><code class="language-mysql">SELECT * FROM db2.table;</code></pre>
-<h3 id="确认表的列结构"><a href="#确认表的列结构" class="headerlink" title="确认表的列结构"></a>确认表的列结构</h3><pre class=" language-mysql"><code class="language-mysql">DESC 表名;</code></pre>
-<p>例如，查看 tb1 表的数据结构：</p>
-<pre class=" language-bash"><code class="language-bash">$ DESC tb1<span class="token punctuation">;</span>
-+-------+--------------+------+-----+---------+-------+
-<span class="token operator">|</span> Field <span class="token operator">|</span> Type         <span class="token operator">|</span> Null <span class="token operator">|</span> Key <span class="token operator">|</span> Default <span class="token operator">|</span> Extra <span class="token operator">|</span>
-+-------+--------------+------+-----+---------+-------+
-<span class="token operator">|</span> empid <span class="token operator">|</span> varchar<span class="token punctuation">(</span>10<span class="token punctuation">)</span>  <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> NULL    <span class="token operator">|</span>       <span class="token operator">|</span>
-<span class="token operator">|</span> name  <span class="token operator">|</span> varchar<span class="token punctuation">(</span>10<span class="token punctuation">)</span>  <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> NULL    <span class="token operator">|</span>       <span class="token operator">|</span>
-<span class="token operator">|</span> age   <span class="token operator">|</span> int          <span class="token operator">|</span> YES  <span class="token operator">|</span>     <span class="token operator">|</span> NULL    <span class="token operator">|</span>       <span class="token operator">|</span>
-+-------+--------------+------+-----+---------+-------+</code></pre>
-<p>Null 表示“允许不输入任何值”，Default表示“如果什么值都不输入就用这个值”。Field表示列名，Type表示数据类型。</p>
-<p>因为列name被设置成了VARCHAR(10)，所以我们无法输入多于10个字符的数据。但是在MySQL中，即使输入了多于指定字符数（这里是10个字符）的数据也不会报错，而是会忽略无法插入的字符（这里是指10个字符之后的数据），这一点需要注意。</p>
-<blockquote>
-<p>如果将SQL Modes设为STRICE_TRANS_TABLES时回报出Data to long for column ‘XXX’ at row XX的错误。</p>
-</blockquote>
-<h3 id="向表中插入多行记录"><a href="#向表中插入多行记录" class="headerlink" title="向表中插入多行记录"></a>向表中插入多行记录</h3><pre class=" language-mysql"><code class="language-mysql">INSERT INTO tb1 (emp_id, name, age) VALUES ('A101', '佐藤', 40), ('A102', '高桥', 28), ('A103', '中川', 20), ('A104', '渡边', 23), ('A105', '西泽', 35);</code></pre>
-<h3 id="复制表"><a href="#复制表" class="headerlink" title="复制表"></a>复制表</h3><pre class=" language-mysql"><code class="language-mysql">CREATE TABLE tb1A SELECT * FROM tb1;</code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -4237,82 +4237,6 @@ $ UNLOCK TABLES;</code></pre>
       </tags>
   </entry>
   <entry>
-    <title>安全地终止线程</title>
-    <url>/posts/e2c5.html</url>
-    <content><![CDATA[<p>中断状态是线程的一个标识位，而中断操作是一种简便的线程间交互方式，而这种交互方式最适合用来取消或停止任务。除了中断以外，还可以利用一个 boolean 变量来控制是否需要停止任务并终止线程。</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Shutdown</span> <span class="token punctuation">{</span>
-  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    Runner one <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Runner</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    Thread countThread <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span>one<span class="token punctuation">,</span> <span class="token string">"CountThread"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    countThread<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">// 睡眠 1 秒，main 线程对 CountThread 进行中断，使 CountThread 能够感知中断而结束</span>
-    <span class="token keyword">try</span> <span class="token punctuation">{</span>
-      TimeUnit<span class="token punctuation">.</span>SECONDS<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    countThread<span class="token punctuation">.</span><span class="token function">interrupt</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    Runner two <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Runner</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    countThread <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span>two<span class="token punctuation">,</span> <span class="token string">"CountThread"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    countThread<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token comment" spellcheck="true">// 睡眠 1 秒，main 线程对 Runner two 进行取消，是 CountThread 能够感知 on 为 false 而结束</span>
-    <span class="token keyword">try</span> <span class="token punctuation">{</span>
-      TimeUnit<span class="token punctuation">.</span>SECONDS<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    two<span class="token punctuation">.</span><span class="token function">cancel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-
-  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">Runner</span> <span class="token keyword">implements</span> <span class="token class-name">Runnable</span> <span class="token punctuation">{</span>
-    <span class="token keyword">private</span> <span class="token keyword">long</span> i<span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token keyword">volatile</span> <span class="token keyword">boolean</span> on <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      <span class="token keyword">while</span> <span class="token punctuation">(</span>on <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>Thread<span class="token punctuation">.</span><span class="token function">currentThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">isInterrupted</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        i<span class="token operator">++</span><span class="token punctuation">;</span>
-      <span class="token punctuation">}</span>
-      System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Count i = "</span> <span class="token operator">+</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">cancel</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      on <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre>
-<p>在执行过程中，main 线程通过中断操作和 cancel() 方法均可使 CountThread 得以终止。这种通过标识位或者中断操作的方式能够使线程终止时有机会去清理资源，而不是武断地将线程停止，因此这种终止线程的做法显得更加安全和优雅。</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <categories>
-        <category>JAVA</category>
-      </categories>
-      <tags>
-        <tag>多线程</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>垃圾回收 Spring Bean</title>
     <url>/posts/581e.html</url>
     <content><![CDATA[<p>Bean垃圾回收（GC）</p>
@@ -4456,6 +4380,82 @@ $mysql db1 -u root -p123456 -e "SELECT * FROM tb1"</code></pre>
       </script>]]></content>
       <tags>
         <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>安全地终止线程</title>
+    <url>/posts/e2c5.html</url>
+    <content><![CDATA[<p>中断状态是线程的一个标识位，而中断操作是一种简便的线程间交互方式，而这种交互方式最适合用来取消或停止任务。除了中断以外，还可以利用一个 boolean 变量来控制是否需要停止任务并终止线程。</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Shutdown</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    Runner one <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Runner</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Thread countThread <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span>one<span class="token punctuation">,</span> <span class="token string">"CountThread"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    countThread<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 睡眠 1 秒，main 线程对 CountThread 进行中断，使 CountThread 能够感知中断而结束</span>
+    <span class="token keyword">try</span> <span class="token punctuation">{</span>
+      TimeUnit<span class="token punctuation">.</span>SECONDS<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    countThread<span class="token punctuation">.</span><span class="token function">interrupt</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    Runner two <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Runner</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    countThread <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span>two<span class="token punctuation">,</span> <span class="token string">"CountThread"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    countThread<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// 睡眠 1 秒，main 线程对 Runner two 进行取消，是 CountThread 能够感知 on 为 false 而结束</span>
+    <span class="token keyword">try</span> <span class="token punctuation">{</span>
+      TimeUnit<span class="token punctuation">.</span>SECONDS<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    two<span class="token punctuation">.</span><span class="token function">cancel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">Runner</span> <span class="token keyword">implements</span> <span class="token class-name">Runnable</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">long</span> i<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">volatile</span> <span class="token keyword">boolean</span> on <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">while</span> <span class="token punctuation">(</span>on <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>Thread<span class="token punctuation">.</span><span class="token function">currentThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">isInterrupted</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        i<span class="token operator">++</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+      System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Count i = "</span> <span class="token operator">+</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">cancel</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      on <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>在执行过程中，main 线程通过中断操作和 cancel() 方法均可使 CountThread 得以终止。这种通过标识位或者中断操作的方式能够使线程终止时有机会去清理资源，而不是武断地将线程停止，因此这种终止线程的做法显得更加安全和优雅。</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <categories>
+        <category>JAVA</category>
+      </categories>
+      <tags>
+        <tag>多线程</tag>
       </tags>
   </entry>
   <entry>
@@ -5948,6 +5948,251 @@ mysql> SELECT * FROM tb;
       </tags>
   </entry>
   <entry>
+    <title>熟练使用视图</title>
+    <url>/posts/76dd.html</url>
+    <content><![CDATA[<h3 id="什么是视图"><a href="#什么是视图" class="headerlink" title="什么是视图"></a>什么是视图</h3><h4 id="视图的真面目"><a href="#视图的真面目" class="headerlink" title="视图的真面目"></a>视图的真面目</h4><p>前面我们学习了多种使用 SELECT 提取纪录的方法。将 SELECT 的结果像表一样保留下来的虚表就是视图。</p>
+<p>视图不是表。因此，视图中并没有保存记录或者列中的数据。也会说，视图是一种信息，用于查询记录。</p>
+<h4 id="视图的用途"><a href="#视图的用途" class="headerlink" title="视图的用途"></a>视图的用途</h4><p>视图虽然看起来像表，但它没有实体，只是一种信息。视图的便利之处在于，用户可以按照想要的条件收集某表中某列的数据。</p>
+<p>之前那种通过设置条件从表中提取记录的做法非常麻烦。如果相同的提出操作以视图的方式执行，就可以将视图作为符合用户个人喜好的表来使用。</p>
+<p>从用户的角度来看，视图和表使用上并没有区别。和表一样，视图也可以进行 SELECT 和 UPDATE。如果更新视图的记录，基表的记录也会更新。</p>
+<img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/2021-01-27_19-05-07.png" style="zoom:87%;">
+
+<h3 id="使用视图"><a href="#使用视图" class="headerlink" title="使用视图"></a>使用视图</h3><h4 id="创建视图"><a href="#创建视图" class="headerlink" title="创建视图"></a>创建视图</h4><pre class=" language-mysql"><code class="language-mysql">$ CREATE VIEW 视图名 AS SELECT 列名 FROM 表名 WHERE 条件;</code></pre>
+<p>上面的语句表示 “对 SELECT 的记录 CREATE VIEW（视图）”。不要忘记在 SELECT 的前面加上 AS。</p>
+<p>上述语句中的 “ WHERE 条件”，实际上也可以 换成 ORDER BY、LIMIT 和 JOIN 等。总之，要在某些条件下选择列，创建虚拟的表。也就是将前面执行的许多 SELECT 结果通过 CREATE VIEW … AS 创建为视图。</p>
+<p>员工信息表 tb1 由员工号（empid）、姓名（name）和年龄（age）组成。试着创建没有员工号、只包含姓名和年龄这两个列的视图。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ CREATE VIEW v1 
+          AS
+  SELECT name, age 
+          FROM tb1;
+
+$ SELECT * FROM v1;
++--------+------+
+| name   | age  |
++--------+------+
+| 佐腾   |   40 |
+| 高桥   |   28 |
+| 中川   |   20 |
+| 渡边   |   23 |
+| 西泽   |   35 |
++--------+------+
+5 rows in set (0.01 sec)</code></pre>
+<p>这次我们只从一个表中提取了列，实际上也可以使用多个表，通过设置条件来提取想要的内容。</p>
+<h4 id="通过视图更新列的值"><a href="#通过视图更新列的值" class="headerlink" title="通过视图更新列的值"></a>通过视图更新列的值</h4><p>视图只显示了基表的一部分。因此，如果更新了基表的值，收集并显示基表值的视图的值也会更新。</p>
+<p>那么，如果更新了视图的值，基表的值又会怎样呢？实际上，视图不仅是基表的一部分，它也是指向基表数据的窗口。因此，如果更新视图的值，基表的值也会随之更新。</p>
+<p>我们来试着更新一下视图 v1 的记录，看看视图的记录更新是否反映到了基表中。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ UPDATE v1 SET name = '主任·佐腾' WHERE name = '佐腾';
+
+$ SELECT * FROM v1;
++----------------+------+
+| name           | age  |
++----------------+------+
+| 主任·佐腾      |   40 |
+| 高桥           |   28 |
+| 中川           |   20 |
+| 渡边           |   23 |
+| 西泽           |   35 |
++----------------+------+
+5 rows in set (0.00 sec)
+
+$ SELECt * FROM tb1;
++-------+----------------+------+
+| empid | name           | age  |
++-------+----------------+------+
+| A101  | 主任·佐腾      |   40 |
+| A102  | 高桥           |   28 |
+| A103  | 中川           |   20 |
+| A104  | 渡边           |   23 |
+| A105  | 西泽           |   35 |
++-------+----------------+------+
+5 rows in set (0.00 sec)</code></pre>
+<p>看来基表 tb1 的值也更新了。由此我们可以得知，如果更新视图的值，其基表的记录也会随之更新。</p>
+<h3 id="设置条件创建视图"><a href="#设置条件创建视图" class="headerlink" title="设置条件创建视图"></a>设置条件创建视图</h3><p>我们将从两个表中提取纪录并通过 WHERE 设置条件来创建视图。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ CREATE VIEW v2 
+            AS 
+    SELECT tb.empid, tb1.name, tb.sales 
+            FROM tb 
+    JOIN tb1 
+            USING(empid) 
+    WHERE tb.sales >= 100;
+
+$ SELECT * FROM v2;
++-------+----------------+-------+
+| empid | name           | sales |
++-------+----------------+-------+
+| A103  | 中川           |   101 |
+| A104  | 渡边           |   181 |
+| A101  | 主任·佐腾      |   184 |
+| A101  | 主任·佐腾      |   300 |
+| A102  | 高桥           |   205 |
++-------+----------------+-------+
+5 rows in set (0.01 sec)</code></pre>
+<p>执行下面的命令</p>
+<pre class=" language-mysql"><code class="language-mysql">$ UPDATE tb SET sales = 777 WHERE sales = 54;
+
+$ SELECT * FROM v2;
++-------+----------------+-------+
+| empid | name           | sales |
++-------+----------------+-------+
+| A103  | 中川           |   101 |
+| A102  | 高桥           |   777 |
+| A104  | 渡边           |   181 |
+| A101  | 主任·佐腾      |   184 |
+| A101  | 主任·佐腾      |   300 |
+| A102  | 高桥           |   205 |
++-------+----------------+-------+
+6 rows in set (0.00 sec)</code></pre>
+<p>可以看到视图 v2 的值也更新了。也就是说，在符合视图设置条件的情况下，如果基表更新，视图中的记录也会随之更新。设置了条件的视图始终会显示与条件相匹配的记录。</p>
+<h4 id="确认视图"><a href="#确认视图" class="headerlink" title="确认视图"></a>确认视图</h4><pre class=" language-mysql"><code class="language-mysql">$ SHOW TABLE;</code></pre>
+<p>视图会与表交织在一起显示出来。</p>
+<p>和表一样，列结构可以通过 DESC 显示出来。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ DESC v2;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| empid | varchar(10)  | YES  |     | NULL    |       |
+| name  | varchar(100) | YES  |     | NULL    |       |
+| sales | int          | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)</code></pre>
+<p>显示视图的详细信息：</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SHOW CREATE VIEW 视图名;</code></pre>
+<h3 id="限制通过视图写入"><a href="#限制通过视图写入" class="headerlink" title="限制通过视图写入"></a>限制通过视图写入</h3><p>视图是用户从基表上随意收集的列。换句话说，作为视图可见的部分大多是基表中的一部分内容。对视图执行 INSERT 操作，就意味着只能向表中的一部分内容中插入数据。</p>
+<p>前面介绍的有点啰嗦，用一句话概括就是对视图执行 INSERT 操作是有限制的。例如，在使用了 UNION、JOIN、子查询的视图中，不能执行 INSERT 。如果只是从一个表中提取了列，那么执行 INSERT 是没有任何问题的。</p>
+<p>插入方法和向表中插入数据的方法相同。</p>
+<p>执行下面的命令：</p>
+<pre class=" language-mysql"><code class="language-mysql">$ INSERT INTO v1 VALUES('临时工·石田', 18);
+Query OK, 1 row affected (0.00 sec)
+
+$ INSERT INTO v2 VALUES(null, 'AsiaMa', 28);
+ERROR 1394 (HY000): Can not insert into join view 'db1.v2' without fields list
+
+$ SELECT * FROM v1;
++-------------------+------+
+| name              | age  |
++-------------------+------+
+| 主任·佐腾         |   40 |
+| 高桥              |   28 |
+| 中川              |   20 |
+| 渡边              |   23 |
+| 西泽              |   35 |
+| 临时工·石田       |   18 |
++-------------------+------+
+6 rows in set (0.00 sec)</code></pre>
+<p>姓名和年龄被完整地插入到了视图 v1 中。那么，视图 v1 的基表 tb1 会变成什么样呢？</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT * FROM tb1;
++-------+-------------------+------+
+| empid | name              | age  |
++-------+-------------------+------+
+| A101  | 主任·佐腾         |   40 |
+| A102  | 高桥              |   28 |
+| A103  | 中川              |   20 |
+| A104  | 渡边              |   23 |
+| A105  | 西泽              |   35 |
+| NULL  | 临时工·石田       |   18 |
++-------+-------------------+------+
+6 rows in set (0.00 sec)</code></pre>
+<p>看来 “临时表·石田” 和 “18” 这两个数据都 INSERT 成功了。另外，对于在视图 v1 中没有被定义的列 empid，因为没有插入数据，所以输入了 NULL。</p>
+<h4 id="设置了条件的基表中会发生什么变化"><a href="#设置了条件的基表中会发生什么变化" class="headerlink" title="设置了条件的基表中会发生什么变化"></a>设置了条件的基表中会发生什么变化</h4><p>如果在设置了条件的视图中插入违反条件的数据，基表会发生什么变化呢？</p>
+<pre class=" language-mysql"><code class="language-mysql">$ CREATE VIEW v3 
+            AS 
+    SELECT empid, sales 
+            FROM tb 
+    WHERE sales >= 100;
+
+$ SELECT * FROM v3;
++-------+-------+
+| empid | sales |
++-------+-------+
+| A103  |   101 |
+| A104  |   181 |
+| A101  |   184 |
+| A101  |   300 |
+| A102  |   205 |
++-------+-------+
+5 rows in set (0.01 sec)</code></pre>
+<ul>
+<li>插入不符合视图条件的记录</li>
+</ul>
+<pre class=" language-mysql"><code class="language-mysql">$ INSERT INTO v3 VALUES('恶意刁难', 50);
+Query OK, 1 row affected (0.01 sec)
+
+$ SELECT * FROM v3;
++-------+-------+
+| empid | sales |
++-------+-------+
+| A103  |   101 |
+| A104  |   181 |
+| A101  |   184 |
+| A101  |   300 |
+| A102  |   205 |
++-------+-------+
+5 rows in set (0.00 sec)</code></pre>
+<p>视图 v3 看不到刚才插入的值，那么基表 tb 会变成什么样呢？</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT * FROM tb;
++--------------+-------+-------+
+| empid        | sales | month |
++--------------+-------+-------+
+| A103         |   101 |     4 |
+| A102         |    54 |     5 |
+| A104         |   181 |     4 |
+| A101         |   184 |     4 |
+| A103         |    17 |     5 |
+| A101         |   300 |     5 |
+| A102         |   205 |     6 |
+| A104         |    93 |     5 |
+| A103         |    12 |     6 |
+| A107         |    87 |     6 |
+| 恶意刁难     |    50 |  NULL |
++--------------+-------+-------+
+11 rows in set (0.00 sec)</code></pre>
+<p>基表 tb 中竟然插入了这个值！在默认情况下，WHERE 条件会被忽略，数据会 INSERT 到基表中。</p>
+<h4 id="当与视图的条件不匹配时报错"><a href="#当与视图的条件不匹配时报错" class="headerlink" title="当与视图的条件不匹配时报错"></a>当与视图的条件不匹配时报错</h4><p>当通过视图 INSERT 记录时，即使与 WHERE 条件不匹配，数据也会直接输入到基表中。这是否意味着总是可以输入与 WHERE 条件不符的记录呢？</p>
+<p>但是，对于有条件限制的视图，无视条件输入记录有时会带来一定的麻烦。另外，从视图中输入的记录无法在改视图中确认也是一件很麻烦的事。</p>
+<p>为了应对这些情况，我们可以将视图设置成 “不接受与条件不匹配的记录”。为了防止输入与 WHERE 条件不匹配的记录，我们可以使用 CREATE VIEW 创建视图时，加上 WITH CHECK OPERON。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ CREATE VIEW v4 
+            AS 
+    SELECT empid, sales 
+            FROM tb 
+    WHERE sales >= 100
+            WITH CHECK OPTION;
+
+$ INSERT INTO v4 VALUES('恶意刁难', 50);
+ERROR 1369 (HY000): CHECK OPTION failed 'db1.v4'</code></pre>
+<p>这样就无法输入不符合条件的记录了。</p>
+<h3 id="替换、修改和删除视图"><a href="#替换、修改和删除视图" class="headerlink" title="替换、修改和删除视图"></a>替换、修改和删除视图</h3><p>当执行 CREATE VIEW 时，如果已经有同名的视图存在，该命令报错。在这种情况下，可以像 “CREATE OR REPLACE VIEW …” 这样，加上 OR REPLACE 替换视图。也就是说，删除已经存在的同名的视图，创建新的视图。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ CREATE OR REPLACE VIEW v1 AS SELECT NOW();
+</code></pre>
+<h4 id="修改视图结构"><a href="#修改视图结构" class="headerlink" title="修改视图结构"></a>修改视图结构</h4><pre class=" language-mysql"><code class="language-mysql">$ ALTER VIEW 视图名 AS SELECT 列名 FROM 表名;</code></pre>
+<p>与使用 “CREATE VIEW … AS SELECT” 创建视图的方法基本相同。</p>
+<h4 id="删除视图"><a href="#删除视图" class="headerlink" title="删除视图"></a>删除视图</h4><pre class=" language-mysql"><code class="language-mysql">$ DROP VIEW 视图名;</code></pre>
+<p>如果视图不存在，该命令就会报错。可以执行下面的命令：</p>
+<pre class=" language-mysql"><code class="language-mysql"># 目标视图不存在，只是不执行操作而已
+$ DROP VIEW IF EXISTS v1;</code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>熟练使用存储过程</title>
     <url>/posts/5d64.html</url>
     <content><![CDATA[<h3 id="什么是存储过程"><a href="#什么是存储过程" class="headerlink" title="什么是存储过程"></a>什么是存储过程</h3><p>将多个 SQL 语句组合成一个只需要使用命令 “CALL xx” 就能执行的集合，该集合就称为 <strong>存储过程（stored procedure）</strong>。“存储（store）表示保存，“过程” 表示步骤。也就是说，存储过程是将一系列步骤归纳并存储起来的集合。</p>
@@ -6221,251 +6466,6 @@ END</code></pre>
 <p>我们可以使用 SHOW TRIGGERS 命令确认当前设置的触发器。</p>
 <pre class=" language-mysql"><code class="language-mysql">$ SHOW TRIGGERS;</code></pre>
 <h4 id="删除触发器"><a href="#删除触发器" class="headerlink" title="删除触发器"></a>删除触发器</h4><pre class=" language-mysql"><code class="language-mysql">$ DROP TRIGGER 触发器名;</code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>MySQL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>熟练使用视图</title>
-    <url>/posts/76dd.html</url>
-    <content><![CDATA[<h3 id="什么是视图"><a href="#什么是视图" class="headerlink" title="什么是视图"></a>什么是视图</h3><h4 id="视图的真面目"><a href="#视图的真面目" class="headerlink" title="视图的真面目"></a>视图的真面目</h4><p>前面我们学习了多种使用 SELECT 提取纪录的方法。将 SELECT 的结果像表一样保留下来的虚表就是视图。</p>
-<p>视图不是表。因此，视图中并没有保存记录或者列中的数据。也会说，视图是一种信息，用于查询记录。</p>
-<h4 id="视图的用途"><a href="#视图的用途" class="headerlink" title="视图的用途"></a>视图的用途</h4><p>视图虽然看起来像表，但它没有实体，只是一种信息。视图的便利之处在于，用户可以按照想要的条件收集某表中某列的数据。</p>
-<p>之前那种通过设置条件从表中提取记录的做法非常麻烦。如果相同的提出操作以视图的方式执行，就可以将视图作为符合用户个人喜好的表来使用。</p>
-<p>从用户的角度来看，视图和表使用上并没有区别。和表一样，视图也可以进行 SELECT 和 UPDATE。如果更新视图的记录，基表的记录也会更新。</p>
-<img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/2021-01-27_19-05-07.png" style="zoom:87%;">
-
-<h3 id="使用视图"><a href="#使用视图" class="headerlink" title="使用视图"></a>使用视图</h3><h4 id="创建视图"><a href="#创建视图" class="headerlink" title="创建视图"></a>创建视图</h4><pre class=" language-mysql"><code class="language-mysql">$ CREATE VIEW 视图名 AS SELECT 列名 FROM 表名 WHERE 条件;</code></pre>
-<p>上面的语句表示 “对 SELECT 的记录 CREATE VIEW（视图）”。不要忘记在 SELECT 的前面加上 AS。</p>
-<p>上述语句中的 “ WHERE 条件”，实际上也可以 换成 ORDER BY、LIMIT 和 JOIN 等。总之，要在某些条件下选择列，创建虚拟的表。也就是将前面执行的许多 SELECT 结果通过 CREATE VIEW … AS 创建为视图。</p>
-<p>员工信息表 tb1 由员工号（empid）、姓名（name）和年龄（age）组成。试着创建没有员工号、只包含姓名和年龄这两个列的视图。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ CREATE VIEW v1 
-          AS
-  SELECT name, age 
-          FROM tb1;
-
-$ SELECT * FROM v1;
-+--------+------+
-| name   | age  |
-+--------+------+
-| 佐腾   |   40 |
-| 高桥   |   28 |
-| 中川   |   20 |
-| 渡边   |   23 |
-| 西泽   |   35 |
-+--------+------+
-5 rows in set (0.01 sec)</code></pre>
-<p>这次我们只从一个表中提取了列，实际上也可以使用多个表，通过设置条件来提取想要的内容。</p>
-<h4 id="通过视图更新列的值"><a href="#通过视图更新列的值" class="headerlink" title="通过视图更新列的值"></a>通过视图更新列的值</h4><p>视图只显示了基表的一部分。因此，如果更新了基表的值，收集并显示基表值的视图的值也会更新。</p>
-<p>那么，如果更新了视图的值，基表的值又会怎样呢？实际上，视图不仅是基表的一部分，它也是指向基表数据的窗口。因此，如果更新视图的值，基表的值也会随之更新。</p>
-<p>我们来试着更新一下视图 v1 的记录，看看视图的记录更新是否反映到了基表中。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ UPDATE v1 SET name = '主任·佐腾' WHERE name = '佐腾';
-
-$ SELECT * FROM v1;
-+----------------+------+
-| name           | age  |
-+----------------+------+
-| 主任·佐腾      |   40 |
-| 高桥           |   28 |
-| 中川           |   20 |
-| 渡边           |   23 |
-| 西泽           |   35 |
-+----------------+------+
-5 rows in set (0.00 sec)
-
-$ SELECt * FROM tb1;
-+-------+----------------+------+
-| empid | name           | age  |
-+-------+----------------+------+
-| A101  | 主任·佐腾      |   40 |
-| A102  | 高桥           |   28 |
-| A103  | 中川           |   20 |
-| A104  | 渡边           |   23 |
-| A105  | 西泽           |   35 |
-+-------+----------------+------+
-5 rows in set (0.00 sec)</code></pre>
-<p>看来基表 tb1 的值也更新了。由此我们可以得知，如果更新视图的值，其基表的记录也会随之更新。</p>
-<h3 id="设置条件创建视图"><a href="#设置条件创建视图" class="headerlink" title="设置条件创建视图"></a>设置条件创建视图</h3><p>我们将从两个表中提取纪录并通过 WHERE 设置条件来创建视图。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ CREATE VIEW v2 
-            AS 
-    SELECT tb.empid, tb1.name, tb.sales 
-            FROM tb 
-    JOIN tb1 
-            USING(empid) 
-    WHERE tb.sales >= 100;
-
-$ SELECT * FROM v2;
-+-------+----------------+-------+
-| empid | name           | sales |
-+-------+----------------+-------+
-| A103  | 中川           |   101 |
-| A104  | 渡边           |   181 |
-| A101  | 主任·佐腾      |   184 |
-| A101  | 主任·佐腾      |   300 |
-| A102  | 高桥           |   205 |
-+-------+----------------+-------+
-5 rows in set (0.01 sec)</code></pre>
-<p>执行下面的命令</p>
-<pre class=" language-mysql"><code class="language-mysql">$ UPDATE tb SET sales = 777 WHERE sales = 54;
-
-$ SELECT * FROM v2;
-+-------+----------------+-------+
-| empid | name           | sales |
-+-------+----------------+-------+
-| A103  | 中川           |   101 |
-| A102  | 高桥           |   777 |
-| A104  | 渡边           |   181 |
-| A101  | 主任·佐腾      |   184 |
-| A101  | 主任·佐腾      |   300 |
-| A102  | 高桥           |   205 |
-+-------+----------------+-------+
-6 rows in set (0.00 sec)</code></pre>
-<p>可以看到视图 v2 的值也更新了。也就是说，在符合视图设置条件的情况下，如果基表更新，视图中的记录也会随之更新。设置了条件的视图始终会显示与条件相匹配的记录。</p>
-<h4 id="确认视图"><a href="#确认视图" class="headerlink" title="确认视图"></a>确认视图</h4><pre class=" language-mysql"><code class="language-mysql">$ SHOW TABLE;</code></pre>
-<p>视图会与表交织在一起显示出来。</p>
-<p>和表一样，列结构可以通过 DESC 显示出来。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ DESC v2;
-+-------+--------------+------+-----+---------+-------+
-| Field | Type         | Null | Key | Default | Extra |
-+-------+--------------+------+-----+---------+-------+
-| empid | varchar(10)  | YES  |     | NULL    |       |
-| name  | varchar(100) | YES  |     | NULL    |       |
-| sales | int          | YES  |     | NULL    |       |
-+-------+--------------+------+-----+---------+-------+
-3 rows in set (0.01 sec)</code></pre>
-<p>显示视图的详细信息：</p>
-<pre class=" language-mysql"><code class="language-mysql">$ SHOW CREATE VIEW 视图名;</code></pre>
-<h3 id="限制通过视图写入"><a href="#限制通过视图写入" class="headerlink" title="限制通过视图写入"></a>限制通过视图写入</h3><p>视图是用户从基表上随意收集的列。换句话说，作为视图可见的部分大多是基表中的一部分内容。对视图执行 INSERT 操作，就意味着只能向表中的一部分内容中插入数据。</p>
-<p>前面介绍的有点啰嗦，用一句话概括就是对视图执行 INSERT 操作是有限制的。例如，在使用了 UNION、JOIN、子查询的视图中，不能执行 INSERT 。如果只是从一个表中提取了列，那么执行 INSERT 是没有任何问题的。</p>
-<p>插入方法和向表中插入数据的方法相同。</p>
-<p>执行下面的命令：</p>
-<pre class=" language-mysql"><code class="language-mysql">$ INSERT INTO v1 VALUES('临时工·石田', 18);
-Query OK, 1 row affected (0.00 sec)
-
-$ INSERT INTO v2 VALUES(null, 'AsiaMa', 28);
-ERROR 1394 (HY000): Can not insert into join view 'db1.v2' without fields list
-
-$ SELECT * FROM v1;
-+-------------------+------+
-| name              | age  |
-+-------------------+------+
-| 主任·佐腾         |   40 |
-| 高桥              |   28 |
-| 中川              |   20 |
-| 渡边              |   23 |
-| 西泽              |   35 |
-| 临时工·石田       |   18 |
-+-------------------+------+
-6 rows in set (0.00 sec)</code></pre>
-<p>姓名和年龄被完整地插入到了视图 v1 中。那么，视图 v1 的基表 tb1 会变成什么样呢？</p>
-<pre class=" language-mysql"><code class="language-mysql">$ SELECT * FROM tb1;
-+-------+-------------------+------+
-| empid | name              | age  |
-+-------+-------------------+------+
-| A101  | 主任·佐腾         |   40 |
-| A102  | 高桥              |   28 |
-| A103  | 中川              |   20 |
-| A104  | 渡边              |   23 |
-| A105  | 西泽              |   35 |
-| NULL  | 临时工·石田       |   18 |
-+-------+-------------------+------+
-6 rows in set (0.00 sec)</code></pre>
-<p>看来 “临时表·石田” 和 “18” 这两个数据都 INSERT 成功了。另外，对于在视图 v1 中没有被定义的列 empid，因为没有插入数据，所以输入了 NULL。</p>
-<h4 id="设置了条件的基表中会发生什么变化"><a href="#设置了条件的基表中会发生什么变化" class="headerlink" title="设置了条件的基表中会发生什么变化"></a>设置了条件的基表中会发生什么变化</h4><p>如果在设置了条件的视图中插入违反条件的数据，基表会发生什么变化呢？</p>
-<pre class=" language-mysql"><code class="language-mysql">$ CREATE VIEW v3 
-            AS 
-    SELECT empid, sales 
-            FROM tb 
-    WHERE sales >= 100;
-
-$ SELECT * FROM v3;
-+-------+-------+
-| empid | sales |
-+-------+-------+
-| A103  |   101 |
-| A104  |   181 |
-| A101  |   184 |
-| A101  |   300 |
-| A102  |   205 |
-+-------+-------+
-5 rows in set (0.01 sec)</code></pre>
-<ul>
-<li>插入不符合视图条件的记录</li>
-</ul>
-<pre class=" language-mysql"><code class="language-mysql">$ INSERT INTO v3 VALUES('恶意刁难', 50);
-Query OK, 1 row affected (0.01 sec)
-
-$ SELECT * FROM v3;
-+-------+-------+
-| empid | sales |
-+-------+-------+
-| A103  |   101 |
-| A104  |   181 |
-| A101  |   184 |
-| A101  |   300 |
-| A102  |   205 |
-+-------+-------+
-5 rows in set (0.00 sec)</code></pre>
-<p>视图 v3 看不到刚才插入的值，那么基表 tb 会变成什么样呢？</p>
-<pre class=" language-mysql"><code class="language-mysql">$ SELECT * FROM tb;
-+--------------+-------+-------+
-| empid        | sales | month |
-+--------------+-------+-------+
-| A103         |   101 |     4 |
-| A102         |    54 |     5 |
-| A104         |   181 |     4 |
-| A101         |   184 |     4 |
-| A103         |    17 |     5 |
-| A101         |   300 |     5 |
-| A102         |   205 |     6 |
-| A104         |    93 |     5 |
-| A103         |    12 |     6 |
-| A107         |    87 |     6 |
-| 恶意刁难     |    50 |  NULL |
-+--------------+-------+-------+
-11 rows in set (0.00 sec)</code></pre>
-<p>基表 tb 中竟然插入了这个值！在默认情况下，WHERE 条件会被忽略，数据会 INSERT 到基表中。</p>
-<h4 id="当与视图的条件不匹配时报错"><a href="#当与视图的条件不匹配时报错" class="headerlink" title="当与视图的条件不匹配时报错"></a>当与视图的条件不匹配时报错</h4><p>当通过视图 INSERT 记录时，即使与 WHERE 条件不匹配，数据也会直接输入到基表中。这是否意味着总是可以输入与 WHERE 条件不符的记录呢？</p>
-<p>但是，对于有条件限制的视图，无视条件输入记录有时会带来一定的麻烦。另外，从视图中输入的记录无法在改视图中确认也是一件很麻烦的事。</p>
-<p>为了应对这些情况，我们可以将视图设置成 “不接受与条件不匹配的记录”。为了防止输入与 WHERE 条件不匹配的记录，我们可以使用 CREATE VIEW 创建视图时，加上 WITH CHECK OPERON。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ CREATE VIEW v4 
-            AS 
-    SELECT empid, sales 
-            FROM tb 
-    WHERE sales >= 100
-            WITH CHECK OPTION;
-
-$ INSERT INTO v4 VALUES('恶意刁难', 50);
-ERROR 1369 (HY000): CHECK OPTION failed 'db1.v4'</code></pre>
-<p>这样就无法输入不符合条件的记录了。</p>
-<h3 id="替换、修改和删除视图"><a href="#替换、修改和删除视图" class="headerlink" title="替换、修改和删除视图"></a>替换、修改和删除视图</h3><p>当执行 CREATE VIEW 时，如果已经有同名的视图存在，该命令报错。在这种情况下，可以像 “CREATE OR REPLACE VIEW …” 这样，加上 OR REPLACE 替换视图。也就是说，删除已经存在的同名的视图，创建新的视图。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ CREATE OR REPLACE VIEW v1 AS SELECT NOW();
-</code></pre>
-<h4 id="修改视图结构"><a href="#修改视图结构" class="headerlink" title="修改视图结构"></a>修改视图结构</h4><pre class=" language-mysql"><code class="language-mysql">$ ALTER VIEW 视图名 AS SELECT 列名 FROM 表名;</code></pre>
-<p>与使用 “CREATE VIEW … AS SELECT” 创建视图的方法基本相同。</p>
-<h4 id="删除视图"><a href="#删除视图" class="headerlink" title="删除视图"></a>删除视图</h4><pre class=" language-mysql"><code class="language-mysql">$ DROP VIEW 视图名;</code></pre>
-<p>如果视图不存在，该命令就会报错。可以执行下面的命令：</p>
-<pre class=" language-mysql"><code class="language-mysql"># 目标视图不存在，只是不执行操作而已
-$ DROP VIEW IF EXISTS v1;</code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
