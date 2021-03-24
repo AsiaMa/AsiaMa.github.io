@@ -85,39 +85,6 @@
       </tags>
   </entry>
   <entry>
-    <title>CopyOnWriteArrayList</title>
-    <url>/posts/34b0.html</url>
-    <content><![CDATA[<h3 id="CopyOnWriteArrayList的优点"><a href="#CopyOnWriteArrayList的优点" class="headerlink" title="CopyOnWriteArrayList的优点"></a>CopyOnWriteArrayList的优点</h3><p>读取完全不用加锁的，并且更厉害的是写入也不会阻塞读取操作。只有修改操作之间需要同步等待。</p>
-<h3 id="CopyOnWriteArrayList的缺点"><a href="#CopyOnWriteArrayList的缺点" class="headerlink" title="CopyOnWriteArrayList的缺点"></a>CopyOnWriteArrayList的缺点</h3><p>数据一致性问题：CopyOnWirite 容器只能保证数据的最终一致性，不能保证数据的实时一致性。所以如果你希望写入的数据，马上能读到，请不要用 CopyOnWtire 容器。</p>
-<p>内存占用问题：因为 CopyOnWrite 的是写时复制策略，所以在进行写操作的时候，内存会同时驻扎两个对象的内存。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>CopyOnWriteArrayList 使用写时复制的策略来保证 list 的一致性，而 获取-修改-写入 三步操作并不是原子性的，所以在增删改的过程中都使用了独占锁，来保证在某个时间只有一个线程对 list 数组进行修改。另外 CopyOnWriteArrayList 提供了弱一致性的迭代器，从而保证在获取迭代器后，其他线程对 list 的修改是不可见的，迭代器遍历的数组是一个快照。另外，CopyOnWriteArraySet 的底层是使用它实现的。</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <categories>
-        <category>多线程</category>
-      </categories>
-      <tags>
-        <tag>多线程</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Bean的初始化方式</title>
     <url>/posts/c3f8.html</url>
     <content><![CDATA[<h3 id="PostConstruct标注方法"><a href="#PostConstruct标注方法" class="headerlink" title="@PostConstruct标注方法"></a>@PostConstruct标注方法</h3><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Employee</span> <span class="token punctuation">{</span>
@@ -292,6 +259,39 @@
       </categories>
       <tags>
         <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CopyOnWriteArrayList</title>
+    <url>/posts/34b0.html</url>
+    <content><![CDATA[<h3 id="CopyOnWriteArrayList的优点"><a href="#CopyOnWriteArrayList的优点" class="headerlink" title="CopyOnWriteArrayList的优点"></a>CopyOnWriteArrayList的优点</h3><p>读取完全不用加锁的，并且更厉害的是写入也不会阻塞读取操作。只有修改操作之间需要同步等待。</p>
+<h3 id="CopyOnWriteArrayList的缺点"><a href="#CopyOnWriteArrayList的缺点" class="headerlink" title="CopyOnWriteArrayList的缺点"></a>CopyOnWriteArrayList的缺点</h3><p>数据一致性问题：CopyOnWirite 容器只能保证数据的最终一致性，不能保证数据的实时一致性。所以如果你希望写入的数据，马上能读到，请不要用 CopyOnWtire 容器。</p>
+<p>内存占用问题：因为 CopyOnWrite 的是写时复制策略，所以在进行写操作的时候，内存会同时驻扎两个对象的内存。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>CopyOnWriteArrayList 使用写时复制的策略来保证 list 的一致性，而 获取-修改-写入 三步操作并不是原子性的，所以在增删改的过程中都使用了独占锁，来保证在某个时间只有一个线程对 list 数组进行修改。另外 CopyOnWriteArrayList 提供了弱一致性的迭代器，从而保证在获取迭代器后，其他线程对 list 的修改是不可见的，迭代器遍历的数组是一个快照。另外，CopyOnWriteArraySet 的底层是使用它实现的。</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <categories>
+        <category>多线程</category>
+      </categories>
+      <tags>
+        <tag>多线程</tag>
       </tags>
   </entry>
   <entry>
@@ -805,92 +805,6 @@ Index_comment:
       </tags>
   </entry>
   <entry>
-    <title>MySQL字符编码设置</title>
-    <url>/posts/d16b.html</url>
-    <content><![CDATA[<h3 id="关于中文的设置"><a href="#关于中文的设置" class="headerlink" title="关于中文的设置"></a>关于中文的设置</h3><p>某种字符的集合称为<strong>字符集（character set）</strong>。例如中文汉字和英文字母都是字符集的一种。</p>
-<p>在计算机和网络上表示字符时，需要给各个字符添加识别信息，例如数字或者符号等。给各个字符分配的数字或者符号称为<strong>字符代码（character code）</strong>。</p>
-<p>给字符集分配字符代码时的规则称为<strong>字符编码（character encoding）</strong>，中文相关的主流字符编码如下所示：</p>
-<table>
-<thead>
-<tr>
-<th>字符编码名</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>ISO-8859-1</td>
-<td>字母的字符编码（单字节编码）</td>
-</tr>
-<tr>
-<td>GB 2312</td>
-<td>1981 年 5 月 1 日发布的简体中文汉字编码国家标准</td>
-</tr>
-<tr>
-<td>GBK</td>
-<td>1995 年 12 月发布的汉字编码国际标准，是对 GB 2312 编码的补充</td>
-</tr>
-<tr>
-<td>cp936</td>
-<td>微软 Windows 环境上在 GB 2312 的基础上扩展的字符编码，通常被视为等同于 GBK</td>
-</tr>
-<tr>
-<td>EUC-CN</td>
-<td>Linux/Unix 环境上以 GB 2312 为基础的字符编码</td>
-</tr>
-<tr>
-<td>GB 18030</td>
-<td>2000 年 3 月 17 日发布的汉字编码国际标准，是对 GBK 编码的补充，兼容 GBK 和 GB 2312 字符集</td>
-</tr>
-<tr>
-<td>UTF-8</td>
-<td>针对 Unicode 字符集的一种可变长度字符编码</td>
-</tr>
-</tbody></table>
-<p>举例来说，“啊” 字在中国国家标准 GB 2312、GBK 和 GB 18030 字符编码中的编码都为 “B0A1”，而在 UTF-8 中则为 “E5958A”。从中可以看出，即使文字相同，如果字符编码不同，表示的字符也可能不同，由此才出现了乱码现象。</p>
-<p>世界上有许多语言系统和文字，所以除了上面介绍的内容之外还有无数的字符集和字符编码。但这样一来，面向全世界发布的网页等就会变得很难处理，因此人们开发了可以支持全世界所有字符的字符集 Unicode。Unicode 的字符编码方式有好几种，现在最为常用的是在 HTML 5 中被默认使用的 UTF-8。顺便说一下，在 UTF-8 的情况下，字符集和字符编码都称为 UTF-8。</p>
-<h3 id="MySQL的字符编码设置"><a href="#MySQL的字符编码设置" class="headerlink" title="MySQL的字符编码设置"></a>MySQL的字符编码设置</h3><p>通过 Web 应用程序，我们可以把输入的数据存储到数据库，再从数据库读出数据显示在 Web 画面上。在 Web 的世界中默认使用的字符编码是 UTF-8，所以如果数据库的字符编码也是 UTF-8，就不需要进行字符编码的转换了。</p>
-<p>因为中文 Windows 系统中命令行的默认字符编码是 GBK，所以 MySQL 监视器的输入输出字符串的字符编码也是 GBK。也就是说，存储在数据库中的字符的字符编码和客户端的输入输出中使用的字符编码并不相同。</p>
-<img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/Snipaste_2021-01-27_11-28-25.png" style="zoom:50%;">
-
-<p>在这种情况下，当向数据库存储数据时（GBK —&gt; UTF-8），以及从数据库读取数据显示在客户端上时（UTF-8—&gt; GBK），都需要进行字符编码的转换。可以通过 修改MySQL 的设置文件（my.ini ）即可：</p>
-<pre class=" language-shell"><code class="language-shell"># SQL 的安装目录下,如：C:\ProgramData\MySQL\MySQL Server 8.0\my.ini
-character-set-server=utf8
-default-character-set=gbk</code></pre>
-<h3 id="命令提示符的UTF-8设置"><a href="#命令提示符的UTF-8设置" class="headerlink" title="命令提示符的UTF-8设置"></a>命令提示符的UTF-8设置</h3><p>Windows终端默认使用字符编码GBK进行数据的输入和输出，而数据库则使用UTF-8存储数据。其实我们也可以把命令终端的字符编码设置成UTF-8。我们需要按照下面的格式在命令终端执行<code>chcp</code></p>
-<pre><code>shell</code></pre>
-<p>chcp用于修改命令终端的字符编码，<code>65001代表UTF-8</code>。如果这样设置，就不需要修改 my.ini 中的内容了。</p>
-<h3 id="确认MySQL中字符编码的设置情况"><a href="#确认MySQL中字符编码的设置情况" class="headerlink" title="确认MySQL中字符编码的设置情况"></a>确认MySQL中字符编码的设置情况</h3><p>启动MySQL监视器，输入status。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/one.png"></p>
-<p>1代表服务器端的字符编码设置，2代表客户端的字符编码设置。</p>
-<p>指定字符编码启动MySQL监视器</p>
-<pre class=" language-sh"><code class="language-sh">$ mysql -uroot -proot --default-character-set=gbk</code></pre>
-<p>另外字符编码设置情况还可以通过下面的命令查看</p>
-<pre class=" language-mysql"><code class="language-mysql">SHOW VARIABLES LIKE 'char%'</code></pre>
-<p>按下<code>F7键后，历史命令</code>会全部显示出来。</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>MySQL</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>MySQL数据类型</title>
     <url>/posts/f499.html</url>
     <content><![CDATA[<h3 id="什么是数据类型"><a href="#什么是数据类型" class="headerlink" title="什么是数据类型"></a>什么是数据类型</h3><p>数据库的表中只能输入各个列执行格式的数据。例如，指定为 “数值类型” 的列中不能输入字符等数据。指定为 “日期类型“的列中，只能输入日期数据。这种数据的格式称为”数据类型“。</p>
@@ -1029,6 +943,92 @@ $ db1:localhost<span class="token operator">></span></code></pre>
 <li>回到初期状态</li>
 </ul>
 <pre class=" language-bash"><code class="language-bash">$ prompt mysql<span class="token operator">></span></code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MySQL字符编码设置</title>
+    <url>/posts/d16b.html</url>
+    <content><![CDATA[<h3 id="关于中文的设置"><a href="#关于中文的设置" class="headerlink" title="关于中文的设置"></a>关于中文的设置</h3><p>某种字符的集合称为<strong>字符集（character set）</strong>。例如中文汉字和英文字母都是字符集的一种。</p>
+<p>在计算机和网络上表示字符时，需要给各个字符添加识别信息，例如数字或者符号等。给各个字符分配的数字或者符号称为<strong>字符代码（character code）</strong>。</p>
+<p>给字符集分配字符代码时的规则称为<strong>字符编码（character encoding）</strong>，中文相关的主流字符编码如下所示：</p>
+<table>
+<thead>
+<tr>
+<th>字符编码名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ISO-8859-1</td>
+<td>字母的字符编码（单字节编码）</td>
+</tr>
+<tr>
+<td>GB 2312</td>
+<td>1981 年 5 月 1 日发布的简体中文汉字编码国家标准</td>
+</tr>
+<tr>
+<td>GBK</td>
+<td>1995 年 12 月发布的汉字编码国际标准，是对 GB 2312 编码的补充</td>
+</tr>
+<tr>
+<td>cp936</td>
+<td>微软 Windows 环境上在 GB 2312 的基础上扩展的字符编码，通常被视为等同于 GBK</td>
+</tr>
+<tr>
+<td>EUC-CN</td>
+<td>Linux/Unix 环境上以 GB 2312 为基础的字符编码</td>
+</tr>
+<tr>
+<td>GB 18030</td>
+<td>2000 年 3 月 17 日发布的汉字编码国际标准，是对 GBK 编码的补充，兼容 GBK 和 GB 2312 字符集</td>
+</tr>
+<tr>
+<td>UTF-8</td>
+<td>针对 Unicode 字符集的一种可变长度字符编码</td>
+</tr>
+</tbody></table>
+<p>举例来说，“啊” 字在中国国家标准 GB 2312、GBK 和 GB 18030 字符编码中的编码都为 “B0A1”，而在 UTF-8 中则为 “E5958A”。从中可以看出，即使文字相同，如果字符编码不同，表示的字符也可能不同，由此才出现了乱码现象。</p>
+<p>世界上有许多语言系统和文字，所以除了上面介绍的内容之外还有无数的字符集和字符编码。但这样一来，面向全世界发布的网页等就会变得很难处理，因此人们开发了可以支持全世界所有字符的字符集 Unicode。Unicode 的字符编码方式有好几种，现在最为常用的是在 HTML 5 中被默认使用的 UTF-8。顺便说一下，在 UTF-8 的情况下，字符集和字符编码都称为 UTF-8。</p>
+<h3 id="MySQL的字符编码设置"><a href="#MySQL的字符编码设置" class="headerlink" title="MySQL的字符编码设置"></a>MySQL的字符编码设置</h3><p>通过 Web 应用程序，我们可以把输入的数据存储到数据库，再从数据库读出数据显示在 Web 画面上。在 Web 的世界中默认使用的字符编码是 UTF-8，所以如果数据库的字符编码也是 UTF-8，就不需要进行字符编码的转换了。</p>
+<p>因为中文 Windows 系统中命令行的默认字符编码是 GBK，所以 MySQL 监视器的输入输出字符串的字符编码也是 GBK。也就是说，存储在数据库中的字符的字符编码和客户端的输入输出中使用的字符编码并不相同。</p>
+<img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/Snipaste_2021-01-27_11-28-25.png" style="zoom:50%;">
+
+<p>在这种情况下，当向数据库存储数据时（GBK —&gt; UTF-8），以及从数据库读取数据显示在客户端上时（UTF-8—&gt; GBK），都需要进行字符编码的转换。可以通过 修改MySQL 的设置文件（my.ini ）即可：</p>
+<pre class=" language-shell"><code class="language-shell"># SQL 的安装目录下,如：C:\ProgramData\MySQL\MySQL Server 8.0\my.ini
+character-set-server=utf8
+default-character-set=gbk</code></pre>
+<h3 id="命令提示符的UTF-8设置"><a href="#命令提示符的UTF-8设置" class="headerlink" title="命令提示符的UTF-8设置"></a>命令提示符的UTF-8设置</h3><p>Windows终端默认使用字符编码GBK进行数据的输入和输出，而数据库则使用UTF-8存储数据。其实我们也可以把命令终端的字符编码设置成UTF-8。我们需要按照下面的格式在命令终端执行<code>chcp</code></p>
+<pre><code>shell</code></pre>
+<p>chcp用于修改命令终端的字符编码，<code>65001代表UTF-8</code>。如果这样设置，就不需要修改 my.ini 中的内容了。</p>
+<h3 id="确认MySQL中字符编码的设置情况"><a href="#确认MySQL中字符编码的设置情况" class="headerlink" title="确认MySQL中字符编码的设置情况"></a>确认MySQL中字符编码的设置情况</h3><p>启动MySQL监视器，输入status。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/one.png"></p>
+<p>1代表服务器端的字符编码设置，2代表客户端的字符编码设置。</p>
+<p>指定字符编码启动MySQL监视器</p>
+<pre class=" language-sh"><code class="language-sh">$ mysql -uroot -proot --default-character-set=gbk</code></pre>
+<p>另外字符编码设置情况还可以通过下面的命令查看</p>
+<pre class=" language-mysql"><code class="language-mysql">SHOW VARIABLES LIKE 'char%'</code></pre>
+<p>按下<code>F7键后，历史命令</code>会全部显示出来。</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -1427,6 +1427,85 @@ Reading messages<span class="token punctuation">..</span>. <span class="token pu
       </tags>
   </entry>
   <entry>
+    <title>Redis位操作</title>
+    <url>/posts/5969.html</url>
+    <content><![CDATA[<h3 id="位操作命令"><a href="#位操作命令" class="headerlink" title="位操作命令"></a>位操作命令</h3><pre class=" language-bash"><code class="language-bash">$ GETBIT key offset
+$ SETBIT key offset value
+$ BITCOUNT key <span class="token punctuation">[</span>start<span class="token punctuation">]</span> <span class="token punctuation">[</span>end<span class="token punctuation">]</span>
+$ BITOP operation destkey key <span class="token punctuation">[</span>key <span class="token punctuation">..</span>.<span class="token punctuation">]</span></code></pre>
+<h3 id="演示"><a href="#演示" class="headerlink" title="演示"></a>演示</h3><p>一个字节由 8 个二进制位组成，Redis 提供了 4 个命令可以直接对二进制位进行操作。为了演示，我们首先将 foo 赋值为 bar：</p>
+<pre class=" language-bash"><code class="language-bash">$ SET foo bar
+OK</code></pre>
+<p>bar 的 3 个字母 “b”, “a” 和 “r” 对应的 ASCII 码分别为98、97 和 114，转换为二进制后分别为 1100010、1100001 和 1110010，所以 foo 键中的二进制位结构如下所示：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/14771610958236_.pic_hd.jpg"></p>
+<p><code>GETBIT</code> 命令可以获得一个字符串类型键指定位置的二进制位的值（0 或 1），索引从 0 开始：</p>
+<pre class=" language-bash"><code class="language-bash">$ GETBIT foo 0
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 0
+$ GETBIT foo 6
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1</code></pre>
+<p>如果需要获取的二进制位的索引超出了键值的二进制为的实际长度则默认值是0：</p>
+<pre class=" language-bash"><code class="language-bash">$ GETBIT foo 10000
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 0</code></pre>
+<p><code>SETBIT</code> 命令可以设置字符串类型键指定位置的二进制位的值，返回值是该位置的旧值。如我们要将 foo 键值设置为 arr，可以通过位操作将 foo 键的二进制位的索引第 6 位设为0，第 7 位设为1：</p>
+<pre class=" language-bash"><code class="language-bash">$ SETBIT foo 6 0
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1
+$ SETBIT foo 7 1
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 0
+$ GET foo
+<span class="token string">"aar"</span></code></pre>
+<p>如果要设置的位置超过了键值的二进制位的长度，<code>SETBIT</code> 命令会自动将中间的二进制位设置为 0。</p>
+<p><code>BITCOUNT</code> 命令可以获得字符串类型键中值是1的二进制位个数，如：</p>
+<pre class=" language-bash"><code class="language-bash">$ BITCOUNT foo
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 10</code></pre>
+<p>可以通过参数来限制统计的字节范围，如我们只希望统计前两个字节（即 “aa” ）:</p>
+<pre class=" language-bash"><code class="language-bash">$ BITCOUNT foo 0 1
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 6</code></pre>
+<p><code>BITOP</code> 命令可以对多个字符串类型键进行位运算，并将结果存储在 destkey 参数指定的键中。<code>BITOP</code> 命令支持的运算操作有 AND、OR、XOR 和 NOT。</p>
+<pre class=" language-bash"><code class="language-bash">$ SET foo1 bar
+OK
+$ SET foo2 aar
+OK
+$ BITOP OR res foo1 foo2
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 3
+$ GET res
+<span class="token string">"car"</span></code></pre>
+<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/14841610959643_.pic_hd.jpg"></p>
+<p><code>BITPOS</code>  命令可以获得指定键的第一个位置是 0 或者 1 的位置。还是以 ”bar“这个键值位例，如果想获取键值中的第一个二进制位为 1 的偏移量，则可以执行：</p>
+<pre class=" language-bash"><code class="language-bash">$ SET foo bar
+OK
+$ BITPOS foo 1
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1</code></pre>
+<p><code>BITOPS</code> 命令的第二个和第三个参数分别可以用来指定要查询的起始字节和结束字节。注意这里的单位不再是二进制位，而是字节。如果我们想查询的第二个字节到第三个字节之间（即 ”a“ 和 ”r“）出现的第一个值位 1 的二进制位的偏移量，则可以执行：</p>
+<pre><code>$ BITPOS foo 1 1 2
+(integer) 9</code></pre>
+<p>这里的返回结果的偏移量是从头开始算起的，与起始字节无关。</p>
+<blockquote>
+<p>如果不设置结束字节且键值的所有二进制位都是 1 ，则当要查询值为 0 的二进制位偏移量时，返回结果会是键值长度的下一个字位的偏移量。这是因为 Redis 会认为键值长度之后的二进制位都是 0。</p>
+</blockquote>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Redis事务</title>
     <url>/posts/a455.html</url>
     <content><![CDATA[<blockquote>
@@ -1506,85 +1585,6 @@ $ GET key
 </blockquote>
 <p>执行 EXEC 命令会取消对所有键的监控。</p>
 <p>可以使用 UNWATCH 命令来保证下一个事务的执行不会收到影响。</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>Redis</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Redis位操作</title>
-    <url>/posts/5969.html</url>
-    <content><![CDATA[<h3 id="位操作命令"><a href="#位操作命令" class="headerlink" title="位操作命令"></a>位操作命令</h3><pre class=" language-bash"><code class="language-bash">$ GETBIT key offset
-$ SETBIT key offset value
-$ BITCOUNT key <span class="token punctuation">[</span>start<span class="token punctuation">]</span> <span class="token punctuation">[</span>end<span class="token punctuation">]</span>
-$ BITOP operation destkey key <span class="token punctuation">[</span>key <span class="token punctuation">..</span>.<span class="token punctuation">]</span></code></pre>
-<h3 id="演示"><a href="#演示" class="headerlink" title="演示"></a>演示</h3><p>一个字节由 8 个二进制位组成，Redis 提供了 4 个命令可以直接对二进制位进行操作。为了演示，我们首先将 foo 赋值为 bar：</p>
-<pre class=" language-bash"><code class="language-bash">$ SET foo bar
-OK</code></pre>
-<p>bar 的 3 个字母 “b”, “a” 和 “r” 对应的 ASCII 码分别为98、97 和 114，转换为二进制后分别为 1100010、1100001 和 1110010，所以 foo 键中的二进制位结构如下所示：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/14771610958236_.pic_hd.jpg"></p>
-<p><code>GETBIT</code> 命令可以获得一个字符串类型键指定位置的二进制位的值（0 或 1），索引从 0 开始：</p>
-<pre class=" language-bash"><code class="language-bash">$ GETBIT foo 0
-<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 0
-$ GETBIT foo 6
-<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1</code></pre>
-<p>如果需要获取的二进制位的索引超出了键值的二进制为的实际长度则默认值是0：</p>
-<pre class=" language-bash"><code class="language-bash">$ GETBIT foo 10000
-<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 0</code></pre>
-<p><code>SETBIT</code> 命令可以设置字符串类型键指定位置的二进制位的值，返回值是该位置的旧值。如我们要将 foo 键值设置为 arr，可以通过位操作将 foo 键的二进制位的索引第 6 位设为0，第 7 位设为1：</p>
-<pre class=" language-bash"><code class="language-bash">$ SETBIT foo 6 0
-<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1
-$ SETBIT foo 7 1
-<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 0
-$ GET foo
-<span class="token string">"aar"</span></code></pre>
-<p>如果要设置的位置超过了键值的二进制位的长度，<code>SETBIT</code> 命令会自动将中间的二进制位设置为 0。</p>
-<p><code>BITCOUNT</code> 命令可以获得字符串类型键中值是1的二进制位个数，如：</p>
-<pre class=" language-bash"><code class="language-bash">$ BITCOUNT foo
-<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 10</code></pre>
-<p>可以通过参数来限制统计的字节范围，如我们只希望统计前两个字节（即 “aa” ）:</p>
-<pre class=" language-bash"><code class="language-bash">$ BITCOUNT foo 0 1
-<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 6</code></pre>
-<p><code>BITOP</code> 命令可以对多个字符串类型键进行位运算，并将结果存储在 destkey 参数指定的键中。<code>BITOP</code> 命令支持的运算操作有 AND、OR、XOR 和 NOT。</p>
-<pre class=" language-bash"><code class="language-bash">$ SET foo1 bar
-OK
-$ SET foo2 aar
-OK
-$ BITOP OR res foo1 foo2
-<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 3
-$ GET res
-<span class="token string">"car"</span></code></pre>
-<p><img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/14841610959643_.pic_hd.jpg"></p>
-<p><code>BITPOS</code>  命令可以获得指定键的第一个位置是 0 或者 1 的位置。还是以 ”bar“这个键值位例，如果想获取键值中的第一个二进制位为 1 的偏移量，则可以执行：</p>
-<pre class=" language-bash"><code class="language-bash">$ SET foo bar
-OK
-$ BITPOS foo 1
-<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> 1</code></pre>
-<p><code>BITOPS</code> 命令的第二个和第三个参数分别可以用来指定要查询的起始字节和结束字节。注意这里的单位不再是二进制位，而是字节。如果我们想查询的第二个字节到第三个字节之间（即 ”a“ 和 ”r“）出现的第一个值位 1 的二进制位的偏移量，则可以执行：</p>
-<pre><code>$ BITPOS foo 1 1 2
-(integer) 9</code></pre>
-<p>这里的返回结果的偏移量是从头开始算起的，与起始字节无关。</p>
-<blockquote>
-<p>如果不设置结束字节且键值的所有二进制位都是 1 ，则当要查询值为 0 的二进制位偏移量时，返回结果会是键值长度的下一个字位的偏移量。这是因为 Redis 会认为键值长度之后的二进制位都是 0。</p>
-</blockquote>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -5948,251 +5948,6 @@ mysql> SELECT * FROM tb;
       </tags>
   </entry>
   <entry>
-    <title>熟练使用视图</title>
-    <url>/posts/76dd.html</url>
-    <content><![CDATA[<h3 id="什么是视图"><a href="#什么是视图" class="headerlink" title="什么是视图"></a>什么是视图</h3><h4 id="视图的真面目"><a href="#视图的真面目" class="headerlink" title="视图的真面目"></a>视图的真面目</h4><p>前面我们学习了多种使用 SELECT 提取纪录的方法。将 SELECT 的结果像表一样保留下来的虚表就是视图。</p>
-<p>视图不是表。因此，视图中并没有保存记录或者列中的数据。也会说，视图是一种信息，用于查询记录。</p>
-<h4 id="视图的用途"><a href="#视图的用途" class="headerlink" title="视图的用途"></a>视图的用途</h4><p>视图虽然看起来像表，但它没有实体，只是一种信息。视图的便利之处在于，用户可以按照想要的条件收集某表中某列的数据。</p>
-<p>之前那种通过设置条件从表中提取记录的做法非常麻烦。如果相同的提出操作以视图的方式执行，就可以将视图作为符合用户个人喜好的表来使用。</p>
-<p>从用户的角度来看，视图和表使用上并没有区别。和表一样，视图也可以进行 SELECT 和 UPDATE。如果更新视图的记录，基表的记录也会更新。</p>
-<img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/2021-01-27_19-05-07.png" style="zoom:87%;">
-
-<h3 id="使用视图"><a href="#使用视图" class="headerlink" title="使用视图"></a>使用视图</h3><h4 id="创建视图"><a href="#创建视图" class="headerlink" title="创建视图"></a>创建视图</h4><pre class=" language-mysql"><code class="language-mysql">$ CREATE VIEW 视图名 AS SELECT 列名 FROM 表名 WHERE 条件;</code></pre>
-<p>上面的语句表示 “对 SELECT 的记录 CREATE VIEW（视图）”。不要忘记在 SELECT 的前面加上 AS。</p>
-<p>上述语句中的 “ WHERE 条件”，实际上也可以 换成 ORDER BY、LIMIT 和 JOIN 等。总之，要在某些条件下选择列，创建虚拟的表。也就是将前面执行的许多 SELECT 结果通过 CREATE VIEW … AS 创建为视图。</p>
-<p>员工信息表 tb1 由员工号（empid）、姓名（name）和年龄（age）组成。试着创建没有员工号、只包含姓名和年龄这两个列的视图。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ CREATE VIEW v1 
-          AS
-  SELECT name, age 
-          FROM tb1;
-
-$ SELECT * FROM v1;
-+--------+------+
-| name   | age  |
-+--------+------+
-| 佐腾   |   40 |
-| 高桥   |   28 |
-| 中川   |   20 |
-| 渡边   |   23 |
-| 西泽   |   35 |
-+--------+------+
-5 rows in set (0.01 sec)</code></pre>
-<p>这次我们只从一个表中提取了列，实际上也可以使用多个表，通过设置条件来提取想要的内容。</p>
-<h4 id="通过视图更新列的值"><a href="#通过视图更新列的值" class="headerlink" title="通过视图更新列的值"></a>通过视图更新列的值</h4><p>视图只显示了基表的一部分。因此，如果更新了基表的值，收集并显示基表值的视图的值也会更新。</p>
-<p>那么，如果更新了视图的值，基表的值又会怎样呢？实际上，视图不仅是基表的一部分，它也是指向基表数据的窗口。因此，如果更新视图的值，基表的值也会随之更新。</p>
-<p>我们来试着更新一下视图 v1 的记录，看看视图的记录更新是否反映到了基表中。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ UPDATE v1 SET name = '主任·佐腾' WHERE name = '佐腾';
-
-$ SELECT * FROM v1;
-+----------------+------+
-| name           | age  |
-+----------------+------+
-| 主任·佐腾      |   40 |
-| 高桥           |   28 |
-| 中川           |   20 |
-| 渡边           |   23 |
-| 西泽           |   35 |
-+----------------+------+
-5 rows in set (0.00 sec)
-
-$ SELECt * FROM tb1;
-+-------+----------------+------+
-| empid | name           | age  |
-+-------+----------------+------+
-| A101  | 主任·佐腾      |   40 |
-| A102  | 高桥           |   28 |
-| A103  | 中川           |   20 |
-| A104  | 渡边           |   23 |
-| A105  | 西泽           |   35 |
-+-------+----------------+------+
-5 rows in set (0.00 sec)</code></pre>
-<p>看来基表 tb1 的值也更新了。由此我们可以得知，如果更新视图的值，其基表的记录也会随之更新。</p>
-<h3 id="设置条件创建视图"><a href="#设置条件创建视图" class="headerlink" title="设置条件创建视图"></a>设置条件创建视图</h3><p>我们将从两个表中提取纪录并通过 WHERE 设置条件来创建视图。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ CREATE VIEW v2 
-            AS 
-    SELECT tb.empid, tb1.name, tb.sales 
-            FROM tb 
-    JOIN tb1 
-            USING(empid) 
-    WHERE tb.sales >= 100;
-
-$ SELECT * FROM v2;
-+-------+----------------+-------+
-| empid | name           | sales |
-+-------+----------------+-------+
-| A103  | 中川           |   101 |
-| A104  | 渡边           |   181 |
-| A101  | 主任·佐腾      |   184 |
-| A101  | 主任·佐腾      |   300 |
-| A102  | 高桥           |   205 |
-+-------+----------------+-------+
-5 rows in set (0.01 sec)</code></pre>
-<p>执行下面的命令</p>
-<pre class=" language-mysql"><code class="language-mysql">$ UPDATE tb SET sales = 777 WHERE sales = 54;
-
-$ SELECT * FROM v2;
-+-------+----------------+-------+
-| empid | name           | sales |
-+-------+----------------+-------+
-| A103  | 中川           |   101 |
-| A102  | 高桥           |   777 |
-| A104  | 渡边           |   181 |
-| A101  | 主任·佐腾      |   184 |
-| A101  | 主任·佐腾      |   300 |
-| A102  | 高桥           |   205 |
-+-------+----------------+-------+
-6 rows in set (0.00 sec)</code></pre>
-<p>可以看到视图 v2 的值也更新了。也就是说，在符合视图设置条件的情况下，如果基表更新，视图中的记录也会随之更新。设置了条件的视图始终会显示与条件相匹配的记录。</p>
-<h4 id="确认视图"><a href="#确认视图" class="headerlink" title="确认视图"></a>确认视图</h4><pre class=" language-mysql"><code class="language-mysql">$ SHOW TABLE;</code></pre>
-<p>视图会与表交织在一起显示出来。</p>
-<p>和表一样，列结构可以通过 DESC 显示出来。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ DESC v2;
-+-------+--------------+------+-----+---------+-------+
-| Field | Type         | Null | Key | Default | Extra |
-+-------+--------------+------+-----+---------+-------+
-| empid | varchar(10)  | YES  |     | NULL    |       |
-| name  | varchar(100) | YES  |     | NULL    |       |
-| sales | int          | YES  |     | NULL    |       |
-+-------+--------------+------+-----+---------+-------+
-3 rows in set (0.01 sec)</code></pre>
-<p>显示视图的详细信息：</p>
-<pre class=" language-mysql"><code class="language-mysql">$ SHOW CREATE VIEW 视图名;</code></pre>
-<h3 id="限制通过视图写入"><a href="#限制通过视图写入" class="headerlink" title="限制通过视图写入"></a>限制通过视图写入</h3><p>视图是用户从基表上随意收集的列。换句话说，作为视图可见的部分大多是基表中的一部分内容。对视图执行 INSERT 操作，就意味着只能向表中的一部分内容中插入数据。</p>
-<p>前面介绍的有点啰嗦，用一句话概括就是对视图执行 INSERT 操作是有限制的。例如，在使用了 UNION、JOIN、子查询的视图中，不能执行 INSERT 。如果只是从一个表中提取了列，那么执行 INSERT 是没有任何问题的。</p>
-<p>插入方法和向表中插入数据的方法相同。</p>
-<p>执行下面的命令：</p>
-<pre class=" language-mysql"><code class="language-mysql">$ INSERT INTO v1 VALUES('临时工·石田', 18);
-Query OK, 1 row affected (0.00 sec)
-
-$ INSERT INTO v2 VALUES(null, 'AsiaMa', 28);
-ERROR 1394 (HY000): Can not insert into join view 'db1.v2' without fields list
-
-$ SELECT * FROM v1;
-+-------------------+------+
-| name              | age  |
-+-------------------+------+
-| 主任·佐腾         |   40 |
-| 高桥              |   28 |
-| 中川              |   20 |
-| 渡边              |   23 |
-| 西泽              |   35 |
-| 临时工·石田       |   18 |
-+-------------------+------+
-6 rows in set (0.00 sec)</code></pre>
-<p>姓名和年龄被完整地插入到了视图 v1 中。那么，视图 v1 的基表 tb1 会变成什么样呢？</p>
-<pre class=" language-mysql"><code class="language-mysql">$ SELECT * FROM tb1;
-+-------+-------------------+------+
-| empid | name              | age  |
-+-------+-------------------+------+
-| A101  | 主任·佐腾         |   40 |
-| A102  | 高桥              |   28 |
-| A103  | 中川              |   20 |
-| A104  | 渡边              |   23 |
-| A105  | 西泽              |   35 |
-| NULL  | 临时工·石田       |   18 |
-+-------+-------------------+------+
-6 rows in set (0.00 sec)</code></pre>
-<p>看来 “临时表·石田” 和 “18” 这两个数据都 INSERT 成功了。另外，对于在视图 v1 中没有被定义的列 empid，因为没有插入数据，所以输入了 NULL。</p>
-<h4 id="设置了条件的基表中会发生什么变化"><a href="#设置了条件的基表中会发生什么变化" class="headerlink" title="设置了条件的基表中会发生什么变化"></a>设置了条件的基表中会发生什么变化</h4><p>如果在设置了条件的视图中插入违反条件的数据，基表会发生什么变化呢？</p>
-<pre class=" language-mysql"><code class="language-mysql">$ CREATE VIEW v3 
-            AS 
-    SELECT empid, sales 
-            FROM tb 
-    WHERE sales >= 100;
-
-$ SELECT * FROM v3;
-+-------+-------+
-| empid | sales |
-+-------+-------+
-| A103  |   101 |
-| A104  |   181 |
-| A101  |   184 |
-| A101  |   300 |
-| A102  |   205 |
-+-------+-------+
-5 rows in set (0.01 sec)</code></pre>
-<ul>
-<li>插入不符合视图条件的记录</li>
-</ul>
-<pre class=" language-mysql"><code class="language-mysql">$ INSERT INTO v3 VALUES('恶意刁难', 50);
-Query OK, 1 row affected (0.01 sec)
-
-$ SELECT * FROM v3;
-+-------+-------+
-| empid | sales |
-+-------+-------+
-| A103  |   101 |
-| A104  |   181 |
-| A101  |   184 |
-| A101  |   300 |
-| A102  |   205 |
-+-------+-------+
-5 rows in set (0.00 sec)</code></pre>
-<p>视图 v3 看不到刚才插入的值，那么基表 tb 会变成什么样呢？</p>
-<pre class=" language-mysql"><code class="language-mysql">$ SELECT * FROM tb;
-+--------------+-------+-------+
-| empid        | sales | month |
-+--------------+-------+-------+
-| A103         |   101 |     4 |
-| A102         |    54 |     5 |
-| A104         |   181 |     4 |
-| A101         |   184 |     4 |
-| A103         |    17 |     5 |
-| A101         |   300 |     5 |
-| A102         |   205 |     6 |
-| A104         |    93 |     5 |
-| A103         |    12 |     6 |
-| A107         |    87 |     6 |
-| 恶意刁难     |    50 |  NULL |
-+--------------+-------+-------+
-11 rows in set (0.00 sec)</code></pre>
-<p>基表 tb 中竟然插入了这个值！在默认情况下，WHERE 条件会被忽略，数据会 INSERT 到基表中。</p>
-<h4 id="当与视图的条件不匹配时报错"><a href="#当与视图的条件不匹配时报错" class="headerlink" title="当与视图的条件不匹配时报错"></a>当与视图的条件不匹配时报错</h4><p>当通过视图 INSERT 记录时，即使与 WHERE 条件不匹配，数据也会直接输入到基表中。这是否意味着总是可以输入与 WHERE 条件不符的记录呢？</p>
-<p>但是，对于有条件限制的视图，无视条件输入记录有时会带来一定的麻烦。另外，从视图中输入的记录无法在改视图中确认也是一件很麻烦的事。</p>
-<p>为了应对这些情况，我们可以将视图设置成 “不接受与条件不匹配的记录”。为了防止输入与 WHERE 条件不匹配的记录，我们可以使用 CREATE VIEW 创建视图时，加上 WITH CHECK OPERON。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ CREATE VIEW v4 
-            AS 
-    SELECT empid, sales 
-            FROM tb 
-    WHERE sales >= 100
-            WITH CHECK OPTION;
-
-$ INSERT INTO v4 VALUES('恶意刁难', 50);
-ERROR 1369 (HY000): CHECK OPTION failed 'db1.v4'</code></pre>
-<p>这样就无法输入不符合条件的记录了。</p>
-<h3 id="替换、修改和删除视图"><a href="#替换、修改和删除视图" class="headerlink" title="替换、修改和删除视图"></a>替换、修改和删除视图</h3><p>当执行 CREATE VIEW 时，如果已经有同名的视图存在，该命令报错。在这种情况下，可以像 “CREATE OR REPLACE VIEW …” 这样，加上 OR REPLACE 替换视图。也就是说，删除已经存在的同名的视图，创建新的视图。</p>
-<pre class=" language-mysql"><code class="language-mysql">$ CREATE OR REPLACE VIEW v1 AS SELECT NOW();
-</code></pre>
-<h4 id="修改视图结构"><a href="#修改视图结构" class="headerlink" title="修改视图结构"></a>修改视图结构</h4><pre class=" language-mysql"><code class="language-mysql">$ ALTER VIEW 视图名 AS SELECT 列名 FROM 表名;</code></pre>
-<p>与使用 “CREATE VIEW … AS SELECT” 创建视图的方法基本相同。</p>
-<h4 id="删除视图"><a href="#删除视图" class="headerlink" title="删除视图"></a>删除视图</h4><pre class=" language-mysql"><code class="language-mysql">$ DROP VIEW 视图名;</code></pre>
-<p>如果视图不存在，该命令就会报错。可以执行下面的命令：</p>
-<pre class=" language-mysql"><code class="language-mysql"># 目标视图不存在，只是不执行操作而已
-$ DROP VIEW IF EXISTS v1;</code></pre>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>MySQL</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>熟练使用存储过程</title>
     <url>/posts/5d64.html</url>
     <content><![CDATA[<h3 id="什么是存储过程"><a href="#什么是存储过程" class="headerlink" title="什么是存储过程"></a>什么是存储过程</h3><p>将多个 SQL 语句组合成一个只需要使用命令 “CALL xx” 就能执行的集合，该集合就称为 <strong>存储过程（stored procedure）</strong>。“存储（store）表示保存，“过程” 表示步骤。也就是说，存储过程是将一系列步骤归纳并存储起来的集合。</p>
@@ -6466,6 +6221,251 @@ END</code></pre>
 <p>我们可以使用 SHOW TRIGGERS 命令确认当前设置的触发器。</p>
 <pre class=" language-mysql"><code class="language-mysql">$ SHOW TRIGGERS;</code></pre>
 <h4 id="删除触发器"><a href="#删除触发器" class="headerlink" title="删除触发器"></a>删除触发器</h4><pre class=" language-mysql"><code class="language-mysql">$ DROP TRIGGER 触发器名;</code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>熟练使用视图</title>
+    <url>/posts/76dd.html</url>
+    <content><![CDATA[<h3 id="什么是视图"><a href="#什么是视图" class="headerlink" title="什么是视图"></a>什么是视图</h3><h4 id="视图的真面目"><a href="#视图的真面目" class="headerlink" title="视图的真面目"></a>视图的真面目</h4><p>前面我们学习了多种使用 SELECT 提取纪录的方法。将 SELECT 的结果像表一样保留下来的虚表就是视图。</p>
+<p>视图不是表。因此，视图中并没有保存记录或者列中的数据。也会说，视图是一种信息，用于查询记录。</p>
+<h4 id="视图的用途"><a href="#视图的用途" class="headerlink" title="视图的用途"></a>视图的用途</h4><p>视图虽然看起来像表，但它没有实体，只是一种信息。视图的便利之处在于，用户可以按照想要的条件收集某表中某列的数据。</p>
+<p>之前那种通过设置条件从表中提取记录的做法非常麻烦。如果相同的提出操作以视图的方式执行，就可以将视图作为符合用户个人喜好的表来使用。</p>
+<p>从用户的角度来看，视图和表使用上并没有区别。和表一样，视图也可以进行 SELECT 和 UPDATE。如果更新视图的记录，基表的记录也会更新。</p>
+<img src="https://cdn.jsdelivr.net/gh/AsiaMa/AsiaMa-imgs/images/2021-01-27_19-05-07.png" style="zoom:87%;">
+
+<h3 id="使用视图"><a href="#使用视图" class="headerlink" title="使用视图"></a>使用视图</h3><h4 id="创建视图"><a href="#创建视图" class="headerlink" title="创建视图"></a>创建视图</h4><pre class=" language-mysql"><code class="language-mysql">$ CREATE VIEW 视图名 AS SELECT 列名 FROM 表名 WHERE 条件;</code></pre>
+<p>上面的语句表示 “对 SELECT 的记录 CREATE VIEW（视图）”。不要忘记在 SELECT 的前面加上 AS。</p>
+<p>上述语句中的 “ WHERE 条件”，实际上也可以 换成 ORDER BY、LIMIT 和 JOIN 等。总之，要在某些条件下选择列，创建虚拟的表。也就是将前面执行的许多 SELECT 结果通过 CREATE VIEW … AS 创建为视图。</p>
+<p>员工信息表 tb1 由员工号（empid）、姓名（name）和年龄（age）组成。试着创建没有员工号、只包含姓名和年龄这两个列的视图。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ CREATE VIEW v1 
+          AS
+  SELECT name, age 
+          FROM tb1;
+
+$ SELECT * FROM v1;
++--------+------+
+| name   | age  |
++--------+------+
+| 佐腾   |   40 |
+| 高桥   |   28 |
+| 中川   |   20 |
+| 渡边   |   23 |
+| 西泽   |   35 |
++--------+------+
+5 rows in set (0.01 sec)</code></pre>
+<p>这次我们只从一个表中提取了列，实际上也可以使用多个表，通过设置条件来提取想要的内容。</p>
+<h4 id="通过视图更新列的值"><a href="#通过视图更新列的值" class="headerlink" title="通过视图更新列的值"></a>通过视图更新列的值</h4><p>视图只显示了基表的一部分。因此，如果更新了基表的值，收集并显示基表值的视图的值也会更新。</p>
+<p>那么，如果更新了视图的值，基表的值又会怎样呢？实际上，视图不仅是基表的一部分，它也是指向基表数据的窗口。因此，如果更新视图的值，基表的值也会随之更新。</p>
+<p>我们来试着更新一下视图 v1 的记录，看看视图的记录更新是否反映到了基表中。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ UPDATE v1 SET name = '主任·佐腾' WHERE name = '佐腾';
+
+$ SELECT * FROM v1;
++----------------+------+
+| name           | age  |
++----------------+------+
+| 主任·佐腾      |   40 |
+| 高桥           |   28 |
+| 中川           |   20 |
+| 渡边           |   23 |
+| 西泽           |   35 |
++----------------+------+
+5 rows in set (0.00 sec)
+
+$ SELECt * FROM tb1;
++-------+----------------+------+
+| empid | name           | age  |
++-------+----------------+------+
+| A101  | 主任·佐腾      |   40 |
+| A102  | 高桥           |   28 |
+| A103  | 中川           |   20 |
+| A104  | 渡边           |   23 |
+| A105  | 西泽           |   35 |
++-------+----------------+------+
+5 rows in set (0.00 sec)</code></pre>
+<p>看来基表 tb1 的值也更新了。由此我们可以得知，如果更新视图的值，其基表的记录也会随之更新。</p>
+<h3 id="设置条件创建视图"><a href="#设置条件创建视图" class="headerlink" title="设置条件创建视图"></a>设置条件创建视图</h3><p>我们将从两个表中提取纪录并通过 WHERE 设置条件来创建视图。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ CREATE VIEW v2 
+            AS 
+    SELECT tb.empid, tb1.name, tb.sales 
+            FROM tb 
+    JOIN tb1 
+            USING(empid) 
+    WHERE tb.sales >= 100;
+
+$ SELECT * FROM v2;
++-------+----------------+-------+
+| empid | name           | sales |
++-------+----------------+-------+
+| A103  | 中川           |   101 |
+| A104  | 渡边           |   181 |
+| A101  | 主任·佐腾      |   184 |
+| A101  | 主任·佐腾      |   300 |
+| A102  | 高桥           |   205 |
++-------+----------------+-------+
+5 rows in set (0.01 sec)</code></pre>
+<p>执行下面的命令</p>
+<pre class=" language-mysql"><code class="language-mysql">$ UPDATE tb SET sales = 777 WHERE sales = 54;
+
+$ SELECT * FROM v2;
++-------+----------------+-------+
+| empid | name           | sales |
++-------+----------------+-------+
+| A103  | 中川           |   101 |
+| A102  | 高桥           |   777 |
+| A104  | 渡边           |   181 |
+| A101  | 主任·佐腾      |   184 |
+| A101  | 主任·佐腾      |   300 |
+| A102  | 高桥           |   205 |
++-------+----------------+-------+
+6 rows in set (0.00 sec)</code></pre>
+<p>可以看到视图 v2 的值也更新了。也就是说，在符合视图设置条件的情况下，如果基表更新，视图中的记录也会随之更新。设置了条件的视图始终会显示与条件相匹配的记录。</p>
+<h4 id="确认视图"><a href="#确认视图" class="headerlink" title="确认视图"></a>确认视图</h4><pre class=" language-mysql"><code class="language-mysql">$ SHOW TABLE;</code></pre>
+<p>视图会与表交织在一起显示出来。</p>
+<p>和表一样，列结构可以通过 DESC 显示出来。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ DESC v2;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| empid | varchar(10)  | YES  |     | NULL    |       |
+| name  | varchar(100) | YES  |     | NULL    |       |
+| sales | int          | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)</code></pre>
+<p>显示视图的详细信息：</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SHOW CREATE VIEW 视图名;</code></pre>
+<h3 id="限制通过视图写入"><a href="#限制通过视图写入" class="headerlink" title="限制通过视图写入"></a>限制通过视图写入</h3><p>视图是用户从基表上随意收集的列。换句话说，作为视图可见的部分大多是基表中的一部分内容。对视图执行 INSERT 操作，就意味着只能向表中的一部分内容中插入数据。</p>
+<p>前面介绍的有点啰嗦，用一句话概括就是对视图执行 INSERT 操作是有限制的。例如，在使用了 UNION、JOIN、子查询的视图中，不能执行 INSERT 。如果只是从一个表中提取了列，那么执行 INSERT 是没有任何问题的。</p>
+<p>插入方法和向表中插入数据的方法相同。</p>
+<p>执行下面的命令：</p>
+<pre class=" language-mysql"><code class="language-mysql">$ INSERT INTO v1 VALUES('临时工·石田', 18);
+Query OK, 1 row affected (0.00 sec)
+
+$ INSERT INTO v2 VALUES(null, 'AsiaMa', 28);
+ERROR 1394 (HY000): Can not insert into join view 'db1.v2' without fields list
+
+$ SELECT * FROM v1;
++-------------------+------+
+| name              | age  |
++-------------------+------+
+| 主任·佐腾         |   40 |
+| 高桥              |   28 |
+| 中川              |   20 |
+| 渡边              |   23 |
+| 西泽              |   35 |
+| 临时工·石田       |   18 |
++-------------------+------+
+6 rows in set (0.00 sec)</code></pre>
+<p>姓名和年龄被完整地插入到了视图 v1 中。那么，视图 v1 的基表 tb1 会变成什么样呢？</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT * FROM tb1;
++-------+-------------------+------+
+| empid | name              | age  |
++-------+-------------------+------+
+| A101  | 主任·佐腾         |   40 |
+| A102  | 高桥              |   28 |
+| A103  | 中川              |   20 |
+| A104  | 渡边              |   23 |
+| A105  | 西泽              |   35 |
+| NULL  | 临时工·石田       |   18 |
++-------+-------------------+------+
+6 rows in set (0.00 sec)</code></pre>
+<p>看来 “临时表·石田” 和 “18” 这两个数据都 INSERT 成功了。另外，对于在视图 v1 中没有被定义的列 empid，因为没有插入数据，所以输入了 NULL。</p>
+<h4 id="设置了条件的基表中会发生什么变化"><a href="#设置了条件的基表中会发生什么变化" class="headerlink" title="设置了条件的基表中会发生什么变化"></a>设置了条件的基表中会发生什么变化</h4><p>如果在设置了条件的视图中插入违反条件的数据，基表会发生什么变化呢？</p>
+<pre class=" language-mysql"><code class="language-mysql">$ CREATE VIEW v3 
+            AS 
+    SELECT empid, sales 
+            FROM tb 
+    WHERE sales >= 100;
+
+$ SELECT * FROM v3;
++-------+-------+
+| empid | sales |
++-------+-------+
+| A103  |   101 |
+| A104  |   181 |
+| A101  |   184 |
+| A101  |   300 |
+| A102  |   205 |
++-------+-------+
+5 rows in set (0.01 sec)</code></pre>
+<ul>
+<li>插入不符合视图条件的记录</li>
+</ul>
+<pre class=" language-mysql"><code class="language-mysql">$ INSERT INTO v3 VALUES('恶意刁难', 50);
+Query OK, 1 row affected (0.01 sec)
+
+$ SELECT * FROM v3;
++-------+-------+
+| empid | sales |
++-------+-------+
+| A103  |   101 |
+| A104  |   181 |
+| A101  |   184 |
+| A101  |   300 |
+| A102  |   205 |
++-------+-------+
+5 rows in set (0.00 sec)</code></pre>
+<p>视图 v3 看不到刚才插入的值，那么基表 tb 会变成什么样呢？</p>
+<pre class=" language-mysql"><code class="language-mysql">$ SELECT * FROM tb;
++--------------+-------+-------+
+| empid        | sales | month |
++--------------+-------+-------+
+| A103         |   101 |     4 |
+| A102         |    54 |     5 |
+| A104         |   181 |     4 |
+| A101         |   184 |     4 |
+| A103         |    17 |     5 |
+| A101         |   300 |     5 |
+| A102         |   205 |     6 |
+| A104         |    93 |     5 |
+| A103         |    12 |     6 |
+| A107         |    87 |     6 |
+| 恶意刁难     |    50 |  NULL |
++--------------+-------+-------+
+11 rows in set (0.00 sec)</code></pre>
+<p>基表 tb 中竟然插入了这个值！在默认情况下，WHERE 条件会被忽略，数据会 INSERT 到基表中。</p>
+<h4 id="当与视图的条件不匹配时报错"><a href="#当与视图的条件不匹配时报错" class="headerlink" title="当与视图的条件不匹配时报错"></a>当与视图的条件不匹配时报错</h4><p>当通过视图 INSERT 记录时，即使与 WHERE 条件不匹配，数据也会直接输入到基表中。这是否意味着总是可以输入与 WHERE 条件不符的记录呢？</p>
+<p>但是，对于有条件限制的视图，无视条件输入记录有时会带来一定的麻烦。另外，从视图中输入的记录无法在改视图中确认也是一件很麻烦的事。</p>
+<p>为了应对这些情况，我们可以将视图设置成 “不接受与条件不匹配的记录”。为了防止输入与 WHERE 条件不匹配的记录，我们可以使用 CREATE VIEW 创建视图时，加上 WITH CHECK OPERON。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ CREATE VIEW v4 
+            AS 
+    SELECT empid, sales 
+            FROM tb 
+    WHERE sales >= 100
+            WITH CHECK OPTION;
+
+$ INSERT INTO v4 VALUES('恶意刁难', 50);
+ERROR 1369 (HY000): CHECK OPTION failed 'db1.v4'</code></pre>
+<p>这样就无法输入不符合条件的记录了。</p>
+<h3 id="替换、修改和删除视图"><a href="#替换、修改和删除视图" class="headerlink" title="替换、修改和删除视图"></a>替换、修改和删除视图</h3><p>当执行 CREATE VIEW 时，如果已经有同名的视图存在，该命令报错。在这种情况下，可以像 “CREATE OR REPLACE VIEW …” 这样，加上 OR REPLACE 替换视图。也就是说，删除已经存在的同名的视图，创建新的视图。</p>
+<pre class=" language-mysql"><code class="language-mysql">$ CREATE OR REPLACE VIEW v1 AS SELECT NOW();
+</code></pre>
+<h4 id="修改视图结构"><a href="#修改视图结构" class="headerlink" title="修改视图结构"></a>修改视图结构</h4><pre class=" language-mysql"><code class="language-mysql">$ ALTER VIEW 视图名 AS SELECT 列名 FROM 表名;</code></pre>
+<p>与使用 “CREATE VIEW … AS SELECT” 创建视图的方法基本相同。</p>
+<h4 id="删除视图"><a href="#删除视图" class="headerlink" title="删除视图"></a>删除视图</h4><pre class=" language-mysql"><code class="language-mysql">$ DROP VIEW 视图名;</code></pre>
+<p>如果视图不存在，该命令就会报错。可以执行下面的命令：</p>
+<pre class=" language-mysql"><code class="language-mysql"># 目标视图不存在，只是不执行操作而已
+$ DROP VIEW IF EXISTS v1;</code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -6998,6 +6998,51 @@ infix <span class="token keyword">fun</span> Int<span class="token punctuation">
       </tags>
   </entry>
   <entry>
+    <title>英语学习第三天</title>
+    <url>/posts/9968.html</url>
+    <content><![CDATA[<h3 id="动名词作主语"><a href="#动名词作主语" class="headerlink" title="动名词作主语"></a>动名词作主语</h3><ul>
+<li>Eating an apple a day keeps you healthy.</li>
+<li>Running five miles is the first thing he does in the morning.</li>
+</ul>
+<h3 id="不定式作主语"><a href="#不定式作主语" class="headerlink" title="不定式作主语"></a>不定式作主语</h3><ul>
+<li>To study abroad is my greatest desire.</li>
+<li>To travel around the world is my plan for this year.</li>
+</ul>
+<p>动名词作主语不讨论这件事做或没做。不定式做主语，这件事情还没有做。</p>
+<p>动词要做主语，不能用原词。可以用动名词，也可以用不定式。如果是不定式，这个动作要没做才可以。</p>
+<blockquote>
+<p>不定式和动名词作主语时，常出现主语过长的情况，可以用代词it代替，作形式主语放在句首，而把真正的主语，即不定式或动名词短语放在句尾。动名词移至句尾时，常改为不定式。</p>
+</blockquote>
+<p>Collecting stamps is one of his hobbies.</p>
+<p><code>It</code> is one of his hobbies <code>to collect stamps</code>.</p>
+<p>Eating an apple a day keeps you healthy.</p>
+<p><code>It</code> keeps you healthy <code>to eat an appale</code>.</p>
+<h3 id="单词"><a href="#单词" class="headerlink" title="单词"></a>单词</h3><p>hear from 收到….的信</p>
+<p>hear sb do sth 听见某人做某事 </p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <tags>
+        <tag>English</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>英语学习第一天</title>
     <url>/posts/56b.html</url>
     <content><![CDATA[<h2 id="五种基本句型"><a href="#五种基本句型" class="headerlink" title="五种基本句型"></a>五种基本句型</h2><p>主语：动作的发起者，位于句首。</p>
@@ -7095,51 +7140,6 @@ infix <span class="token keyword">fun</span> Int<span class="token punctuation">
 <li>She talk loudy.（方式状语）</li>
 <li>He walks in a funny way.</li>
 </ul>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
-      <tags>
-        <tag>English</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>英语学习第三天</title>
-    <url>/posts/9968.html</url>
-    <content><![CDATA[<h3 id="动名词作主语"><a href="#动名词作主语" class="headerlink" title="动名词作主语"></a>动名词作主语</h3><ul>
-<li>Eating an apple a day keeps you healthy.</li>
-<li>Running five miles is the first thing he does in the morning.</li>
-</ul>
-<h3 id="不定式作主语"><a href="#不定式作主语" class="headerlink" title="不定式作主语"></a>不定式作主语</h3><ul>
-<li>To study abroad is my greatest desire.</li>
-<li>To travel around the world is my plan for this year.</li>
-</ul>
-<p>动名词作主语不讨论这件事做或没做。不定式做主语，这件事情还没有做。</p>
-<p>动词要做主语，不能用原词。可以用动名词，也可以用不定式。如果是不定式，这个动作要没做才可以。</p>
-<blockquote>
-<p>不定式和动名词作主语时，常出现主语过长的情况，可以用代词it代替，作形式主语放在句首，而把真正的主语，即不定式或动名词短语放在句尾。动名词移至句尾时，常改为不定式。</p>
-</blockquote>
-<p>Collecting stamps is one of his hobbies.</p>
-<p><code>It</code> is one of his hobbies <code>to collect stamps</code>.</p>
-<p>Eating an apple a day keeps you healthy.</p>
-<p><code>It</code> keeps you healthy <code>to eat an appale</code>.</p>
-<h3 id="单词"><a href="#单词" class="headerlink" title="单词"></a>单词</h3><p>hear from 收到….的信</p>
-<p>hear sb do sth 听见某人做某事 </p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
